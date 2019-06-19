@@ -119,7 +119,7 @@
                 <h5>CONTACT DETAILS</h5>
                 <div class="row">
                     <div class="col-md-4">
-                        <input type="text" name="mobileNumber" value="{{ session('sess_mobile_number') }}" class="form-control" placeholder="Mobile Number">
+                        <input type="text" name="mobile_number" value="{{ session('sess_mobile_number') }}" class="form-control" placeholder="Mobile Number">
                     </div>
 
                     <div class="col-md-4">

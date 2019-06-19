@@ -28,4 +28,14 @@ Auth::routes();
         'payments' => 'PaymentController',
     ]);
 
+Route::get('/co-tenant/create', function(){
+    return view('create-co-tenant');
+});
+
+Route::get('/room/add', function(){
+    
+    $rooms = DB::table('rooms')->get();
+
+    return view('resident-add-room', compact('rooms'));
+});
 

@@ -46,6 +46,7 @@ class RoomController extends Controller
     {
         $room_no = request('room_no');
         $building = request('building');
+        $floor_number = request('floor_number');
         $project = request('project');
         $short_term_rent = request('short_term_rent');
         $long_term_rent = request('long_term_rent');
@@ -55,6 +56,7 @@ class RoomController extends Controller
         $room = new Room();
         $room->room_no = $room_no;
         $room->building = $building;
+        $room->floor_number = $floor_number;
         $room->project = $project;
         $room->short_term_rent = $short_term_rent;
         $room->long_term_rent = $long_term_rent;
@@ -63,7 +65,7 @@ class RoomController extends Controller
         $room->no_of_beds = $no_of_beds;
         $room->save(); 
 
-        return redirect('rooms')->with('success','Room is successfully created!');
+        return redirect('rooms/'.$room->room_id)->with('success','Room is successfully created!');
 
     }
 

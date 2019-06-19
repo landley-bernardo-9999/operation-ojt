@@ -43,7 +43,23 @@ class ResidentController extends Controller
             'email_address' => ['unique:residents', 'nullable'],
         ]);
 
-        //resident information
+        //create co-tenant
+        if($request->type_of_resident == 'co_resident'){
+            $resident = new Resident();
+            $resident->first_name = $request->first_name;
+            $resident->middle_name = $request->middle_name;
+            $resident->last_name = $request->last_name;
+            $resident->type_of_resident = 'co_resident';
+            $resident->email_address = $request->email_address;
+            $resident->mobile_number = $request->mobile_number;
+            $resident->telephone_number = $request->telephone_number;
+            $resident->primary_resident_id = session('resident_id');
+            $resident->save();
+
+            return redirect('/residents/'.session('resident_id'))->with('success', 'Co-resident has been added!');
+        }
+        //create primary resident
+        else{
         $first_name = $request->first_name;
         $last_name = $request->last_name;
         $middle_name = $request->middle_name;
@@ -92,6 +108,7 @@ class ResidentController extends Controller
         session(['sess_guardian_mobile_number' => $guardian_mobile_number]);
 
         return redirect('/transactions/create')->with('success');
+        }
     }
 
     /**
@@ -104,11 +121,23 @@ class ResidentController extends Controller
     {
         $resident = Resident::findOrFail($resident_id);
 
+        session(['resident_name'=> $resident->first_name.' '.$resident->last_name]);
+        session(['resident_id'=> $resident_id]);
+
+        $resident->last_name;
+
         $transaction = DB::table('transactions')
         ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
         ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
         ->where('residents.resident_id', $resident_id)
         ->get();
+
+        $guardian = DB::table('guardians')
+        ->join('residents', 'guardians.guardian_resident_id', 'residents.resident_id')
+        ->where('residents.resident_id', $resident_id)
+        ->get(); 
+
+        $co_residents = DB::table('residents')->where('primary_resident_id', $resident_id)->get();
 
         $payment = DB::table('transactions')
         ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
@@ -117,7 +146,7 @@ class ResidentController extends Controller
         ->where('residents.resident_id', $resident_id)
         ->get();
 
-        return view('show-resident', compact('resident', 'transaction', 'repairs', 'payment'));
+        return view('show-resident', compact('resident', 'transaction', 'repairs', 'payment', 'co_residents', 'guardian'));
     }
 
     /**
@@ -155,7 +184,8 @@ class ResidentController extends Controller
         DB::table('guardians')->where('guardian_resident_id', $resident_id)->delete();
         DB::table('transactions')->where('trans_resident_id', $resident_id)->delete();
         DB::table('users')->where('user_resident_id', $resident_id)->delete();
+        DB::table('residents')->where('primary_resident_id', $resident_id)->delete();
 
-        return redirect('/residents/')->with('success','Resident has been deleted!');
+        return redirect('/rooms/'.session('sess_room_id'))->with('success','Resident has been deleted!');
     }
 }

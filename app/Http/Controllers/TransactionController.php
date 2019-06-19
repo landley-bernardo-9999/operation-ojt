@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Transaction;
 use Illuminate\Http\Request;
 use Carbon;
+use DB;
 
 class TransactionController extends Controller
 {
@@ -132,8 +133,16 @@ class TransactionController extends Controller
             $total = $secDepRent + $advanceRent + $secDepUtilities + $transient;
 
             session(['sess_total' => $total]);
+            
+            session(['room_id' => $request->room_id]);
 
-        return redirect('/payments/create')->with('success');
+        if($request->adding_room == 'yes'){
+            session(['sess_add_room' => $request->adding_room ]);
+            return redirect ('/room/add/');
+        }else{
+            return redirect('/payments/create')->with('success');     
+        }
+    
 
     }
 
@@ -143,9 +152,18 @@ class TransactionController extends Controller
      * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function show(Transaction $transaction)
+    public function show($trans_id)
     {
-        //
+        $transaction = Transaction::findOrFail($trans_id);
+
+        $resident = DB::table('transactions')
+        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+        ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
+        ->where('transactions.trans_id', $trans_id)
+        ->get();
+
+        return view('show-transaction', compact('transaction', 'resident'));
     }
 
     /**
@@ -166,9 +184,21 @@ class TransactionController extends Controller
      * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request, $trans_id)
     {
-        //
+        $move_out = $request->move_out_reason;
+
+        if($move_out == null){
+            $data = $request->all();
+            Transaction::findOrFail($trans_id)->update($data);
+        }
+        else{
+            return 'hes moving out';
+        }
+
+
+        return redirect('transactions/'.$trans_id)->with('success','Utility readings has been updated!');
+
     }
 
     /**

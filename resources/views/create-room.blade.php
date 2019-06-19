@@ -34,6 +34,23 @@
                     </div>
 
                      <div class="form-group row">
+                        <label for="floor_number" class="col-md-4 col-form-label text-md-right">Floor Number:</label>
+                        <div class="col-md-5">
+                            <select class="form-control" name="floor_number" required>
+                                <option value="">Select Floor Number</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
+                        </div>     
+                    </div>
+
+                     <div class="form-group row">
                         <label for="project" class="col-md-4 col-form-label text-md-right">Project:</label>
                         <div class="col-md-5">
                             <select class="form-control" name="project" required>

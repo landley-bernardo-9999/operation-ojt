@@ -70,20 +70,22 @@
             <tr>
                 <h3>Owners</h3>
             </tr>
+            <?php $row_no_owners = 1; ?>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Date Enrolled</th>
+                <th></th>
+            </tr>
             @foreach ($owner as $owner)
             <tr>
-                <td>Name:</td>
+                <td>{{ $row_no_owners++ }}. </td>
                 <td>{{ $owner->owner_first_name }} {{ $owner->owner_middle_name }} {{ $owner->owner_last_name }}</td>
-                <td><a href="/owners/{{$owner->owner_id}}">MORE INFO</a></td>
-            </tr>
-            <tr>
-                <td>Date of Enrollment:</td>
                 <td>{{Carbon\Carbon::parse(  $owner->enrollment_date )->formatLocalized('%b %d %Y')}}</td>
                 <?php session(['sess_owner_id'=> $owner->owner_id]) ?>
-                <td></td>
+                <td><a href="/owners/{{$owner->owner_id}}">MORE INFO</a></td>
             </tr>
             @endforeach
-            
         </table>
     </div>
 

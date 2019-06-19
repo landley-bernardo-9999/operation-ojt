@@ -21,7 +21,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -51,6 +51,7 @@ class PaymentController extends Controller
             $resident->type_of_resident = 'primary_resident';
             $resident->birthdate = session('sess_birthdate');
             $resident->email_address = session('sess_email_address');
+            $resident->telephone_number = session('sess_telephone_number');
             $resident->mobile_number = session('sess_mobile_number');
             $resident->barangay = session('sess_barangay');
             $resident->municipality = session('sess_municipality');
@@ -72,7 +73,7 @@ class PaymentController extends Controller
             if($user->email = $resident->email_address == null){
                 $user->email = 'noemailadress'.$resident->resident_id.'@marthaservices.com';
             }else{
-            $user->email = $request->email_address;
+                $user->email = session('sess_email_address');
             }
             $user->privilege = "resident";
             $user->password = Hash::make('marthaservices');

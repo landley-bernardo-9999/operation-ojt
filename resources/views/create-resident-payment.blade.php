@@ -19,16 +19,15 @@
                 <div class="float-right col-md-3">
                    <p>Client: <b>{{session('sess_first_name')}} {{session('sess_middle_name')}} {{session('sess_last_name')}}</b></p>    
                </div>
+
+               <div class="float-right col-md-3">
+                    <p>Unit No: <b>{{session('sess_room_building')}} {{session('sess_room_no')}}</b></p>    
+                </div>
+                <div class="float-right col-md-3">
+                    <p>Beds: <b>{{session('sess_no_of_beds')}}</b></p>    
+                </div>
            </div>
 
-           <div class="row">
-                <div class="float-right col-md-3">
-                   <p>Unit No: <b>{{session('sess_room_building')}} {{session('sess_room_no')}}</b></p>    
-               </div>
-               <div class="float-right col-md-3">
-                   <p>Beds: <b>{{session('sess_no_of_beds')}}</b></p>    
-               </div>
-           </div>
 
            <div class="row">      
                <div class="col-md-4">
@@ -46,25 +45,41 @@
                    <p>Number of months: <b>{{$durationInMonths}}</b></p>
                </div>
            </div>
+
            <div class="row">      
-               <div class="col-md-3">
-               <p>Payment to be settled: <b>{{ number_format(session('sess_total'), 2) }}</b></p>
-               </div>
-           </div>
+                <div class="col-md-3">
+                <p>Payment to be settled: <b>{{ number_format(session('sess_total'), 2) }}</b></p>
+                </div>
+            </div>
 
-            <div class="row">      
-               <div class="col-md-12">
-                   Payment breakdown
-                   <ul>
-                       <li><input type="number" name="sec_dep_rent" value="{{session('sess_sec_dep_rent')}}"> - Security Deposit for Rent</li>
-                       <li><input type="number" name="sec_dep_utilities" value="{{session('sess_sec_dep_utilities')}}"> - Security Deposit for Utilities</li>
-                       <li><input type="number" name="advance_rent" value="{{session('sess_advance_rent')}}"> - Advance Rent</li>
-                       <li><input type="number" name="transient" value="{{session('sess_transient')}}"> - Transient</li>
-                   </ul>
-               </div>
+            <h5>PAYMENT BREAKDOWN</h5>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="">Security Deposit For Rent</label>
+                    <input type="number" class="form-control" name="sec_dep_rent" value="{{session('sess_sec_dep_rent')}}"> 
+                </div>
+            </div>
 
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="">Security Deposit for Utilities</label>
+                    <input type="number" class="form-control" name="sec_dep_utilities" value="{{session('sess_sec_dep_utilities')}}">
+                </div>
+            </div>
 
-           </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="">Advance Rent</label>
+                    <input type="number" class="form-control" name="advance_rent" value="{{session('sess_advance_rent')}}">
+                </div>
+            </div>
+                
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="">Transient</label>
+                    <input type="number" class="form-control" name="transient" value="{{session('sess_transient')}}">
+                </div>
+            </div>
             <hr>
             
         <div class="card-footer">
