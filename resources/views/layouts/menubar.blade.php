@@ -11,9 +11,9 @@
             </button>
 
             <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/home') }}">
-                {{ config('app.name', 'Laravel') }}
-            </a>
+                <a class="navbar-brand" href="{{ url('/home') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -29,6 +29,7 @@
                     <li><a href="{{ route('login') }}">Login</a></li>
                     <li><a href="{{ route('register') }}">Register</a></li>
                 @else
+                @if(auth()->user()->privilege === 'leasingOfficer')
                 <ul class="nav navbar-nav nav-bar-left">
                     <li><a href="/rooms/"><i class="fas fa-home"></i>&nbspRooms</a></li>
                     <li><a href="/residents/"><i class="fas fa-users"></i>&nbspResidents</a></li>
@@ -36,9 +37,8 @@
                     <li><a href="/violations/"><i class="fas fa-user-times"></i>&nbspViolations</a></li>
                     <li><a href="/repairs/"><i class="fas fa-hammer"></i>&nbspRepairs</a></li>
                     <li><a href="/personnels/"><i class="fas fa-user-lock"></i>&nbspPersonnels</a></li>
-                    
-
                 </ul>
+                @endif
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             {{ Auth::user()->name }} <span class="caret"></span>
@@ -46,7 +46,7 @@
 
                         <ul class="dropdown-menu" role="menu">
                              <li>
-                                <a href="">Account</a>
+                                <a href="/users/{{ auth()->user()->user_id }}">My Account</a>
                             </li> 
                             <li>
                                 <a href="{{ route('logout') }}"

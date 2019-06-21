@@ -7,17 +7,25 @@
             <a class="" href="{{ URL::previous() }}">BACK</a>
         </div>
 
+        @if(auth()->user()->privilege == 'leasingOfficer')
         <div class="col-md-2">
             <a class="" href="">EDIT</a>
         </div>
 
-        <div class="col-md-8 float-right">
+     
+        <div class="col-md-2">
+            <a class="" href="/owner/room/add">ADD ROOM</a>
+        </div>
+        
+
+        <div class="col-md-2 float-right">
             <form method="POST" action="/owners/{{ $owner->owner_id }}">
                 @method('delete')
                 {{ csrf_field() }}
                 <button onclick="return confirm('Are you sure you want to perform this operation? ');" >DELETE</button>
             </form> 
         </div>
+        @endif
     </div>
     <div class="row">
        <div class="col-md-9">
@@ -112,6 +120,28 @@
                     <td>Email Address:</td>
                     <td>{{$owner->owner_email_address}}</td>
                 </tr>
+            </table>
+        </div>
+
+        <div class="row">
+            <table class="table">
+               <tr>
+                   <h3>Representative</h3>
+               </tr>
+               @foreach ($representative as $representative)
+               <tr>
+                    <td>Name:</td>
+                    <td>{{$representative->rep_name}}</td>
+               </tr>
+               <tr>
+                    <td>Relationship with the Unit Owner:</td>
+                    <td>{{$representative->rep_relationship}}</td>
+               </tr>
+               <tr>
+                    <td>Mobile Number:</td>
+                    <td>{{$representative->rep_mobile_number}}</td>
+               </tr>
+               @endforeach
             </table>
         </div>
 

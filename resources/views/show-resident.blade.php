@@ -15,6 +15,9 @@
         <div class="col-md-1">
             <p><a class="" href="/room/add">ADD ROOM</a></p>
         </div>
+        <div class="col-md-1">
+            <p><a class="" href="/room/add">TRANSFER RESIDENT</a></p>
+       </div>
          <div class="col-md-1">
              <p><a class="" href="">ADD REPAIR</a></p>
         </div>
@@ -25,9 +28,6 @@
              <p><a class="" href="">KEY BORROW</a></p>
         </div>
 
-        <div class="col-md-1">
-            <p><a class="" href="">TRANSFER</a></p>
-       </div>
        
         <div class="col-md-1">
             <form method="POST" action="/residents/{{ $resident->resident_id }}">

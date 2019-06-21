@@ -13,9 +13,19 @@ class ResidentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $s = $request->query('s');
+
+        $residents = DB::table('transactions')
+        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+        ->orWhere(DB::raw('CONCAT_WS(" ", first_name,last_name, " ")'), 'like', "%{$s}%")
+        ->orWhere('email_address', 'like', "%$s%")
+        ->orWhere('mobile_number', 'like', "%$s%")
+        ->get();  
+
+        return view ('residents', compact('residents'));
     }
 
     /**
@@ -129,8 +139,9 @@ class ResidentController extends Controller
         $transaction = DB::table('transactions')
         ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
         ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+        ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
         ->where('residents.resident_id', $resident_id)
-        ->get();
+        ->get();    
 
         $guardian = DB::table('guardians')
         ->join('residents', 'guardians.guardian_resident_id', 'residents.resident_id')

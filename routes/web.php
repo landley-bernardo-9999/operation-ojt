@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,19 +18,23 @@ Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
+
     Route::resources([
         'rooms' => 'RoomController',
         'residents' => 'ResidentController',
         'owners' => 'OwnerController',
-        'repairs' => 'RepairController',
-        'violations' => 'ViolationController',
-        'personnels' => 'PersonnelController',
         'transactions' => 'TransactionController',
         'payments' => 'PaymentController',
+        'contracts' => 'ContractController',
+        'users' => 'UserController',
     ]);
 
 Route::get('/co-tenant/create', function(){
     return view('create-co-tenant');
+});
+
+Route::get('/resident/moveout', function(){
+    return view('resident-moveout');
 });
 
 Route::get('/room/add', function(){
@@ -38,4 +43,18 @@ Route::get('/room/add', function(){
 
     return view('resident-add-room', compact('rooms'));
 });
+
+Route::get('/owner/room/add', function(){
+
+    $rooms = DB::table('contracts')
+        ->rightJoin('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+        ->select('room_id', 'room_no', 'building', 'room_status')
+        ->where('contract_id', null)
+        ->get(); 
+
+    return view('owner-add-room', compact('rooms'));
+});
+
+Route::get('/search/residents{s?}', 'ResidentController@index')->where('s', '[\w\d]+');
+Route::get('/search/owners{s?}', 'OwnerController@index')->where('s', '[\w\d]+');
 

@@ -18,9 +18,19 @@ class OwnerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $s = $request->query('s');
+
+        $owners = DB::table('contracts')
+        ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+        ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
+        ->orWhere(DB::raw('CONCAT_WS(" ", owner_first_name,owner_last_name, " ")'), 'like', "%{$s}%")
+        ->orWhere('owner_email_address', 'like', "%$s%")
+        ->orWhere('owner_mobile_number', 'like', "%$s%")
+        ->get();  
+
+        return view ('owners', compact('owners'));
     }
 
     /**
@@ -119,6 +129,14 @@ class OwnerController extends Controller
     {   
         $owner = Owner::findOrFail($owner_id);
 
+        $owner_name = $owner->owner_first_name.' '.$owner->owner_last_name;
+
+        $owner_id = $owner->owner_id;
+
+        session(['owner_name' => $owner_name]);
+
+        session(['owner_id' => $owner_id]);
+
         $contract = DB::table('contracts')
         ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
         ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
@@ -134,7 +152,9 @@ class OwnerController extends Controller
         ->where('owners.owner_id', $owner_id)
         ->get();
 
-        return view('show-owner', compact('owner', 'contract', 'transaction', 'bank'));
+        $representative = DB::table('representatives')->where('rep_owner_id', $owner_id)->get();
+
+        return view('show-owner', compact('owner', 'contract', 'transaction', 'bank', 'representative'));
 
     }
 
@@ -175,6 +195,6 @@ class OwnerController extends Controller
         DB::table('representatives')->where('rep_owner_id', $owner_id)->delete();
         DB::table('users')->where('user_owner_id', $owner_id)->delete();
 
-        return redirect('/owners/')->with('success','Owner has been deleted!');
+        return redirect('/owners/'.session('sess_room_id'))->with('success','Owner has been deleted!');
     }
 }

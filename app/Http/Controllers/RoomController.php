@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Gate;
 use DB;
 use App\Owner;
+use Session;
 
 class RoomController extends Controller
 {
@@ -17,13 +18,28 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $room = DB::table('rooms')
-            ->orderBy('project', 'asc')
-            ->orderBy('building', 'asc')
-            ->orderBy('room_no', 'asc')
-            ->get();
+        try
+        {
+            if(auth()->user()->user_id === null || auth()->user()->privilege === 'leasingOfficer' ){
 
-        return view('rooms', compact('room'));
+                $room = DB::table('rooms')
+                ->orderBy('project', 'asc')
+                ->orderBy('building', 'asc')
+                ->orderBy('room_no', 'asc')
+                ->get();
+    
+                return view('rooms', compact('room'));
+            }
+            else{
+                
+                abort(404, "Forbidden Page.");
+            }   
+        }
+        catch(\Exception $e)
+        {
+            abort(404, "Forbidden Page.");
+        }
+      
     }
 
     /**
@@ -44,6 +60,10 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
+        request()->validate([
+            'room_no' => ['unique:rooms', 'nullable']
+        ]);
+
         $room_no = request('room_no');
         $building = request('building');
         $floor_number = request('floor_number');
@@ -77,26 +97,41 @@ class RoomController extends Controller
      */
     public function show($room_id)
     {
-        $room = Room::findOrFail($room_id);
+        try
+        {
+            if(auth()->user()->user_id === null || auth()->user()->privilege === 'leasingOfficer'){
 
-        $owner = DB::table('contracts')
-        ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
-        ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
-        ->where('contracts.contract_room_id', $room_id)
-        ->get();
+                $room = Room::findOrFail($room_id);
 
-        $resident = DB::table('transactions')
-        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
-        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-        ->where('transactions.trans_room_id', $room_id)
-        ->get();
+                $owner = DB::table('contracts')
+                ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+                ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
+                ->where('contracts.contract_room_id', $room_id)
+                ->get();
+        
+                $resident = DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->where('transactions.trans_room_id', $room_id)
+                ->get();
+        
+                session(['sess_room_id' => $room->room_id]);
+                session(['sess_room_no' => $room->room_no]);
+                session(['sess_room_building' => $room->building]);
+                session(['sess_no_of_beds' => $room->no_of_beds]);
+        
+                return view('show-room', compact('room', 'owner', 'resident'));
+            }
+            else{
+                abort(404, "Forbidden Page.");
+            }   
+         }
+        catch(\Exception $e)
+        {
+            abort(404, "Forbidden Page.");
+        }
 
-        session(['sess_room_id' => $room->room_id]);
-        session(['sess_room_no' => $room->room_no]);
-        session(['sess_room_building' => $room->building]);
-        session(['sess_no_of_beds' => $room->no_of_beds]);
-
-        return view('show-room', compact('room', 'owner', 'resident'));
+       
     }
 
     /**

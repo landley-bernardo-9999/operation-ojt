@@ -7,7 +7,7 @@
             <a class="" href="/residents/{{ session('resident_id') }}">BACK</a>
         </div>
         <div class="col-md-2">
-            <a class="float-right" href="/residents/create/">MOVE OUT</a>
+            <a class="float-right" href="/transactions/{{ $transaction->trans_id }}/edit">MOVE OUT</a>
         </div>
     </div>
     <div class="row">

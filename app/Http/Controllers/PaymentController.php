@@ -139,8 +139,33 @@ class PaymentController extends Controller
             
             $room = DB::table('rooms')
             ->where('room_id', session('sess_room_id'))
-            ->update(['remarks' => 'This room is reserved. Full payment has not yet been settled.']);
+            ->update(['remarks' => 'THIS IS RESERVED. RESIDENT. FULL PAYMENT HAS NOT YET BEEN SETTLED.']);
         
+            session()->forget('sess_first_name');
+            session()->forget('sess_last_name');
+            session()->forget('sess_middle_name');
+            session()->forget('sess_birthdate');
+            session()->forget('sess_email_address');
+            session()->forget('sess_telephone_number');
+            session()->forget('sess_mobile_number');
+            session()->forget('sess_barangay');
+            session()->forget('sess_municipality');
+            session()->forget('sess_province');
+            session()->forget('sess_zip');
+
+            session()->forget('sess_name');
+            session()->forget('sess_relationship');
+            session()->forget('sess_guardian_mobile_number');
+
+            session()->forget('sess_trans_date');
+            session()->forget('sess_move_in_date');
+            session()->forget('sess_move_out_date');
+            session()->forget('sess_term');
+
+            session()->forget('sess_sec_dep_rent');
+            session()->forget('sess_advance_rent');
+            session()->forget('sess_sec_dep_utilities');
+            session()->forget('sess_transient');
 
         return redirect('/rooms/'.session('sess_room_id'))->with('success', 'Resident has moved in!');
     }

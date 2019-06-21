@@ -6,6 +6,7 @@ use App\Transaction;
 use Illuminate\Http\Request;
 use Carbon;
 use DB;
+use App\Payment;
 
 class TransactionController extends Controller
 {
@@ -137,10 +138,84 @@ class TransactionController extends Controller
             session(['room_id' => $request->room_id]);
 
         if($request->adding_room == 'yes'){
-            session(['sess_add_room' => $request->adding_room ]);
+           session(['sess_adding_room' => $request->adding_room ]);
             return redirect ('/room/add/');
+        }elseif($request->adding_room == 'no'){
+            
+            //create the transaction.
+            $transaction = new Transaction();
+            $transaction->trans_date = $request->trans_date;
+            $transaction->move_in_date = $request->move_in_date;
+            $transaction->move_out_date = $request->move_out_date;
+            $transaction->trans_resident_id = session('resident_id');
+            $transaction->trans_room_id =$request->room_id;
+            $transaction->trans_owner_id = session('sess_owner_id');
+            $transaction->trans_status = 'pending';
+            $transaction->term = $request->term;
+            $transaction->save();
+    
+             //create the payment.
+            if($request->sec_dep_rent > 0){
+                $payment = new Payment();
+                $payment->amt = $request->sec_dep_rent;
+                $payment->desc = 'sec_dep_rent';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $transaction->trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+
+            if($request->advance_rent > 0){
+                $payment = new Payment();
+                $payment->amt = $request->advance_rent;
+                $payment->desc = 'advance_rent';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $transaction->trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+
+            if($request->sec_dep_utilities > 0){
+                $payment = new Payment();
+                $payment->amt = $request->sec_dep_utilities;
+                $payment->desc = 'sec_dep_utilities';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $transaction->trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+
+            if($request->transient > 0){
+                $payment = new Payment();
+                $payment->amt = $request->transient;
+                $payment->desc = 'transient';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $transaction->trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+    
+            $room = DB::table('rooms')
+            ->where('room_id', $request->room_id)
+            ->update(['room_status' => 'reserved']);
+            
+            $room = DB::table('rooms')
+            ->where('room_id', $request->room_id)
+            ->update(['remarks' => 'This room is reserved. Full payment has not yet been settled.']);
+
+            session()->forget('sess_trans_date');
+            session()->forget('sess_move_in_date');
+            session()->forget('sess_move_out_date'); 
+            session()->forget('sess_term');
+            session()->forget('sess_adding_room');
+            session()->forget('sess_sec_dep_rent');
+            session()->forget('sess_sec_dep_utilities');
+            session()->forget('sess_advance_rent');
+            session()->forget('sess_transient');
+
+            return redirect('/residents/'.session('resident_id'))->with('success', 'Transaction has been added!');
         }else{
-            return redirect('/payments/create')->with('success');     
+            return redirect('/payments/create')->with('success');  
         }
     
 
@@ -172,9 +247,26 @@ class TransactionController extends Controller
      * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transaction $transaction)
+    public function edit($trans_id)
     {
-        //
+        $transaction = Transaction::findOrFail($trans_id);
+
+        $resident = DB::table('transactions')
+        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+        ->where('transactions.trans_id', $trans_id)
+        ->where('transactions.trans_resident_id', session('resident_id'))
+        ->where('transactions.trans_room_id', session('sess_room_id'))
+        ->get();
+
+        $payment = DB::table('transactions')
+        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+        ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+        ->where('transactions.trans_id', $trans_id)
+        ->get();
+
+        return view('resident-moveout', compact('transaction', 'resident', 'payment'));
     }
 
     /**
@@ -186,18 +278,34 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $trans_id)
     {
-        $move_out = $request->move_out_reason;
+        if($request->trans_status == 'inactive'){
+                DB::table('transactions')
+                ->where('transactions.trans_resident_id', session('resident_id'))
+                ->where('transactions.trans_room_id', session('sess_room_id'))
+                ->update([
+                            'trans_status' => 'inactive',
+                            'move_out_reason' => $request->move_out_reason,
+                            'actual_move_out_date' => $request->actual_move_out_date                    
+                        ]);
 
-        if($move_out == null){
-            $data = $request->all();
-            Transaction::findOrFail($trans_id)->update($data);
+            DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->where('trans_room_id', session('sess_room_id'))
+                    ->update([
+                            'room_status' => 'vacant',
+                            'remarks' => 'THE ROOM IS SET FOR GENERAL CLEANING'
+                        ]);
+
+            return redirect('transactions/'.$trans_id.'/edit')->with('success','Resident has moved out!');
         }
         else{
-            return 'hes moving out';
+            $data = $request->all();
+            Transaction::findOrFail($trans_id)->update($data);       
+            
+            return redirect('transactions/'.$trans_id)->with('success','Utility readings has been updated!');
         }
 
-
-        return redirect('transactions/'.$trans_id)->with('success','Utility readings has been updated!');
+      
 
     }
 

@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-2">
-            <a class="" href="/rooms/">BACK</a>
+            <a class="" href="{{ URL::previous() }}">BACK</a>
         </div>
         <div class="col-md-2">
             <a class="" href="">EDIT</a>
