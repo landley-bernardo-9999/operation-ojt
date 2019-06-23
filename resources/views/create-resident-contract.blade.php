@@ -33,24 +33,19 @@
              </div>
              
              <div class="row">
-                 <div class="col-md-4">
+                 <div class="col-md-3">
                      <label for="">From</label>
-                     <input type="date" class="form-control" value="{{ session('sess_move_in_date') }}" name="move_in_date" required>
+                     <input type="date" class="form-control" value="{{ session('sess_move_in_date') }}" name="move_in_date" id="move_in_date" required>
                  </div>
  
-                <div class="col-md-4">
+                <div class="col-md-3">
                      <label for="">To</label>
-                     <input type="date" class="form-control" value="{{ session('sess_move_out_date') }}" name="move_out_date" required>
+                     <input type="date" class="form-control" value="" name="move_out_date" id="move_out_date" onkeyup="select_term()" required>
                  </div>
  
-                 <div class="col-md-4">
+                 <div class="col-md-2">
                      <label for="">Term</label>
-                     <select name="term" id="" class="form-control" required>
-                         <option value="">Select Term</option>
-                         <option value="long_term">Long Term</option>
-                         <option value="short_term">Short Term</option>
-                         <option value="transient">Transient</option>
-                     </select>
+                    <input type="text" name="term" id="term" readonly class="form-control">
                  </div>
              </div>
             
@@ -65,3 +60,31 @@
 </div>
 <br>
 @endsection
+
+<script>
+ function select_term(){    
+        var move_in_date = document.getElementById('move_in_date').value;
+        var move_out_date = document.getElementById('move_out_date').value;
+
+        var d1 = new Date(move_in_date);
+        var d2 = new Date(move_out_date);
+        var timeDiff = d2.getTime() - d1.getTime();
+        var DaysDiff = timeDiff / (1000 * 3600 * 24);
+
+        if(DaysDiff => 180 && DaysDiff > 29){
+            document.getElementById('term').value =  'long_term';
+        }
+
+        if(DaysDiff < 180 && DaysDiff > 29){
+            document.getElementById('term').value =  'short_term';
+        }
+
+        if(DaysDiff <= 29 ){
+            document.getElementById('term').value =  'transient' ;
+        }
+     
+
+
+
+    }
+</script>

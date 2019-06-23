@@ -13,7 +13,7 @@
         </ul>
     </div>
     <div class="row">
-        <table class="table table-borderless">
+        <table class="table">
         <tr>
             <h3>Contract</h3>
         </tr>

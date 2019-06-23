@@ -11,7 +11,11 @@
                 <a class="nav-link" href="#">Edit</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/residents/create/">Add Resident</a>
+                @if($room->room_status != 'vacant')
+                    <a title="You can't add a resident. The unit is already occupied." class="nav-link" href="#" aria-disabled="true">Add Resident</a>
+                @else
+                    <a class="nav-link" href="/residents/create/">Add Resident</a>
+                @endif
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/owners/create/">Add Owner</a>
@@ -21,7 +25,7 @@
                 <form method="POST" action="/rooms/{{ $room->room_id }}">
                     @method('delete')
                     {{ csrf_field() }}
-                    <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger">Delete</button>
+                    <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger nav-link">Delete</button>
                 </form>
             </li>
         </ul>
@@ -130,3 +134,4 @@
     
 </div>
 @endsection
+

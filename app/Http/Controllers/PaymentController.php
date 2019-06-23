@@ -50,6 +50,9 @@ class PaymentController extends Controller
             $resident->last_name = session('sess_last_name');
             $resident->type_of_resident = 'primary_resident';
             $resident->birthdate = session('sess_birthdate');
+            $resident->nationality = session('sess_nationality');
+            $resident->civil_status = session('sess_civil_status');
+            $resident->id_info = session('sess_id_info');
             $resident->email_address = session('sess_email_address');
             $resident->telephone_number = session('sess_telephone_number');
             $resident->mobile_number = session('sess_mobile_number');
@@ -167,7 +170,7 @@ class PaymentController extends Controller
             session()->forget('sess_sec_dep_utilities');
             session()->forget('sess_transient');
 
-        return redirect('/rooms/'.session('sess_room_id'))->with('success', 'Resident has moved in!');
+        return redirect('/rooms/'.session('sess_room_id'))->with('success', 'Resident has added to the unit.');
     }
 
     /**

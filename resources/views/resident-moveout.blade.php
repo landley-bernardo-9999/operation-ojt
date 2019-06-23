@@ -16,7 +16,7 @@
          <tr>
             <h3>Resident Move-out Form</h3>
         </tr>
-        <table class="table table-borderless">
+        <table class="table">
              @foreach ($resident as $resident)
         <tr>
             <td>Resident Name:</td>
