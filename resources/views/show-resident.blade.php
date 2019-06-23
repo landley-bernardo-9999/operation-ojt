@@ -3,43 +3,42 @@
 @section('content')
 <div class="container">
     <div class="row">
-         <div class="col-md-1">
-            <a class="" href="/rooms/{{ session('sess_room_id') }}">BACK</a>
-        </div>
-        <div class="col-md-1">
-             <p><a class="" href="">EDIT</a></p>
-        </div>
-        <div class="col-md-1">
-             <p><a class="" href="/co-tenant/create">ADD CO-TENANT</a></p>
-        </div>
-        <div class="col-md-1">
-            <p><a class="" href="/room/add">ADD ROOM</a></p>
-        </div>
-        <div class="col-md-1">
-            <p><a class="" href="/room/add">TRANSFER RESIDENT</a></p>
-       </div>
-         <div class="col-md-1">
-             <p><a class="" href="">ADD REPAIR</a></p>
-        </div>
-         <div class="col-md-1">
-             <p><a class="" href="">ADD VIOLATION</a></p>
-        </div>
-         <div class="col-md-1">
-             <p><a class="" href="">KEY BORROW</a></p>
-        </div>
-
-       
-        <div class="col-md-1">
-            <form method="POST" action="/residents/{{ $resident->resident_id }}">
-                @method('delete')
-                {{ csrf_field() }}
-                <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="float-right">DELETE</button>
-            </form> 
-        </div>
-        <div class="col-md-1">
-             <p><a class="" href="">HOUSE RULES</a></p>
-        </div>
-      
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="/rooms/{{ session('sess_room_id') }}">Back</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Edit</a>
+            </li>
+            <li class="nav-item">
+                <a href="/co-tenant/create">Add Co-Tenant</a>
+            </li>
+            <li class="nav-item">
+                <a href="/room/add">Add Room</a>
+            </li>
+            <li class="nav-item">
+                <a href="/room/add">Transfer Resident</a>
+            </li>
+            <li class="nav-item">
+                <a href="#">Add Repair</a>
+            </li>
+            <li class="nav-item">
+                <a href="#">Add Violation</a>
+            </li>
+            <li class="nav-item">
+                <a href="#">Borrow Key</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">House Rules</a>
+            </li>
+            <li class="nav-item">
+                <form method="POST" action="/residents/{{ $resident->resident_id }}">
+                    @method('delete')
+                    {{ csrf_field() }}
+                    <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger">Delete</button>
+                </form>
+            </li>
+        </ul>
     </div>
     <div class="row">
        <div class="col-md-9">

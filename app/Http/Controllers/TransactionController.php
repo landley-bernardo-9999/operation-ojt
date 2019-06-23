@@ -259,14 +259,26 @@ class TransactionController extends Controller
         ->where('transactions.trans_room_id', session('sess_room_id'))
         ->get();
 
-        $payment = DB::table('transactions')
+        $payment_move_ins = DB::table('transactions')
         ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
         ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
         ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
         ->where('transactions.trans_id', $trans_id)
+        ->where('payments.desc','sec_dep_utilities')
+        ->orWhere('payments.desc', 'sec_dep_rent')
         ->get();
 
-        return view('resident-moveout', compact('transaction', 'resident', 'payment'));
+        $payment_move_outs = DB::table('transactions')
+        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+        ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+        ->where('trans_id', $trans_id)
+        ->where ('payments.desc','!=', 'sec_dep_utilities')
+        ->where('payments.desc','!=' ,'sec_dep_rent')
+        ->where('payments.desc', '!=','advance_rent')
+        ->get();
+
+        return view('resident-moveout', compact('transaction', 'resident', 'payment_move_ins', 'payment_move_outs'));
     }
 
     /**
@@ -278,8 +290,8 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $trans_id)
     {
-        if($request->trans_status == 'inactive'){
-                DB::table('transactions')
+        if($request->trans_status == 'inactive'){ 
+            DB::table('transactions')
                 ->where('transactions.trans_resident_id', session('resident_id'))
                 ->where('transactions.trans_room_id', session('sess_room_id'))
                 ->update([
@@ -296,13 +308,93 @@ class TransactionController extends Controller
                             'remarks' => 'THE ROOM IS SET FOR GENERAL CLEANING'
                         ]);
 
+            if($request->total_comforter > 0){
+                $payment = new Payment();
+                $payment->amt = $request->total_comforter;
+                $payment->desc = $request->qty_comforter.'_curtain';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+
+            if($request->total_bedlining > 0){
+                $payment = new Payment();
+                $payment->amt = $request->total_bedlining;
+                $payment->desc = $request->qty_bedlining.'_bedlining';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+   
+            if($request->total_pillow_case > 0){
+                $payment = new Payment();
+                $payment->amt = $request->total_pillow_case;
+                $payment->desc = $request->qty_pillow_case.'_pillow_case';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+
+            if($request->total_pillow > 0){
+                $payment = new Payment();
+                $payment->amt = $request->total_pillow;
+                $payment->desc = $request->qty_pillow.'_pillow';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+
+            if($request->total_rug > 0){
+                $payment = new Payment();
+                $payment->amt = $request->total_rug;
+                $payment->desc = $request->qty_rug.'_rug';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+
+            if($request->total_curtain > 0){
+                $payment = new Payment();
+                $payment->amt = $request->total_curtain;
+                $payment->desc = $request->qty_curtain.'_curtain';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+
+            if($request->total_towel > 0){
+                $payment = new Payment();
+                $payment->amt = $request->total_towel;
+                $payment->desc = $request->qty_towel.'_pillow_case';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+
+            if($request->total_gc > 0){
+                $payment = new Payment();
+                $payment->amt = $request->total_gc;
+                $payment->desc = 'general_cleaning';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
+
             return redirect('transactions/'.$trans_id.'/edit')->with('success','Resident has moved out!');
         }
         else{
             $data = $request->all();
             Transaction::findOrFail($trans_id)->update($data);       
             
-            return redirect('transactions/'.$trans_id)->with('success','Utility readings has been updated!');
+            return redirect('transactions/'.$trans_id)->with('success','Utility readings has been added!');
         }
 
       

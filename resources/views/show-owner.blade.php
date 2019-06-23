@@ -3,29 +3,25 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-2">
-            <a class="" href="{{ URL::previous() }}">BACK</a>
-        </div>
-
-        @if(auth()->user()->privilege == 'leasingOfficer')
-        <div class="col-md-2">
-            <a class="" href="">EDIT</a>
-        </div>
-
-     
-        <div class="col-md-2">
-            <a class="" href="/owner/room/add">ADD ROOM</a>
-        </div>
-        
-
-        <div class="col-md-2 float-right">
-            <form method="POST" action="/owners/{{ $owner->owner_id }}">
-                @method('delete')
-                {{ csrf_field() }}
-                <button onclick="return confirm('Are you sure you want to perform this operation? ');" >DELETE</button>
-            </form> 
-        </div>
-        @endif
+         <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ URL::previous() }}">Back</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Edit</a>
+            </li>
+            <li class="nav-item">
+                <a href="/owner/room/add">Add Room</a>
+            </li>
+            <li class="nav-item">
+                <form method="POST" action="/owners/{{ $owner->owner_id }}">
+                    @method('delete')
+                    {{ csrf_field() }}
+                    <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger" >Delete</button>
+                </form> 
+            </li>
+        </ul>
+      
     </div>
     <div class="row">
        <div class="col-md-9">

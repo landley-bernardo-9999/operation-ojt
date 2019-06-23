@@ -3,12 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-2">
-            <a class="" href="/residents/{{ session('resident_id') }}">BACK</a>
-        </div>
-        <div class="col-md-2">
-            <a class="float-right" href="/transactions/{{ $transaction->trans_id }}/edit">MOVE OUT</a>
-        </div>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="/residents/{{ session('resident_id') }}">Back</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/transactions/{{ $transaction->trans_id }}/edit">Move Out</a>
+            </li>
+        </ul>
     </div>
     <div class="row">
         <table class="table table-borderless">
@@ -47,21 +49,41 @@
             </tr>
             <tr>
                 <th><label for="">Water</label></th>
+                <th></th>
                 <th><label for="">Electric</label></th>
+                <th></th>
             </tr>
-            
+            @if($transaction->trans_status == 'active')
             <tr>
-                <td>Initial <input type="number" class="form-control" style="width:30%" name="initial_water_reading" value="{{ $transaction->initial_water_reading }}"> </td>
-                <td>Initial <input type="number" class="form-control" style="width:30%" name="initial_electric_reading" value="{{ $transaction->initial_electric_reading }}"></td>
+                <td>Initial</td>
+                <td><input type="number" class="form-control" style="width:30%" name="initial_water_reading" value="{{ $transaction->initial_water_reading }}"></td>
+                <td>Initial</td>
+                <td><input type="number" class="form-control" style="width:30%" name="initial_electric_reading" value="{{ $transaction->initial_electric_reading }}"></td>
             </tr>
             <tr>
-                <td>Final  <input type="number" class="form-control" style="width:30%" name="final_water_reading" value="{{ $transaction->final_water_reading }}"></td>
-                <td>Final  <input type="number" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_water_reading }}"></td>
+                <td>Final </td>
+                <td><input type="number" class="form-control" style="width:30%" name="final_water_reading" value="{{ $transaction->final_water_reading }}"></td>
+                <td>Final  </td>
+                <td><input type="number" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_water_reading }}"></td>
             </tr>
             <tr>
                 <th ><button type="submit">SAVE</button></th>
                 <td></td>
             </tr>
+            @else
+             <tr>
+                <td>Initial</td>
+                <td>{{ $transaction->initial_water_reading }}</td>
+                <td>Initial</td>
+                <td>{{ $transaction->initial_electric_reading }}</td>
+            </tr>
+            <tr>
+                <td>Final </td>
+                <td>{{ $transaction->final_water_reading }}</td>
+                <td>Final  </td>
+                <td>{{ $transaction->final_water_reading }}</td>
+            </tr>
+            @endif
 
         </table>
         </form>

@@ -27,7 +27,7 @@
       
                 <hr>
             <div class="card-footer">
-                <a class="float-left btn btn-primary" href="/residents/{{session('resident_id')}}"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>
+                <a class="float-left btn btn-primary" href="/owners/{{session('owner_id')}}"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>
                 <button type="submit" class="float-right btn btn-primary"><i class="fas fa-arrow-circle-right"></i>&nbspSAVE</button>
             <br>
         </div>

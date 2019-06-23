@@ -3,25 +3,28 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-2">
-            <a class="" href="{{ URL::previous() }}">BACK</a>
-        </div>
-        <div class="col-md-2">
-            <a class="" href="">EDIT</a>
-        </div>
-        <div class="col-md-2">
-            <a class="float-right" href="/residents/create/">ADD RESIDENT</a>
-        </div>
-        <div class="col-md-2">
-            <a class="float-right" href="/owners/create/">ADD OWNER</a>
-        </div>
-        <div class="col-md-2">
-            <form method="POST" action="/rooms/{{ $room->room_id }}">
-                @method('delete')
-                {{ csrf_field() }}
-            <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="">DELETE</button>
-        </form> 
-        </div>
+       <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ URL::previous() }}">Back</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Edit</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/residents/create/">Add Resident</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/owners/create/">Add Owner</a>
+            </li>
+            
+            <li class="nav-item">
+                <form method="POST" action="/rooms/{{ $room->room_id }}">
+                    @method('delete')
+                    {{ csrf_field() }}
+                    <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger">Delete</button>
+                </form>
+            </li>
+        </ul>
     </div>
     <div class="row">
         <table class="table table-borderless">
