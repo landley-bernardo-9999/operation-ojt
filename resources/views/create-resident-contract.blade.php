@@ -4,55 +4,87 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h3>Leasing Agreement</h3>2 of 3
+            <h3>Leasing Agreement</h3>
         </div>
         <hr>
         <div class="card-body">
          <form method="POST" action="/transactions">
             {{ csrf_field() }}
             <div class="row">
-                <div class="float-right col-md-3">
+                <div class="float-right col-md-2">
                      <label for="">Date of transaction</label>
                     <input type="date" name="trans_date" id="" value="{{date('Y-m-d')}}" class="form-control">   
                 </div>
              </div>
              <br>
              <div class="row">
-                  <div class="float-right col-md-3">
-                     <p>Client: <b>{{session('sess_first_name')}} {{session('sess_middle_name')}} {{session('sess_last_name')}}</b></p>    
-                 </div>
-             </div>
- 
-             <div class="row">
-                  <div class="float-right col-md-3">
-                     <p>Unit No: <b>{{session('sess_room_building')}} {{session('sess_room_no')}}</b></p>    
-                 </div>
-                 <div class="float-right col-md-3">
-                     <p>Beds: <b>{{session('sess_no_of_beds')}}</b></p>    
-                 </div>
+                <div class="col-md-2">
+                    <p>Client: <b>{{session('sess_first_name')}} {{session('sess_middle_name')}} {{session('sess_last_name')}}</b></p>    
+                </div>
+                <div class="col-md-2">
+                    <p>Unit No: <b>{{session('sess_room_no')}}</b></p>    
+                </div>
+                <div class="col-md-2">
+                    <p>Building: <b>{{session('sess_room_building')}}</b></p>   
+                    <input type="hidden" name="building" id="building" value="{{ session('sess_room_building') }}" readonly class="form-control">  
+                </div>
+                <div class="col-md-2">
+                    <p>Beds: <b>{{session('sess_no_of_beds')}}</b></p>    
+                </div>
              </div>
              
+             <label for="">Contract Period</label>
              <div class="row">
-                 <div class="col-md-3">
-                     <label for="">From</label>
-                     <input type="date" class="form-control" value="{{ session('sess_move_in_date') }}" name="move_in_date" id="move_in_date" required>
+                 <div class="col-md-2">
+                     From: <input type="date" class="form-control" value="{{date('Y-m-d')}}" name="move_in_date" id="move_in_date" required>
                  </div>
  
-                <div class="col-md-3">
-                     <label for="">To</label>
-                     <input type="date" class="form-control" value="" name="move_out_date" id="move_out_date" onkeyup="select_term()" required>
+                <div class="col-md-2">
+                     To: <input type="date" class="form-control" value="" name="move_out_date" id="move_out_date" onkeyup="select_term()" required>
                  </div>
  
                  <div class="col-md-2">
-                     <label for="">Term</label>
-                    <input type="text" name="term" id="term" readonly class="form-control">
+                    Term: <input type="text" name="term" id="term" readonly class="form-control">
                  </div>
+
+                 <input type="hidden" name="yes" value="adding_room">
+                 
              </div>
+             
+             <br>
+
+            <label for="">Payment</label>
+            <div class="row">
+              <div class="col-md-12">
+                  <table class="table">
+                  <tr>
+                      <td>Security Deposit for Rent:</td>
+                      <td><input type="number" class="form-control" style="width:30%" id="sec_dep_rent" name="sec_dep_rent" value="0.00" > </td>
+                  </tr>
+                  <tr>
+                      <td>Security Deposit for Utilities:</td>
+                      <td><input type="number" class="form-control" style="width:30%" id="sec_dep_utilities" name="sec_dep_utilities" value="0.00" ></td>
+                  </tr>
+                  <tr>
+                      <td>Advance Rent:</td>
+                      <td><input type="number" class="form-control" style="width:30%" id="advance_rent" name="advance_rent" value="0.00" ></td>
+                  </tr>
+                  <tr>
+                      <td>Transient:</td>
+                      <td><input type="number" class="form-control" style="width:30%" id="transient" name="transient" value="0.00" ></td>
+                  </tr>
+                  <tr>
+                      <th>Total</th>
+                      <td><input type="number" class="form-control" style="width:30%" id="total_payment" name="total_payment" value="0.00" readonly></td>
+                  </tr>
+              </table>
+              </div>
+            </div>
             
                 <hr>
                 <div class="card-footer">
-                    <a class="float-left btn btn-primary" href="/residents/create"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>
-                    <button type="submit" class="float-right btn btn-primary"><i class="fas fa-arrow-circle-right"></i>&nbspNEXT</button>
+                    <a class="btn-default" href="/residents/create"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>
+                    <button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="fas fa-arrow-circle-right"></i>&nbspSAVE</button>
                 <br>
                 </div>
         </form>
@@ -65,6 +97,7 @@
  function select_term(){    
         var move_in_date = document.getElementById('move_in_date').value;
         var move_out_date = document.getElementById('move_out_date').value;
+        var building = document.getElementById('building').value;
 
         var d1 = new Date(move_in_date);
         var d2 = new Date(move_out_date);
@@ -72,19 +105,124 @@
         var DaysDiff = timeDiff / (1000 * 3600 * 24);
 
         if(DaysDiff => 180 && DaysDiff > 29){
-            document.getElementById('term').value =  'long_term';
+            document.getElementById('term').value =   'long_term' ;
         }
 
         if(DaysDiff < 180 && DaysDiff > 29){
-            document.getElementById('term').value =  'short_term';
+            document.getElementById('term').value =  'short_term' ;
         }
 
         if(DaysDiff <= 29 ){
-            document.getElementById('term').value =  'transient' ;
+            document.getElementById('term').value = 'transient' ;
         }
+
+        //computation for the payment in harvard
+        if( building === 'harvard'){
+            if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 6800*2;
+                var advance_rent = document.getElementById('advance_rent').value = 6800;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else if( document.getElementById('term').value === 'short_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 7800;
+                var advance_rent = document.getElementById('advance_rent').value = 7800;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else{
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 0;
+                var advance_rent = document.getElementById('advance_rent').value = 0;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 1200 * DaysDiff;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities + transient;
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+
+        }
+
+        //computation of payment for princeton.
+        if( building === 'princeton'){
+            if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 7500*2;
+                var advance_rent = document.getElementById('advance_rent').value = 7500;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else if( document.getElementById('term').value === 'short_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 8500;
+                var advance_rent = document.getElementById('advance_rent').value = 8500;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else{
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 0;
+                var advance_rent = document.getElementById('advance_rent').value = 0;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 1200 * DaysDiff;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities + transient;
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+
+        }
+
+        //computation of payment fo wharton.
+        if( building === 'wharton'){
+            if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 11000*2;
+                var advance_rent = document.getElementById('advance_rent').value = 11000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else if( document.getElementById('term').value === 'short_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 12000;
+                var advance_rent = document.getElementById('advance_rent').value = 12000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else{
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 0;
+                var advance_rent = document.getElementById('advance_rent').value = 0;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 2000 * DaysDiff;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities + transient;
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+
+        }
+
+
      
-
-
-
     }
+
 </script>

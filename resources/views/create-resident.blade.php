@@ -4,7 +4,7 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h3>Client Information Sheet</h3>1 of 3
+            <h3>Client Information Sheet</h3>
         </div>
         <hr>
         <div class="card-body">
@@ -147,8 +147,8 @@
                 </div>
                 <hr>
                 <div class="card-footer">
-                    <a class="float-left btn btn-primary" href="/rooms/{{session('sess_room_id')}}"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>
-                    <button type="submit" class="float-right btn btn-primary"><i class="fas fa-arrow-circle-right"></i>&nbspNEXT</button>
+                    <a class="btn-default" href="/rooms/{{session('sess_room_id')}}"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>
+                    <button type="submit" class="btn-default"><i class="fas fa-arrow-circle-right"></i>&nbspNEXT</button>
                 <br>
                 </div>
         </form>

@@ -23,12 +23,28 @@ class RoomController extends Controller
             if(auth()->user()->user_id === null || auth()->user()->privilege === 'leasingOfficer' ){
 
                 $room = DB::table('rooms')
-                ->orderBy('project', 'asc')
-                ->orderBy('building', 'asc')
-                ->orderBy('room_no', 'asc')
+                ->count();
+
+                $harvard = DB::table('rooms')
+                ->where('building', 'harvard')
+                ->orderBy('floor_number', 'asc')
+                ->get();
+
+                $princeton = DB::table('rooms')
+                ->where('building', 'princeton')
+                ->orderBy('floor_number', 'asc')
+                ->get();
+
+                $wharton = DB::table('rooms')
+                ->where('building', 'wharton')
+                ->orderBy('floor_number', 'asc')
                 ->get();
     
-                return view('rooms', compact('room'));
+                $cy = DB::table('rooms')
+                ->where('project', 'the_courtyards')
+                ->orderBy('floor_number', 'asc')
+                ->get();
+                return view('rooms', compact('room', 'harvard', 'princeton', 'wharton', 'cy'));
             }
             else{
                 
@@ -85,7 +101,7 @@ class RoomController extends Controller
         $room->no_of_beds = $no_of_beds;
         $room->save(); 
 
-        return redirect('rooms/'.$room->room_id)->with('success','Room is successfully created!');
+        return redirect('/rooms/create/')->with('success','Room is successfully created!');
 
     }
 

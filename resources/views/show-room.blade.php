@@ -78,6 +78,9 @@
                 <h3>Owners</h3>
             </tr>
             <?php $row_no_owners = 1; ?>
+            @if(!$owner->count() > 0)
+            <p>No Owners Found.</p>
+            @else
             <tr>
                 <th>No.</th>
                 <th>Name</th>
@@ -93,6 +96,8 @@
                 <td><a href="/owners/{{$owner->owner_id}}">MORE INFO</a></td>
             </tr>
             @endforeach
+            @endif
+
         </table>
     </div>
 
@@ -102,7 +107,11 @@
                 <h3>Residents</h3>
             </tr>
             <?php $row_no = 1; ?>
-            <tr>
+            @if(!$resident->count() > 0)
+            <p>No Residents Found.</p>
+                
+            @else
+             <tr>
                 <th>No.</th>
                 <th>Name</th>
                 <th>Status</th>
@@ -117,10 +126,8 @@
                 <td>{{Carbon\Carbon::parse(  $resident->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $resident->move_out_date )->formatLocalized('%b %d %Y')}}</td>
                 <td><a href="/residents/{{$resident->resident_id}}">MORE INFO</a></td>
             </tr>
-            <tr>
-               
-            </tr>
             @endforeach
+            @endif
         </table>
     </div>
 

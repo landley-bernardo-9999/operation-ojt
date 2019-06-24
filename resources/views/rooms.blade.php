@@ -6,7 +6,7 @@
         <a href="/rooms/create">ADD ROOM</a>     
     </div>
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="col-md-2">
             </div>
             <div class="col-md-2">
@@ -24,42 +24,155 @@
                     Reserved
             </div>
             <div class="col-md-2">
-                <i class="fas fa-home fa-1x btn btn-primary"></i>
+                <i class="fas fa-home fa-1x btn btn-default"></i>
                     Rectification 
             </div>
         </div> 
     </div> 
     <br><br>
-    <div class="row">
-        <div class="container">
+    <div class="container">
+        <p><b>{{ $room }}</b> rooms are enrolled in leasing.</p>
+        <div class="row">
             <table class="table table-responsive">  
-                @foreach($room as $row)
-                    @if($row->room_status == 'occupied')
-                        <a href="/rooms/{{$row->room_id}}" class="btn btn-success" role="button">
+                <h3>Harvard</h3>
+                @foreach($harvard as $harvard)
+                    @if($harvard->room_status == 'occupied')
+                        <a href="/rooms/{{$harvard->room_id}}" class="btn btn-success" role="button">
                             <i class="fas fa-home fa-2x"></i>
-                            <div style="display: flex; width: 30px; justify-content: space-around;>
-                            <p style="font-size: 11px">{{$row->room_no}}</p>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$harvard->room_no}}</p>
                             </div>
                         </a>          
-                    @elseif($row->room_status == 'vacant')
-                        <a href="/rooms/{{$row->room_id}}" class="btn btn-danger" role="button">
+                    @elseif($harvard->room_status == 'vacant')
+                        <a href="/rooms/{{$harvard->room_id}}" class="btn btn-danger" role="button">
                             <i class="fas fa-home fa-2x"></i>
                             <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
-                            <p style="font-size: 11px">{{$row->room_no}}</p>
+                            <p style="font-size: 11px">{{$harvard->room_no}}</p>
                             </div>
                         </a>
-                    @elseif($row->room_status == 'reserved')
-                        <a href="/rooms/{{$row->room_id}}" class="btn btn-warning" role="button">
+                    @elseif($harvard->room_status == 'reserved')
+                        <a href="/rooms/{{$harvard->room_id}}" class="btn btn-warning" role="button">
                             <i class="fas fa-home fa-2x"></i>
                             <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
-                            <p style="font-size: 11px">{{$row->room_no}}</p>
+                            <p style="font-size: 11px">{{$harvard->room_no}}</p>
                             </div>
                         </a>
-                    @elseif($row->room_status == 'rectification')
-                        <a href="/rooms/{{$row->room_id}}" class="btn btn-primary" role="button">
+                    @elseif($harvard->room_status == 'rectification')
+                        <a href="/rooms/{{$harvard->room_id}}" class="btn btn-primary" role="button">
                             <i class="fas fa-home fa-2x"></i>
                             <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
-                            <p style="font-size: 11px">{{$row->room_no}}</p>
+                            <p style="font-size: 11px">{{$harvard->room_no}}</p>
+                            </div>
+                        </a>
+                    @endif
+                @endforeach
+            </table>
+        </div>
+
+         <div class="row">
+            <table class="table table-responsive">  
+                <h3>Princeton</h3>
+                @foreach($princeton as $princeton)
+                    @if($princeton->room_status == 'occupied')
+                        <a href="/rooms/{{$princeton->room_id}}" class="btn btn-success" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$princeton->room_no}}</p>
+                            </div>
+                        </a>          
+                    @elseif($princeton->room_status == 'vacant')
+                        <a href="/rooms/{{$princeton->room_id}}" class="btn btn-danger" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$princeton->room_no}}</p>
+                            </div>
+                        </a>
+                    @elseif($princeton->room_status == 'reserved')
+                        <a href="/rooms/{{$princeton->room_id}}" class="btn btn-warning" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$princeton->room_no}}</p>
+                            </div>
+                        </a>
+                    @elseif($princeton->room_status == 'rectification')
+                        <a href="/rooms/{{$princeton->room_id}}" class="btn btn-primary" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$princeton->room_no}}</p>
+                            </div>
+                        </a>
+                    @endif
+                @endforeach
+            </table>
+        </div>
+
+         <div class="row">
+            <table class="table table-responsive">  
+                <h3>Wharton</h3>
+                @foreach($wharton as $wharton)
+                    @if($wharton->room_status == 'occupied')
+                        <a href="/rooms/{{$wharton->room_id}}" class="btn btn-success" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$wharton->room_no}}</p>
+                            </div>
+                        </a>    
+                    @elseif($wharton->room_status == 'vacant')
+                        <a href="/rooms/{{$wharton->room_id}}" class="btn btn-danger" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$wharton->room_no}}</p>
+                            </div>
+                        </a>
+                    @elseif($wharton->room_status == 'reserved')
+                        <a href="/rooms/{{$wharton->room_id}}" class="btn btn-warning" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$wharton->room_no}}</p>
+                            </div>
+                        </a>
+                    @elseif($wharton->room_status == 'rectification')
+                        <a href="/rooms/{{$wharton->room_id}}" class="btn btn-primary" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$wharton->room_no}}</p>
+                            </div>
+                        </a>
+                    @endif
+                @endforeach
+            </table>
+        </div>
+
+         <div class="row">
+            <table class="table table-responsive">  
+                <h3>Courtyards</h2>
+                @foreach($cy as $cy)
+                    @if($cy->room_status == 'occupied')
+                        <a title= "{{ $cy->building }}" href="/rooms/{{$cy->room_id}}" class="btn btn-success" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$cy->room_no}}</p>
+                            </div>
+                        </a>    
+                    @elseif($cy->room_status == 'vacant')
+                        <a title= "{{ $cy->building }}" href="/rooms/{{$cy->room_id}}" class="btn btn-danger" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$cy->room_no}}</p>
+                            </div>
+                        </a>
+                    @elseif($cy->room_status == 'reserved')
+                        <a title= "{{ $cy->building }}" href="/rooms/{{$cy->room_id}}" class="btn btn-warning" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$cy->room_no}}</p>
+                            </div>
+                        </a>
+                    @elseif($cy->room_status == 'rectification')
+                        <a title= "{{ $cy->building }}" href="/rooms/{{$cy->room_id}}" class="btn btn-primary" role="button">
+                            <i class="fas fa-home fa-2x"></i>
+                            <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$cy->room_no}}</p>
                             </div>
                         </a>
                     @endif

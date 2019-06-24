@@ -39,7 +39,10 @@ Route::get('/resident/moveout', function(){
 
 Route::get('/room/add', function(){
     
-    $rooms = DB::table('rooms')->get();
+    $rooms = DB::table('contracts')
+    ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
+    ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+    ->orderBy('building', 'asc')->get();
 
     return view('resident-add-room', compact('rooms'));
 });

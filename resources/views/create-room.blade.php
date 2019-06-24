@@ -9,18 +9,18 @@
             <form method="POST" action="/rooms">
                 {{ csrf_field() }}
                 <div class="form-group row">
-                    <label for="room_no" class="col-md-4 col-form-label text-md-right">Room No:</label>
-                    <div class="col-md-4">
+                    <label for="room_no" class="col-md-4">Room No:</label>
+                    <div class="col-md-3">
                         <input name="room_no" type="text" class="form-control" value="" required>
                     </div>     
                 </div>
 
                 <div class="form-group row">
                     <label for="building" class="col-md-4 col-form-label text-md-right">Building:</label>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <select class="form-control" name="building" required>
                             <option value="">Select Building</option>
-                            <option value="harvard">Harvard</option>
+                            <option value="harvard" selected>Harvard</option>
                             <option value="princeton">Princeton</option>
                             <option value="wharton">Wharton</option>
                             <option value="loft">Loft</option>
@@ -33,7 +33,7 @@
 
                  <div class="form-group row">
                     <label for="floor_number" class="col-md-4 col-form-label text-md-right">Floor Number:</label>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <select class="form-control" name="floor_number" required>
                             <option value="">Select Floor Number</option>
                             <option value="1">1</option>
@@ -50,10 +50,10 @@
 
                  <div class="form-group row">
                     <label for="project" class="col-md-4 col-form-label text-md-right">Project:</label>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <select class="form-control" name="project" required>
                             <option value="">Select Project</option>
-                            <option value="north_cambridge">North Cambridge</option>
+                            <option value="north_cambridge" selected>North Cambridge</option>
                             <option value="the_courtyards">The Courtyards</option>
                         </select>
                     </div>     
@@ -61,29 +61,29 @@
 
                 <div class="form-group row">
                     <label for="short_term_rent" class="col-md-4 col-form-label text-md-right">Short-term Rent:</label>
-                    <div class="col-md-4">
-                        <input name="short_term_rent" type="number" min="1" class="form-control" value="" required>
+                    <div class="col-md-3">
+                        <input name="short_term_rent" type="number" min="1" class="form-control" value="7800" required>
                     </div>     
                 </div>
 
                 <div class="form-group row">
                     <label for="long_term_rent" class="col-md-4 col-form-label text-md-right">Long-term Rent:</label>
-                    <div class="col-md-4">
-                        <input name="long_term_rent" type="number" min="1" class="form-control" value="" required>
+                    <div class="col-md-3">
+                        <input name="long_term_rent" type="number" min="1" class="form-control" value="6800" required>
                     </div>     
                 </div>
 
 
                 <div class="form-group row">
                     <label for="size" class="col-md-4 col-form-label text-md-right">Size:</label>
-                    <div class="col-md-4">
-                        <input name="size" type="number" min="1" class="form-control" value="" required>
+                    <div class="col-md-3">
+                        <input name="size" type="number" min="1" class="form-control" value="15" required>
                     </div>     
                 </div>
 
                 <div class="form-group row">
                     <label for="no_of_beds" class="col-md-4 col-form-label text-md-right">No Of Beds:</label>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <select class="form-control" name="no_of_beds" required>
                             <option value="">Select Bed</option>
                             <option value="1SB">1SB</option>

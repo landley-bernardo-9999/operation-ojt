@@ -27,6 +27,10 @@
             <td>{{ $resident->first_name }} {{ $resident->last_name }}</td>
         </tr>
         <tr>
+            <td>Unit No:</td>
+            <td>{{ $resident->building }} {{ $resident->room_no }}</td>
+        </tr>
+        <tr>
             <td>Owner Name:</td>
             <td>{{ $resident->owner_first_name }} {{ $resident->owner_last_name }}</td>
         </tr>

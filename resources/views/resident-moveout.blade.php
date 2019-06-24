@@ -91,29 +91,33 @@
                <h3>Security Deposit</h3>
            </tr>
            <?php $row_no_payments_move_in = 1; ?>
+           @if(!$payment_move_ins->count() > 0)
+           <p>No Security Deposit.</p>
+           @else
            <tr>
-               <th>No.</th>
-               <th>Date</th>
-               <th>Description</th>
-               <th>Amount</th>
-               <th>Status</th>
-           </tr>
-           @foreach ($payment_move_ins as $payment)
-           <tr>
-                <td>{{ $row_no_payments_move_in++ }}.</td>
-                <td> {{Carbon\Carbon::parse(  $payment->trans_date )->formatLocalized('%b %d %Y')}}</td>
-                <td>{{ $payment->desc }}</td>
-                <td>{{ number_format($payment->amt, 2) }}</td>
-                <td>{{ $payment->payment_status }}</td>
-           </tr>
-           @endforeach
-           <tr>
-                <td>Total</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><b>{{ number_format($payment_move_ins->sum('amt'), 2) }}</b></td>
+                <th>No.</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Status</th>
             </tr>
+            @foreach ($payment_move_ins as $payment)
+            <tr>
+                 <td>{{ $row_no_payments_move_in++ }}.</td>
+                 <td> {{Carbon\Carbon::parse(  $payment->trans_date )->formatLocalized('%b %d %Y')}}</td>
+                 <td>{{ $payment->desc }}</td>
+                 <td>{{ number_format($payment->amt, 2) }}</td>
+                 <td>{{ $payment->payment_status }}</td>
+            </tr>
+            @endforeach
+            <tr>
+                 <td>Total</td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td><b>{{ number_format($payment_move_ins->sum('amt'), 2) }}</b></td>
+             </tr>
+           @endif
           
         </table>
 
@@ -167,65 +171,65 @@
                    <td>1.</td>
                    <td>LAUNDRY</td>
                    <td>Comforter</td>
-                   <td><input type="text" class="form-control" name="qty_comforter" id="qty_comforter" style="width: 40%" onkeyup="sum_comforter()"></td>
-                   <td><input type="text" class="form-control" name="amt_comforter" id="amt_comforter" style="width: 40%" onkeyup="sum_comforter()"></td>
-                   <td><input type="text" name="total_comforter" id="total_comforter" class="form-control"  style="width: 40%" readonly></td>
+                   <td><input type="text" class="form-control" name="qty_comforter" id="qty_comforter" value = "0" style="width: 40%" onkeyup="sum_comforter()"></td>
+                   <td><input type="text" class="form-control" name="amt_comforter" id="amt_comforter" value = "0" style="width: 40%" onkeyup="sum_comforter()"></td>
+                   <td><input type="text" name="total_comforter" id="total_comforter" class="form-control" value = "0" style="width: 40%" readonly></td>
                 </tr>
                 <tr>
                    <td></td>
                    <td></td>
                    <td>Bedlining</td>
-                   <td><input type="text" class="form-control" name="qty_bedlining" id="qty_bedlining" style="width: 40%" onkeyup="sum_bedlining()"></td>
-                   <td><input type="text" class="form-control" name="amt_bedlining" id="amt_bedlining" style="width: 40%" onkeyup="sum_bedlining()"></td>
-                   <td><input type="text" name="total_bedlining" id="total_bedlining" class="form-control"  style="width: 40%" readonly></td>
+                   <td><input type="text" class="form-control" name="qty_bedlining" id="qty_bedlining" value = "0" style="width: 40%" onkeyup="sum_bedlining()"></td>
+                   <td><input type="text" class="form-control" name="amt_bedlining" id="amt_bedlining" value = "0" style="width: 40%" onkeyup="sum_bedlining()"></td>
+                   <td><input type="text" name="total_bedlining" id="total_bedlining" class="form-control"  value = "0" style="width: 40%" readonly></td>
                </tr>
                <tr>
                     <td></td>
                     <td></td>
                     <td>Pillow case</td>
-                    <td><input type="text" class="form-control" name="qty_pillow_case" id="qty_pillow_case" style="width: 40%" onkeyup="sum_pillow_case()"></td>
-                    <td><input type="text" class="form-control" name="amt_pillow_case" id="amt_pillow_case" style="width: 40%" onkeyup="sum_pillow_case()"></td>
-                    <td><input type="text" name="total_pillow_case" id="total_pillow_case" class="form-control"  style="width: 40%" readonly></td>
+                    <td><input type="text" class="form-control" name="qty_pillow_case" id="qty_pillow_case" value = "0" style="width: 40%" onkeyup="sum_pillow_case()"></td>
+                    <td><input type="text" class="form-control" name="amt_pillow_case" id="amt_pillow_case" value = "0" style="width: 40%" onkeyup="sum_pillow_case()"></td>
+                    <td><input type="text" name="total_pillow_case" id="total_pillow_case" class="form-control"  value = "0" style="width: 40%" readonly></td>
                 </tr>
                 <tr>
                    <td></td>
                    <td></td>
                    <td>Pillow</td>
-                   <td><input type="text" class="form-control" name="qty_pillow" id="qty_pillow" style="width: 40%" onkeyup="sum_pillow()"></td>
-                   <td><input type="text" class="form-control" name="amt_pillow" id="amt_pillow" style="width: 40%" onkeyup="sum_pillow()"></td>
-                   <td><input type="text" class="form-control" name="total_pillow" id="total_pillow" style="width: 40%" readonly></td>
+                   <td><input type="text" class="form-control" name="qty_pillow" id="qty_pillow" value = "0" style="width: 40%" onkeyup="sum_pillow()"></td>
+                   <td><input type="text" class="form-control" name="amt_pillow" id="amt_pillow" value = "0" style="width: 40%" onkeyup="sum_pillow()"></td>
+                   <td><input type="text" class="form-control" name="total_pillow" id="total_pillow" value = "0" style="width: 40%" readonly></td>
                </tr>
                <tr>
                     <td></td>
                     <td></td>
                     <td>Rug</td>
-                    <td><input type="text" class="form-control" name="qty_rug" id="qty_rug" style="width: 40%" onkeyup="sum_rug()"></td>
-                    <td><input type="text" class="form-control" name="amt_rug" id="amt_rug" style="width: 40%" onkeyup="sum_rug()"></td>
-                    <td><input type="text" name="total_rug" id="total_rug" class="form-control"  style="width: 40%" readonly></td>
+                    <td><input type="text" class="form-control" name="qty_rug" id="qty_rug" value = "0" style="width: 40%" onkeyup="sum_rug()"></td>
+                    <td><input type="text" class="form-control" name="amt_rug" id="amt_rug" value = "0" style="width: 40%" onkeyup="sum_rug()"></td>
+                    <td><input type="text" name="total_rug" id="total_rug" class="form-control"  value = "0" style="width: 40%" readonly></td>
                </tr>
                <tr>
                     <td></td>
                     <td></td>
                     <td>Curtain/Blind</td>
-                    <td><input type="text" class="form-control" name="qty_curtain" id="qty_curtain" style="width: 40%" onkeyup="sum_curtain()"></td>
-                    <td><input type="text" class="form-control" name="amt_curtain" id="amt_curtain" style="width: 40%" onkeyup="sum_curtain()"></td>
-                    <td><input type="text" class="form-control" name="total_curtain" id="total_curtain" style="width: 40%" readonly></td>
+                    <td><input type="text" class="form-control" name="qty_curtain" id="qty_curtain" value = "0" style="width: 40%" onkeyup="sum_curtain()"></td>
+                    <td><input type="text" class="form-control" name="amt_curtain" id="amt_curtain" value = "0" style="width: 40%" onkeyup="sum_curtain()"></td>
+                    <td><input type="text" class="form-control" name="total_curtain" id="total_curtain" value = "0" style="width: 40%" readonly></td>
                </tr>
                <tr>
                     <td></td>
                     <td></td>
                     <td>Towel</td>
-                    <td><input type="text" class="form-control" name="qty_towel" id="qty_towel" style="width: 40%" onkeyup="sum_towel()"></td>
-                    <td><input type="text" class="form-control" name="amt_towel" id="amt_towel" style="width: 40%" onkeyup="sum_towel()"></td>
-                    <td><input type="text" class="form-control" name="total_towel" id="total_towel" style="width: 40%" readonly></td>
+                    <td><input type="text" class="form-control" name="qty_towel" id="qty_towel" value = "0" style="width: 40%" onkeyup="sum_towel()"></td>
+                    <td><input type="text" class="form-control" name="amt_towel" id="amt_towel" value = "0" style="width: 40%" onkeyup="sum_towel()"></td>
+                    <td><input type="text" class="form-control" name="total_towel" id="total_towel" value = "0" style="width: 40%" readonly></td>
                 </tr>
                 <tr>
                    <td>2. </td>
                    <td>GENERAL CLEANING</td>
                    <td></td>
                    <td></td>
-                   <td><input type="text" class="form-control" name="amt_gc" id="amt_gc" style="width: 40%" onkeyup="sum_gc()"></td>
-                   <td><input type="text" class="form-control" name="total_gc" id="total_gc" style="width: 40%" readonly></td>
+                   <td><input type="text" class="form-control" name="amt_gc" id="amt_gc" value = "0" style="width: 40%" onkeyup="sum_gc()"></td>
+                   <td><input type="text" class="form-control" name="total_gc" id="total_gc" value = "0"  style="width: 40%" readonly></td>
                 </tr>
                 <tr>
                    <td></td>

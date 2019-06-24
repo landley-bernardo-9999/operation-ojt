@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Carbon;
 use DB;
 use App\Payment;
+use App\Resident;
+use App\Guardian;
+use App\User;
+use Hash;
 
 class TransactionController extends Controller
 {
@@ -37,188 +41,204 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
+        //get the room_id and owner_id from form
+        $owner_id = $request->room_id;
+        //get only the owner_id
+        $pieces = explode(" ", $owner_id);
+
         $trans_date = $request->trans_date;
         $move_in_date = $request->move_in_date;
         $move_out_date = $request->move_out_date;
-        $term = $request->term;
+        $term = $request->term; 
+        $sec_dep_rent = $request->sec_dep_rent;
+        $advance_rent = $request->advance_rent;
+        $sec_dep_utilities = $request->sec_dep_utilities;
+        $transient = $request->transient;
 
-        $secDepRent = 0;
-        $advanceRent = 0;
-        $transient = 0;
-
-        session(['sess_trans_date' => $trans_date]);
-        session(['sess_move_in_date' => $move_in_date]);
-        session(['sess_move_out_date' => $move_out_date]);
-        session(['sess_term' => $term]);
-
-        $start=Carbon\Carbon::parse($move_in_date);
-        $end=Carbon\Carbon::parse($move_out_date); 
-        $durationInDays = $start->diffInDays($end);
-
-        $building = session('sess_room_building');
-
-        //north cambridge
-        if($building == 'harvard'){
-            if($term == 'long_term'){
-                $secDepRent = 6800*2;
-                $advanceRent = 6800;
-            }
-            elseif($term == 'short_term'){
-                $secDepRent  = 6800;
-                $advanceRent = 6800;
-            }
-            elseif($term == 'transient'){
-                $transient = 1200 * $durationInDays;
-            }
-            
-        }
-        
-        elseif($building == 'princeton'){
-            if($term == 'long_term'){
-                $secDepRent = 7500*2;
-                $advanceRent = 7500;
-            }
-            elseif($term == 'short_term'){
-                $secDepRent = 7500;
-                $advanceRent = 7500;
-            }
-            elseif($term == 'transient'){
-                $transient = 1200 * $durationInDays;
-            }
-        }
-        
-        elseif($building == 'wharton'){
-            if($term == 'long_term'){
-                $secDepRent = 11000*2;
-                $advanceRent = 11000;
-            }
-            elseif($term == 'short_term'){
-                $secDepRent = 12000;
-                $advanceRent = 12000;
-            }
-            elseif($term == 'transient'){
-                 $transient = 2000 * $durationInDays;
-            }
-        }
-
-        //the courtyards
-        elseif($building == 'manors'){
-            if($term == 'long_term'){
-                $secDepRent = 15000;
-                $advanceRent = 15000;
-            }
-            elseif($term == 'short_term'){
-                $secDepRent = 16000;
-                $advanceRent = 16000;
-            }
-            elseif($term == 'transient'){
-                 $transient = 2500 * $durationInDays;
-            }
-        }
-
-            session(['sess_sec_dep_rent' => $secDepRent]);
-            session(['sess_advance_rent' => $advanceRent]);
-
-        if($term == 'transient'){
-            $secDepUtilities = 0;
-        }
-        else{
-            $secDepUtilities = 2000;
-            $transient = 0;
-        }
-
-            session(['sess_transient' => $transient]);
-            session(['sess_sec_dep_utilities' => $secDepUtilities]);
-            
-            $total = $secDepRent + $advanceRent + $secDepUtilities + $transient;
-
-            session(['sess_total' => $total]);
-            
-            session(['room_id' => $request->room_id]);
-
-        if($request->adding_room == 'yes'){
-           session(['sess_adding_room' => $request->adding_room ]);
-            return redirect ('/room/add/');
-        }elseif($request->adding_room == 'no'){
-            
+        if($request->adding_room === 'yes'){
             //create the transaction.
-            $transaction = new Transaction();
-            $transaction->trans_date = $request->trans_date;
-            $transaction->move_in_date = $request->move_in_date;
-            $transaction->move_out_date = $request->move_out_date;
-            $transaction->trans_resident_id = session('resident_id');
-            $transaction->trans_room_id =$request->room_id;
-            $transaction->trans_owner_id = session('sess_owner_id');
-            $transaction->trans_status = 'pending';
-            $transaction->term = $request->term;
-            $transaction->save();
-    
-             //create the payment.
-            if($request->sec_dep_rent > 0){
-                $payment = new Payment();
-                $payment->amt = $request->sec_dep_rent;
-                $payment->desc = 'sec_dep_rent';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $transaction->trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
+         $transaction = new Transaction();
+         $transaction->trans_date = $trans_date;
+         $transaction->move_in_date = $move_in_date;
+         $transaction->move_out_date = $move_out_date;
+         $transaction->trans_resident_id = session('resident_id');
+         $transaction->trans_room_id = $pieces[1];
+         $transaction->trans_owner_id = $pieces[0];
+         $transaction->trans_status = 'active';
+         $transaction->term = $term;
+         $transaction->save();
+ 
+          //create the payment.
+         if($sec_dep_rent > 0){
+             $payment = new Payment();
+             $payment->amt = $sec_dep_rent;
+             $payment->desc = 'sec_dep_rent';
+             $payment->payment_status = 'unpaid';
+             $payment->payment_transaction_id = $transaction->trans_id;
+             $payment->updated_at = null;
+             $payment->save();
+         }
 
-            if($request->advance_rent > 0){
-                $payment = new Payment();
-                $payment->amt = $request->advance_rent;
-                $payment->desc = 'advance_rent';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $transaction->trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
+         if($advance_rent > 0){
+             $payment = new Payment();
+             $payment->amt = $advance_rent;
+             $payment->desc = 'advance_rent';
+             $payment->payment_status = 'paid';
+             $payment->payment_transaction_id = $transaction->trans_id;
+             $payment->updated_at = null;
+             $payment->save();
+         }
 
-            if($request->sec_dep_utilities > 0){
-                $payment = new Payment();
-                $payment->amt = $request->sec_dep_utilities;
-                $payment->desc = 'sec_dep_utilities';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $transaction->trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
+         if($sec_dep_utilities > 0){
+             $payment = new Payment();
+             $payment->amt = $sec_dep_utilities;
+             $payment->desc = 'sec_dep_utilities';
+             $payment->payment_status = 'paid';
+             $payment->payment_transaction_id = $transaction->trans_id;
+             $payment->updated_at = null;
+             $payment->save();
+         }
 
-            if($request->transient > 0){
-                $payment = new Payment();
-                $payment->amt = $request->transient;
-                $payment->desc = 'transient';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $transaction->trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
-    
-            $room = DB::table('rooms')
-            ->where('room_id', $request->room_id)
-            ->update(['room_status' => 'reserved']);
-            
-            $room = DB::table('rooms')
-            ->where('room_id', $request->room_id)
-            ->update(['remarks' => 'This room is reserved. Full payment has not yet been settled.']);
+         if($transient > 0){
+             $payment = new Payment();
+             $payment->amt = $transient;
+             $payment->desc = 'transient';
+             $payment->payment_status = 'paid';
+             $payment->payment_transaction_id = $transaction->trans_id;
+             $payment->updated_at = null;
+             $payment->save();
+         }
+ 
+         $room = DB::table('rooms')
+         ->where('room_id', session('sess_room_id'))
+         ->update(['room_status' => 'occupied']);
+         
+        //  $room = DB::table('rooms')
+        //  ->where('room_id', session('sess_room_id'))
+        //  ->update(['remarks' => 'THIS IS RESERVED. RESIDENT. FULL PAYMENT HAS NOT YET BEEN SETTLED.']);
 
-            session()->forget('sess_trans_date');
-            session()->forget('sess_move_in_date');
-            session()->forget('sess_move_out_date'); 
-            session()->forget('sess_term');
-            session()->forget('sess_adding_room');
-            session()->forget('sess_sec_dep_rent');
-            session()->forget('sess_sec_dep_utilities');
-            session()->forget('sess_advance_rent');
-            session()->forget('sess_transient');
+     return redirect('/residents/'.session('resident_id'))->with('success', 'Transaction has been added.');
+        }else {
+            //create the resident.
+         $resident = new Resident();
+         $resident->first_name = session('sess_first_name');
+         $resident->middle_name = session('sess_middle_name');
+         $resident->last_name = session('sess_last_name');
+         $resident->type_of_resident = 'primary_resident';
+         $resident->birthdate = session('sess_birthdate');
+         $resident->nationality = session('sess_nationality');
+         $resident->civil_status = session('sess_civil_status');
+         $resident->id_info = session('sess_id_info');
+         $resident->email_address = session('sess_email_address');
+         $resident->telephone_number = session('sess_telephone_number');
+         $resident->mobile_number = session('sess_mobile_number');
+         $resident->barangay = session('sess_barangay');
+         $resident->municipality = session('sess_municipality');
+         $resident->province = session('sess_province');
+         $resident->zip = session('sess_zip');
+         $resident->save();
 
-            return redirect('/residents/'.session('resident_id'))->with('success', 'Transaction has been added!');
-        }else{
-            return redirect('/payments/create')->with('success');  
+         //create the guardian
+         $guardian = new Guardian();
+         $guardian->guardian_resident_id =$resident->resident_id;
+         $guardian->name = session('sess_name');
+         $guardian->relationship = session('sess_relationship');
+         $guardian->mobile_number = session('sess_guardian_mobile_number');
+         $guardian->save();
+     
+         //create the user
+         $user = new User();
+         $user->name = $resident->first_name.' '.$resident->last_name;
+         if($user->email = $resident->email_address == null){
+             $user->email = 'noemailadress'.$resident->resident_id.'@marthaservices.com';
+         }else{
+             $user->email = session('sess_email_address');
+         }
+         $user->privilege = "resident";
+         $user->password = Hash::make('marthaservices');
+         $user->user_resident_id = $resident->resident_id;
+         $user->save();
+
+         //create the transaction.
+         $transaction = new Transaction();
+         $transaction->trans_date = $trans_date;
+         $transaction->move_in_date = $move_in_date;
+         $transaction->move_out_date = $move_out_date;
+         $transaction->trans_resident_id = $resident->resident_id;
+         $transaction->trans_room_id = session('sess_room_id');
+         $transaction->trans_owner_id = session('sess_owner_id');
+         $transaction->trans_status = 'pending';
+         $transaction->term = $term;
+         $transaction->save();
+ 
+          //create the payment.
+         if($sec_dep_rent > 0){
+             $payment = new Payment();
+             $payment->amt = $sec_dep_rent;
+             $payment->desc = 'sec_dep_rent';
+             $payment->payment_status = 'unpaid';
+             $payment->payment_transaction_id = $transaction->trans_id;
+             $payment->updated_at = null;
+             $payment->save();
+         }
+
+         if($advance_rent > 0){
+             $payment = new Payment();
+             $payment->amt = $advance_rent;
+             $payment->desc = 'advance_rent';
+             $payment->payment_status = 'unpaid';
+             $payment->payment_transaction_id = $transaction->trans_id;
+             $payment->updated_at = null;
+             $payment->save();
+         }
+
+         if($sec_dep_utilities > 0){
+             $payment = new Payment();
+             $payment->amt = $sec_dep_utilities;
+             $payment->desc = 'sec_dep_utilities';
+             $payment->payment_status = 'unpaid';
+             $payment->payment_transaction_id = $transaction->trans_id;
+             $payment->updated_at = null;
+             $payment->save();
+         }
+
+         if($transient > 0){
+             $payment = new Payment();
+             $payment->amt = $transient;
+             $payment->desc = 'transient';
+             $payment->payment_status = 'unpaid';
+             $payment->payment_transaction_id = $transaction->trans_id;
+             $payment->updated_at = null;
+             $payment->save();
+         }
+ 
+         $room = DB::table('rooms')
+         ->where('room_id', session('sess_room_id'))
+         ->update(['room_status' => 'reserved']);
+         
+         $room = DB::table('rooms')
+         ->where('room_id', session('sess_room_id'))
+         ->update(['remarks' => 'THIS IS RESERVED. RESIDENT. FULL PAYMENT HAS NOT YET BEEN SETTLED.']);
+     
+         session()->forget('sess_first_name');
+         session()->forget('sess_last_name');
+         session()->forget('sess_middle_name');
+         session()->forget('sess_birthdate');
+         session()->forget('sess_email_address');
+         session()->forget('sess_telephone_number');
+         session()->forget('sess_mobile_number');
+         session()->forget('sess_barangay');
+         session()->forget('sess_municipality');
+         session()->forget('sess_province');
+         session()->forget('sess_zip');
+
+         session()->forget('sess_name');
+         session()->forget('sess_relationship');
+         session()->forget('sess_guardian_mobile_number');
+
+     return redirect('/rooms/'.session('sess_room_id'))->with('success', 'Resident is added to the unit.');
         }
-    
-
     }
 
     /**
