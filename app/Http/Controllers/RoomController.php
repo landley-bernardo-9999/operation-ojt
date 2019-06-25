@@ -28,21 +28,25 @@ class RoomController extends Controller
                 $harvard = DB::table('rooms')
                 ->where('building', 'harvard')
                 ->orderBy('floor_number', 'asc')
+                ->orderBy('room_no', 'asc')
                 ->get();
 
                 $princeton = DB::table('rooms')
                 ->where('building', 'princeton')
                 ->orderBy('floor_number', 'asc')
+                ->orderBy('room_no', 'asc')
                 ->get();
 
                 $wharton = DB::table('rooms')
                 ->where('building', 'wharton')
                 ->orderBy('floor_number', 'asc')
+                ->orderBy('room_no', 'asc')
                 ->get();
     
                 $cy = DB::table('rooms')
                 ->where('project', 'the_courtyards')
                 ->orderBy('floor_number', 'asc')
+                ->orderBy('room_no', 'asc')
                 ->get();
                 return view('rooms', compact('room', 'harvard', 'princeton', 'wharton', 'cy'));
             }

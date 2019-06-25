@@ -20,8 +20,8 @@
                     <div class="col-md-3">
                         <select class="form-control" name="building" required>
                             <option value="">Select Building</option>
-                            <option value="harvard" selected>Harvard</option>
-                            <option value="princeton">Princeton</option>
+                            <option value="harvard" >Harvard</option>
+                            <option value="princeton" >Princeton</option>
                             <option value="wharton">Wharton</option>
                             <option value="loft">Loft</option>
                             <option value="manors">Manors</option>
@@ -44,6 +44,8 @@
                             <option value="6">6</option>
                             <option value="7">7</option>
                             <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
                         </select>
                     </div>     
                 </div>
@@ -53,7 +55,7 @@
                     <div class="col-md-3">
                         <select class="form-control" name="project" required>
                             <option value="">Select Project</option>
-                            <option value="north_cambridge" selected>North Cambridge</option>
+                            <option value="north_cambridge" >North Cambridge</option>
                             <option value="the_courtyards">The Courtyards</option>
                         </select>
                     </div>     
@@ -62,14 +64,14 @@
                 <div class="form-group row">
                     <label for="short_term_rent" class="col-md-4 col-form-label text-md-right">Short-term Rent:</label>
                     <div class="col-md-3">
-                        <input name="short_term_rent" type="number" min="1" class="form-control" value="7800" required>
+                        <input name="short_term_rent" type="number" min="1" class="form-control" value="" required>
                     </div>     
                 </div>
 
                 <div class="form-group row">
                     <label for="long_term_rent" class="col-md-4 col-form-label text-md-right">Long-term Rent:</label>
                     <div class="col-md-3">
-                        <input name="long_term_rent" type="number" min="1" class="form-control" value="6800" required>
+                        <input name="long_term_rent" type="number" min="1" class="form-control" value="" required>
                     </div>     
                 </div>
 
@@ -77,7 +79,7 @@
                 <div class="form-group row">
                     <label for="size" class="col-md-4 col-form-label text-md-right">Size:</label>
                     <div class="col-md-3">
-                        <input name="size" type="number" min="1" class="form-control" value="15" required>
+                        <input name="size" type="number" min="1" class="form-control" value="" required>
                     </div>     
                 </div>
 
