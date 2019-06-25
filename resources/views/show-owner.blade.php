@@ -67,7 +67,7 @@
        </div>
 
        <div class="col-md-3">
-
+           <img src="/storage/owner_img/nophoto.png" alt="..." class="img-thumbnail">
        </div>
     </div>
 

@@ -195,6 +195,6 @@ class OwnerController extends Controller
         DB::table('representatives')->where('rep_owner_id', $owner_id)->delete();
         DB::table('users')->where('user_owner_id', $owner_id)->delete();
 
-        return redirect('/owners/'.session('sess_room_id'))->with('success','Owner has been deleted!');
+        return redirect('/rooms/'.session('sess_room_id'))->with('success','Owner has been deleted!');
     }
 }
