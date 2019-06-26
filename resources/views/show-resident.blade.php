@@ -31,13 +31,15 @@
             <li class="nav-item">
                 <a href="#" class="nav-link">House Rules</a>
             </li>
-            <li class="nav-item">
+            @if(auth()->user()->privilege === 'leasingOfficer')
+             <li class="nav-item">
                 <form method="POST" action="/residents/{{ $resident->resident_id }}">
                     @method('delete')
                     {{ csrf_field() }}
                     <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger">Delete</button>
                 </form>
             </li>
+            @endif
         </ul>
     </div>
     <div class="row">

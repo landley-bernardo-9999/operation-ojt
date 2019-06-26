@@ -60,4 +60,5 @@ Route::get('/owner/room/add', function(){
 
 Route::get('/search/residents{s?}', 'ResidentController@index')->where('s', '[\w\d]+');
 Route::get('/search/owners{s?}', 'OwnerController@index')->where('s', '[\w\d]+');
+Route::get('/search/users{s?}', 'UserController@index')->where('s', '[\w\d]+');
 

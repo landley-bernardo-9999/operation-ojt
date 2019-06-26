@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use DB;
 
 class UserController extends Controller
 {
@@ -12,9 +13,29 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        
+        try
+        {
+            if(auth()->user()->privilege === 'admin'){
+
+                $s = $request->query('s');
+
+                $users = DB::table('users')
+                ->orWhere('email', 'like', "%$s%")
+                ->orWhere('name', 'like', "%$s%")
+                ->get();
+
+                return view('users', compact('users'));      
+            }
+            else{
+                abort(404, "Forbidden Page.");
+            }   
+         }
+        catch(\Exception $e)
+        {
+            abort(404, "Forbidden Page.");
+        }
     }
 
     /**
@@ -24,7 +45,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+       //
     }
 
     /**
@@ -46,9 +67,23 @@ class UserController extends Controller
      */
     public function show($user_id)
     {
-        $user = User::findOrFail($user_id);
+        try
+        {
+            if(auth()->user()->user_id == $user_id || auth()->user()->privilege === 'admin'){
 
-        return view('show-account', compact('user'));
+                $user = User::findOrFail($user_id);
+
+                return view('show-account', compact('user'));
+            }
+            else{
+                abort(404, "Forbidden Page.");
+            }   
+         }
+        catch(\Exception $e)
+        {
+            abort(404, "Forbidden Page.");
+        }
+
     }
 
     /**

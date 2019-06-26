@@ -21,13 +21,15 @@
                 <a class="nav-link" href="/owners/create/">Add Owner</a>
             </li>
             
-            <li class="nav-item">
+            @if(auth()->user()->privilege === 'leasingOfficer')
+             <li class="nav-item">
                 <form method="POST" action="/rooms/{{ $room->room_id }}">
                     @method('delete')
                     {{ csrf_field() }}
                     <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger nav-link">Delete</button>
                 </form>
             </li>
+            @endif
         </ul>
     </div>
     <div class="row">

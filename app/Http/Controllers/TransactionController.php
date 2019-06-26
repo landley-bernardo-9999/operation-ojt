@@ -168,7 +168,7 @@ class TransactionController extends Controller
          $transaction->trans_resident_id = $resident->resident_id;
          $transaction->trans_room_id = session('sess_room_id');
          $transaction->trans_owner_id = session('sess_owner_id');
-         $transaction->trans_status = 'pending';
+         $transaction->trans_status = 'active';
          $transaction->term = $term;
          $transaction->save();
  
@@ -177,9 +177,9 @@ class TransactionController extends Controller
              $payment = new Payment();
              $payment->amt = $sec_dep_rent;
              $payment->desc = 'sec_dep_rent';
-             $payment->payment_status = 'unpaid';
+             $payment->payment_status = 'paid';
              $payment->payment_transaction_id = $transaction->trans_id;
-             $payment->updated_at = null;
+            //  $payment->updated_at = null;
              $payment->save();
          }
 
@@ -187,9 +187,9 @@ class TransactionController extends Controller
              $payment = new Payment();
              $payment->amt = $advance_rent;
              $payment->desc = 'advance_rent';
-             $payment->payment_status = 'unpaid';
+             $payment->payment_status = 'paid';
              $payment->payment_transaction_id = $transaction->trans_id;
-             $payment->updated_at = null;
+            //  $payment->updated_at = null;
              $payment->save();
          }
 
@@ -197,9 +197,9 @@ class TransactionController extends Controller
              $payment = new Payment();
              $payment->amt = $sec_dep_utilities;
              $payment->desc = 'sec_dep_utilities';
-             $payment->payment_status = 'unpaid';
+             $payment->payment_status = 'paid';
              $payment->payment_transaction_id = $transaction->trans_id;
-             $payment->updated_at = null;
+            //  $payment->updated_at = null;
              $payment->save();
          }
 
@@ -207,19 +207,19 @@ class TransactionController extends Controller
              $payment = new Payment();
              $payment->amt = $transient;
              $payment->desc = 'transient';
-             $payment->payment_status = 'unpaid';
+             $payment->payment_status = 'paid';
              $payment->payment_transaction_id = $transaction->trans_id;
-             $payment->updated_at = null;
+            //  $payment->updated_at = null;
              $payment->save();
          }
  
          $room = DB::table('rooms')
          ->where('room_id', session('sess_room_id'))
-         ->update(['room_status' => 'reserved']);
+         ->update(['room_status' => 'occupied']);
          
-         $room = DB::table('rooms')
-         ->where('room_id', session('sess_room_id'))
-         ->update(['remarks' => 'THIS IS RESERVED. RESIDENT. FULL PAYMENT HAS NOT YET BEEN SETTLED.']);
+        //  $room = DB::table('rooms')
+        //  ->where('room_id', session('sess_room_id'))
+        //  ->update(['remarks' => 'THIS IS RESERVED. RESIDENT. FULL PAYMENT HAS NOT YET BEEN SETTLED.']);
      
          session()->forget('sess_first_name');
          session()->forget('sess_last_name');

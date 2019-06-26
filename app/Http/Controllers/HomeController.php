@@ -32,6 +32,7 @@ class HomeController extends Controller
         ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
         ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
         ->orderBy('move_in_date', 'asc')
+        ->where('trans_status', 'active')
         ->get();  
 
         $move_out = DB::table('transactions')

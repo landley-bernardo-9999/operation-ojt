@@ -20,17 +20,30 @@ class OwnerController extends Controller
      */
     public function index(Request $request)
     {
-        $s = $request->query('s');
+        try
+        {
+            if(auth()->user()->privilege === 'leasingOfficer'){
 
-        $owners = DB::table('contracts')
-        ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
-        ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
-        ->orWhere(DB::raw('CONCAT_WS(" ", owner_first_name,owner_last_name, " ")'), 'like', "%{$s}%")
-        ->orWhere('owner_email_address', 'like', "%$s%")
-        ->orWhere('owner_mobile_number', 'like', "%$s%")
-        ->get();  
+                $s = $request->query('s');
 
-        return view ('owners', compact('owners'));
+                $owners = DB::table('contracts')
+                ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+                ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
+                ->orWhere(DB::raw('CONCAT_WS(" ", owner_first_name,owner_last_name, " ")'), 'like', "%{$s}%")
+                ->orWhere('owner_email_address', 'like', "%$s%")
+                ->orWhere('owner_mobile_number', 'like', "%$s%")
+                ->get();  
+        
+                return view ('owners', compact('owners'));
+            }
+            else{
+                abort(404, "Forbidden Page.");
+            }   
+         }
+        catch(\Exception $e)
+        {
+            abort(404, "Forbidden Page.");
+        }
     }
 
     /**
@@ -127,35 +140,48 @@ class OwnerController extends Controller
      */
     public function show($owner_id)
     {   
-        $owner = Owner::findOrFail($owner_id);
+        try
+        {
+            if(auth()->user()->privilege === 'leasingOfficer' || (auth()->user()->user_owner_id == $owner_id)){
 
-        $owner_name = $owner->owner_first_name.' '.$owner->owner_last_name;
+                $owner = Owner::findOrFail($owner_id);
 
-        $owner_id = $owner->owner_id;
-
-        session(['owner_name' => $owner_name]);
-
-        session(['owner_id' => $owner_id]);
-
-        $contract = DB::table('contracts')
-        ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
-        ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
-        ->where('owners.owner_id', $owner_id)
-        ->get();
-
-        $bank = DB::table('banks')->where('bank_owner_id', $owner_id)->get();
+                $owner_name = $owner->owner_first_name.' '.$owner->owner_last_name;
         
-        $transaction = DB::table('transactions')
-        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
-        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-        ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
-        ->where('owners.owner_id', $owner_id)
-        ->get();
-
-        $representative = DB::table('representatives')->where('rep_owner_id', $owner_id)->get();
-
-        return view('show-owner', compact('owner', 'contract', 'transaction', 'bank', 'representative'));
-
+                $owner_id = $owner->owner_id;
+        
+                session(['owner_name' => $owner_name]);
+        
+                session(['owner_id' => $owner_id]);
+        
+                $contract = DB::table('contracts')
+                ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+                ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
+                ->where('owners.owner_id', $owner_id)
+                ->get();
+        
+                $bank = DB::table('banks')->where('bank_owner_id', $owner_id)->get();
+                
+                $transaction = DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
+                ->where('owners.owner_id', $owner_id)
+                ->get();
+        
+                $representative = DB::table('representatives')->where('rep_owner_id', $owner_id)->get();
+        
+                return view('show-owner', compact('owner', 'contract', 'transaction', 'bank', 'representative'));
+        
+            }
+            else{
+                abort(404, "Forbidden Page.");
+            }   
+         }
+        catch(\Exception $e)
+        {
+            abort(404, "Forbidden Page.");
+        }
     }
 
     /**

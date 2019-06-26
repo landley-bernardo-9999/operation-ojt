@@ -15,17 +15,31 @@ class ResidentController extends Controller
      */
     public function index(Request $request)
     {
-        $s = $request->query('s');
+        try
+        {
+            if(auth()->user()->privilege === 'leasingOfficer'){
 
-        $residents = DB::table('transactions')
-        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
-        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-        ->orWhere(DB::raw('CONCAT_WS(" ", first_name,last_name, " ")'), 'like', "%{$s}%")
-        ->orWhere('email_address', 'like', "%$s%")
-        ->orWhere('mobile_number', 'like', "%$s%")
-        ->get();  
+                $s = $request->query('s');
 
-        return view ('residents', compact('residents'));
+                $residents = DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->orWhere(DB::raw('CONCAT_WS(" ", first_name,last_name, " ")'), 'like', "%{$s}%")
+                ->orWhere('email_address', 'like', "%$s%")
+                ->orWhere('mobile_number', 'like', "%$s%")
+                ->orderBy('trans_date', 'desc')
+                ->get();  
+
+                return view ('residents', compact('residents'));
+            }
+            else{
+                abort(404, "Forbidden Page.");
+            }   
+         }
+        catch(\Exception $e)
+        {
+            abort(404, "Forbidden Page.");
+        }
     }
 
     /**
@@ -66,7 +80,7 @@ class ResidentController extends Controller
             $resident->primary_resident_id = session('resident_id');
             $resident->save();
 
-            return redirect('/residents/'.session('resident_id'))->with('success', 'Co-resident has been added!');
+            return redirect('/co-tenant/create')->with('success', 'Co-resident has been added!');
         }
         //create primary resident
         else{
@@ -129,36 +143,49 @@ class ResidentController extends Controller
      */
     public function show($resident_id)
     {
-        $resident = Resident::findOrFail($resident_id);
+        try
+        {
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_resident_id == $resident_id){
 
-        session(['resident_name'=> $resident->first_name.' '.$resident->last_name]);
-        session(['resident_id'=> $resident_id]);
+                $resident = Resident::findOrFail($resident_id);
 
-        $resident->last_name;
-
-        $transaction = DB::table('transactions')
-        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
-        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-        ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
-        ->where('residents.resident_id', $resident_id)
-        ->orderBy('move_in_date', 'asc')
-        ->get();    
-
-        $guardian = DB::table('guardians')
-        ->join('residents', 'guardians.guardian_resident_id', 'residents.resident_id')
-        ->where('residents.resident_id', $resident_id)
-        ->get(); 
-
-        $co_residents = DB::table('residents')->where('primary_resident_id', $resident_id)->get();
-
-        $payment = DB::table('transactions')
-        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
-        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-        ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
-        ->where('residents.resident_id', $resident_id)
-        ->get();
-
-        return view('show-resident', compact('resident', 'transaction', 'repairs', 'payment', 'co_residents', 'guardian'));
+                session(['resident_name'=> $resident->first_name.' '.$resident->last_name]);
+                session(['resident_id'=> $resident_id]);
+        
+                $resident->last_name;
+        
+                $transaction = DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
+                ->where('residents.resident_id', $resident_id)
+                ->orderBy('move_in_date', 'asc')
+                ->get();    
+        
+                $guardian = DB::table('guardians')
+                ->join('residents', 'guardians.guardian_resident_id', 'residents.resident_id')
+                ->where('residents.resident_id', $resident_id)
+                ->get(); 
+        
+                $co_residents = DB::table('residents')->where('primary_resident_id', $resident_id)->get();
+        
+                $payment = DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+                ->where('residents.resident_id', $resident_id)
+                ->get();
+        
+                return view('show-resident', compact('resident', 'transaction', 'repairs', 'payment', 'co_residents', 'guardian'));
+            }
+            else{
+                abort(404, "Forbidden Page.");
+            }   
+         }
+        catch(\Exception $e)
+        {
+            abort(404, "Forbidden Page.");
+        }
     }
 
     /**

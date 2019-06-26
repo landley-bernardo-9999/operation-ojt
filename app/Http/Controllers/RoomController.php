@@ -133,6 +133,7 @@ class RoomController extends Controller
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
                 ->where('transactions.trans_room_id', $room_id)
+                ->orderBy('trans_date', 'desc')
                 ->get();
         
                 session(['sess_room_id' => $room->room_id]);

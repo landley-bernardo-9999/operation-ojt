@@ -29,16 +29,19 @@
                     <li><a href="{{ route('login') }}">Login</a></li>
                     <li><a href="{{ route('register') }}">Register</a></li>
                 @else
-                @if(auth()->user()->privilege === 'leasingOfficer')
                 <ul class="nav navbar-nav nav-bar-left">
+                    @if(auth()->user()->privilege === 'admin')
+                    <li><a href="/users/"><i class="fas fa-user-circle"></i>&nbspUsers</a></li>
+                    @endif
+                    @if(auth()->user()->privilege === 'leasingOfficer')
                     <li><a href="/rooms/"><i class="fas fa-home"></i>&nbspRooms</a></li>
                     <li><a href="/residents/"><i class="fas fa-users"></i>&nbspResidents</a></li>
                     <li><a href="/owners/"><i class="fas fa-user-tie"></i>&nbspOwners</a></li>
                     <li><a href="/violations/"><i class="fas fa-user-times"></i>&nbspViolations</a></li>
                     <li><a href="/repairs/"><i class="fas fa-hammer"></i>&nbspRepairs</a></li>
                     <li><a href="/personnels/"><i class="fas fa-user-lock"></i>&nbspPersonnels</a></li>
+                    @endif
                 </ul>
-                @endif
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             {{ Auth::user()->name }} <span class="caret"></span>

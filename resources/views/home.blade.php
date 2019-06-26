@@ -107,13 +107,13 @@
                     <th>No.</th>
                     <th>Name</th>
                     <th>Unit No</th>
-                    <th>Move In </th>
+                    <th>Date</th>
                     <th></th>
                 </tr>
                 <?php $row_no_move_in = 1; ?>
                 @foreach ($move_in as $move_in)
                 <tr>
-                    <td>{{ $row_no_move_in++ }}</td>
+                    <td>{{ $row_no_move_in++ }}.</td>
                     <td>{{ $move_in->first_name}} {{ $move_in->last_name }}</td>
                     <td>{{ $move_in->room_no}} </td>
                     <td>{{Carbon\Carbon::parse(  $move_in->move_in_date )->formatLocalized('%b %d %Y')}}</td>
@@ -129,13 +129,13 @@
                     <th>No.</th>
                     <th>Name</th>
                     <th>Unit No</th>
-                    <th>Move In </th>
+                    <th>Date</th>
                     <th></th>
                 </tr>
                 <?php $row_no_move_out = 1; ?>
                 @foreach ($move_out as $move_out)
                 <tr>
-                    <td>{{ $row_no_move_out++ }}</td>
+                    <td>{{ $row_no_move_out++ }}.</td>
                     <td>{{ $move_out->first_name}} {{ $move_out->last_name }}</td>
                     <td>{{ $move_out->room_no}} </td>
                     <td>{{Carbon\Carbon::parse(  $move_out->actual_move_out_date )->formatLocalized('%b %d %Y')}}</td>

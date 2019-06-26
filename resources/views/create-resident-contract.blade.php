@@ -221,6 +221,40 @@
 
         }
 
+        //computation of payment fo wharton.
+        if( building === 'manors'){
+            if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 18000;
+                var advance_rent = document.getElementById('advance_rent').value = 17000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else if( document.getElementById('term').value === 'short_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 18000;
+                var advance_rent = document.getElementById('advance_rent').value = 17000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else{
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 0;
+                var advance_rent = document.getElementById('advance_rent').value = 0;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 2000 * DaysDiff;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities + transient;
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+
+        }
 
      
     }
