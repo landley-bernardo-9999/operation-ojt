@@ -36,12 +36,55 @@
                     <td>{{ $reserved_rooms_wharton }}</td>
                     <td>{{ $rectification_rooms_wharton }}</td>
                 </tr>
+                <tr>
+                    <td>Manors</td>
+                    <td>{{ $occupied_rooms_manors }}</td>
+                    <td>{{ $vacant_rooms_manors }}</td>
+                    <td>{{ $reserved_rooms_manors }}</td>
+                    <td>{{ $rectification_rooms_manors }}</td>
+                </tr>
+                <tr>
+                    <td>Loft</td>
+                    <td>{{ $occupied_rooms_loft }}</td>
+                    <td>{{ $vacant_rooms_loft }}</td>
+                    <td>{{ $reserved_rooms_loft }}</td>
+                    <td>{{ $rectification_rooms_loft }}</td>
+                </tr>
+                <tr>
+                    <td>Colorado</td>
+                    <td>{{ $occupied_rooms_colorado }}</td>
+                    <td>{{ $vacant_rooms_colorado }}</td>
+                    <td>{{ $reserved_rooms_colorado }}</td>
+                    <td>{{ $rectification_rooms_colorado }}</td>
+                </tr>
+                <tr>
+                    <td>Arkansas</td>
+                    <td>{{ $occupied_rooms_arkansas }}</td>
+                    <td>{{ $vacant_rooms_arkansas }}</td>
+                    <td>{{ $reserved_rooms_arkansas }}</td>
+                    <td>{{ $rectification_rooms_arkansas }}</td>
+                </tr>
             </table>
         </div>
     </div>
     <div class="row">
-        <h3>Occupancy Rate</h3>
+        <h3>Reserved Units</h3>
+        @if ($reserved_rooms->count() < 0)
+        <p class="text-danger">No reserved units.</p>
+        @endif
+        <ul>
+            @foreach ($reserved_rooms as $room)
+                <li><a href="/rooms/{{ $room->room_id }}">{{ $room->building }} {{ $room->room_no }}</a></li>
+            @endforeach
+        </ul>
     </div>
+    <div class="row">
+        <h3>Occupancy Rate (%)</h3>
+    </div>
+     <div class="row">
+        {!! $chart->container() !!}
+    </div>
+    <br>
     <div class="row">
         <div class="col-md-6 text-center">
             <div class="panel">
@@ -49,7 +92,7 @@
                 <h3>North Cambridge</h3>
             </div>
             <div class="panel-body">
-                <h1>{{ $occupancy_nc }}%</h1>
+                <h1>{{ number_format($occupancy_nc,2) }}%</h1>
             </div>
         </div>
         </div>
@@ -59,10 +102,16 @@
                 <h3>The Courtyards</h3>
             </div>
             <div class="panel-body">
-                <h1>{{ $occupancy_cy }}%</h1>
+                <h1>{{ number_format($occupancy_cy, 2) }}%</h1>
             </div>
         </div>
         </div>
+    </div>
+    <div class="row">
+        <h3>Resident Move In Rate</h3>
+    </div>
+     <div class="row">
+        {!! $line->container() !!}
     </div>
     <div class="row">
         <h3>Stats</h3>
@@ -71,7 +120,7 @@
         <div class="col-md-4 text-center">
             <div class="panel">
                 <div class="panel-header">
-                    <h3>Rooms</h3>
+                    <h3>Rooms Enrolled</h3>
                 </div>
                 <div class="panel-body">
                     <h1>{{ $rooms }}</h1>
@@ -81,7 +130,7 @@
         <div class="col-md-4 text-center">
             <div class="panel">
                 <div class="panel-header">
-                    <h3>Residents</h3>
+                    <h3>Active Residents</h3>
                 </div>
                 <div class="panel-body">
                     <h1>{{ $residents }}</h1>
@@ -146,4 +195,7 @@
         </div>
     </div>
 </div>
+{!! $chart->script() !!}
+{!! $line->script() !!}
 @endsection
+

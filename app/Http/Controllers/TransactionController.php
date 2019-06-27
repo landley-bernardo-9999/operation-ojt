@@ -284,8 +284,7 @@ class TransactionController extends Controller
         ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
         ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
         ->where('transactions.trans_id', $trans_id)
-        ->where('payments.desc','sec_dep_utilities')
-        ->orWhere('payments.desc', 'sec_dep_rent')
+        ->whereIn('payments.desc',['sec_dep_utilities', 'sec_dep_rent'])
         ->get();
 
         $payment_move_outs = DB::table('transactions')
@@ -293,9 +292,7 @@ class TransactionController extends Controller
         ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
         ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
         ->where('trans_id', $trans_id)
-        ->where ('payments.desc','!=', 'sec_dep_utilities')
-        ->where('payments.desc','!=' ,'sec_dep_rent')
-        ->where('payments.desc', '!=','advance_rent')
+        ->whereNotIn ('payments.desc', ['sec_dep_utilities', 'sec_dep_rent', 'advance_rent', 'transient'])
         ->get();
 
         return view('resident-moveout', compact('transaction', 'resident', 'payment_move_ins', 'payment_move_outs'));

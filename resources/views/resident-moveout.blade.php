@@ -14,7 +14,7 @@
     </div>
     <div class="row">
          <tr>
-            <h3>Resident Move-out Form</h3>
+            <h3>Moveout Form</h3>
         </tr>
         <table class="table">
              @foreach ($resident as $resident)
@@ -39,7 +39,7 @@
             <td>{{ $transaction->move_out_reason }}</td>    
             @else
             <td>Move Out Date:</td>
-            <td> <input type="date" class="form-control" style="width:50%" name="actual_move_out_date" value="" required></<td>
+            <td> <input type="date" class="form-control" style="width:50%" name="actual_move_out_date" value="{{$transaction->move_out_date}}" required></<td>
             <input type="hidden" name="trans_status" value="inactive">
             <td>Reason:</td>
             <td>
@@ -92,7 +92,7 @@
            </tr>
            <?php $row_no_payments_move_in = 1; ?>
            @if(!$payment_move_ins->count() > 0)
-           <p>No Security Deposit.</p>
+           <p class="text-danger">No Security Deposit.</p>
            @else
            <tr>
                 <th>No.</th>
@@ -111,11 +111,11 @@
             </tr>
             @endforeach
             <tr>
-                 <td>Total</td>
-                 <td></td>
+                 <td><b>TOTAL</b></td>
                  <td></td>
                  <td></td>
                  <td><b>{{ number_format($payment_move_ins->sum('amt'), 2) }}</b></td>
+                 <td></td>
              </tr>
            @endif
           
@@ -128,6 +128,9 @@
                <h3>Move Out Charges</h3>
            </tr>
            <?php $row_no_payments_move_out = 1; ?>
+           @if(!$payment_move_outs->count() > 0)
+           <p class="text-danger">No Moveout Charges.</p>
+           @else
            <tr>
                <th>No.</th>
                <th>Date</th>
@@ -145,13 +148,13 @@
            </tr>
            @endforeach
            <tr>
-               <td>Total</td>
-               <td></td>
+               <td><b>TOTAL</b></td>
                <td></td>
                <td></td>
                <td><b>{{ number_format($payment_move_outs->sum('amt'), 2) }}</b></td>
+               <td></td>
            </tr>
-          
+          @endif
         </table>
         @else
         <table class="table">

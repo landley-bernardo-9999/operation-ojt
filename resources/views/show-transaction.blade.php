@@ -15,7 +15,7 @@
     <div class="row">
         <table class="table">
         <tr>
-            <h3>Contract</h3>
+            <h3>Leasing Agreement</h3>
         </tr>
         <tr>
             <td>Transaction Date:</td>
@@ -68,7 +68,7 @@
                 <td>Final </td>
                 <td><input type="number" class="form-control" style="width:30%" name="final_water_reading" value="{{ $transaction->final_water_reading }}"></td>
                 <td>Final  </td>
-                <td><input type="number" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_water_reading }}"></td>
+                <td><input type="number" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_electric_reading }}"></td>
             </tr>
             <tr>
                 <th ><button type="submit">SAVE</button></th>

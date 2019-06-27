@@ -90,6 +90,7 @@ class RoomController extends Controller
         $project = request('project');
         $short_term_rent = request('short_term_rent');
         $long_term_rent = request('long_term_rent');
+        $transient = request('transient');
         $size = request('size');
         $no_of_beds = request('no_of_beds');
 
@@ -100,6 +101,7 @@ class RoomController extends Controller
         $room->project = $project;
         $room->short_term_rent = $short_term_rent;
         $room->long_term_rent = $long_term_rent;
+        $room->transient  = $transient;
         $room->size = $size;
         $room->room_status = 'vacant';
         $room->no_of_beds = $no_of_beds;

@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="float-right col-md-2">
                      <label for="">Date of transaction</label>
-                    <input type="date" name="trans_date" id="" value="{{date('Y-m-d')}}" class="form-control">   
+                    <input type="date" name="trans_date" id="trans_date" value="{{date('Y-m-d')}}" onkeyup="select_term()" class="form-control">   
                 </div>
              </div>
              <br>
@@ -36,7 +36,7 @@
              <label for="">Contract Period</label>
              <div class="row">
                  <div class="col-md-2">
-                     From: <input type="date" class="form-control" value="{{date('Y-m-d')}}" name="move_in_date" id="move_in_date" required>
+                     From: <input type="date" class="form-control" name="move_in_date" id="move_in_date" required>
                  </div>
  
                 <div class="col-md-2">
@@ -94,8 +94,9 @@
 @endsection
 
 <script>
- function select_term(){    
-        var move_in_date = document.getElementById('move_in_date').value;
+    function select_term(){    
+        
+        var move_in_date = document.getElementById('move_in_date').value =  document.getElementById('trans_date').value;
         var move_out_date = document.getElementById('move_out_date').value;
         var building = document.getElementById('building').value;
 
@@ -221,10 +222,10 @@
 
         }
 
-        //computation of payment fo wharton.
+        //computation of payment fo manors.
         if( building === 'manors'){
             if( document.getElementById('term').value === 'long_term'){
-                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 18000;
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 17000;
                 var advance_rent = document.getElementById('advance_rent').value = 17000;
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
                 var transient = document.getElementById('transient').value = 0;
@@ -235,7 +236,7 @@
             }
             else if( document.getElementById('term').value === 'short_term'){
                 var sec_dep_rent = document.getElementById('sec_dep_rent').value = 18000;
-                var advance_rent = document.getElementById('advance_rent').value = 17000;
+                var advance_rent = document.getElementById('advance_rent').value = 18000;
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
                 var transient = document.getElementById('transient').value = 0;
 
@@ -256,7 +257,108 @@
 
         }
 
-     
-    }
+        //computation of payment fo loft.
+        if( building === 'loft'){
+            if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 13000;
+                var advance_rent = document.getElementById('advance_rent').value = 13000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
 
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else if( document.getElementById('term').value === 'short_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 14000;
+                var advance_rent = document.getElementById('advance_rent').value = 14000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else{
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 0;
+                var advance_rent = document.getElementById('advance_rent').value = 0;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 2000 * DaysDiff;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities + transient;
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+        }
+
+         //computation of payment fo arkansas.
+        if( building === 'arkansas'){
+            if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 16000;
+                var advance_rent = document.getElementById('advance_rent').value = 16000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else if( document.getElementById('term').value === 'short_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 17000;
+                var advance_rent = document.getElementById('advance_rent').value = 17000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else{
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 0;
+                var advance_rent = document.getElementById('advance_rent').value = 0;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 2000 * DaysDiff;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities + transient;
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+        }
+
+         //computation of payment fo colorado.
+         if( building === 'colorado'){
+            if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 13000;
+                var advance_rent = document.getElementById('advance_rent').value = 13000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else if( document.getElementById('term').value === 'short_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 14000;
+                var advance_rent = document.getElementById('advance_rent').value = 14000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else{
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 0;
+                var advance_rent = document.getElementById('advance_rent').value = 0;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 2000 * DaysDiff;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities + transient;
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+        }
+
+
+    }
 </script>

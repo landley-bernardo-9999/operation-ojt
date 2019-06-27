@@ -15,6 +15,7 @@ class Room extends Model
         'project',
         'long_term_rent', 
         'short_term_rent', 
+        'transient',
         'rooom_status', 
         'size', 
         'no_of_beds', 

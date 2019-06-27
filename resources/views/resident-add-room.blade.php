@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="float-right col-md-2">
                      <label for="">Date of transaction</label>
-                    <input type="date" name="trans_date" id="" value="{{date('Y-m-d')}}" class="form-control">   
+                    <input type="date" name="trans_date" id="trans_date" value="{{date('Y-m-d')}}" onkeyup="select_term()" class="form-control">   
                 </div>
              </div>
              <br>
@@ -26,7 +26,10 @@
                          <option value="">Select Building</option>
                          <option value="harvard">Harvard</option>
                          <option value="princeton">Princeton</option>
-                         <option value="wharton">Wharton</option>
+                         <option value="arkansas">Arkansas</option>
+                         <option value="colorado">Colorado</option>
+                         <option value="loft">Loft</option>
+                         <option value="manors">Manors</option>
                      </select>
                  </div>
                  <div class="col-md-2">
@@ -102,7 +105,7 @@
 
 <script>
  function select_term(){    
-        var move_in_date = document.getElementById('move_in_date').value;
+        var move_in_date = document.getElementById('move_in_date').value   = document.getElementById('trans_date').value; ;
         var move_out_date = document.getElementById('move_out_date').value;
         var building = document.getElementById('building').value;
 
@@ -209,6 +212,41 @@
                 var sec_dep_rent = document.getElementById('sec_dep_rent').value = 12000;
                 var advance_rent = document.getElementById('advance_rent').value = 12000;
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else{
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 0;
+                var advance_rent = document.getElementById('advance_rent').value = 0;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 2000 * DaysDiff;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities + transient;
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+
+        }
+
+                //computation of payment fo wharton.
+        if( building === 'manors'){
+            if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 17000;
+                var advance_rent = document.getElementById('advance_rent').value = 17000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else if( document.getElementById('term').value === 'short_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 18000;
+                var advance_rent = document.getElementById('advance_rent').value = 18000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
                 var transient = document.getElementById('transient').value = 0;
 
                 var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities

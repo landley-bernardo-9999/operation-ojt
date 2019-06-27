@@ -46,8 +46,8 @@
             <td> {{ $room->building }}</th>
         </tr>
         <tr>
-            <td>Montly Rent: (Long Term/Short Term):</td>
-            <td> {{ number_format($room->long_term_rent, 2) }}/{{ number_format($room->short_term_rent, 2) }}</th>
+            <td>Montly Rent: (Long Term/Short Term)/Transient:</td>
+            <td> {{ number_format($room->long_term_rent, 2) }}/{{ number_format($room->short_term_rent, 2) }}/{{ number_format($room->transient, 2) }}</th>
         </tr>
               
         <tr>
@@ -81,7 +81,7 @@
             </tr>
             <?php $row_no_owners = 1; ?>
             @if(!$owner->count() > 0)
-            <p>No Owners Found.</p>
+            <p class="text-danger">No Owners Found.</p>
             @else
             <tr>
                 <th>No.</th>
@@ -110,7 +110,7 @@
             </tr>
             <?php $row_no = 1; ?>
             @if(!$resident->count() > 0)
-            <p>No Residents Found.</p>
+            <p class="text-danger">No Residents Found.</p>
                 
             @else
              <tr>

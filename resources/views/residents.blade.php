@@ -18,6 +18,7 @@
             <th>No. </th>
             <th>Resident</th>
             <th>Unit No</th>
+            <th>Status</th>
             <th></th>
             <?php $row_no = 1; ?>    
         </tr>   
@@ -26,6 +27,7 @@
             <td>{{ $row_no++ }}.</td>
             <td>{{ $resident->first_name }} {{ $resident->last_name }}</td>
             <td>{{ $resident->building }} {{ $resident->room_no }}</td>
+            <td>{{ $resident->trans_status }}</td>
             <td><a href="/rooms/{{ $resident->room_id }}">MORE INFO</a></td>
         </tr>
         @endforeach

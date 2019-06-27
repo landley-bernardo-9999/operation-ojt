@@ -42,7 +42,10 @@ Route::get('/room/add', function(){
     $rooms = DB::table('contracts')
     ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
     ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
-    ->orderBy('building', 'asc')->get();
+    ->orderBy('project', 'asc')
+    ->orderBy('building', 'asc')
+    ->orderBy('floor_number', 'asc')
+    ->get();
 
     return view('resident-add-room', compact('rooms'));
 });
@@ -53,6 +56,9 @@ Route::get('/owner/room/add', function(){
         ->rightJoin('rooms', 'contracts.contract_room_id', 'rooms.room_id')
         ->select('room_id', 'room_no', 'building', 'room_status')
         ->where('contract_id', null)
+        ->orderBy('project', 'asc')
+        ->orderBy('building', 'asc')
+        ->orderBy('floor_number', 'asc')
         ->get(); 
 
     return view('owner-add-room', compact('rooms'));

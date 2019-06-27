@@ -75,7 +75,13 @@
                     </div>     
                 </div>
 
-
+                <div class="form-group row">
+                    <label for="long_term_rent" class="col-md-4 col-form-label text-md-right">Transient:</label>
+                    <div class="col-md-3">
+                        <input name="transient" type="number" min="1" class="form-control" value="" required>
+                    </div>     
+                </div>
+    
                 <div class="form-group row">
                     <label for="size" class="col-md-4 col-form-label text-md-right">Size:</label>
                     <div class="col-md-3">
@@ -107,4 +113,5 @@
         </div>
     </div> 
 </div>
+<br>
 @endsection
