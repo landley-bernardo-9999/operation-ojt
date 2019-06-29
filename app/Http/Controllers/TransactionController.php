@@ -74,9 +74,10 @@ class TransactionController extends Controller
              $payment = new Payment();
              $payment->amt = $sec_dep_rent;
              $payment->desc = 'sec_dep_rent';
-             $payment->payment_status = 'unpaid';
+             $payment->payment_status = 'paid';
              $payment->payment_transaction_id = $transaction->trans_id;
-             $payment->updated_at = null;
+             $payment->created_at = $transaction->trans_date;
+             $payment->updated_at = $transaction->trans_date;;
              $payment->save();
          }
 
@@ -86,7 +87,8 @@ class TransactionController extends Controller
              $payment->desc = 'advance_rent';
              $payment->payment_status = 'paid';
              $payment->payment_transaction_id = $transaction->trans_id;
-             $payment->updated_at = null;
+             $payment->created_at = $transaction->trans_date;
+             $payment->updated_at = $transaction->trans_date;;
              $payment->save();
          }
 
@@ -96,7 +98,8 @@ class TransactionController extends Controller
              $payment->desc = 'sec_dep_utilities';
              $payment->payment_status = 'paid';
              $payment->payment_transaction_id = $transaction->trans_id;
-             $payment->updated_at = null;
+             $payment->created_at = $transaction->trans_date;
+             $payment->updated_at = $transaction->trans_date;;
              $payment->save();
          }
 
@@ -106,7 +109,8 @@ class TransactionController extends Controller
              $payment->desc = 'transient';
              $payment->payment_status = 'paid';
              $payment->payment_transaction_id = $transaction->trans_id;
-             $payment->updated_at = null;
+             $payment->created_at = $transaction->trans_date;
+             $payment->updated_at = $transaction->trans_date;;
              $payment->save();
          }
  
@@ -174,43 +178,46 @@ class TransactionController extends Controller
  
           //create the payment.
          if($sec_dep_rent > 0){
-             $payment = new Payment();
-             $payment->amt = $sec_dep_rent;
-             $payment->desc = 'sec_dep_rent';
-             $payment->payment_status = 'paid';
-             $payment->payment_transaction_id = $transaction->trans_id;
-            //  $payment->updated_at = null;
-             $payment->save();
+            $payment = new Payment();
+            $payment->amt = $sec_dep_rent;
+            $payment->desc = 'sec_dep_rent';
+            $payment->payment_status = 'paid';
+            $payment->payment_transaction_id = $transaction->trans_id;
+            $payment->updated_at = $transaction->trans_date;;
+            $payment->created_at = $transaction->trans_date;
+            $payment->save();
          }
 
          if($advance_rent > 0){
-             $payment = new Payment();
-             $payment->amt = $advance_rent;
-             $payment->desc = 'advance_rent';
-             $payment->payment_status = 'paid';
-             $payment->payment_transaction_id = $transaction->trans_id;
-            //  $payment->updated_at = null;
-             $payment->save();
+            $payment = new Payment();
+            $payment->amt = $advance_rent;
+            $payment->desc = 'advance_rent';
+            $payment->payment_status = 'paid';
+            $payment->payment_transaction_id = $transaction->trans_id;
+            $payment->updated_at = $transaction->trans_date;;
+            $payment->save();
          }
 
          if($sec_dep_utilities > 0){
-             $payment = new Payment();
-             $payment->amt = $sec_dep_utilities;
-             $payment->desc = 'sec_dep_utilities';
-             $payment->payment_status = 'paid';
-             $payment->payment_transaction_id = $transaction->trans_id;
-            //  $payment->updated_at = null;
-             $payment->save();
+            $payment = new Payment();
+            $payment->amt = $sec_dep_utilities;
+            $payment->desc = 'sec_dep_utilities';
+            $payment->payment_status = 'paid';
+            $payment->payment_transaction_id = $transaction->trans_id;
+            $payment->updated_at = $transaction->trans_date;;
+            $payment->created_at = $transaction->trans_date;
+            $payment->save();
          }
 
          if($transient > 0){
-             $payment = new Payment();
-             $payment->amt = $transient;
-             $payment->desc = 'transient';
-             $payment->payment_status = 'paid';
-             $payment->payment_transaction_id = $transaction->trans_id;
-            //  $payment->updated_at = null;
-             $payment->save();
+            $payment = new Payment();
+            $payment->amt = $transient;
+            $payment->desc = 'transient';
+            $payment->payment_status = 'paid';
+            $payment->payment_transaction_id = $transaction->trans_id;
+            $payment->updated_at = $transaction->trans_date;;
+            $payment->created_at = $transaction->trans_date;
+            $payment->save();
          }
  
          $room = DB::table('rooms')
@@ -249,16 +256,23 @@ class TransactionController extends Controller
      */
     public function show($trans_id)
     {
-        $transaction = Transaction::findOrFail($trans_id);
+        if(auth()->user()->user_owner_id === session('owner_id') || auth()->user()->user_resident_id === session('resident_id') || auth()->user()->privilege === 'leasingOfficer'){
+            
+            $transaction = Transaction::findOrFail($trans_id);
 
-        $resident = DB::table('transactions')
-        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
-        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-        ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
-        ->where('transactions.trans_id', $trans_id)
-        ->get();
-
-        return view('show-transaction', compact('transaction', 'resident'));
+            $resident = DB::table('transactions')
+            ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+            ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+            ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
+            ->where('transactions.trans_id', $trans_id)
+            ->get();
+    
+            return view('show-transaction', compact('transaction', 'resident'));
+        }
+        else{
+            abort(404, "Forbidden Page.");
+        }
+      
     }
 
     /**

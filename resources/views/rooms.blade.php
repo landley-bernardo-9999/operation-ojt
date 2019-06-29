@@ -31,7 +31,7 @@
     </div> 
     <br><br>
     <div class="container">
-        <p><b>{{ $room }}</b> rooms are enrolled in leasing.</p>
+        {{-- <p><b>{{ $room }}</b> rooms are enrolled in leasing.</p> --}}
         <div class="row">
             <table class="table table-responsive">  
                 <h3>Harvard</h3>

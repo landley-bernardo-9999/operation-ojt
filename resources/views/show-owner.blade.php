@@ -192,6 +192,7 @@
                 <td>
                     {{Carbon\Carbon::parse(  $contract->enrollment_date )->formatLocalized('%b %d %Y')}}
                 </td>
+                <td><a href="/rooms/{{ $contract->contract_room_id }}">MORE INFO</a></td>
            </tr>
            @endforeach
         </table>

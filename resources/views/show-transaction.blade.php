@@ -30,10 +30,12 @@
             <td>Unit No:</td>
             <td>{{ $resident->building }} {{ $resident->room_no }}</td>
         </tr>
+        @if (auth()->user()->privilege === 'leasingOfficer')
         <tr>
             <td>Owner Name:</td>
             <td>{{ $resident->owner_first_name }} {{ $resident->owner_last_name }}</td>
-        </tr>
+        </tr>    
+        @endif
         <tr>
             <td>Status of the contract:</td>
             <td>{{ $transaction->trans_status }}</td>
@@ -57,7 +59,7 @@
                 <th><label for="">Electric</label></th>
                 <th></th>
             </tr>
-            @if($transaction->trans_status == 'active')
+            @if($transaction->trans_status == 'active' || $transaction->trans_resident_id != session('resident_id'))
             <tr>
                 <td>Initial</td>
                 <td><input type="number" class="form-control" style="width:30%" name="initial_water_reading" value="{{ $transaction->initial_water_reading }}"></td>

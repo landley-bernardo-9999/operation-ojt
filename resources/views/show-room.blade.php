@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', session('sess_room_no'))
+@section('title', $room->room_no)
 @section('content')
 <div class="container">
     <div class="row">

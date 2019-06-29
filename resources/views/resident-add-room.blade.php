@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title',session('sess_room_no'))
+@section('title',session('resident_name'))
 @section('content')
 <div class="container">
     <div class="card">
@@ -19,7 +19,7 @@
              <br>
              <div class="row">
                 <div class="col-md-2">
-                    <p>Client: <b>{{session('sess_first_name')}} {{session('sess_middle_name')}} {{session('sess_last_name')}}</b></p>    
+                    <p>Client: <b>{{session('resident_name')}}</b></p>    
                 </div>
                  <div class="col-md-2">
                      Building<select class="form-control" name="building" id="building" required >

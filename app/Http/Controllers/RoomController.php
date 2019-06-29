@@ -121,7 +121,7 @@ class RoomController extends Controller
     {
         try
         {
-            if(auth()->user()->user_id === null || auth()->user()->privilege === 'leasingOfficer'){
+            if(auth()->user()->user_owner_id === session('owner_id') || auth()->user()->user_resident_id === session('resident_id') || auth()->user()->privilege === 'leasingOfficer'){
 
                 $room = Room::findOrFail($room_id);
 
@@ -135,14 +135,15 @@ class RoomController extends Controller
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
                 ->where('transactions.trans_room_id', $room_id)
-                ->orderBy('trans_date', 'desc')
+                ->orderBy('move_in_date', 'desc')
                 ->get();
         
-                session(['sess_room_id' => $room->room_id]);
-                session(['sess_room_no' => $room->room_no]);
-                session(['sess_room_building' => $room->building]);
-                session(['sess_no_of_beds' => $room->no_of_beds]);
-        
+                if(auth()->user()->privilege === 'leasingOfficer'){
+                    session(['sess_room_id' => $room->room_id]);
+                    session(['sess_room_no' => $room->room_no]);
+                    session(['sess_room_building' => $room->building]);
+                    session(['sess_no_of_beds' => $room->no_of_beds]);
+                }      
                 return view('show-room', compact('room', 'owner', 'resident'));
             }
             else{

@@ -243,7 +243,9 @@
                    <td id="move_out_charges_grand_total" name="move_out_charges_grand_total"><b>0.00</b></td>
                 </tr> 
             </table>
-            <button onclick="return confirm('Are you sure you want to perform this operation? ');">MOVE OUT</button>
+            @if (auth()->user()->privilege === 'leasingOfficer')
+            <button onclick="return confirm('Are you sure you want to perform this operation? ');">MOVE OUT</button>            
+            @endif
         @endif
         </form>
     </div>    

@@ -152,8 +152,6 @@ class ResidentController extends Controller
                 session(['resident_name'=> $resident->first_name.' '.$resident->last_name]);
                 session(['resident_id'=> $resident_id]);
         
-                $resident->last_name;
-        
                 $transaction = DB::table('transactions')
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')

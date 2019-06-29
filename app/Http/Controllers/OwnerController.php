@@ -149,11 +149,12 @@ class OwnerController extends Controller
                 $owner_name = $owner->owner_first_name.' '.$owner->owner_last_name;
         
                 $owner_id = $owner->owner_id;
-        
+
+             
                 session(['owner_name' => $owner_name]);
-        
                 session(['owner_id' => $owner_id]);
-        
+            
+    
                 $contract = DB::table('contracts')
                 ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
                 ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
