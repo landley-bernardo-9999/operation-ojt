@@ -28,7 +28,7 @@
             <td>{{ $resident->first_name }} {{ $resident->last_name }}</td>
             <td>{{ $resident->building }} {{ $resident->room_no }}</td>
             <td>{{ $resident->trans_status }}</td>
-            <td><a href="/rooms/{{ $resident->room_id }}">MORE INFO</a></td>
+            <td><a href="/rooms/{{ $resident->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
         </tr>
         @endforeach
         @else

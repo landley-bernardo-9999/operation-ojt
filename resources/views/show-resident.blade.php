@@ -5,31 +5,31 @@
     <div class="row">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" href="/rooms/{{ session('sess_room_id') }}">Back</a>
+                <a class="nav-link" href="/rooms/{{ session('sess_room_id') }}" oncontextmenu="return false">Back</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Edit</a>
+                <a class="nav-link" href="#" oncontextmenu="return false">Edit</a>
             </li>
             <li class="nav-item">
-                <a href="/co-tenant/create">Add Co-Tenant</a>
+                <a href="/co-tenant/create" oncontextmenu="return false">Add Co-Tenant</a>
             </li>
             <li class="nav-item">
-                <a href="/room/add">Add Room</a>
+                <a href="/room/add" oncontextmenu="return false">Add Room</a>
             </li>
             <li class="nav-item">
-                <a href="/room/add">Transfer Resident</a>
+                <a href="/room/add" oncontextmenu="return false">Transfer Resident</a>
             </li>
             <li class="nav-item">
-                <a href="#">Add Repair</a>
+                <a href="#" oncontextmenu="return false">Add Repair</a>
             </li>
             <li class="nav-item">
-                <a href="#">Add Violation</a>
+                <a href="#" oncontextmenu="return false">Add Violation</a>
             </li>
             <li class="nav-item">
-                <a href="#">Borrow Key</a>
+                <a href="#" oncontextmenu="return false">Borrow Key</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">House Rules</a>
+                <a href="#" class="nav-link" oncontextmenu="return false">House Rules</a>
             </li>
             @if(auth()->user()->privilege === 'leasingOfficer')
              <li class="nav-item">
@@ -247,7 +247,7 @@
                         {{ number_format($transaction->short_term_rent, 2) }}
                     @endif
                 </td>
-                <td><a href="/transactions/{{ $transaction->trans_id }}">MORE INFO</a></td>
+                <td><a href="/transactions/{{ $transaction->trans_id }}" oncontextmenu="return false">MORE INFO</a></td>
            </tr>
            @endforeach
           

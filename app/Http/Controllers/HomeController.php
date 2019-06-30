@@ -37,7 +37,7 @@ class HomeController extends Controller
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
                 ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
-                ->orderBy('move_in_date', 'asc')
+                ->orderBy('move_in_date', 'desc')
                 ->where('trans_status', 'active')
                 ->take(10)
                 ->get();  
@@ -46,7 +46,7 @@ class HomeController extends Controller
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
                 ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
-                ->orderBy('actual_move_out_date', 'asc')
+                ->orderBy('actual_move_out_date', 'desc')
                 ->where('trans_status', 'inactive')
                 ->take(10)
                 ->get();  

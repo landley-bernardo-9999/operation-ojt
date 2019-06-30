@@ -5,10 +5,10 @@
     <div class="row">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" href="/residents/{{ session('resident_id') }}">Back</a>
+                <a class="nav-link" href="/residents/{{ session('resident_id') }}" oncontextmenu="return false">Back</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/transactions/{{ $transaction->trans_id }}/edit">Move Out</a>
+                <a class="nav-link" href="/transactions/{{ $transaction->trans_id }}/edit" oncontextmenu="return false">Move Out</a>
             </li>
         </ul>
     </div>

@@ -5,20 +5,20 @@
     <div class="row">
        <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" href="{{ URL::previous() }}">Back</a>
+                <a class="nav-link" href="{{ URL::previous() }}" oncontextmenu="return false">Back</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Edit</a>
+                <a class="nav-link" href="#" oncontextmenu="return false">Edit</a>
             </li>
             <li class="nav-item">
                 @if($room->room_status != 'vacant')
-                    <a title="You can't add a resident. The unit is already occupied." class="nav-link" href="#" aria-disabled="true">Add Resident</a>
+                    <a title="You can't add a resident. The unit is already occupied." class="nav-link" href="#" aria-disabled="true" oncontextmenu="return false">Add Resident</a>
                 @else
-                    <a class="nav-link" href="/residents/create/">Add Resident</a>
+                    <a class="nav-link" href="/residents/create/" oncontextmenu="return false">Add Resident</a>
                 @endif
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/owners/create/">Add Owner</a>
+                <a class="nav-link" href="/owners/create/" oncontextmenu="return false">Add Owner</a>
             </li>
             
             @if(auth()->user()->privilege === 'leasingOfficer')
@@ -95,7 +95,7 @@
                 <td>{{ $owner->owner_first_name }} {{ $owner->owner_middle_name }} {{ $owner->owner_last_name }}</td>
                 <td>{{Carbon\Carbon::parse(  $owner->enrollment_date )->formatLocalized('%b %d %Y')}}</td>
                 <?php session(['sess_owner_id'=> $owner->owner_id]) ?>
-                <td><a href="/owners/{{$owner->owner_id}}">MORE INFO</a></td>
+                <td><a href="/owners/{{$owner->owner_id}}" oncontextmenu="return false">MORE INFO</a></td>
             </tr>
             @endforeach
             @endif
@@ -126,7 +126,7 @@
                 <td>{{ $resident->first_name }} {{ $resident->middle_name }} {{ $resident->last_name }}</td>
                 <td>{{ $resident->trans_status }}</td>
                 <td>{{Carbon\Carbon::parse(  $resident->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $resident->move_out_date )->formatLocalized('%b %d %Y')}}</td>
-                <td><a href="/residents/{{$resident->resident_id}}">MORE INFO</a></td>
+                <td><a href="/residents/{{$resident->resident_id}}" oncontextmenu="return false">MORE INFO</a></td>
             </tr>
             @endforeach
             @endif

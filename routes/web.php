@@ -35,7 +35,7 @@ Route::get('/co-tenant/create', function(){
 
 Route::get('/resident/moveout', function(){
     return view('resident-moveout');
-});
+}); 
 
 Route::get('/room/add', function(){
     

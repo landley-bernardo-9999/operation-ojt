@@ -11,7 +11,7 @@
             </button>
 
             <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/home') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}" oncontextmenu="return false">
                     {{ config('app.name', 'Laravel') }}
                 </a>
         </div>
@@ -26,35 +26,36 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
+                    <li><a href="{{ route('login') }}" oncontextmenu="return false">Login</a></li>
+                    <li><a href="{{ route('register') }}" oncontextmenu="return false">Register</a></li>
                 @else
                 <ul class="nav navbar-nav nav-bar-left">
                     @if(auth()->user()->privilege === 'admin')
-                    <li><a href="/users/"><i class="fas fa-user-circle"></i>&nbspUsers</a></li>
+                    <li><a href="/users/create" oncontextmenu="return false"><i class="fas fa-user-plus"></i>&nbspRegister</a></li>
+                    <li><a href="/users/" oncontextmenu="return false"><i class="fas fa-user-circle"></i>&nbspUsers</a></li>
                     @endif
                     @if(auth()->user()->privilege === 'leasingOfficer')
-                    <li><a href="/rooms/"><i class="fas fa-home"></i>&nbspRooms</a></li>
-                    <li><a href="/residents/"><i class="fas fa-users"></i>&nbspResidents</a></li>
-                    <li><a href="/owners/"><i class="fas fa-user-tie"></i>&nbspOwners</a></li>
-                    <li><a href="/violations/"><i class="fas fa-user-times"></i>&nbspViolations</a></li>
-                    <li><a href="/repairs/"><i class="fas fa-hammer"></i>&nbspRepairs</a></li>
-                    <li><a href="/personnels/"><i class="fas fa-user-lock"></i>&nbspPersonnels</a></li>
+                    <li><a href="/rooms/" oncontextmenu="return false"><i class="fas fa-home"></i>&nbspRooms</a></li>
+                    <li><a href="/residents/" oncontextmenu="return false"><i class="fas fa-users"></i>&nbspResidents</a></li>
+                    <li><a href="/owners/" oncontextmenu="return false"><i class="fas fa-user-tie"></i>&nbspOwners</a></li>
+                    <li><a href="/violations/" oncontextmenu="return false"><i class="fas fa-user-times"></i>&nbspViolations</a></li>
+                    <li><a href="/repairs/" oncontextmenu="return false"><i class="fas fa-hammer"></i>&nbspRepairs</a></li>
+                    <li><a href="/personnels/" oncontextmenu="return false"><i class="fas fa-user-lock"></i>&nbspPersonnels</a></li>
                     @endif
                 </ul>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" oncontextmenu="return false">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
                              <li>
-                                <a href="/users/{{ auth()->user()->user_id }}">My Account</a>
+                                <a href="/users/{{ auth()->user()->user_id }}" oncontextmenu="return false">My Account</a>
                             </li> 
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
+                                             document.getElementById('logout-form').submit();" oncontextmenu="return false">
                                     Logout
                                 </a>
 

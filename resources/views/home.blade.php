@@ -162,9 +162,6 @@
         {!! $line2->container() !!}
     </div>
     <div class="row">
-        <h3>Stats</h3>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <h3>Last 10 move in</h3>
             <table class="table">
@@ -182,7 +179,7 @@
                     <td>{{ $move_in->first_name}} {{ $move_in->last_name }}</td>
                     <td>{{ $move_in->room_no}} </td>
                     <td>{{Carbon\Carbon::parse(  $move_in->move_in_date )->formatLocalized('%b %d %Y')}}</td>
-                    <td><a href="rooms/{{ $move_in->room_id }}">MORE INFO</a></td>
+                    <td><a href="rooms/{{ $move_in->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
                 </tr>
                 @endforeach
             </table>
@@ -204,7 +201,7 @@
                     <td>{{ $move_out->first_name}} {{ $move_out->last_name }}</td>
                     <td>{{ $move_out->room_no}} </td>
                     <td>{{Carbon\Carbon::parse(  $move_out->actual_move_out_date )->formatLocalized('%b %d %Y')}}</td>
-                    <td><a href="rooms/{{ $move_out->room_id }}">MORE INFO</a></td>
+                    <td><a href="rooms/{{ $move_out->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
                 </tr>
                 @endforeach
             </table>

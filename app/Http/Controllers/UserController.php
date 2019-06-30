@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use DB;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -22,8 +23,9 @@ class UserController extends Controller
                 $s = $request->query('s');
 
                 $users = DB::table('users')
-                ->orWhere('email', 'like', "%$s%")
-                ->orWhere('name', 'like', "%$s%")
+                ->where('privilege','!=' ,'admin')
+                ->where('name', 'like', "%$s%")
+                ->orderBy('created_at','desc')
                 ->get();
 
                 return view('users', compact('users'));      
@@ -45,7 +47,21 @@ class UserController extends Controller
      */
     public function create()
     {
-       //
+        try
+        {
+            if(auth()->user()->privilege === 'admin'){
+
+                return view('create-user');
+            }
+            else{
+                abort(404, "Forbidden Page.");
+            }   
+         }
+        catch(\Exception $e)
+        {
+            abort(404, "Forbidden Page.");
+        }
+
     }
 
     /**
@@ -56,7 +72,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(auth()->user()->privilege === 'admin'){
+
+            request()->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+    
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'privilege' => $request->privilege,
+                'password' =>  bcrypt($request->password),
+            ]);
+    
+            return redirect('users/create')->with('success', 'User has been registered successfully!');
+        }
+        else{
+            abort(404, "Forbidden Page.");
+        }   
+      
     }
 
     /**
@@ -115,8 +151,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id)
     {
-        //
+        DB::table('users')->where('user_id', $user_id)->delete();
+
+        return redirect('/users/')->with('success','User has been deleted!');
     }
 }
