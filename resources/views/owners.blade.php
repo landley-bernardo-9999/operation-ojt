@@ -26,7 +26,7 @@
             <td>{{ $row_no++ }}.</td>
             <td>{{ $owner->owner_first_name }} {{ $owner->owner_last_name }}</td>
             <td>{{ $owner->building }} {{ $owner->room_no }}</td>
-            <td><a href="/rooms/{{ $owner->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
+            <td><a href="/rooms/{{ $owner->room_id }}" oncontextmenu="return false" >MORE INFO</a></td>
         </tr>
         @endforeach
         @else

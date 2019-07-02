@@ -2,13 +2,14 @@
 @section('title', $room->room_no)
 @section('content')
 <div class="container">
+@if(auth()->user()->privilege === 'leasingOfficer')
     <div class="row">
        <ul class="nav nav-pills">
             <li class="nav-item">
                 <a class="nav-link" href="{{ URL::previous() }}" oncontextmenu="return false">Back</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" oncontextmenu="return false">Edit</a>
+                <a class="nav-link" href="/rooms/{{ $room->room_id }}/edit" oncontextmenu="return false">Edit</a>
             </li>
             <li class="nav-item">
                 @if($room->room_status != 'vacant')
@@ -21,7 +22,7 @@
                 <a class="nav-link" href="/owners/create/" oncontextmenu="return false">Add Owner</a>
             </li>
             
-            @if(auth()->user()->privilege === 'leasingOfficer')
+         
              <li class="nav-item">
                 <form method="POST" action="/rooms/{{ $room->room_id }}">
                     @method('delete')
@@ -29,9 +30,9 @@
                     <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger nav-link">Delete</button>
                 </form>
             </li>
-            @endif
         </ul>
     </div>
+@endif
     <div class="row">
         <table class="table table-borderless">
         <tr>
@@ -74,6 +75,7 @@
         </table>
     </div>
 
+@if(auth()->user()->privilege === 'leasingOfficer')
     <div class="row">
         <table class="table">
             <tr>
@@ -102,22 +104,30 @@
 
         </table>
     </div>
-
+@endif
     <div class="row">
         <table class="table">
             <tr>
-                <h3>Residents</h3>
+                @if(auth()->user()->privilege === 'leasingOfficer')
+                    <h3>Residents</h3>
+                @else
+                    <h3>Contracts</h3>
+                @endif
             </tr>
             <?php $row_no = 1; ?>
             @if(!$resident->count() > 0)
-            <p class="text-danger">No Residents Found.</p>
-                
+            @if(auth()->user()->privilege === 'leasingOfficer')
+                <p class="text-danger">No Residents Found.</p>
+            @else
+                <p class="text-danger">No Contracts Found.</p>
+            @endif
             @else
              <tr>
                 <th>No.</th>
                 <th>Name</th>
                 <th>Status</th>
                 <th>Contract Period</th>
+                <th>Term</th>
                 <th></th>
             </tr>
             @foreach ($resident as $resident)
@@ -125,22 +135,18 @@
                 <td>{{ $row_no++ }}.</td>
                 <td>{{ $resident->first_name }} {{ $resident->middle_name }} {{ $resident->last_name }}</td>
                 <td>{{ $resident->trans_status }}</td>
-                <td>{{Carbon\Carbon::parse(  $resident->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $resident->move_out_date )->formatLocalized('%b %d %Y')}}</td>
-                <td><a href="/residents/{{$resident->resident_id}}" oncontextmenu="return false">MORE INFO</a></td>
+                <td>{{Carbon\Carbon::parse(  $resident->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $resident->move_out_date )->formatLocalized('%b %d %Y')}} </td>
+                <td>{{ $resident->term }}</td>
+                <td>   
+                    @if(auth()->user()->privilege === 'leasingOfficer')
+                        <a href="/residents/{{$resident->resident_id}}" oncontextmenu="return false">MORE INFO</a>
+                    @endif
+                </td>
             </tr>
             @endforeach
             @endif
         </table>
-    </div>
-
-    <div class="row">
-        <table class="table">
-            <tr>
-                <h3>Repairs</h3>
-            </tr>
-        </table>
-    </div>
-    
+    </div>    
 </div>
 @endsection
 

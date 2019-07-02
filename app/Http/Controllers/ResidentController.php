@@ -152,7 +152,7 @@ class ResidentController extends Controller
                 session(['resident_name'=> $resident->first_name.' '.$resident->last_name]);
                 session(['resident_id'=> $resident_id]);
         
-                $transaction = DB::table('transactions')
+                $contract = DB::table('transactions')
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
                 ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
@@ -174,7 +174,7 @@ class ResidentController extends Controller
                 ->where('residents.resident_id', $resident_id)
                 ->get();
         
-                return view('show-resident', compact('resident', 'transaction', 'repairs', 'payment', 'co_residents', 'guardian'));
+                return view('show-resident', compact('resident', 'contract', 'repairs', 'payment', 'co_residents', 'guardian'));
             }
             else{
                 abort(404, "Forbidden Page.");

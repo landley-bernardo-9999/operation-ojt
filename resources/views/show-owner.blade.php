@@ -1,19 +1,27 @@
 @extends('layouts.app')
-@section('title',  $owner->owner_first_name." ".$owner->owner_last_name)
+@if(auth()->user()->privilege === 'owner')
+    @section('title',  'Profile')
+@elseif(auth()->user()->privilege === 'resident')
+    @section('title',  'Profile')
+@else
+    @section('title',  $owner->owner_first_name." ".$owner->owner_last_name)
+@endif
+
 @section('content')
 <div class="container">
+    @if(auth()->user()->privilege === 'leasingOfficer')
     <div class="row">
          <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" href="{{ URL::previous() }}">Back</a>
+                <a class="nav-link" href="{{ URL::previous() }}" oncontextmenu="return false">Back</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Edit</a>
+                <a class="nav-link" href="/owners/{{ $owner->owner_id }}/edit" oncontextmenu="return false">Edit</a>
             </li>
             <li class="nav-item">
-                <a href="/owner/room/add">Add Room</a>
+                <a href="/owner/room/add" oncontextmenu="return false">Add Room</a>
             </li>
-            @if(auth()->user()->privilege === 'leasingOfficer')
+            
             <li class="nav-item">
                 <form method="POST" action="/owners/{{ $owner->owner_id }}">
                     @method('delete')
@@ -21,10 +29,9 @@
                     <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger" >Delete</button>
                 </form> 
            </li>
-           @endif
         </ul>
-      
     </div>
+    @endif
     <div class="row">
        <div class="col-md-9">
             <table class="table">
@@ -69,7 +76,7 @@
        </div>
 
        <div class="col-md-3">
-           <img src="/storage/owner_img/nophoto.png" alt="..." class="img-thumbnail">
+          
        </div>
     </div>
 
@@ -165,12 +172,17 @@
             </table>
         </div>
 
-    <div class="row">
+   @if(auth()->user()->privilege === 'leasingOfficer')
+   <div class="row">
         <table class="table">
            <tr>
                <h3>Units</h3>
            </tr>
            <?php $row_no_units = 1; ?>
+           @if(!$contract->count() > 0)
+           <p class="text-danger">No Units Found.</p>
+               
+           @else
            <tr>
                <th>No.</th>
                <th>Unit No</th>
@@ -195,72 +207,10 @@
                 <td><a href="/rooms/{{ $contract->contract_room_id }}">MORE INFO</a></td>
            </tr>
            @endforeach
+           @endif
         </table>
     </div>
 
-    <div class="row">
-        <table class="table">
-           <tr>
-               <h3>Transactions</h3>
-           </tr>
-           <?php $row_no_trans = 1; ?>
-           <tr>
-               <th>No.</th>
-               <th>Unit No</th>
-               <th>Building</th>
-               <th>Contract Period</th>
-               <th>Contract Status</th>
-               <th>Montly Rent</th>
-           </tr>
-           @foreach ($transaction as $transaction)
-           <tr>
-                <td>
-                    {{ $row_no_trans++ }}.
-                </td>
-                <td>
-                   {{ $transaction->room_no }}
-                </td>
-                <td>
-                    {{ $transaction->building }}
-                </td>
-                <td>
-                    {{Carbon\Carbon::parse(  $transaction->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $transaction->move_out_date )->formatLocalized('%b %d %Y')}} 
-                </td>
-                <td>
-                    {{ $transaction->trans_status }}
-                </td>
-                <td>
-                    @if($transaction->term == 'long_term')
-                        {{ number_format($transaction->long_term_rent, 2) }}
-                    @elseif($transaction->term == 'short_term')
-                        {{ number_format($transaction->short_term_rent, 2) }}
-                    @endif
-                </td>
-           </tr>
-           @endforeach
-          
-        </table>
-    </div>
-
-    <div class="row">
-            <table class="table">
-               <tr>
-                   <h3>Repairs</h3>
-               </tr>
-               <?php $row_no_trans = 1; ?>
-               <tr>
-                   <th>No.</th>
-                   <th>Unit No</th>
-                   <th>Building</th>
-                   <th>Contract Period</th>
-                   <th>Contract Status</th>
-                   <th>Montly Rent</th>
-               </tr>
-             
-              
-            </table>
-        </div>
-
-    
+    @endif
 </div>
 @endsection

@@ -27,23 +27,23 @@ class LoginController extends Controller
      */
 
      protected function authenticated($request, $user){
-         if($user->privilege == 'admin'){
+         if($user->privilege === 'admin'){
             return redirect('/users');
          }
-         elseif($user->privilege == 'executive'){
+         elseif($user->privilege === 'executive'){
              return redirect('/home');
          }
-         elseif($user->privilege == 'leasingOfficer'){
+         elseif($user->privilege === 'leasingOfficer'){
             return redirect('/home');
         }
-        elseif($user->privilege == 'treasury'){
+        elseif($user->privilege === 'treasury'){
             return redirect('/residents');
         }
-        elseif($user->privilege == 'resident'){  
-            return redirect('/residents/'.auth()->user()->user_resident_id);
+        elseif($user->privilege === 'resident'){  
+            return redirect('/dashboard');
         }
-        elseif($user->privilege == 'owner'){
-            return redirect('/owners/'.auth()->user()->user_owner_id);
+        elseif($user->privilege === 'owner'){
+            return redirect('/dashboard');
         }
          
      }

@@ -136,7 +136,7 @@
         <div class="row">
             <table class="table">
             <tr>
-                <h3>Guardian Information</h3>
+                <h3>Guardian</h3>
             </tr>
             <?php $row_no_co_guardian = 1; ?>
             <tr>
@@ -181,8 +181,55 @@
             </table>
         </div>
 
+    <div class="row">
+        <table class="table">
+           <tr>
+               <h3>Contracts</h3>
+           </tr>
+           <?php $row_no_contracts = 1; ?>
+           <tr>
+               <th>No.</th>
+               <th>Unit No</th>
+               <th>Building</th>
+               <th>Contract Period</th>
+               <th>Contract Status</th>
+               <th>Montly Rent</th>
+               <th></th>
+           </tr>
+           @foreach ($contract as $contract)
+           <tr>
+                <td>
+                    {{ $row_no_contracts++ }}.
+                </td>
+                <td>
+                   {{ $contract->room_no }}
+                </td>
+                <td>
+                    {{ $contract->building }}
+                </td>
+                <td>
+                    {{Carbon\Carbon::parse(  $contract->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $contract->move_out_date )->formatLocalized('%b %d %Y')}} 
+                </td>
+                <td>
+                    {{ $contract->trans_status }}
+                </td>
+                <td>
+                    @if($contract->term == 'long_term')
+                        {{ number_format($contract->long_term_rent, 2) }}
+                    @elseif($contract->term == 'short_term')
+                        {{ number_format($contract->short_term_rent, 2) }}
+                    @else   
+                        {{ number_format($contract->transient, 2) }} - transient
+                    @endif
+                </td>
+                <td><a href="/transactions/{{ $contract->trans_id }}" oncontextmenu="return false">MORE INFO</a></td>
+           </tr>
+           @endforeach
+          
+        </table>
+    </div>
 
-         <div class="row">
+    <div class="row">
         <table class="table">
            <tr>
                <h3>Payments</h3>
@@ -207,74 +254,6 @@
           
         </table>
     </div>
-
-    <div class="row">
-        <table class="table">
-           <tr>
-               <h3>Transactions</h3>
-           </tr>
-           <?php $row_no_trans = 1; ?>
-           <tr>
-               <th>No.</th>
-               <th>Unit No</th>
-               <th>Building</th>
-               <th>Contract Period</th>
-               <th>Contract Status</th>
-               <th>Montly Rent</th>
-               <th></th>
-           </tr>
-           @foreach ($transaction as $transaction)
-           <tr>
-                <td>
-                    {{ $row_no_trans++ }}.
-                </td>
-                <td>
-                   {{ $transaction->room_no }}
-                </td>
-                <td>
-                    {{ $transaction->building }}
-                </td>
-                <td>
-                    {{Carbon\Carbon::parse(  $transaction->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $transaction->move_out_date )->formatLocalized('%b %d %Y')}} 
-                </td>
-                <td>
-                    {{ $transaction->trans_status }}
-                </td>
-                <td>
-                    @if($transaction->term == 'long_term')
-                        {{ number_format($transaction->long_term_rent, 2) }}
-                    @elseif($transaction->term == 'short_term')
-                        {{ number_format($transaction->short_term_rent, 2) }}
-                    @endif
-                </td>
-                <td><a href="/transactions/{{ $transaction->trans_id }}" oncontextmenu="return false">MORE INFO</a></td>
-           </tr>
-           @endforeach
-          
-        </table>
-    </div>
-
-    
-
-    <div class="row">
-            <table class="table">
-               <tr>
-                   <h3>Repairs</h3>
-               </tr>
-               <?php $row_no_trans = 1; ?>
-               <tr>
-                   <th>No.</th>
-                   <th>Unit No</th>
-                   <th>Building</th>
-                   <th>Contract Period</th>
-                   <th>Contract Status</th>
-                   <th>Montly Rent</th>
-               </tr>
-             
-              
-            </table>
-        </div>
-
     
 </div>
 @endsection

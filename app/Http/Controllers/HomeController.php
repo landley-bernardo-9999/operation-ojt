@@ -159,9 +159,15 @@ class HomeController extends Controller
                     'reserved_rooms'
                 ));
             }
-            else{
+
+            if (auth()->user()->privilege === 'owner' ){
                 
-                abort(404, "Forbidden Page.");
+                return view('owner-dashboard');
+            }   
+
+            if (auth()->user()->privilege === 'resident' ){
+                
+                return view('resident-dashboard');
             }   
         }
         catch(\Exception $e)

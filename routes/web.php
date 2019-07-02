@@ -37,6 +37,46 @@ Route::get('/resident/moveout', function(){
     return view('resident-moveout');
 }); 
 
+Route::get('/dashboard', function(){
+    if(auth()->user()->privilege === 'owner'){
+        $rooms = DB::table('contracts')
+        ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+        ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
+        ->where('contracts.contract_owner_id', auth()->user()->user_owner_id)
+        ->get();
+
+        $enrollment_date = DB::table('contracts')
+        ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+        ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
+        ->where('contracts.contract_owner_id', auth()->user()->user_owner_id)
+        ->orderBy('enrollment_date', 'desc')
+        ->get();
+
+        $contract = DB::table('transactions')
+        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+        ->where('transactions.trans_owner_id', auth()->user()->user_owner_id)
+        ->orderBy('move_in_date', 'desc')
+        ->get();
+
+        $move_out = DB::table('transactions')
+        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+        ->where('transactions.trans_owner_id', auth()->user()->user_owner_id)
+        ->orderBy('actual_move_out_date', 'desc')
+        ->get();
+
+        session(['dashboard_owner_id'=> auth()->user()->user_owner_id]);
+
+        return view('owner-dashboard', compact('rooms', 'enrollment_date', 'contract', 'move_out'));
+    }
+    if(auth()->user()->privilege === 'resident'){
+
+    }    
+
+}); 
+
+
 Route::get('/room/add', function(){
     
     $rooms = DB::table('contracts')

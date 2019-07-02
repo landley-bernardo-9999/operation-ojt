@@ -32,7 +32,7 @@ class OwnerController extends Controller
                 ->orWhere(DB::raw('CONCAT_WS(" ", owner_first_name,owner_last_name, " ")'), 'like', "%{$s}%")
                 ->orWhere('owner_email_address', 'like', "%$s%")
                 ->orWhere('owner_mobile_number', 'like', "%$s%")
-                ->orderBy('enrollment_date', 'asc')
+                ->orderBy('contracts.created_at', 'desc')
                 ->get();  
         
                 return view ('owners', compact('owners'));
@@ -143,7 +143,7 @@ class OwnerController extends Controller
     {   
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer' || (auth()->user()->user_owner_id == $owner_id)){
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_owner_id == $owner_id ){
 
                 $owner = Owner::findOrFail($owner_id);
 
@@ -163,17 +163,10 @@ class OwnerController extends Controller
                 ->get();
         
                 $bank = DB::table('banks')->where('bank_owner_id', $owner_id)->get();
-                
-                $transaction = DB::table('transactions')
-                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
-                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-                ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
-                ->where('owners.owner_id', $owner_id)
-                ->get();
         
                 $representative = DB::table('representatives')->where('rep_owner_id', $owner_id)->get();
         
-                return view('show-owner', compact('owner', 'contract', 'transaction', 'bank', 'representative'));
+                return view('show-owner', compact('owner', 'contract', 'bank', 'representative'));
         
             }
             else{
@@ -192,9 +185,15 @@ class OwnerController extends Controller
      * @param  \App\Owner  $owner
      * @return \Illuminate\Http\Response
      */
-    public function edit(Owner $owner)
+    public function edit($owner_id)
     {
-        //
+        $owner = Owner::findOrFail($owner_id);
+
+        $representative = Representative::where('rep_owner_id', $owner_id)->get();
+
+        $bank = Bank::where('bank_owner_id', $owner_id)->get();
+
+        return view('edit-owner', compact('owner', 'representative', 'bank'));
     }
 
     /**
@@ -204,9 +203,50 @@ class OwnerController extends Controller
      * @param  \App\Owner  $owner
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Owner $owner)
+    public function update(Request $request, $owner_id)
     {
-        //
+        $owner = Owner::findOrFail($owner_id);
+
+        $owner->owner_first_name = $request->owner_first_name;
+        $owner->owner_last_name = $request->owner_last_name;
+        $owner->owner_middle_name = $request->owner_middle_name;
+        $owner->owner_birthdate = $request->owner_birthdate;
+        $owner->owner_gender = $request->owner_gender;
+        $owner->owner_nationality = $request->owner_nationality;
+        $owner->owner_civil_status = $request->owner_civil_status;
+        $owner->owner_ethnicity = $request->owner_ethnicity;
+        $owner->owner_id_info = $request->owner_id_info;
+        $owner->owner_email_address = $request->owner_email_address;
+        $owner->owner_mobile_number = $request->owner_mobile_number;
+        $owner->owner_telephone_number = $request->owner_telephone_number;
+        $owner->owner_house_number = $request->owner_house_number;
+        $owner->owner_barangay = $request->owner_barangay;
+        $owner->owner_municipality = $request->owner_municipality;
+        $owner->owner_province = $request->owner_province;
+        $owner->owner_zip = $request->owner_zip;
+        $owner->save();
+
+        DB::table('representatives')
+        ->where('rep_owner_id', $owner_id)
+        ->update(
+                [
+                    'rep_name' => $request->rep_name,
+                    'rep_relationship' => $request->rep_relationship,
+                    'rep_mobile_number' => $request->rep_mobile_number
+                ]
+        );
+
+        DB::table('banks')
+        ->where('bank_owner_id', $owner_id)
+        ->update(
+                [
+                    'bank_name' => $request->bank_name,
+                    'bank_account_name' => $request->bank_account_name,
+                    'bank_account_number' => $request->bank_account_number
+                ]
+        );
+
+        return redirect('/owners/'.$owner_id)->with('success', 'Information has been updated successfully!');
     }
 
     /**

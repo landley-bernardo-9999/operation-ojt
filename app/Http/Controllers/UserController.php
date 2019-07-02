@@ -128,9 +128,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user_id)
     {
-        //
+        $user = User::findOrFail($user_id);
+
+        return view('edit-account', compact('user'));
     }
 
     /**
@@ -140,9 +142,36 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user_id)
     {
-        //
+        $attributes = request()->validate([
+            'name' => [' '],
+            'email' => [' '],
+            'privilege' => [' '],
+            
+        ]);
+
+        if($request->user_resident_id != null){
+             DB::table('users')
+            ->join('residents', 'user_resident_id', 'resident_id')  
+            ->where('user_id', $user_id)
+            ->update([
+                        'email_address' => $request->email,                    
+                    ]);
+        } 
+        
+        if($request->user_owner_id != null){
+            DB::table('users')
+            ->join('owners', 'user_owner_id', 'owner_id')  
+            ->where('user_id', $user_id)
+            ->update([
+                        'owner_email_address' => $request->email,                    
+                   ]);
+        }    
+
+        User::findOrFail($user_id)->update($attributes);
+
+        return redirect('/users/'.$user_id)->with('success','User has been updated successfully!');
     }
 
     /**

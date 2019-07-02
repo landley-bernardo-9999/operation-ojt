@@ -11,7 +11,7 @@
             </button>
 
             <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/home') }}" oncontextmenu="return false">
+                <a class="navbar-brand" href="#" oncontextmenu="return false">
                     {{ config('app.name', 'Laravel') }}
                 </a>
         </div>
@@ -33,6 +33,10 @@
                     @if(auth()->user()->privilege === 'admin')
                     <li><a href="/users/create" oncontextmenu="return false"><i class="fas fa-user-plus"></i>&nbspRegister</a></li>
                     <li><a href="/users/" oncontextmenu="return false"><i class="fas fa-user-circle"></i>&nbspUsers</a></li>
+                    @endif
+                    @if(auth()->user()->privilege === 'owner')
+                    <li><a href="/dashboard" oncontextmenu="return false"><i class="fas fa-chalkboard"></i>&nbspDashboard</a></li>
+                    <li><a href="/owners/{{auth()->user()->user_owner_id}}" oncontextmenu="return false"><i class="far fa-id-card"></i>&nbspProfile</a></li>
                     @endif
                     @if(auth()->user()->privilege === 'leasingOfficer')
                     <li><a href="/rooms/" oncontextmenu="return false"><i class="fas fa-home"></i>&nbspRooms</a></li>

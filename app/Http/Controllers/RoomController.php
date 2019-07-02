@@ -9,6 +9,7 @@ use DB;
 use App\Owner;
 use Session;
 
+
 class RoomController extends Controller
 {
     /**
@@ -121,7 +122,7 @@ class RoomController extends Controller
     {
         try
         {
-            if(auth()->user()->user_owner_id === session('owner_id') || auth()->user()->user_resident_id === session('resident_id') || auth()->user()->privilege === 'leasingOfficer'){
+            if(auth()->user()->user_owner_id == session('owner_id') || auth()->user()->user_resident_id == session('resident_id') || auth()->user()->privilege === 'leasingOfficer'){
 
                 $room = Room::findOrFail($room_id);
 
@@ -164,9 +165,11 @@ class RoomController extends Controller
      * @param  \App\Room  $room
      * @return \Illuminate\Http\Response
      */
-    public function edit(Room $room)
+    public function edit($user_id)
     {
-        //
+        $room = Room::findOrFail($user_id);
+
+        return view('edit-room', compact('room'));
     }
 
     /**
@@ -176,9 +179,24 @@ class RoomController extends Controller
      * @param  \App\Room  $room
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
+    public function update(Request $request, $room_id)
     {
-        //
+        $room = Room::findOrFail($room_id);
+
+        $room->room_no = $request->room_no;
+        $room->building = $request->building;
+        $room->project = $request->project;
+        $room->room_status = $request->room_status;
+        $room->short_term_rent = $request->short_term_rent;
+        $room->long_term_rent = $request->long_term_rent;
+        $room->transient = $request->transient;
+        $room->size = $request->size;
+        $room->no_of_beds = $request->no_of_beds;
+        $room->remarks = $request->remarks;
+        
+        $room->save();
+
+        return redirect('/rooms/'.$room_id)->with('success','Room has been updated successfully!');
     }
 
     /**
