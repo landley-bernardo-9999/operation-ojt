@@ -102,49 +102,6 @@ class HomeController extends Controller
                 $occupancy_nc =  DB::table('rooms')->where('project', 'north_cambridge')->where('room_status', 'occupied')->count() / DB::table('rooms')->where('project', 'north_cambridge')->count() * 100;
                 $occupancy_cy =  DB::table('rooms')->where('room_status', 'occupied')->where('project', 'the_courtyards')->count() / DB::table('rooms')->where('project', 'the_courtyards')->count() * 100;
         
-                //occupancy rate per building
-                $occupancy_harvard = (DB::table('rooms')->where('building', 'harvard')->where('room_status', 'occupied')->count()/DB::table('rooms')->where('building', 'harvard')->count()) * 100 * 100;
-                $occupancy_princeton =(DB::table('rooms')->where('building', 'princeton')->where('room_status', 'occupied')->count()/DB::table('rooms')->where('building', 'princeton')->count()) * 100;
-                $occupancy_wharton = (DB::table('rooms')->where('building', 'wharton')->where('room_status', 'occupied')->count()/DB::table('rooms')->where('building', 'wharton')->count()) * 100;
-                $occupancy_manors = (DB::table('rooms')->where('building', 'manors')->where('room_status', 'occupied')->count()/DB::table('rooms')->where('building', 'manors')->count()) * 100;
-                $occupancy_arkansas = (DB::table('rooms')->where('building', 'arkansas')->where('room_status', 'occupied')->count()/DB::table('rooms')->where('building', 'arkansas')->count()) * 100;
-                $occupancy_colorado = (DB::table('rooms')->where('building', 'colorado')->where('room_status', 'occupied')->count()/DB::table('rooms')->where('building', 'colorado')->count()) * 100;
-                $occupancy_loft = (DB::table('rooms')->where('building', 'loft')->where('room_status', 'occupied')->count()/DB::table('rooms')->where('building', 'loft')->count()) * 100;
-                
-                //bar graph
-                $chart = new DashboardChart;
-
-                $chart->labels(['Harvard', 'Princeton', 'Wharton', 'Arkansas', 'Colorado', 'Loft', 'Manors']);
-                $chart->dataset('Per Building','bar', [$occupancy_harvard ,$occupancy_princeton ,$occupancy_wharton,  $occupancy_arkansas, $occupancy_colorado, $occupancy_loft, $occupancy_manors]);
-
-                //move in rate per month
-                
-                $move_in_past_5_months = Transaction::whereMonth('move_in_date', Carbon::now()->subMonths(5)->month)->whereYear('move_in_date', Carbon::now()->year)->count();
-                $move_in_past_4_months = Transaction::whereMonth('move_in_date', Carbon::now()->subMonths(4)->month)->whereYear('move_in_date', Carbon::now()->year)->count();
-                $move_in_past_3_months = Transaction::whereMonth('move_in_date', Carbon::now()->subMonths(3)->month)->whereYear('move_in_date', Carbon::now()->year)->count();
-                $move_in_past_2_months = Transaction::whereMonth('move_in_date', Carbon::now()->subMonths(2)->month)->whereYear('move_in_date', Carbon::now()->year)->count();
-                $move_in_past_1_months = Transaction::whereMonth('move_in_date', Carbon::now()->subMonths(1)->month)->whereYear('move_in_date', Carbon::now()->year)->count();
-                $move_in_present_month = Transaction::whereMonth('move_in_date', Carbon::now()->month)->whereYear('move_in_date', Carbon::now()->year)->count();
-
-
-                //line
-                $line = new DashboardChart;
-                $line->labels([Carbon::now()->subMonths(5)->format('M-Y'), Carbon::now()->subMonths(4)->format('M-Y'), Carbon::now()->subMonths(3)->format('M-Y'), Carbon::now()->subMonths(2)->format('M-Y'), Carbon::now()->subMonths(1)->format('M-Y'), Carbon::now()->format('M-Y')]);
-                $line->dataset('Move In Rate(for the last 6 months)','line', [$move_in_past_5_months, $move_in_past_4_months, $move_in_past_3_months, $move_in_past_2_months, $move_in_past_1_months, $move_in_present_month]);
-
-                //move out rate per month
-                $move_out_past_5_months = Transaction::whereMonth('actual_move_out_date', Carbon::now()->subMonths(5)->month)->whereYear('actual_move_out_date', Carbon::now()->year)->count();
-                $move_out_past_4_months = Transaction::whereMonth('actual_move_out_date', Carbon::now()->subMonths(4)->month)->whereYear('actual_move_out_date', Carbon::now()->year)->count();
-                $move_out_past_3_months = Transaction::whereMonth('actual_move_out_date', Carbon::now()->subMonths(3)->month)->whereYear('actual_move_out_date', Carbon::now()->year)->count();
-                $move_out_past_2_months = Transaction::whereMonth('actual_move_out_date', Carbon::now()->subMonths(2)->month)->whereYear('actual_move_out_date', Carbon::now()->year)->count();
-                $move_out_past_1_months = Transaction::whereMonth('actual_move_out_date', Carbon::now()->subMonths(1)->month)->whereYear('actual_move_out_date', Carbon::now()->year)->count();
-                $move_out_present_month = Transaction::whereMonth('actual_move_out_date', Carbon::now()->month)->whereYear('actual_move_out_date', Carbon::now()->year)->count();
-
-                //line
-                $line2 = new DashboardChart;
-                $line2->labels([Carbon::now()->subMonths(5)->format('M-Y'), Carbon::now()->subMonths(4)->format('M-Y'), Carbon::now()->subMonths(3)->format('M-Y'), Carbon::now()->subMonths(2)->format('M-Y'), Carbon::now()->subMonths(1)->format('M-Y'), Carbon::now()->format('M-Y')]);
-                $line2->dataset('Move Out Rate(for the last 6 months)','line', [$move_out_past_5_months, $move_out_past_4_months, $move_out_past_3_months, $move_out_past_2_months, $move_out_past_1_months, $move_out_present_month]);
-
                 return view('home', compact('move_in', 'move_out', 'rooms', 'residents', 'owners',
                     'occupied_rooms_harvard', 'vacant_rooms_harvard', 'reserved_rooms_harvard', 'rectification_rooms_harvard',
                     'occupied_rooms_princeton', 'vacant_rooms_princeton', 'reserved_rooms_princeton', 'rectification_rooms_princeton',
@@ -155,7 +112,6 @@ class HomeController extends Controller
                     'occupied_rooms_arkansas', 'vacant_rooms_arkansas', 'reserved_rooms_arkansas', 'rectification_rooms_arkansas',
                     'nc_rooms','cy_rooms',
                     'occupancy_nc','occupancy_cy',
-                    'chart', 'line', 'line2',
                     'reserved_rooms'
                 ));
             }

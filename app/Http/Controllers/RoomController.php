@@ -21,7 +21,7 @@ class RoomController extends Controller
     {
         try
         {
-            if(auth()->user()->user_id === null || auth()->user()->privilege === 'leasingOfficer' ){
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->privilege === 'leasingManager' ){
 
                 $room = DB::table('rooms')
                 ->count();

@@ -2,51 +2,48 @@
 @section('title',  $resident->first_name." ".$resident->last_name)
 @section('content')
 <div class="container">
+        @if(auth()->user()->privilege === 'leasingOfficer')
     <div class="row">
-        <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a class="nav-link" href="/rooms/{{ session('sess_room_id') }}" oncontextmenu="return false">Back</a>
+        <ul class="nav navbar-nav">
+            <li class="">
+                <a class="" href="/rooms/{{ session('sess_room_id') }}" oncontextmenu="return false">Back</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" oncontextmenu="return false">Edit</a>
+            <li class="">
+                <a class="" href="#" oncontextmenu="return false">Edit</a>
             </li>
-            <li class="nav-item">
+            <li class="">
                 <a href="/co-tenant/create" oncontextmenu="return false">Add Co-Tenant</a>
             </li>
-            <li class="nav-item">
+            <li class="">
                 <a href="/room/add" oncontextmenu="return false">Add Room</a>
             </li>
-            <li class="nav-item">
+            <li class="">
                 <a href="/room/add" oncontextmenu="return false">Transfer Resident</a>
             </li>
-            <li class="nav-item">
+            <li class="">
                 <a href="#" oncontextmenu="return false">Add Repair</a>
             </li>
-            <li class="nav-item">
+            <li class="">
                 <a href="#" oncontextmenu="return false">Add Violation</a>
             </li>
-            <li class="nav-item">
+            <li class="">
                 <a href="#" oncontextmenu="return false">Borrow Key</a>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link" oncontextmenu="return false">House Rules</a>
-            </li>
-            @if(auth()->user()->privilege === 'leasingOfficer')
-             <li class="nav-item">
+             {{-- <li class="nav-item">
                 <form method="POST" action="/residents/{{ $resident->resident_id }}">
                     @method('delete')
                     {{ csrf_field() }}
                     <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger">Delete</button>
                 </form>
-            </li>
-            @endif
+            </li> --}}
         </ul>
     </div>
+    @endif
     <div class="row">
-       <div class="col-md-9">
-            <table class="table table-borderless">
+       <div class="col-md-12">
+            <table class="table">
                     <tr>
-                        <h3>Personal Information</h3>
+                        <td><h4><b> Personal Information</b></h4></td>
                     </tr>
                     <tr>
                         <td>Name:</td>
@@ -77,17 +74,8 @@
                         <td>{{$resident->id_info}}</td>
                     </tr>
                     
-                    </table>
-       </div>
-       <div class="col-md-3">
-         
-       </div>
-    </div>
-
-     <div class="row">
-        <table class="table">
                 <tr>
-                    <h3>Address</h3>
+                    <td><h4><b>Address</b></h4></td>
                 </tr>
                 <tr>
                     <td>House Number:</td>
@@ -108,15 +96,9 @@
                 <tr>
                     <td>Zip Code:</td>
                     <td>{{$resident->zip}}</td>
-                </tr>
-            </table>
-        </div>
-
-        
-       <div class="row">
-            <table class="table">
+                </tr>  
                 <tr>
-                    <h3>Contact Details</h3>
+                    <td><h4><b>Contact Details</b></h4></td>
                 </tr>
                 <tr>
                     <td>Mobile Number:</td>
@@ -129,18 +111,18 @@
                 <tr>
                     <td>Email Address:</td>
                     <td>{{$resident->email_address}}</td>
-                </tr>
+                </tr>  
             </table>
-        </div>
-
+       </div>
+    </div>
         <div class="row">
             <table class="table">
             <tr>
-                <h3>Guardian</h3>
+               <td><h4><b> Guardian</b></h4></td>
             </tr>
             <?php $row_no_co_guardian = 1; ?>
             <tr>
-                <th>No.</th>
+                <th>No</th>
                 <th>Name</th>
                 <th>Relationship</th>
                 <th>Mobile Number</th>
@@ -159,11 +141,11 @@
         <div class="row">
             <table class="table">
             <tr>
-                <h3>Co-Residents</h3>
+                <td><h4><b>Co-Residents</b></h4></<h4></td>
             </tr>
             <?php $row_no_co_residents = 1; ?>
             <tr>
-                <th>No.</th>
+                <th>No</th>
                 <th>Name</th>
                 <th>Mobile Number</th>
                 <th>Telephone Number</th>
@@ -184,11 +166,11 @@
     <div class="row">
         <table class="table">
            <tr>
-               <h3>Contracts</h3>
+               <td><h4><b>Contracts</b></<h4></td>
            </tr>
            <?php $row_no_contracts = 1; ?>
            <tr>
-               <th>No.</th>
+               <th>No</th>
                <th>Unit No</th>
                <th>Building</th>
                <th>Contract Period</th>
@@ -232,7 +214,7 @@
     <div class="row">
         <table class="table">
            <tr>
-               <h3>Payments</h3>
+               <td><h4><b> Payments</b></<h4`></td>
            </tr>
            <?php $row_no_payments = 1; ?>
            <tr>

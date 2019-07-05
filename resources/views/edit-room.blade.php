@@ -77,28 +77,28 @@
                 <div class="form-group row">
                     <label for="short_term_rent" class="col-md-4 col-form-label text-md-right">Short-term Rent:</label>
                     <div class="col-md-3">
-                        <input name="short_term_rent" type="number" min="1" class="form-control" value="{{ $room->short_term_rent }}" required>
+                        <input name="short_term_rent" type="number" class="form-control" value="{{ $room->short_term_rent }}" required>
                     </div>     
                 </div>
 
                 <div class="form-group row">
                     <label for="long_term_rent" class="col-md-4 col-form-label text-md-right">Long-term Rent:</label>
                     <div class="col-md-3">
-                        <input name="long_term_rent" type="number" min="1" class="form-control" value="{{ $room->long_term_rent }}" required>
+                        <input name="long_term_rent" type="number" class="form-control" value="{{ $room->long_term_rent }}" required>
                     </div>     
                 </div>
 
                 <div class="form-group row">
                     <label for="long_term_rent" class="col-md-4 col-form-label text-md-right">Transient:</label>
                     <div class="col-md-3">
-                        <input name="transient" type="number" min="1" class="form-control" value="{{ $room->transient }}" required>
+                        <input name="transient" type="number" class="form-control" value="{{ $room->transient }}" required>
                     </div>     
                 </div>
     
                 <div class="form-group row">
                     <label for="size" class="col-md-4 col-form-label text-md-right">Size:</label>
                     <div class="col-md-3">
-                        <input name="size" type="number" min="1" class="form-control" value="{{ $room->size }}" required>
+                        <input name="size" type="number" class="form-control" value="{{ $room->size }}" required>
                     </div>     
                 </div>
 
@@ -124,12 +124,10 @@
                                     {{ $room->remarks }}
                             </textarea>
                         </div>     
-                    </div>
+                </div>
               
-            <div class="row">
-                <a href="{{ URL::previous() }}" class="btn btn-danger"></i>CANCEL</a>           
-                <button class="btn btn-primary" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');">SAVE</button>         
-            </div>  
+                <a href="{{ URL::previous() }}" class="btn-default"></i>CANCEL</a>           
+                <button class="btn-default" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');">SAVE</button>         
             </form>    
         </div>
     </div> 

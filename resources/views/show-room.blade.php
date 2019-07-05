@@ -4,32 +4,22 @@
 <div class="container">
 @if(auth()->user()->privilege === 'leasingOfficer')
     <div class="row">
-       <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ URL::previous() }}" oncontextmenu="return false">Back</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/rooms/{{ $room->room_id }}/edit" oncontextmenu="return false">Edit</a>
-            </li>
-            <li class="nav-item">
-                @if($room->room_status != 'vacant')
-                    <a title="You can't add a resident. The unit is already occupied." class="nav-link" href="#" aria-disabled="true" oncontextmenu="return false">Add Resident</a>
-                @else
-                    <a class="nav-link" href="/residents/create/" oncontextmenu="return false">Add Resident</a>
-                @endif
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/owners/create/" oncontextmenu="return false">Add Owner</a>
-            </li>
-            
-         
-             <li class="nav-item">
+        <ul class="nav navbar-nav">   
+            <li><a class="" href="{{ URL::previous() }}" oncontextmenu="return false">Back</a></li>
+            <li><a class="" href="/rooms/{{ $room->room_id }}/edit" oncontextmenu="return false">Edit</a></li>
+            @if($room->room_status != 'vacant')
+            <li> <a title="You can't add a resident. The unit is already occupied." class="" href="#" aria-disabled="true" oncontextmenu="return false">Add Resident</a></li>
+            @else
+            <li><a class="" href="/residents/create/" oncontextmenu="return false">Add Resident</a></li>
+            @endif
+            <li><a class="" href="/owners/create/" oncontextmenu="return false">Add Owner</a></li>
+            {{-- <li> 
                 <form method="POST" action="/rooms/{{ $room->room_id }}">
                     @method('delete')
                     {{ csrf_field() }}
-                    <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger nav-link">Delete</button>
+                    <button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger">Delete</button>
                 </form>
-            </li>
+            </li> --}}
         </ul>
     </div>
 @endif
@@ -75,7 +65,7 @@
         </table>
     </div>
 
-@if(auth()->user()->privilege === 'leasingOfficer')
+@if(auth()->user()->privilege === 'leasingOfficer'  || auth()->user()->privilege === 'leasingManager')
     <div class="row">
         <table class="table">
             <tr>

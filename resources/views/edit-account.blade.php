@@ -86,9 +86,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                Save    
-                                </button>
+                                <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default">Save</button>
                             </div>
                         </div>
                     </form>

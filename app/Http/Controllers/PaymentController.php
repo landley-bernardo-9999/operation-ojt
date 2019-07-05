@@ -19,9 +19,36 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        
+        if(auth()->user()->privilege === 'owner'){
+            $owners = DB::table('transactions')
+            ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
+            ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+            ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+            ->select('*', 'payments.created_at as billing_date')
+            ->where('owner_id', auth()->user()->user_owner_id)
+            ->whereIn('desc', ['monthly_rent', 'advance_rent'])
+            ->get();
+    
+            return view('owners', compact('owners'));
+        } 
+        elseif(auth()->user()->privilege === 'treasury'){
+            $s = $request->query('s');
+
+            $owners = DB::table('contracts')
+            ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+            ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
+            ->where('room_no', 'like', "%$s%")
+            ->orderBy('owner_first_name', 'asc')
+            ->get();  
+
+           return view('payments', compact('owners'));
+        } 
+        else{
+            abort(404, "Forbidden Page.");
+        } 
+       
     }
 
     /**
@@ -51,9 +78,16 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show($payment_id)
     {
-        //
+        $remittance = DB::table('transactions')
+        ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+        ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
+        ->selec
+        ->where('payment_id', $payment_id)
+        ->get();  
+
+        return view('show-remittance', compact('remittance'));
     }
 
     /**

@@ -36,15 +36,26 @@
                     @endif
                     @if(auth()->user()->privilege === 'owner')
                     <li><a href="/dashboard" oncontextmenu="return false"><i class="fas fa-chalkboard"></i>&nbspDashboard</a></li>
+                    <li><a href="/payments" oncontextmenu="return false"><i class="fas fa-hand-holding-usd"></i>&nbspRemittances</a></li>
                     <li><a href="/owners/{{auth()->user()->user_owner_id}}" oncontextmenu="return false"><i class="far fa-id-card"></i>&nbspProfile</a></li>
                     @endif
-                    @if(auth()->user()->privilege === 'leasingOfficer')
-                    <li><a href="/rooms/" oncontextmenu="return false"><i class="fas fa-home"></i>&nbspRooms</a></li>
-                    <li><a href="/residents/" oncontextmenu="return false"><i class="fas fa-users"></i>&nbspResidents</a></li>
-                    <li><a href="/owners/" oncontextmenu="return false"><i class="fas fa-user-tie"></i>&nbspOwners</a></li>
-                    <li><a href="/violations/" oncontextmenu="return false"><i class="fas fa-user-times"></i>&nbspViolations</a></li>
-                    <li><a href="/repairs/" oncontextmenu="return false"><i class="fas fa-hammer"></i>&nbspRepairs</a></li>
-                    <li><a href="/personnels/" oncontextmenu="return false"><i class="fas fa-user-lock"></i>&nbspPersonnels</a></li>
+                    @if(auth()->user()->privilege === 'leasingOfficer'  )
+                    <li><a href="/home" oncontextmenu="return false"><i class="fas fa-chalkboard"></i>&nbspDashboard</a></li>
+                    <li><a href="/rooms" oncontextmenu="return false"><i class="fas fa-home"></i>&nbspRooms</a></li>
+                    <li><a href="/residents" oncontextmenu="return false"><i class="fas fa-users"></i>&nbspResidents</a></li>
+                    <li><a href="/owners" oncontextmenu="return false"><i class="fas fa-user-tie"></i>&nbspOwners</a></li>
+                    @endif
+
+                    @if( auth()->user()->privilege === 'leasingManager' )
+                    <li><a href="/dashboard" oncontextmenu="return false"><i class="fas fa-chalkboard"></i>&nbspDashboard</a></li>
+                    <li><a href="/rooms" oncontextmenu="return false"><i class="fas fa-home"></i>&nbspRooms</a></li>
+                    <li><a href="/residents" oncontextmenu="return false"><i class="fas fa-users"></i>&nbspResidents</a></li>
+                    <li><a href="/owners" oncontextmenu="return false"><i class="fas fa-user-tie"></i>&nbspOwners</a></li>
+                    @endif
+
+                    @if( auth()->user()->privilege === 'treasury' )
+                    <li><a href="/dashboard" oncontextmenu="return false"><i class="fas fa-chalkboard"></i>&nbspDashboard</a></li>
+                    <li><a href="/payments" oncontextmenu="return false"><i class="fas fa-search"></i>&nbspSearch</a></li>
                     @endif
                 </ul>
                     <li class="dropdown">

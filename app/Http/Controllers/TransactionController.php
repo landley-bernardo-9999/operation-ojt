@@ -235,6 +235,7 @@ class TransactionController extends Controller
          session()->forget('sess_email_address');
          session()->forget('sess_telephone_number');
          session()->forget('sess_mobile_number');
+         session()->forget('sess_house_number');
          session()->forget('sess_barangay');
          session()->forget('sess_municipality');
          session()->forget('sess_province');
@@ -321,7 +322,7 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $trans_id)
     {
-        if($request->trans_status == 'inactive'){ 
+        if($request->trans_status == 'active'){ 
             DB::table('transactions')
                 ->where('transactions.trans_resident_id', session('resident_id'))
                 ->where('transactions.trans_room_id', session('sess_room_id'))

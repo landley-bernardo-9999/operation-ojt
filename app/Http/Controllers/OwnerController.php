@@ -22,7 +22,7 @@ class OwnerController extends Controller
     {
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer'){
+            if(auth()->user()->privilege === 'leasingOfficer'  || auth()->user()->privilege === 'leasingManager' ){
 
                 $s = $request->query('s');
 
@@ -143,31 +143,42 @@ class OwnerController extends Controller
     {   
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_owner_id == $owner_id ){
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_owner_id == $owner_id || auth()->user()->privilege === 'treasury' ){
 
-                $owner = Owner::findOrFail($owner_id);
+                if( auth()->user()->privilege === 'treasury' ){
+                    
+                    $owner = Owner::findOrFail($owner_id);
 
-                $owner_name = $owner->owner_first_name.' '.$owner->owner_last_name;
-        
-                $owner_id = $owner->owner_id;
+                    $remittances = DB::table('transactions')
+                    ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
+                    ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+                    ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                    ->select('*', 'payments.created_at as billing_date')
+                    ->where('owner_id', $owner_id)
+                    ->whereIn('desc', ['monthly_rent', 'advance_rent'])
+                    ->get();
 
-             
-                session(['owner_name' => $owner_name]);
-                session(['owner_id' => $owner_id]);
+
+                    return view('owner-remittance', compact('owner', 'remittances'));
+
+                }else{
+                    $owner = Owner::findOrFail($owner_id);
+
+                    $owner_name = $owner->owner_first_name.' '.$owner->owner_last_name;
             
+                    $owner_id = $owner->owner_id;
+            
+                    $bank = DB::table('banks')->where('bank_owner_id', $owner_id)->get();
+            
+                    $representative = DB::table('representatives')->where('rep_owner_id', $owner_id)->get();
     
-                $contract = DB::table('contracts')
-                ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
-                ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
-                ->where('owners.owner_id', $owner_id)
-                ->get();
-        
-                $bank = DB::table('banks')->where('bank_owner_id', $owner_id)->get();
-        
-                $representative = DB::table('representatives')->where('rep_owner_id', $owner_id)->get();
-        
-                return view('show-owner', compact('owner', 'contract', 'bank', 'representative'));
-        
+                    if(auth()->user()->privilege === 'leasingOfficer' ){
+                        session(['owner_name' => $owner_name]);
+                        session(['owner_id' => $owner_id]);
+                    }
+                    
+                    return view('show-owner', compact('owner', 'bank', 'representative'));
+                }                
             }
             else{
                 abort(404, "Forbidden Page.");

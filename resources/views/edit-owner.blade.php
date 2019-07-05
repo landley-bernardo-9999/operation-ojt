@@ -157,8 +157,8 @@
             </table>
 
         </div>
-        <a href="{{ URL::previous() }}" class="btn btn-danger"></i>CANCEL</a>           
-        <button class="btn btn-primary" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');">SAVE</button>  
+        <a href="{{ URL::previous() }}" class="btn-default"></i>CANCEL</a>           
+        <button class="btn-default" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');">SAVE</button>  
     </form>
 </div>
 <br>

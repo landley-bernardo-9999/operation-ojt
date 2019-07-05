@@ -5,7 +5,47 @@
     <div class="row">
         <h3>Dashboard</h3>
     </div>
-
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Rooms Enrolled</h3>  
+                </div>
+                <div class="panel-body">
+                    <h1>{{ $rooms }}</h1>
+                    <br>
+                    <div class="col-md-6">
+                        <p>NC</p>
+                        <h3>{{ $nc_rooms }}</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <p>CY</p>
+                        <h3>{{ $cy_rooms }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Active Residents</h3>
+                </div>
+                <div class="panel-body">
+                    <h1>{{ $residents }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Owners</h3>
+                </div>
+                <div class="panel-body">
+                    <h1>{{ $owners }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <table class="table">
@@ -96,9 +136,12 @@
         </ul>
     </div>
     <div class="row">
-        <h3>Occupancy Rate</h3>
+        <h3>Occupancy Rate (%)</h3>
     </div>
-
+     <div class="row">
+        {!! $chart->container() !!}
+    </div>
+    <br>
     <div class="row">
         <div class="col-md-6 text-center">
             <div class="panel">
@@ -121,7 +164,19 @@
         </div>
         </div>
     </div>
-
+    <div class="row">
+        <h3>Resident Move In Rate</h3>
+    </div>
+     <div class="row">
+        {!! $line->container() !!}
+    </div>
+    <br>
+    <div class="row">
+        <h3>Resident Move Out Rate</h3>
+    </div>
+     <div class="row">
+        {!! $line2->container() !!}
+    </div>
     <div class="row">
         <div class="col-md-6">
             <h3>Last 10 move in</h3>
@@ -170,5 +225,8 @@
         </div>
     </div>
 </div>
+{!! $chart->script() !!}
+{!! $line->script() !!}
+{!! $line2->script() !!}
 @endsection
 

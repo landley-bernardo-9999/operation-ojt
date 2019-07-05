@@ -26,6 +26,7 @@
                          <option value="">Select Building</option>
                          <option value="harvard">Harvard</option>
                          <option value="princeton">Princeton</option>
+                         <option value="wharton">Wharton</option>
                          <option value="arkansas">Arkansas</option>
                          <option value="colorado">Colorado</option>
                          <option value="loft">Loft</option>

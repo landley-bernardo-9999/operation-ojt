@@ -244,7 +244,7 @@
                 </tr> 
             </table>
             @if (auth()->user()->privilege === 'leasingOfficer')
-            <button onclick="return confirm('Are you sure you want to perform this operation? ');">MOVE OUT</button>            
+            <button onclick="return confirm('Are you sure you want to perform this operation? ');">Move out</button>            
             @endif
         @endif
         </form>
