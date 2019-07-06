@@ -122,14 +122,14 @@
             </tr>
             <?php $row_no_rep = 1; ?>
             <tr>
-                <th>No</th>
+                <th>#</th>
                 <th>Name</th>
                 <th>Relationship with the Unit Owner</th>
                 <th>Mobile Number</th>
             </tr>
             @foreach ($representative as $representative)
             <tr>
-                <td>{{ $row_no_rep++ }}.</td>
+                <th>{{ $row_no_rep++ }}</th>
                 <td>{{$representative->rep_name}}</td>
                 <td>{{$representative->rep_relationship}}</td>
                 <td>{{$representative->rep_mobile_number}}</td>
@@ -145,14 +145,14 @@
                 </tr>
                 <?php $row_no_bank = 1; ?>
                 <tr>
-                    <th>No</th>
+                    <th>#</th>
                     <th>Bank Name</th>
                     <th>Account Name</th>
                     <th>Account Number</th>
                 </tr>
                 @foreach ($bank as $bank)
                 <tr>
-                    <td>{{ $row_no_bank++ }}.</td>
+                    <th>{{ $row_no_bank++ }}</th>
                     <td>{{$bank->bank_name}}</td>
                     <td>{{$bank->bank_account_name}}</td>
                     <td>{{$bank->bank_account_number}}</td>

@@ -144,6 +144,10 @@ class RoomController extends Controller
                     session(['sess_room_no' => $room->room_no]);
                     session(['sess_room_building' => $room->building]);
                     session(['sess_no_of_beds' => $room->no_of_beds]);
+                    session(['sess_room_size' => $room->size]);
+                    session(['sess_short_term_rent' => $room->short_term_rent]);
+                    session(['sess_long_term_rent' => $room->long_term_rent]);
+
                 }      
                 return view('show-room', compact('room', 'owner', 'resident'));
             }

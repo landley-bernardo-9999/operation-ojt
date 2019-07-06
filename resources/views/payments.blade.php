@@ -31,8 +31,8 @@
             <td>{{ $owner->building }} {{ $owner->room_no }}</td>
             
             <td>
-                <a href="/owners/{{ $owner->owner_id }}" class="btn-default">
-                    OPEN
+                <a href="/owners/{{ $owner->owner_id }}" class="">
+                    MORE INFO
                 </a>
             </td>
             {{-- <td><input type="text" class="" style="width:50%" value="" name="mgmt_fee"></td>

@@ -20,7 +20,12 @@ class Payment extends Model
         'date_deposited',
         'bank_name',
         'amt_paid',
-        'note'
+        'note',
+        'remittance_amt',
+        'mgmt_fee',
+        'condo_dues',
+        'remittance_note',
+        'others',
     ];
 
     public function payments(){

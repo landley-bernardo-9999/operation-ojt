@@ -76,14 +76,14 @@
             <p class="text-danger">No Owners Found.</p>
             @else
             <tr>
-                <th>No.</th>
+                <th>#</th>
                 <th>Name</th>
                 <th>Date Enrolled</th>
                 <th></th>
             </tr>
             @foreach ($owner as $owner)
             <tr>
-                <td>{{ $row_no_owners++ }}. </td>
+                <th>{{ $row_no_owners++ }}</th>
                 <td>{{ $owner->owner_first_name }} {{ $owner->owner_middle_name }} {{ $owner->owner_last_name }}</td>
                 <td>{{Carbon\Carbon::parse(  $owner->enrollment_date )->formatLocalized('%b %d %Y')}}</td>
                 <?php session(['sess_owner_id'=> $owner->owner_id]) ?>
@@ -113,7 +113,7 @@
             @endif
             @else
              <tr>
-                <th>No.</th>
+                <th>#</th>
                 <th>Name</th>
                 <th>Status</th>
                 <th>Contract Period</th>
@@ -122,7 +122,7 @@
             </tr>
             @foreach ($resident as $resident)
             <tr>
-                <td>{{ $row_no++ }}.</td>
+                <th>{{ $row_no++ }}</th>
                 <td>{{ $resident->first_name }} {{ $resident->middle_name }} {{ $resident->last_name }}</td>
                 <td>{{ $resident->trans_status }}</td>
                 <td>{{Carbon\Carbon::parse(  $resident->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $resident->move_out_date )->formatLocalized('%b %d %Y')}} </td>

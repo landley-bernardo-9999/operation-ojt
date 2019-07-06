@@ -22,7 +22,7 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         if(auth()->user()->privilege === 'owner'){
-            $owners = DB::table('transactions')
+            $remittances = DB::table('transactions')
             ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
@@ -31,7 +31,7 @@ class PaymentController extends Controller
             ->whereIn('desc', ['monthly_rent', 'advance_rent'])
             ->get();
     
-            return view('owners', compact('owners'));
+            return view('owner-remittance', compact('remittances'));
         } 
         elseif(auth()->user()->privilege === 'treasury'){
             $s = $request->query('s');
@@ -81,9 +81,10 @@ class PaymentController extends Controller
     public function show($payment_id)
     {
         $remittance = DB::table('transactions')
-        ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
-        ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
-        ->selec
+        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+        ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
+        ->join('payments', 'transactions.trans_id', 'payment_transaction_id')
+        ->select('*', 'payments.created_at as billing_date')
         ->where('payment_id', $payment_id)
         ->get();  
 
@@ -110,7 +111,7 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
-        //
+        dd('asdasasd');
     }
 
     /**

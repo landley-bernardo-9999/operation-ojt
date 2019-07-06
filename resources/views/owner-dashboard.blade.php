@@ -124,18 +124,18 @@
                             <td>{{ $long_term_rent->long_term_rent }}</td>
                             @if($short_term_rent->building === 'harvard')
                                 <td>780</td>
-                            @elseif($short_term_rent->building === 'princeton')
+                            @elseif($long_term_rent->building === 'princeton')
                                 <td> 1200</td>
-                            @elseif($short_term_rent->building === 'wharton')
+                            @elseif($long_term_rent->building === 'wharton')
                                 <td>1500</td>
                             @endif
                             <td>{{ $long_term_rent->size * 58.61}} </td>
                             @if($short_term_rent->building === 'harvard')
-                            <th>{{  $short_term_rent->long_term_rent - (($short_term_rent->size * 58.61) + (780))  }} </th>
-                            @elseif($short_term_rent->building === 'princeton')
-                            <th>{{  $short_term_rent->long_term_rent - (($short_term_rent->size * 58.61) + (1200))  }} </th> 
-                            @elseif($short_term_rent->building === 'wharton')
-                            <th>{{  $short_term_rent->long_term_rent - (($short_term_rent->size * 58.61) + (1500))  }} </th> 
+                            <th>{{  $long_term_rent->long_term_rent - (($long_term_rent->size * 58.61) + (780))  }} </th>
+                            @elseif($long_term_rent->building === 'princeton')
+                            <th>{{  $long_term_rent->long_term_rent - (($long_term_rent->size * 58.61) + (1200))  }} </th> 
+                            @elseif($long_term_rent->building === 'wharton')
+                            <th>{{  $long_term_rent->long_term_rent - (($long_term_rent->size * 58.61) + (1500))  }} </th> 
                             @endif
                         </tr>
                         @endforeach

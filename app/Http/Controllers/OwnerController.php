@@ -97,7 +97,7 @@ class OwnerController extends Controller
         $user = new User();
         $user->name = $owner->owner_first_name.' '.$owner->owner_last_name;
         if($user->email = $owner->owner_email_address == null){
-            $user->email = 'noemailadress'.$owner->owner_id.'@marthaservices.com';
+            $user->email = 'ownernoemailadress'.$owner->owner_id.'@marthaservices.com';
         }else{
            $user->email = $request->owner_email_address;
         }

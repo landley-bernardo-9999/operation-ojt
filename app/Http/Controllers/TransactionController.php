@@ -10,6 +10,7 @@ use App\Payment;
 use App\Resident;
 use App\Guardian;
 use App\User;
+use App\Remittance;
 use Hash;
 
 class TransactionController extends Controller
@@ -155,7 +156,7 @@ class TransactionController extends Controller
          $user = new User();
          $user->name = $resident->first_name.' '.$resident->last_name;
          if($user->email = $resident->email_address == null){
-             $user->email = 'noemailadress'.$resident->resident_id.'@marthaservices.com';
+             $user->email = 'residentnoemailadress'.$resident->resident_id.'@marthaservices.com';
          }else{
              $user->email = session('sess_email_address');
          }
@@ -195,8 +196,85 @@ class TransactionController extends Controller
             $payment->payment_status = 'paid';
             $payment->payment_transaction_id = $transaction->trans_id;
             $payment->updated_at = $transaction->trans_date;;
-            $payment->save();
-         }
+            
+
+            //adding remittance info for the unit owner
+
+            if(session('sess_room_building') === 'harvard'){
+                //condo dues for harvard
+                $condo_dues =  session('sess_room_size') * 58.61;
+                if($transaction->term === 'short_term'){
+                    //management fee for harvard short-term
+                    $mgmt_fee = session('sess_short_term_rent') * 0.2;
+                    //remittance for the owner
+                    $payment->mgmt_fee = $mgmt_fee;
+                    $remittance_amt =  session('sess_short_term_rent') - ($condo_dues + $mgmt_fee);
+                    $payment->condo_dues = $condo_dues;
+                    $payment->others = 0;
+                    $payment->remittance_amt = $remittance_amt;
+                }
+                elseif($transaction->term === 'long_term'){
+                     //management fee for the harvard long-term
+                     $mgmt_fee = 780;
+                     //remittance for the owner
+                     $payment->mgmt_fee = $mgmt_fee;
+                     $remittance_amt =  session('sess_long_term_rent') - ($condo_dues + $mgmt_fee);
+                     $payment->condo_dues = $condo_dues;
+                     $payment->others = 0;
+                     $payment->remittance_amt = $remittance_amt;
+                }
+            }
+            elseif(session('sess_room_building') === 'princeton'){
+                 //condo dues for princeton
+                 $condo_dues =  session('sess_room_size') * 58.61;
+                if($transaction->term === 'short_term'){
+                     //management fee for princeton short-term
+                     $mgmt_fee = 1700;
+                     //remittance for the owner
+                     $payment->mgmt_fee = $mgmt_fee;
+                     $remittance_amt =  session('sess_short_term_rent') - ($condo_dues + $mgmt_fee);
+                     $payment->condo_dues = $condo_dues;
+                     $payment->others = 0;
+                     $payment->remittance_amt = $remittance_amt;
+                }
+                elseif($transaction->term === 'long_term'){
+                     //management fee for princeton long-term
+                     $mgmt_fee = 1200;
+                     //remittance for the owner
+                     $payment->mgmt_fee = $mgmt_fee;
+                     $remittance_amt =  session('sess_long_term_rent') - ($condo_dues + $mgmt_fee);
+                     $payment->condo_dues = $condo_dues;
+                     $payment->others = 0;
+                     $payment->remittance_amt = $remittance_amt;
+                }
+            }
+            elseif(session('sess_room_building') === 'wharton'){
+                 //condo dues for wharton
+                 $condo_dues =  session('sess_room_size') * 58.61;
+                if($transaction->term === 'short_term'){
+                    //management fee for wharton short-term
+                    $mgmt_fee = session('sess_short_term_rent') * 0.2;
+                    //remittance for the owner
+                    $payment->mgmt_fee = $mgmt_fee;
+                    $remittance_amt =  session('sess_short_term_rent') - ($condo_dues + $mgmt_fee);
+                    $payment->condo_dues = $condo_dues;
+                    $payment->others = 0;
+                    $payment->remittance_amt = $remittance_amt;
+                }
+                elseif($transaction->term === 'long_term'){
+                    //management fee for wharton long-term
+                    $mgmt_fee = 1500;
+                    //remittance for the owner
+                    $payment->mgmt_fee = $mgmt_fee;
+                    $remittance_amt =  session('sess_long_term_rent') - ($condo_dues + $mgmt_fee);
+                    $payment->condo_dues = $condo_dues;
+                    $payment->others = 0;
+                    $payment->remittance_amt = $remittance_amt;
+                }
+            }
+                    $payment->save();
+            
+        }
 
          if($sec_dep_utilities > 0){
             $payment = new Payment();

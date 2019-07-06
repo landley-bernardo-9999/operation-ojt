@@ -30,16 +30,14 @@ class LoginController extends Controller
          if($user->privilege === 'admin'){
             return redirect('/users');
          }
-         elseif($user->privilege === 'executive'){
-             return redirect('/home');
-         } elseif($user->privilege === 'leasingManager'){
+        elseif($user->privilege === 'leasingManager'){
             return redirect('/dashboard');
         }
          elseif($user->privilege === 'leasingOfficer'){
-            return redirect('/home');
+            return redirect('/dashboard');
         }
         elseif($user->privilege === 'treasury'){
-            return redirect('/payments');
+            return redirect('/dashboard');
         }
         elseif($user->privilege === 'resident'){  
             return redirect('/dashboard');

@@ -15,7 +15,7 @@
  
     <div class="row">
        <div class="col-md-12">
-            <h4><b>{{ $owner->owner_first_name }} {{ $owner->owner_middle_name }} {{ $owner->owner_last_name }}</b></h4>
+            <h4><b>{{ $owners->owner_first_name }} {{ $owner->owner_middle_name }} {{ $owner->owner_last_name }}</b></h4>
             <table class="table">
                 <tr>
                         <th>#</th>
@@ -33,10 +33,10 @@
                         <th> {{ $row_no++ }} </th>
                         <td> {{Carbon\Carbon::parse(  $remittance->billing_date )->formatLocalized('%b %d %Y')}} </td>
                         <td> {{ $remittance->building }} {{ $remittance->room_no }} </td>
-                        <td> {{ $remittance->amt }} </td>
+                        <td> {{ $remittance->remittance_amt }} </td>
                         <td>
-                            <a href="/payments/{{ $remittance->payment_id }}" class="btn-default">
-                                OPEN
+                            <a href="/payments/{{ $remittance->payment_id }}">
+                                MORE INFO
                             </a>
                         </td>
                         {{-- <td><input type="text" class="" style="width:50%" value="" name="mgmt_fee"></td>

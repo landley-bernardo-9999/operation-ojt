@@ -122,14 +122,14 @@
             </tr>
             <?php $row_no_co_guardian = 1; ?>
             <tr>
-                <th>No</th>
+                <th>#</th>
                 <th>Name</th>
                 <th>Relationship</th>
                 <th>Mobile Number</th>
             </tr>
             @foreach ($guardian as $guardian)
             <tr>
-                <td>{{ $row_no_co_guardian++ }}.</td>
+                <th>{{ $row_no_co_guardian++ }}</th>
                 <td> {{ $guardian->name }} </td>
                 <td> {{ $guardian->relationship }} </td>
                 <td> {{ $guardian->mobile_number }} </td>
@@ -145,7 +145,7 @@
             </tr>
             <?php $row_no_co_residents = 1; ?>
             <tr>
-                <th>No</th>
+                <th>#</th>
                 <th>Name</th>
                 <th>Mobile Number</th>
                 <th>Telephone Number</th>
@@ -153,7 +153,7 @@
             </tr>
             @foreach ($co_residents as $co_residents)
             <tr>
-                <td>{{ $row_no_co_residents++ }}.</td>
+                <th>{{ $row_no_co_residents++ }}</th>
                 <td> {{ $co_residents->first_name }} {{ $co_residents->middle_name }} {{ $co_residents->last_name }}</td>
                 <td> {{ $co_residents->mobile_number }} </td>
                 <td> {{ $co_residents->telephone_number }} </td>
@@ -170,7 +170,7 @@
            </tr>
            <?php $row_no_contracts = 1; ?>
            <tr>
-               <th>No</th>
+               <th>#</th>
                <th>Unit No</th>
                <th>Building</th>
                <th>Contract Period</th>
@@ -180,9 +180,9 @@
            </tr>
            @foreach ($contract as $contract)
            <tr>
-                <td>
-                    {{ $row_no_contracts++ }}.
-                </td>
+                <th>
+                    {{ $row_no_contracts++ }}
+                </th>
                 <td>
                    {{ $contract->room_no }}
                 </td>
@@ -218,7 +218,7 @@
            </tr>
            <?php $row_no_payments = 1; ?>
            <tr>
-               <th>No.</th>
+               <th>#</th>
                <th>Date</th>
                <th>Description</th>
                <th>Amount</th>
@@ -226,7 +226,7 @@
            </tr>
            @foreach ($payment as $payment)
            <tr>
-                <td>{{ $row_no_payments++ }}.</td>
+                <th>{{ $row_no_payments++ }}</th>
                 <td> {{Carbon\Carbon::parse(  $payment->trans_date )->formatLocalized('%b %d %Y')}}</td>
                 <td>{{ $payment->desc }}</td>
                 <td>{{ number_format($payment->amt, 2) }}</td>
