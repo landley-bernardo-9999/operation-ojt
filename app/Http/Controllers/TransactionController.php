@@ -400,7 +400,7 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $trans_id)
     {
-        if($request->trans_status == 'active'){ 
+        if($request->trans_status === 'inactive'){ 
             DB::table('transactions')
                 ->where('transactions.trans_resident_id', session('resident_id'))
                 ->where('transactions.trans_room_id', session('sess_room_id'))
@@ -410,10 +410,9 @@ class TransactionController extends Controller
                             'actual_move_out_date' => $request->actual_move_out_date                    
                         ]);
 
-            DB::table('transactions')
-                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
-                ->where('trans_room_id', session('sess_room_id'))
-                    ->update([
+            DB::table('rooms')
+                ->where('room_id', session('sess_room_id'))
+                ->update([
                             'room_status' => 'vacant',
                             'remarks' => 'THE ROOM IS SET FOR GENERAL CLEANING'
                         ]);

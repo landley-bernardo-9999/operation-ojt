@@ -95,7 +95,7 @@
            <p class="text-danger">No Security Deposit.</p>
            @else
            <tr>
-                <th>No.</th>
+                <th>#</th>
                 <th>Date</th>
                 <th>Description</th>
                 <th>Amount</th>
@@ -103,7 +103,7 @@
             </tr>
             @foreach ($payment_move_ins as $payment)
             <tr>
-                 <td>{{ $row_no_payments_move_in++ }}.</td>
+                 <th>{{ $row_no_payments_move_in++ }}</th>
                  <td> {{Carbon\Carbon::parse(  $payment->trans_date )->formatLocalized('%b %d %Y')}}</td>
                  <td>{{ $payment->desc }}</td>
                  <td>{{ number_format($payment->amt, 2) }}</td>
