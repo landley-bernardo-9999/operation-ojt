@@ -17,11 +17,11 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->privilege === 'leasingManager' ){
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->privilege === 'leasingManager'){
 
                 $room = DB::table('rooms')
                 ->count();
@@ -51,10 +51,19 @@ class RoomController extends Controller
                 ->get();
                 return view('rooms', compact('room', 'harvard', 'princeton', 'wharton', 'cy'));
             }
+            elseif (auth()->user()->privilege === 'billingAndCollection') {
+
+                $s = $request->query('s');
+
+                $rooms = DB::table('rooms')
+                ->where('room_no', 'like', "%{$s}%")
+                ->get();
+
+                return view('search-rooms', compact('rooms'));
+            }  
             else{
-                
                 abort(404, "Forbidden Page.");
-            }   
+            }
         }
         catch(\Exception $e)
         {

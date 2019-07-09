@@ -20,7 +20,7 @@
                 <td>{{ $user->privilege }}</td>
             </tr>
             <tr>
-                <td><a class="btn-default" href="/users/{{ $user->user_id }}/edit">Edit</a></td>
+                <td><a class="" href="/users/{{ $user->user_id }}/edit">Edit</a></td>
                 <td> 
                     @if(auth()->user()->privilege === 'admin')
                         <form method="POST" action="/users/{{ $user->user_id }}">

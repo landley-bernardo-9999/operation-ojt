@@ -15,7 +15,7 @@
         @if($residents->count() > 0)
         <p>{{ $residents->count() }} residents found.</p>
         <tr>
-            <th>No. </th>
+            <th>#</th>
             <th>Resident</th>
             <th>Unit No</th>
             <th>Status</th>
@@ -24,7 +24,7 @@
         </tr>   
         @foreach ($residents as $resident)
         <tr>
-            <td>{{ $row_no++ }}.</td>
+            <th>{{ $row_no++ }}</th>
             <td>{{ $resident->first_name }} {{ $resident->last_name }}</td>
             <td>{{ $resident->building }} {{ $resident->room_no }}</td>
             <td>{{ $resident->trans_status }}</td>

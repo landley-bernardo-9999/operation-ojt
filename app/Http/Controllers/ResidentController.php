@@ -145,7 +145,7 @@ class ResidentController extends Controller
     {
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_resident_id == $resident_id){
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_resident_id == $resident_id  || auth()->user()->privilege === 'billingAndCollection'){
 
                 $resident = Resident::findOrFail($resident_id);
 
@@ -171,7 +171,9 @@ class ResidentController extends Controller
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
                 ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+                ->select('*', 'payments.created_at as billing_date')
                 ->where('residents.resident_id', $resident_id)
+                ->orderBy('payments.created_at', 'desc')
                 ->get();
         
                 return view('show-resident', compact('resident', 'contract', 'repairs', 'payment', 'co_residents', 'guardian'));

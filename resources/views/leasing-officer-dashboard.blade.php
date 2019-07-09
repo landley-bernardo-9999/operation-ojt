@@ -127,7 +127,7 @@
             <h3>Last 10 move in</h3>
             <table class="table">
                 <tr>
-                    <th>No</th>
+                    <th>#</th>
                     <th>Resident</th>
                     <th>Unit</th>
                     <th>Date</th>
@@ -136,7 +136,7 @@
                 <?php $row_no_move_in = 1; ?>
                 @foreach ($move_in as $move_in)
                 <tr>
-                    <td>{{ $row_no_move_in++ }}.</td>
+                    <th>{{ $row_no_move_in++ }}</th>
                     <td>{{ $move_in->first_name}} {{ $move_in->last_name }}</td>
                     <td>{{ $move_in->room_no}} </td>
                     <td>{{Carbon\Carbon::parse(  $move_in->move_in_date )->formatLocalized('%b %d %Y')}}</td>
@@ -150,7 +150,7 @@
             <h3>Last 10 move out</h3>
             <table class="table">
                 <tr>
-                    <th>No</th>
+                    <th>#</th>
                     <th>Resident</th>
                     <th>Unit</th>
                     <th>Date</th>
@@ -159,7 +159,7 @@
                 <?php $row_no_move_out = 1; ?>
                 @foreach ($move_out as $move_out)
                 <tr>
-                    <td>{{ $row_no_move_out++ }}.</td>
+                    <th>{{ $row_no_move_out++ }}</th>
                     <td>{{ $move_out->first_name}} {{ $move_out->last_name }}</td>
                     <td>{{ $move_out->room_no}} </td>
                     <td>{{Carbon\Carbon::parse(  $move_out->actual_move_out_date )->formatLocalized('%b %d %Y')}}</td>

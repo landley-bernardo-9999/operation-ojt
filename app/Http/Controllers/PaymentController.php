@@ -33,14 +33,16 @@ class PaymentController extends Controller
     
             return view('owner-remittance', compact('remittances'));
         } 
-        elseif(auth()->user()->privilege === 'treasury'){
+        elseif(auth()->user()->privilege === 'billingAndCollection'){
             $s = $request->query('s');
 
             $owners = DB::table('contracts')
             ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
             ->join('owners', 'contracts.contract_owner_id', 'owners.owner_id')
             ->where('room_no', 'like', "%$s%")
-            ->orderBy('owner_first_name', 'asc')
+            ->orderBy('project', 'asc')
+            ->orderBy('building', 'asc')
+            ->orderBy('room_no', 'asc')
             ->get();  
 
            return view('payments', compact('owners'));
@@ -88,7 +90,10 @@ class PaymentController extends Controller
         ->where('payment_id', $payment_id)
         ->get();  
 
-        return view('show-remittance', compact('remittance'));
+        
+
+        
+        return view('show-remittance', compact('remittance','remittances_owner'));
     }
 
     /**
@@ -109,9 +114,22 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, $payment_id)
     {
-        dd('asdasasd');
+        if(auth()->user()->privilege === 'billingAndCollection'){
+            $remittance = Payment::findOrFail($payment_id);
+            $remittance->mgmt_fee = $request->mgmt_fee;
+            $remittance->condo_dues = $request->condo_dues;
+            $remittance->others = $request->others;
+            $remittance->remittance_amt =  $request->remittance_amt;
+            $remittance->save();
+    
+            return redirect('/payments/'.$payment_id)->with('success', 'Remittance has been updated successfully!');
+        }
+        else{
+            abort(404, "Forbidden Page.");
+        }
+       
     }
 
     /**

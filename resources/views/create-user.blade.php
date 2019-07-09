@@ -48,6 +48,7 @@
                                 <option value="leasingOfficer" {{ old('privilege') == 'leasingOfficer' ? 'selected' : ''}} >Leasing Officer</option>
                                 <option value="leasingManager" {{ old('privilege') == 'leasingManager' ? 'selected' : ''}}>Leasing Manager</option>
                                 <option value="admin" {{ old('privilege') == 'admin' ? 'selected': ''}}>Admin</option>
+                                <option value="billingAndCollection" {{ old('billingAndCollection') == 'billingAndCollection' ? 'selected': ''}}>Billing and Collection</option>
                                 <option value="treasury" {{ old('privilege') == 'treasury' ? 'selected': ''}}>Treasury</option>
                             </select>
 

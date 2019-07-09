@@ -35,7 +35,7 @@ class OwnerController extends Controller
                 ->orderBy('contracts.created_at', 'desc')
                 ->get();  
         
-                return view ('owners', compact('owners'));
+                return view ('payments', compact('owners'));
             }
             else{
                 abort(404, "Forbidden Page.");
@@ -143,9 +143,9 @@ class OwnerController extends Controller
     {   
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_owner_id == $owner_id || auth()->user()->privilege === 'treasury' ){
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_owner_id == $owner_id || auth()->user()->privilege === 'billingAndCollection' ){
 
-                if( auth()->user()->privilege === 'treasury' ){
+                if( auth()->user()->privilege === 'billingAndCollection' ){
                     
                     $owner = Owner::findOrFail($owner_id);
 
@@ -156,8 +156,8 @@ class OwnerController extends Controller
                     ->select('*', 'payments.created_at as billing_date')
                     ->where('owner_id', $owner_id)
                     ->whereIn('desc', ['monthly_rent', 'advance_rent'])
+                    
                     ->get();
-
 
                     return view('owner-remittance', compact('owner', 'remittances'));
 

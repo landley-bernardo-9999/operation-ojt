@@ -42,9 +42,7 @@
     <div class="row">
        <div class="col-md-12">
             <table class="table">
-                    <tr>
-                        <td><h4><b> Personal Information</b></h4></td>
-                    </tr>
+                        <p><h4><b> Personal Information</b></h4></p>
                     <tr>
                         <td>Name:</td>
                         <td>{{ $resident->first_name }} {{ $resident->middle_name }} {{ $resident->last_name }} </td>
@@ -117,9 +115,8 @@
     </div>
         <div class="row">
             <table class="table">
-            <tr>
-               <td><h4><b> Guardian</b></h4></td>
-            </tr>
+               <p><h4><b> Guardian</b></h4></p>
+                @if($guardian->count() > 0)
             <?php $row_no_co_guardian = 1; ?>
             <tr>
                 <th>#</th>
@@ -135,14 +132,16 @@
                 <td> {{ $guardian->mobile_number }} </td>
             </tr>
             @endforeach
+            @else
+            <p class="text-danger">No guardians declared.</p>
+          @endif
             </table>
         </div>
 
         <div class="row">
             <table class="table">
-            <tr>
-                <td><h4><b>Co-Residents</b></h4></<h4></td>
-            </tr>
+                <p><h4><b>Co-Residents</b></h4></<h4></p>
+                @if($co_residents->count() > 0)
             <?php $row_no_co_residents = 1; ?>
             <tr>
                 <th>#</th>
@@ -160,14 +159,15 @@
                 <td> {{ $co_residents->email_address }} </td>
             </tr>
             @endforeach
+            @else
+            <p class="text-danger">No co-residents declared.</p>
+          @endif
             </table>
         </div>
 
     <div class="row">
         <table class="table">
-           <tr>
-               <td><h4><b>Contracts</b></<h4></td>
-           </tr>
+            <p><h4><b>Contracts</b></<h4></p>        
            <?php $row_no_contracts = 1; ?>
            <tr>
                <th>#</th>
@@ -213,9 +213,7 @@
 
     <div class="row">
         <table class="table">
-           <tr>
-               <td><h4><b> Payments</b></<h4`></td>
-           </tr>
+               <p><h4><b> Payments</b></<h4`></p>
            <?php $row_no_payments = 1; ?>
            <tr>
                <th>#</th>
@@ -227,7 +225,7 @@
            @foreach ($payment as $payment)
            <tr>
                 <th>{{ $row_no_payments++ }}</th>
-                <td> {{Carbon\Carbon::parse(  $payment->trans_date )->formatLocalized('%b %d %Y')}}</td>
+                <td> {{Carbon\Carbon::parse(  $payment->billing_date )->formatLocalized('%b %d %Y')}}</td>
                 <td>{{ $payment->desc }}</td>
                 <td>{{ number_format($payment->amt, 2) }}</td>
                 <td>{{ $payment->payment_status }}</td>
