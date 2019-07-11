@@ -128,9 +128,7 @@
                 <td>{{Carbon\Carbon::parse(  $resident->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $resident->move_out_date )->formatLocalized('%b %d %Y')}} </td>
                 <td>{{ $resident->term }}</td>
                 <td>   
-                    @if(auth()->user()->privilege === 'leasingOfficer')
-                        <a href="/residents/{{$resident->resident_id}}" oncontextmenu="return false">MORE INFO</a>
-                    @endif
+                    <a href="/residents/{{$resident->resident_id}}" oncontextmenu="return false">MORE INFO</a>
                 </td>
             </tr>
             @endforeach

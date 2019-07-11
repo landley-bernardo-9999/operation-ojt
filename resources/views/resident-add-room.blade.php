@@ -18,7 +18,7 @@
              </div>
              <br>
              <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <p>Client: <b>{{session('resident_name')}}</b></p>    
                 </div>
                  <div class="col-md-2">
@@ -64,28 +64,31 @@
              
              <br>
 
-            <label for="">Payment</label>
-            <div class="row">
+            
+         
+            <div class="row" id="payment_info">
+                
+            <label for="">PAYMENT BREAKDOWN</label>
               <div class="col-md-12">
                   <table class="table">
                   <tr>
-                      <td>Security Deposit for Rent:</td>
-                      <td><input type="number" class="form-control" style="width:30%" id="sec_dep_rent" name="sec_dep_rent" value="0.00" > </td>
+                      <td  id="sec_dep_rent_label">Security Deposit for Rent:</td>
+                      <td><input type="text" class="form-control" style="width:30%" id="sec_dep_rent" name="sec_dep_rent" value="0.00" onkeyup="compute_total()"> </td>
                   </tr>
                   <tr>
-                      <td>Security Deposit for Utilities:</td>
-                      <td><input type="number" class="form-control" style="width:30%" id="sec_dep_utilities" name="sec_dep_utilities" value="0.00" ></td>
+                      <td  id="sec_dep_utilities_label">Security Deposit for Utilities:</td>
+                      <td><input type="text" class="form-control" style="width:30%" id="sec_dep_utilities" name="sec_dep_utilities" value="0.00" onkeyup="compute_total()"></td>
                   </tr>
                   <tr>
-                      <td>Advance Rent:</td>
-                      <td><input type="number" class="form-control" style="width:30%" id="advance_rent" name="advance_rent" value="0.00" ></td>
+                      <td id="advance_rent_label">Advance Rent:</td>
+                      <td><input type="text" class="form-control" style="width:30%" id="advance_rent" name="advance_rent" value="0.00" onkeyup="compute_total()"></td>
                   </tr>
                   <tr>
-                      <td>Transient:</td>
-                      <td><input type="number" class="form-control" style="width:30%" id="transient" name="transient" value="0.00" ></td>
+                      <td id="transient_label">Transient:</td>
+                      <td><input type="text" class="form-control" style="width:30%" id="transient" name="transient" value="0.00" onkeyup="compute_total()"></td>
                   </tr>
                   <tr>
-                      <th>Total</th>
+                      <th>TOTAL</th>
                       <td><input type="number" class="form-control" style="width:30%" id="total_payment" name="total_payment" value="0.00" readonly></td>
                   </tr>
               </table>
@@ -105,6 +108,20 @@
 @endsection
 
 <script>
+
+window.onload = function() {
+        document.getElementById('payment_info').style.display = 'none';
+    }
+
+    function compute_total(){
+        var sec_dep_rent=document.getElementById('sec_dep_rent').value;
+        var sec_dep_utilities=document.getElementById('sec_dep_utilities').value;
+        var advance_rent=document.getElementById('advance_rent').value;
+        var transient=document.getElementById('transient').value;   
+
+        document.getElementById('total_payment').value = parseFloat(sec_dep_rent) + parseFloat(sec_dep_utilities) + parseFloat(advance_rent) + parseFloat(transient);
+    }
+
  function select_term(){    
         var move_in_date = document.getElementById('move_in_date').value   = document.getElementById('trans_date').value; ;
         var move_out_date = document.getElementById('move_out_date').value;
@@ -115,15 +132,15 @@
         var timeDiff = d2.getTime() - d1.getTime();
         var DaysDiff = timeDiff / (1000 * 3600 * 24);
 
-        if(DaysDiff => 180 && DaysDiff > 29){
+        if(DaysDiff => 180 && DaysDiff > 27){
             document.getElementById('term').value =   'long_term' ;
         }
 
-        if(DaysDiff < 180 && DaysDiff > 29){
+        if(DaysDiff < 180 && DaysDiff > 27){
             document.getElementById('term').value =  'short_term' ;
         }
 
-        if(DaysDiff <= 29 ){
+        if(DaysDiff <= 27 ){
             document.getElementById('term').value = 'transient' ;
         }
 
@@ -133,20 +150,28 @@
                 var sec_dep_rent = document.getElementById('sec_dep_rent').value = 6800*2;
                 var advance_rent = document.getElementById('advance_rent').value = 6800;
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
-                var transient = document.getElementById('transient').value = 0;
+                 var transient = document.getElementById('transient').value = 0;
 
-                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
-
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
+               
                 document.getElementById('total_payment').value = total_payment;
             }
             else if( document.getElementById('term').value === 'short_term'){
                 var sec_dep_rent = document.getElementById('sec_dep_rent').value = 7800;
                 var advance_rent = document.getElementById('advance_rent').value = 7800;
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
-                var transient = document.getElementById('transient').value = 0;
+                 var transient = document.getElementById('transient').value = 0;
 
-                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
-
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
+               
                 document.getElementById('total_payment').value = total_payment;
             }
             else{
@@ -170,8 +195,11 @@
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
                 var transient = document.getElementById('transient').value = 0;
 
-                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
-
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+           
                 document.getElementById('total_payment').value = total_payment;
             }
             else if( document.getElementById('term').value === 'short_term'){
@@ -180,8 +208,11 @@
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
                 var transient = document.getElementById('transient').value = 0;
 
-                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
-
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+                      
                 document.getElementById('total_payment').value = total_payment;
             }
             else{
@@ -205,8 +236,11 @@
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
                 var transient = document.getElementById('transient').value = 0;
 
-                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
-
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
                 document.getElementById('total_payment').value = total_payment;
             }
             else if( document.getElementById('term').value === 'short_term'){
@@ -214,9 +248,11 @@
                 var advance_rent = document.getElementById('advance_rent').value = 12000;
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 2000;
                 var transient = document.getElementById('transient').value = 0;
-
-                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
-
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
                 document.getElementById('total_payment').value = total_payment;
             }
             else{
@@ -240,8 +276,11 @@
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
                 var transient = document.getElementById('transient').value = 0;
 
-                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
-
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
                 document.getElementById('total_payment').value = total_payment;
             }
             else if( document.getElementById('term').value === 'short_term'){
@@ -250,8 +289,11 @@
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
                 var transient = document.getElementById('transient').value = 0;
 
-                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities
-
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
                 document.getElementById('total_payment').value = total_payment;
             }
             else{
@@ -265,10 +307,7 @@
                 document.getElementById('total_payment').value = total_payment;
             }
 
-        }
-
-
-     
+        }   
     }
 
 </script>

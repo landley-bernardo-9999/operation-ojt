@@ -145,7 +145,7 @@ class ResidentController extends Controller
     {
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_resident_id == $resident_id  || auth()->user()->privilege === 'billingAndCollection'){
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_resident_id == $resident_id  || auth()->user()->privilege === 'billingAndCollection'  || auth()->user()->privilege === 'leasingManager'){
 
                 $resident = Resident::findOrFail($resident_id);
 

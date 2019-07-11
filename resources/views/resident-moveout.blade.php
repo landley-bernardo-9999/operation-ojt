@@ -43,12 +43,13 @@
             <input type="hidden" name="trans_status" value="inactive">
             <td>Reason:</td>
             <td>
-                <select name="move_out_reason" id="" class="form-control" style="width:70%" required>
+                <select name="move_out_reason" id="" class="form-control" style="width:70%">
                     <option value="" selected>Select Reason</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="delinquent">Delinquent</option>
                     <option value="end_of_contract">End of Contract</option>
                     <option value="force_majeure">Force Majeure</option>
                     <option value="run_away">Run Away</option>
-                    <option value="delinquent">Delinquent</option>
                     <option value="unruly">Unruly</option>
                 </select>
             </td>    
@@ -132,7 +133,7 @@
            <p class="text-danger">No Moveout Charges.</p>
            @else
            <tr>
-               <th>No.</th>
+               <th>#</th>
                <th>Date</th>
                <th>Description</th>
                <th>Amount</th>
@@ -140,7 +141,7 @@
            </tr>
            @foreach ($payment_move_outs as $payment)
            <tr>
-                <td>{{ $row_no_payments_move_out++ }}.</td>
+                <th>{{ $row_no_payments_move_out++ }}.</th>
                 <td> {{Carbon\Carbon::parse(  $payment->trans_date )->formatLocalized('%b %d %Y')}}</td>
                 <td>{{ $payment->desc }}</td>
                 <td>{{ number_format($payment->amt, 2) }}</td>
@@ -163,15 +164,15 @@
                 </tr>
                <?php $row_no_payments = 1; ?>
                 <tr>
-                   <th>No.</th>
+                   <th>#</th>
+                   <th>Category</th>
                    <th>Items/Materials</th>
-                   <th>Remarks</th>
                    <th>Quantity</th>
                    <th>Amount</th>
                    <th>Total</th>
                 </tr>
                 <tr>
-                   <td>1.</td>
+                   <th>1</th>
                    <td>LAUNDRY</td>
                    <td>Comforter</td>
                    <td><input type="text" class="form-control" name="qty_comforter" id="qty_comforter" value = "0" style="width: 40%" onkeyup="sum_comforter()"></td>
@@ -227,7 +228,15 @@
                     <td><input type="text" class="form-control" name="total_towel" id="total_towel" value = "0" style="width: 40%" readonly></td>
                 </tr>
                 <tr>
-                   <td>2. </td>
+                    <th>2</th>
+                    <td>ADDITIONAL CHARGES</td>
+                    <td><input type="text" class="form-control" name="item" value="Others" id="item" style="width: 60%"></td>
+                    <td><input type="text" class="form-control" name="qty" id="qty" value="1"  style="width: 40%" readonly></td>
+                    <td><input type="text" class="form-control" name="amt" id="amt" value="0" style="width: 40%" onkeyup="sum_charges()"></td>
+                    <td><input type="text" class="form-control" name="total_amt" id="total_amt" value="0"  style="width: 40%" readonly></td>
+                 </tr>
+                <tr>
+                   <th>3</th>
                    <td>GENERAL CLEANING</td>
                    <td></td>
                    <td></td>
@@ -310,6 +319,14 @@
         }
     }
 
+    function sum_charges(){
+        var qty = document.getElementById('qty').value;
+        var amt = document.getElementById('amt').value;
+        if(!isNaN(qty) && !isNaN(amt)){
+            document.getElementById('total_amt').value =  (parseInt(qty) * parseInt(amt)).toFixed(2);
+        }
+    }
+
     function sum_gc(){
         var qty_comforter = document.getElementById('qty_comforter').value;
         var amt_comforter = document.getElementById('amt_comforter').value;
@@ -331,6 +348,10 @@
 
         var qty_towel = document.getElementById('qty_towel').value;
         var amt_towel = document.getElementById('amt_towel').value;
+
+        
+        var qty = document.getElementById('qty').value;
+        var amt = document.getElementById('amt').value;
 
         var amt_gc = document.getElementById('amt_gc').value;
 
@@ -390,6 +411,15 @@
             amt_towel = 1;
         }
 
+       //additional charges
+        //towel
+        if(isNaN(qty)){
+            qty = 1;
+        }
+        if(isNaN(amt)){
+            amt = 1;
+        }
+
         //general cleaning
         if(isNaN(amt_gc)){
             amt_gc = 1;
@@ -405,6 +435,7 @@
                 parseInt(qty_rug) * parseInt(amt_rug) +
                 parseInt(qty_curtain) * parseInt(amt_curtain) +
                 parseInt(qty_towel) * parseInt(amt_towel) +
+                parseInt(qty) * parseInt(amt) +
                 parseInt(amt_gc)
             ).toFixed(2);
         }

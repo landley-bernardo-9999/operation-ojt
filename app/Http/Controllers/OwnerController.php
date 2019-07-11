@@ -35,7 +35,7 @@ class OwnerController extends Controller
                 ->orderBy('contracts.created_at', 'desc')
                 ->get();  
         
-                return view ('payments', compact('owners'));
+                return view ('owners', compact('owners'));
             }
             else{
                 abort(404, "Forbidden Page.");
@@ -143,7 +143,7 @@ class OwnerController extends Controller
     {   
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_owner_id == $owner_id || auth()->user()->privilege === 'billingAndCollection' ){
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_owner_id == $owner_id || auth()->user()->privilege === 'billingAndCollection'  || auth()->user()->privilege === 'leasingManager'){
 
                 if( auth()->user()->privilege === 'billingAndCollection' ){
                     

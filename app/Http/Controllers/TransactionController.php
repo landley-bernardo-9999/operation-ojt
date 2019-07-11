@@ -89,7 +89,7 @@ class TransactionController extends Controller
              $payment->payment_status = 'paid';
              $payment->payment_transaction_id = $transaction->trans_id;
              $payment->created_at = $transaction->trans_date;
-             $payment->updated_at = $transaction->trans_date;;
+             $payment->created_at = $transaction->trans_date;
              $payment->save();
          }
 
@@ -114,9 +114,9 @@ class TransactionController extends Controller
              $payment->updated_at = $transaction->trans_date;;
              $payment->save();
          }
- 
+
          $room = DB::table('rooms')
-         ->where('room_id', session('sess_room_id'))
+         ->where('room_id', $pieces[1])
          ->update(['room_status' => 'occupied']);
          
         //  $room = DB::table('rooms')
@@ -195,9 +195,9 @@ class TransactionController extends Controller
             $payment->desc = 'advance_rent';
             $payment->payment_status = 'paid';
             $payment->payment_transaction_id = $transaction->trans_id;
-            $payment->updated_at = $transaction->trans_date;;
+            $payment->updated_at = $transaction->trans_date;
+            $payment->created_at = $transaction->trans_date;
             
-
             //adding remittance info for the unit owner
 
             if(session('sess_room_building') === 'harvard'){
@@ -385,7 +385,7 @@ class TransactionController extends Controller
         ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
         ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
         ->where('trans_id', $trans_id)
-        ->whereNotIn ('payments.desc', ['sec_dep_utilities', 'sec_dep_rent', 'advance_rent', 'transient'])
+        ->whereNotIn ('payments.desc', ['sec_dep_utilities', 'sec_dep_rent', 'advance_rent','monthly_rent','transient'])
         ->get();
 
         return view('resident-moveout', compact('transaction', 'resident', 'payment_move_ins', 'payment_move_outs'));
@@ -400,6 +400,10 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $trans_id)
     {
+        request()->validate([
+            'move_out_reason' => ['required']
+        ]);
+
         if($request->trans_status === 'inactive'){ 
             DB::table('transactions')
                 ->where('transactions.trans_resident_id', session('resident_id'))
@@ -497,6 +501,15 @@ class TransactionController extends Controller
                 $payment->save();
             }
 
+            if($request->total_amt > 0){
+                $payment = new Payment();
+                $payment->amt = $request->total_amt;
+                $payment->desc = 'other_charges';
+                $payment->payment_status = 'unpaid';
+                $payment->payment_transaction_id = $trans_id;
+                $payment->updated_at = null;
+                $payment->save();
+            }
             return redirect('transactions/'.$trans_id.'/edit')->with('success','Resident has moved out!');
         }
         else{

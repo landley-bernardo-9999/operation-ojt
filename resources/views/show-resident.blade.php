@@ -15,19 +15,13 @@
                 <a href="/co-tenant/create" oncontextmenu="return false">Add Co-Tenant</a>
             </li>
             <li class="">
-                <a href="/room/add" oncontextmenu="return false">Add Room</a>
-            </li>
-            <li class="">
-                <a href="/room/add" oncontextmenu="return false">Transfer Resident</a>
+                <a href="/room/add" oncontextmenu="return false">Add/Renewal/Transfer Contract</a>
             </li>
             <li class="">
                 <a href="#" oncontextmenu="return false">Add Repair</a>
             </li>
             <li class="">
                 <a href="#" oncontextmenu="return false">Add Violation</a>
-            </li>
-            <li class="">
-                <a href="#" oncontextmenu="return false">Borrow Key</a>
             </li>
              {{-- <li class="nav-item">
                 <form method="POST" action="/residents/{{ $resident->resident_id }}">

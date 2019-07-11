@@ -152,6 +152,9 @@
                 </div>
                 <div class="panel-body">
                     <ul>
+                        <li>
+                            The propose increase for the condominium has been concluded and the implemented has taken effect this June 2019.
+                        </li>
                          <li>
                            2nd General Assembly for North Cambridge Unit Owners was held June 01, 2019 on Princeton Building. 
                         </li>
@@ -246,6 +249,7 @@
                         </li>    
                         <ul>
                             <li><a href="/storage/files/NC-House-Rules-Revised-2014-booklet.pdf" target="_blank">NORTH CAMBRIDGE</a></li>
+                            <li><a href="/storage/files/NC-House-Rules-Revised-2014-booklet.pdf" target="_blank">COURTYARDS</a></li>
                         </ul>
                     </ol>
                  

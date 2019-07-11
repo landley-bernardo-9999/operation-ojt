@@ -84,22 +84,64 @@
             </table>
         </div>
     </div>
+    
     <div class="row">
-        <h3>Reserved Units</h3>
-        @if ($reserved_rooms->count() < 0)
-        <p class="text-danger">No reserved units.</p>
-        @endif
-        <ul>
+        <div class="col-md-12">
+            <h3>Upcoming Moveouts</h3>
+            <table class="table">
+                @if($about_to_move_out->count() > 0)
+                <p>{{ $about_to_move_out->count() }} upcoming moveouts.</p>
+                <tr>
+                    <th>#</th>
+                    <th>Resident</th>
+                    <th>Unit</th>
+                    <th>Move Out Date</th>
+                    <th></th>
+                </tr>
+                <?php $row_no = 1; ?>
+                @foreach ($about_to_move_out as $about_to_move_out)
+                <tr>
+                    <th>{{ $row_no++ }}</th>
+                    <td>{{ $about_to_move_out->first_name}} {{ $about_to_move_out->last_name }}</td>
+                    <td>{{ $about_to_move_out->room_no}} </td>
+                    <td>{{Carbon\Carbon::parse(  $about_to_move_out->move_out_date )->formatLocalized('%b %d %Y')}}</td>
+                    <td><a href="rooms/{{ $about_to_move_out->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
+                </tr>
+                @endforeach
+                @else
+                <p class="text-danger">No upcoming moveouts yet.</p>
+              @endif
+            </table>
+        </div>                
+    </div>
+    
+    <div class="row">
+       <div class="col-md-6">
+            <h3>Reserved Units</h3>
+            @if ($reserved_rooms->count() == 0)
+            <p class="text-danger">No reserved units.</p>
+            @endif
+            <ul>
             @foreach ($reserved_rooms as $room)
-                <li><a href="/rooms/{{ $room->room_id }}">{{ $room->building }} {{ $room->room_no }}</a></li>
+                <li><a href="/rooms/{{ $room->room_id }}">{{ $room->building }} {{ $room->room_no }}</a> - {{ $room->remarks }}.</li>
             @endforeach
         </ul>
-    </div>
-    <div class="row">
-        <h3>Occupancy Rate</h3>
+       </div>
+       <div class="col-md-6">
+            <h3>Units Under Rectification</h3>
+            @if ($rectification_rooms->count() == 0)
+            <p class="text-danger">No units under rectication.</p>
+            @endif
+            <ul>
+            @foreach ($rectification_rooms as $room)
+                <li><a href="/rooms/{{ $room->room_id }}">{{ $room->building }} {{ $room->room_no }}</a> - {{ $room->remarks }}.</li>
+            @endforeach
+        </ul>
+       </div>
     </div>
 
     <div class="row">
+            <h3>Occupancy Rate</h3>
         <div class="col-md-6 text-center">
             <div class="panel">
             <div class="panel-header">

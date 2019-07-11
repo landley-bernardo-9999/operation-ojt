@@ -73,7 +73,7 @@
                 <td><input type="number" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_electric_reading }}"></td>
             </tr>
             <tr>
-                <th ><button type="submit">Save</button></th>
+                <th><button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default">SAVE</button></th>
                 <td></td>
             </tr>
             @else

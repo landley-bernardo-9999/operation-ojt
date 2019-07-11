@@ -22,6 +22,7 @@
                         <select class="form-control" name="room_status" required>
                             <option value="{{ $room->room_status }}" selected>{{ $room->room_status }}</option>
                             <option value="occupied" >occupied</option>
+                            <option value="rectification" >rectification</option>
                             <option value="reserved">reserved</option>
                             <option value="vacant">vacant</option>
                         </select>

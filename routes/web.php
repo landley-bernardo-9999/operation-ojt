@@ -46,6 +46,7 @@ Auth::routes();
         'payments' => 'PaymentController',
         'contracts' => 'ContractController',
         'users' => 'UserController',
+        'charges' => 'ChargesController'
     ]);
 
 Route::get('/co-tenant/create', function(){
@@ -266,6 +267,15 @@ Route::get('/dashboard', function(){
         $rectification_rooms_arkansas = DB::table('rooms')->where('building', 'arkansas')->where('room_status', 'rectification')->count();
 
         $reserved_rooms = DB::table('rooms')->where('room_status', 'reserved')->get();
+        $rectification_rooms = DB::table('rooms')->where('room_status', 'rectification')->get();
+
+        $about_to_move_out = DB::table('transactions')
+        ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+        ->orderBy('move_in_date', 'desc')
+        ->where('trans_status', 'active')
+        ->whereBetween('move_out_date', [Carbon::now(), Carbon::now()->addDays(7)])
+        ->get();  
 
 
         $occupancy_nc =  DB::table('rooms')->where('project', 'north_cambridge')->where('room_status', 'occupied')->count() / DB::table('rooms')->where('project', 'north_cambridge')->count() * 100;
@@ -281,7 +291,8 @@ Route::get('/dashboard', function(){
             'occupied_rooms_arkansas', 'vacant_rooms_arkansas', 'reserved_rooms_arkansas', 'rectification_rooms_arkansas',
             'nc_rooms','cy_rooms',
             'occupancy_nc','occupancy_cy',
-            'reserved_rooms'
+            'reserved_rooms','rectification_rooms',
+            'about_to_move_out'
         ));
     }  
     if(auth()->user()->privilege === 'leasingManager'){

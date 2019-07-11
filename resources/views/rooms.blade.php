@@ -24,7 +24,7 @@
                     Reserved
             </div>
             <div class="col-md-2">
-                <i class="fas fa-home fa-1x btn btn-default"></i>
+                <i class="fas fa-home fa-1x btn btn-primary"></i>
                     Rectification 
             </div>
         </div> 
