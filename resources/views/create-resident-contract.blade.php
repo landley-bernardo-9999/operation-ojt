@@ -51,7 +51,7 @@
                  
              </div>
             
-
+            <br>
             <div class="row" id="payment_info">
                 
             <label for="">PAYMENT BREAKDOWN</label>

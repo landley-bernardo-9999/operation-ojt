@@ -124,19 +124,9 @@
             </table>
         </div>
     </div>
+  
     <div class="row">
-        <h3>Reserved Units</h3>
-        @if ($reserved_rooms->count() < 0)
-        <p class="text-danger">No reserved units.</p>
-        @endif
-        <ul>
-            @foreach ($reserved_rooms as $room)
-                <li><a href="/rooms/{{ $room->room_id }}">{{ $room->building }} {{ $room->room_no }}</a></li>
-            @endforeach
-        </ul>
-    </div>
-    <div class="row">
-        <h3>Occupancy Rate (%)</h3>
+        <h3>Occupancy Rate </h3>
     </div>
      <div class="row">
         {!! $chart->container() !!}
@@ -164,69 +154,42 @@
         </div>
         </div>
     </div>
-    <div class="row">
-        <h3>Resident Move In Rate</h3>
+   <div class="row">
+       @if($move_in_rate_increase < 0)
+            <h3>Move In Rate ( +{{ number_format($move_in_rate_increase,0) }} % )</h3>
+       @else
+            <h3>Move In Rate ( -{{ number_format($move_in_rate_increase,0) }} % )</h3>
+       @endif
     </div>
      <div class="row">
         {!! $line->container() !!}
     </div>
     <br>
-    <div class="row">
-        <h3>Resident Move Out Rate</h3>
+     <div class="row">
+       @if($move_out_rate_increase > 0)
+            <h3>Move Out Rate ( +{{ number_format($move_out_rate_increase,0) }} % )</h3>
+       @else
+            <h3>Move Out Rate ( -{{ number_format($move_out_rate_increase,0) }} % )</h3>
+       @endif
     </div>
      <div class="row">
         {!! $line2->container() !!}
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <h3>Last 10 move in</h3>
-            <table class="table">
-                <tr>
-                    <th>No</th>
-                    <th>Resident</th>
-                    <th>Unit</th>
-                    <th>Date</th>
-                    <th></th>
-                </tr>
-                <?php $row_no_move_in = 1; ?>
-                @foreach ($move_in as $move_in)
-                <tr>
-                    <td>{{ $row_no_move_in++ }}.</td>
-                    <td>{{ $move_in->first_name}} {{ $move_in->last_name }}</td>
-                    <td>{{ $move_in->room_no}} </td>
-                    <td>{{Carbon\Carbon::parse(  $move_in->move_in_date )->formatLocalized('%b %d %Y')}}</td>
-                    <td><a href="rooms/{{ $move_in->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
-                </tr>
-                @endforeach
-            </table>
-            
-        </div>
-        <div class="col-md-6">
-            <h3>Last 10 move out</h3>
-            <table class="table">
-                <tr>
-                    <th>No</th>
-                    <th>Resident</th>
-                    <th>Unit</th>
-                    <th>Date</th>
-                    <th></th>
-                </tr>
-                <?php $row_no_move_out = 1; ?>
-                @foreach ($move_out as $move_out)
-                <tr>
-                    <td>{{ $row_no_move_out++ }}.</td>
-                    <td>{{ $move_out->first_name}} {{ $move_out->last_name }}</td>
-                    <td>{{ $move_out->room_no}} </td>
-                    <td>{{Carbon\Carbon::parse(  $move_out->actual_move_out_date )->formatLocalized('%b %d %Y')}}</td>
-                    <td><a href="rooms/{{ $move_out->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
-                </tr>
-                @endforeach
-            </table>
-        </div>
+       @if($collection_rate_increase < 0)
+            <h3>Collection Rate ( +{{ number_format($collection_rate_increase,0) }} % )</h3>
+       @else
+            <h3>Collection Rate ( -{{ number_format($collection_rate_increase,0) }} % )</h3>
+       @endif
+    </div>
+     <div class="row">
+        {!! $line3->container() !!}
     </div>
 </div>
+<br>
 {!! $chart->script() !!}
 {!! $line->script() !!}
 {!! $line2->script() !!}
+{!! $line3->script() !!}
 @endsection
 

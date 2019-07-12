@@ -171,7 +171,7 @@ Route::get('/dashboard', function(){
           $chart = new DashboardChart;
 
           $chart->labels(['Harvard', 'Princeton', 'Wharton', 'Courtyards']);
-          $chart->dataset('Per Building','bar', [$harvard_delinquent_account->count(),
+          $chart->dataset('','bar', [$harvard_delinquent_account->count(),
                                                  $princeton_delinquent_account->count(), 
                                                  $wharton_delinquent_account->count(),
                                                  $cy_delinquent_account->count()
@@ -188,7 +188,7 @@ Route::get('/dashboard', function(){
           //line
           $line = new DashboardChart;
           $line->labels([Carbon::now()->subMonths(5)->format('M-Y'), Carbon::now()->subMonths(4)->format('M-Y'), Carbon::now()->subMonths(3)->format('M-Y'), Carbon::now()->subMonths(2)->format('M-Y'), Carbon::now()->subMonths(1)->format('M-Y'), Carbon::now()->format('M-Y')]);
-          $line->dataset('Collection Rate(for the last 6 months)','line', [
+          $line->dataset('','line', [
                                                                             $collection_rate_past_5_months, 
                                                                             $collection_rate_past_4_months, 
                                                                             $collection_rate_past_3_months, 
@@ -197,7 +197,9 @@ Route::get('/dashboard', function(){
                                                                             $collection_rate_present_months
                                                                         ]);
 
-        return view('billing-and-collection-dashboard', compact('harvard_delinquent_account', 'princeton_delinquent_account', 'wharton_delinquent_account', 'cy_delinquent_account', 'chart', 'line'));
+            $increase_rate = (($collection_rate_past_1_months - $collection_rate_present_months)/($collection_rate_past_1_months)) * 100;
+
+        return view('billing-and-collection-dashboard', compact('harvard_delinquent_account', 'princeton_delinquent_account', 'wharton_delinquent_account', 'cy_delinquent_account', 'chart', 'line', 'increase_rate'));
     } 
     if(auth()->user()->privilege === 'resident'){
 
@@ -295,25 +297,7 @@ Route::get('/dashboard', function(){
             'about_to_move_out'
         ));
     }  
-    if(auth()->user()->privilege === 'leasingManager'){
-        $move_in = DB::table('transactions')
-                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
-                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-                ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
-                ->orderBy('move_in_date', 'desc')
-                ->where('trans_status', 'active')
-                ->take(10)
-                ->get();  
-        
-                $move_out = DB::table('transactions')
-                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
-                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-                ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
-                ->orderBy('actual_move_out_date', 'desc')
-                ->where('trans_status', 'inactive')
-                ->take(10)
-                ->get();  
-        
+    if(auth()->user()->privilege === 'leasingManager'){        
                 $residents = DB::table('transactions')
                 ->leftJoin('residents', 'transactions.trans_resident_id', 'residents.resident_id')
                 ->where('trans_status', 'active')
@@ -375,7 +359,7 @@ Route::get('/dashboard', function(){
                 $chart = new DashboardChart;
 
                 $chart->labels(['Harvard', 'Princeton', 'Wharton', 'Courtyards']);
-                $chart->dataset('Per Building','bar', [$occupancy_harvard ,$occupancy_princeton ,$occupancy_wharton,  $occupancy_cy]);
+                $chart->dataset('','bar', [$occupancy_harvard ,$occupancy_princeton ,$occupancy_wharton,  $occupancy_cy]);
 
                 //move in rate per month
                 
@@ -390,7 +374,7 @@ Route::get('/dashboard', function(){
                 //line
                 $line = new DashboardChart;
                 $line->labels([Carbon::now()->subMonths(5)->format('M-Y'), Carbon::now()->subMonths(4)->format('M-Y'), Carbon::now()->subMonths(3)->format('M-Y'), Carbon::now()->subMonths(2)->format('M-Y'), Carbon::now()->subMonths(1)->format('M-Y'), Carbon::now()->format('M-Y')]);
-                $line->dataset('Move In Rate(for the last 6 months)','line', [$move_in_past_5_months, $move_in_past_4_months, $move_in_past_3_months, $move_in_past_2_months, $move_in_past_1_months, $move_in_present_month]);
+                $line->dataset('','line', [$move_in_past_5_months, $move_in_past_4_months, $move_in_past_3_months, $move_in_past_2_months, $move_in_past_1_months, $move_in_present_month]);
 
                 //move out rate per month
                 $move_out_past_5_months = Transaction::whereMonth('actual_move_out_date', Carbon::now()->subMonths(5)->month)->whereYear('actual_move_out_date', Carbon::now()->year)->count();
@@ -403,7 +387,35 @@ Route::get('/dashboard', function(){
                 //line
                 $line2 = new DashboardChart;
                 $line2->labels([Carbon::now()->subMonths(5)->format('M-Y'), Carbon::now()->subMonths(4)->format('M-Y'), Carbon::now()->subMonths(3)->format('M-Y'), Carbon::now()->subMonths(2)->format('M-Y'), Carbon::now()->subMonths(1)->format('M-Y'), Carbon::now()->format('M-Y')]);
-                $line2->dataset('Move Out Rate(for the last 6 months)','line', [$move_out_past_5_months, $move_out_past_4_months, $move_out_past_3_months, $move_out_past_2_months, $move_out_past_1_months, $move_out_present_month]);
+                $line2->dataset('','line', [$move_out_past_5_months, $move_out_past_4_months, $move_out_past_3_months, $move_out_past_2_months, $move_out_past_1_months, $move_out_present_month]);
+
+
+                        //move out rate per month
+                $collection_rate_past_5_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(5)->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
+                $collection_rate_past_4_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(4)->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
+                $collection_rate_past_3_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(3)->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
+                $collection_rate_past_2_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(2)->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
+                $collection_rate_past_1_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(1)->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
+                    $collection_rate_present_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
+
+                //line
+                $line3 = new DashboardChart;
+                $line3->labels([Carbon::now()->subMonths(5)->format('M-Y'), Carbon::now()->subMonths(4)->format('M-Y'), Carbon::now()->subMonths(3)->format('M-Y'), Carbon::now()->subMonths(2)->format('M-Y'), Carbon::now()->subMonths(1)->format('M-Y'), Carbon::now()->format('M-Y')]);
+                $line3->dataset('','line', [
+                                                                            $collection_rate_past_5_months, 
+                                                                            $collection_rate_past_4_months, 
+                                                                            $collection_rate_past_3_months, 
+                                                                            $collection_rate_past_2_months, 
+                                                                            $collection_rate_past_1_months, 
+                                                                            $collection_rate_present_months
+                                                                        ]);
+
+            $collection_rate_increase =  (($collection_rate_past_1_months - $collection_rate_present_months)/($collection_rate_past_1_months)) * 100;
+
+            $move_out_rate_increase = (($move_out_past_1_months - $move_out_present_month)/($move_out_past_1_months)) * 100;
+
+            $move_in_rate_increase = (($move_in_past_1_months - $move_in_present_month)/($move_in_past_1_months)) * 100;
+
 
                 return view('leasing-manager-dashboard', compact('move_in', 'move_out', 'rooms', 'residents', 'owners',
                     'occupied_rooms_harvard', 'vacant_rooms_harvard', 'reserved_rooms_harvard', 'rectification_rooms_harvard',
@@ -415,7 +427,7 @@ Route::get('/dashboard', function(){
                     'occupied_rooms_arkansas', 'vacant_rooms_arkansas', 'reserved_rooms_arkansas', 'rectification_rooms_arkansas',
                     'nc_rooms','cy_rooms',
                     'occupancy_nc','occupancy_cy',
-                    'chart', 'line', 'line2',
+                    'chart', 'line', 'line2','line3','collection_rate_increase','move_in_rate_increase','move_out_rate_increase',
                     'reserved_rooms'
                 ));
     }   

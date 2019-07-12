@@ -86,7 +86,7 @@
                         @foreach ($short_term_rent as $short_term_rent)
                         <tr>
                             <td>{{ $short_term_rent->building }} {{ $short_term_rent->room_no }}</td>
-                            <td>{{ $short_term_rent->short_term_rent }}</td>
+                            <td>{{ number_format($short_term_rent->short_term_rent,2) }}</td>
                             @if($short_term_rent->building === 'harvard')
                                 <td>{{ $short_term_rent->short_term_rent * 0.2}} </td>
                             @elseif($short_term_rent->building === 'princeton')
@@ -121,7 +121,7 @@
                         @foreach ($long_term_rent as $long_term_rent)
                         <tr>
                             <td>{{ $long_term_rent->building }} {{ $long_term_rent->room_no }}</td>
-                            <td>{{ $long_term_rent->long_term_rent }}</td>
+                            <td>{{ number_format($long_term_rent->long_term_rent,2) }}</td>
                             @if($short_term_rent->building === 'harvard')
                                 <td>780</td>
                             @elseif($long_term_rent->building === 'princeton')
