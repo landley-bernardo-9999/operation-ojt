@@ -233,43 +233,43 @@ Route::get('/dashboard', function(){
         $cy_rooms = DB::table('rooms')->where('project', 'the_courtyards')->count();
         $owners = DB::table('owners')->count();
 
-        $occupied_rooms_harvard = DB::table('rooms')->where('building', 'harvard')->where('room_status', 'occupied')->count();
-        $vacant_rooms_harvard = DB::table('rooms')->where('building', 'harvard')->where('room_status', 'vacant')->count();
-        $reserved_rooms_harvard = DB::table('rooms')->where('building', 'harvard')->where('room_status', 'reserved')->count();
-        $rectification_rooms_harvard = DB::table('rooms')->where('building', 'harvard')->where('room_status', 'rectification')->count();
+        $occupied_rooms_harvard = Room::where('building', 'harvard')->where('room_status', 'occupied')->count();
+        $vacant_rooms_harvard = Room::where('building', 'harvard')->where('room_status', 'vacant')->count();
+        $reserved_rooms_harvard = Room::where('building', 'harvard')->where('room_status', 'reserved')->count();
+        $rectification_rooms_harvard = Room::where('building', 'harvard')->where('room_status', 'rectification')->count();
 
-        $occupied_rooms_princeton= DB::table('rooms')->where('building', 'princeton')->where('room_status', 'occupied')->count();
-        $vacant_rooms_princeton = DB::table('rooms')->where('building', 'princeton')->where('room_status', 'vacant')->count();
-        $reserved_rooms_princeton = DB::table('rooms')->where('building', 'princeton')->where('room_status', 'reserved')->count();
-        $rectification_rooms_princeton = DB::table('rooms')->where('building', 'princeton')->where('room_status', 'rectification')->count();
+        $occupied_rooms_princeton= Room::where('building', 'princeton')->where('room_status', 'occupied')->count();
+        $vacant_rooms_princeton = Room::where('building', 'princeton')->where('room_status', 'vacant')->count();
+        $reserved_rooms_princeton = Room::where('building', 'princeton')->where('room_status', 'reserved')->count();
+        $rectification_rooms_princeton = Room::where('building', 'princeton')->where('room_status', 'rectification')->count();
 
-        $occupied_rooms_wharton = DB::table('rooms')->where('building', 'wharton')->where('room_status', 'occupied')->count();
-        $vacant_rooms_wharton = DB::table('rooms')->where('building', 'wharton')->where('room_status', 'vacant')->count();
-        $reserved_rooms_wharton = DB::table('rooms')->where('building', 'wharton')->where('room_status', 'reserved')->count();
-        $rectification_rooms_wharton = DB::table('rooms')->where('building', 'wharton')->where('room_status', 'rectification')->count();
+        $occupied_rooms_wharton =Room::where('building', 'wharton')->where('room_status', 'occupied')->count();
+        $vacant_rooms_wharton = Room::where('building', 'wharton')->where('room_status', 'vacant')->count();
+        $reserved_rooms_wharton = Room::where('building', 'wharton')->where('room_status', 'reserved')->count();
+        $rectification_rooms_wharton = Room::where('building', 'wharton')->where('room_status', 'rectification')->count();
 
-        $occupied_rooms_manors = DB::table('rooms')->where('building', 'manors')->where('room_status', 'occupied')->count();
-        $vacant_rooms_manors = DB::table('rooms')->where('building', 'manors')->where('room_status', 'vacant')->count();
-        $reserved_rooms_manors = DB::table('rooms')->where('building', 'manors')->where('room_status', 'reserved')->count();
-        $rectification_rooms_manors = DB::table('rooms')->where('building', 'manors')->where('room_status', 'rectification')->count();
+        $occupied_rooms_manors = Room::where('building', 'manors')->where('room_status', 'occupied')->count();
+        $vacant_rooms_manors = Room::where('building', 'manors')->where('room_status', 'vacant')->count();
+        $reserved_rooms_manors = Room::where('building', 'manors')->where('room_status', 'reserved')->count();
+        $rectification_rooms_manors = Room::where('building', 'manors')->where('room_status', 'rectification')->count();
 
-        $occupied_rooms_loft = DB::table('rooms')->where('building', 'loft')->where('room_status', 'occupied')->count();
-        $vacant_rooms_loft = DB::table('rooms')->where('building', 'loft')->where('room_status', 'vacant')->count();
-        $reserved_rooms_loft = DB::table('rooms')->where('building', 'loft')->where('room_status', 'reserved')->count();
-        $rectification_rooms_loft = DB::table('rooms')->where('building', 'loft')->where('room_status', 'rectification')->count();
+        $occupied_rooms_loft = Room::where('building', 'loft')->where('room_status', 'occupied')->count();
+        $vacant_rooms_loft = Room::where('building', 'loft')->where('room_status', 'vacant')->count();
+        $reserved_rooms_loft = Room::where('building', 'loft')->where('room_status', 'reserved')->count();
+        $rectification_rooms_loft = Room::where('building', 'loft')->where('room_status', 'rectification')->count();
 
-        $occupied_rooms_colorado = DB::table('rooms')->where('building', 'colorado')->where('room_status', 'occupied')->count();
-        $vacant_rooms_colorado = DB::table('rooms')->where('building', 'colorado')->where('room_status', 'vacant')->count();
-        $reserved_rooms_colorado = DB::table('rooms')->where('building', 'colorado')->where('room_status', 'reserved')->count();
-        $rectification_rooms_colorado = DB::table('rooms')->where('building', 'colorado')->where('room_status', 'rectification')->count();
+        $occupied_rooms_colorado = Room::where('building', 'colorado')->where('room_status', 'occupied')->count();
+        $vacant_rooms_colorado = Room::where('building', 'colorado')->where('room_status', 'vacant')->count();
+        $reserved_rooms_colorado = Room::where('building', 'colorado')->where('room_status', 'reserved')->count();
+        $rectification_rooms_colorado = Room::where('building', 'colorado')->where('room_status', 'rectification')->count();
 
-        $occupied_rooms_arkansas = DB::table('rooms')->where('building', 'arkansas')->where('room_status', 'occupied')->count();
-        $vacant_rooms_arkansas = DB::table('rooms')->where('building', 'arkansas')->where('room_status', 'vacant')->count();
-        $reserved_rooms_arkansas = DB::table('rooms')->where('building', 'arkansas')->where('room_status', 'reserved')->count();
-        $rectification_rooms_arkansas = DB::table('rooms')->where('building', 'arkansas')->where('room_status', 'rectification')->count();
+        $occupied_rooms_arkansas = Room::where('building', 'arkansas')->where('room_status', 'occupied')->count();
+        $vacant_rooms_arkansas = Room::where('building', 'arkansas')->where('room_status', 'vacant')->count();
+        $reserved_rooms_arkansas = Room::where('building', 'arkansas')->where('room_status', 'reserved')->count();
+        $rectification_rooms_arkansas = Room::where('building', 'arkansas')->where('room_status', 'rectification')->count();
 
-        $reserved_rooms = DB::table('rooms')->where('room_status', 'reserved')->get();
-        $rectification_rooms = DB::table('rooms')->where('room_status', 'rectification')->get();
+        $reserved_rooms = Room::where('room_status', 'reserved')->get();
+        $rectification_rooms = Room::where('room_status', 'rectification')->get();
 
         $about_to_move_out = DB::table('transactions')
         ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
@@ -303,57 +303,57 @@ Route::get('/dashboard', function(){
                 ->where('trans_status', 'active')
                 ->count();      
                 
-                $rooms = DB::table('rooms')->count();
-                $nc_rooms = DB::table('rooms')->where('project', 'north_cambridge')->count();
-                $cy_rooms = DB::table('rooms')->where('project', 'the_courtyards')->count();
-                $owners = DB::table('owners')->count();
+                $rooms =Room::count();
+                $nc_rooms = Room::where('project', 'north_cambridge')->count();
+                $cy_rooms = Room::where('project', 'the_courtyards')->count();
+                $owners = Room::count();
         
-                $occupied_rooms_harvard = DB::table('rooms')->where('building', 'harvard')->where('room_status', 'occupied')->count();
-                $vacant_rooms_harvard = DB::table('rooms')->where('building', 'harvard')->where('room_status', 'vacant')->count();
-                $reserved_rooms_harvard = DB::table('rooms')->where('building', 'harvard')->where('room_status', 'reserved')->count();
-                $rectification_rooms_harvard = DB::table('rooms')->where('building', 'harvard')->where('room_status', 'rectification')->count();
+                $occupied_rooms_harvard =Room::where('building', 'harvard')->where('room_status', 'occupied')->count();
+                $vacant_rooms_harvard = Room::where('building', 'harvard')->where('room_status', 'vacant')->count();
+                $reserved_rooms_harvard = Room::where('building', 'harvard')->where('room_status', 'reserved')->count();
+                $rectification_rooms_harvard =Room::where('building', 'harvard')->where('room_status', 'rectification')->count();
         
-                $occupied_rooms_princeton= DB::table('rooms')->where('building', 'princeton')->where('room_status', 'occupied')->count();
-                $vacant_rooms_princeton = DB::table('rooms')->where('building', 'princeton')->where('room_status', 'vacant')->count();
-                $reserved_rooms_princeton = DB::table('rooms')->where('building', 'princeton')->where('room_status', 'reserved')->count();
-                $rectification_rooms_princeton = DB::table('rooms')->where('building', 'princeton')->where('room_status', 'rectification')->count();
+                $occupied_rooms_princeton= Room::where('building', 'princeton')->where('room_status', 'occupied')->count();
+                $vacant_rooms_princeton = Room::where('building', 'princeton')->where('room_status', 'vacant')->count();
+                $reserved_rooms_princeton = Room::where('building', 'princeton')->where('room_status', 'reserved')->count();
+                $rectification_rooms_princeton = Room::where('building', 'princeton')->where('room_status', 'rectification')->count();
         
-                $occupied_rooms_wharton = DB::table('rooms')->where('building', 'wharton')->where('room_status', 'occupied')->count();
-                $vacant_rooms_wharton = DB::table('rooms')->where('building', 'wharton')->where('room_status', 'vacant')->count();
-                $reserved_rooms_wharton = DB::table('rooms')->where('building', 'wharton')->where('room_status', 'reserved')->count();
-                $rectification_rooms_wharton = DB::table('rooms')->where('building', 'wharton')->where('room_status', 'rectification')->count();
+                $occupied_rooms_wharton = Room::where('building', 'wharton')->where('room_status', 'occupied')->count();
+                $vacant_rooms_wharton = Room::where('building', 'wharton')->where('room_status', 'vacant')->count();
+                $reserved_rooms_wharton = Room::where('building', 'wharton')->where('room_status', 'reserved')->count();
+                $rectification_rooms_wharton = Room::where('building', 'wharton')->where('room_status', 'rectification')->count();
 
-                $occupied_rooms_manors = DB::table('rooms')->where('building', 'manors')->where('room_status', 'occupied')->count();
-                $vacant_rooms_manors = DB::table('rooms')->where('building', 'manors')->where('room_status', 'vacant')->count();
-                $reserved_rooms_manors = DB::table('rooms')->where('building', 'manors')->where('room_status', 'reserved')->count();
-                $rectification_rooms_manors = DB::table('rooms')->where('building', 'manors')->where('room_status', 'rectification')->count();
+                $occupied_rooms_manors = Room::where('building', 'manors')->where('room_status', 'occupied')->count();
+                $vacant_rooms_manors = Room::where('building', 'manors')->where('room_status', 'vacant')->count();
+                $reserved_rooms_manors = Room::where('building', 'manors')->where('room_status', 'reserved')->count();
+                $rectification_rooms_manors = Room::where('building', 'manors')->where('room_status', 'rectification')->count();
         
-                $occupied_rooms_loft = DB::table('rooms')->where('building', 'loft')->where('room_status', 'occupied')->count();
-                $vacant_rooms_loft = DB::table('rooms')->where('building', 'loft')->where('room_status', 'vacant')->count();
-                $reserved_rooms_loft = DB::table('rooms')->where('building', 'loft')->where('room_status', 'reserved')->count();
-                $rectification_rooms_loft = DB::table('rooms')->where('building', 'loft')->where('room_status', 'rectification')->count();
+                $occupied_rooms_loft = Room::where('building', 'loft')->where('room_status', 'occupied')->count();
+                $vacant_rooms_loft = Room::where('building', 'loft')->where('room_status', 'vacant')->count();
+                $reserved_rooms_loft = Room::where('building', 'loft')->where('room_status', 'reserved')->count();
+                $rectification_rooms_loft =Room::where('building', 'loft')->where('room_status', 'rectification')->count();
 
-                $occupied_rooms_colorado = DB::table('rooms')->where('building', 'colorado')->where('room_status', 'occupied')->count();
-                $vacant_rooms_colorado = DB::table('rooms')->where('building', 'colorado')->where('room_status', 'vacant')->count();
-                $reserved_rooms_colorado = DB::table('rooms')->where('building', 'colorado')->where('room_status', 'reserved')->count();
-                $rectification_rooms_colorado = DB::table('rooms')->where('building', 'colorado')->where('room_status', 'rectification')->count();
+                $occupied_rooms_colorado = Room::where('building', 'colorado')->where('room_status', 'occupied')->count();
+                $vacant_rooms_colorado = Room::where('building', 'colorado')->where('room_status', 'vacant')->count();
+                $reserved_rooms_colorado = Room::where('building', 'colorado')->where('room_status', 'reserved')->count();
+                $rectification_rooms_colorado =Room::where('building', 'colorado')->where('room_status', 'rectification')->count();
 
-                $occupied_rooms_arkansas = DB::table('rooms')->where('building', 'arkansas')->where('room_status', 'occupied')->count();
-                $vacant_rooms_arkansas = DB::table('rooms')->where('building', 'arkansas')->where('room_status', 'vacant')->count();
-                $reserved_rooms_arkansas = DB::table('rooms')->where('building', 'arkansas')->where('room_status', 'reserved')->count();
-                $rectification_rooms_arkansas = DB::table('rooms')->where('building', 'arkansas')->where('room_status', 'rectification')->count();
+                $occupied_rooms_arkansas = Room::where('building', 'arkansas')->where('room_status', 'occupied')->count();
+                $vacant_rooms_arkansas = Room::where('building', 'arkansas')->where('room_status', 'vacant')->count();
+                $reserved_rooms_arkansas = Room::where('building', 'arkansas')->where('room_status', 'reserved')->count();
+                $rectification_rooms_arkansas = Room::where('building', 'arkansas')->where('room_status', 'rectification')->count();
 
-                $reserved_rooms = DB::table('rooms')->where('room_status', 'reserved')->get();
+                $reserved_rooms = Room::where('room_status', 'reserved')->get();
 
 
-                $occupancy_nc =  DB::table('rooms')->where('project', 'north_cambridge')->where('room_status', 'occupied')->count() / DB::table('rooms')->where('project', 'north_cambridge')->count() * 100;
-                $occupancy_cy =  DB::table('rooms')->where('room_status', 'occupied')->where('project', 'the_courtyards')->count() / DB::table('rooms')->where('project', 'the_courtyards')->count() * 100;
+                $occupancy_nc =  Room::where('project', 'north_cambridge')->where('room_status', 'occupied')->count() / Room::where('project', 'north_cambridge')->count() * 100;
+                $occupancy_cy =  Room::where('room_status', 'occupied')->where('project', 'the_courtyards')->count() / Room::where('project', 'the_courtyards')->count() * 100;
         
                 //occupancy rate per building
-                $occupancy_harvard = (DB::table('rooms')->where('building', 'harvard')->where('room_status', 'occupied')->count()/DB::table('rooms')->where('building', 'harvard')->count()) * 100 * 100;
-                $occupancy_princeton =(DB::table('rooms')->where('building', 'princeton')->where('room_status', 'occupied')->count()/DB::table('rooms')->where('building', 'princeton')->count()) * 100;
-                $occupancy_wharton = (DB::table('rooms')->where('building', 'wharton')->where('room_status', 'occupied')->count()/DB::table('rooms')->where('building', 'wharton')->count()) * 100;
-                $occupancy_cy = (DB::table('rooms')->where('project', 'the_courtyards')->where('room_status', 'occupied')->count()/DB::table('rooms')->where('building', 'wharton')->count()) * 100;
+                $occupancy_harvard = (Room::where('building', 'harvard')->where('room_status', 'occupied')->count()/Room::where('building', 'harvard')->count()) * 100;
+                $occupancy_princeton =(Room::where('building', 'princeton')->where('room_status', 'occupied')->count()/Room::where('building', 'princeton')->count()) * 100;
+                $occupancy_wharton = (Room::where('building', 'wharton')->where('room_status', 'occupied')->count()/Room::where('building', 'wharton')->count()) * 100;
+                $occupancy_cy = (Room::where('project', 'the_courtyards')->where('room_status', 'occupied')->count()/Room::where('building', 'wharton')->count()) * 100;
                 
                 //bar graph
                 $chart = new DashboardChart;

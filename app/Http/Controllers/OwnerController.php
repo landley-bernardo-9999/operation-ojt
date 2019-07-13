@@ -130,7 +130,7 @@ class OwnerController extends Controller
         $contract->contract_room_id = session('sess_room_id');
         $contract->save();
 
-        return redirect('/rooms/'.session('sess_room_id'))->with('success', 'Unit Owner is created!');
+        return redirect('/rooms/'.session('sess_room_id'))->with('success', 'Unit Owner has been added!');
     }
 
     /**

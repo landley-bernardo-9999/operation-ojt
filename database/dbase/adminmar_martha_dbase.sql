@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jul 11, 2019 at 11:06 PM
--- Server version: 5.6.41-84.1
--- PHP Version: 7.2.7
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jul 12, 2019 at 08:51 AM
+-- Server version: 5.7.21
+-- PHP Version: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,15 +28,18 @@ SET time_zone = "+00:00";
 -- Table structure for table `banks`
 --
 
-CREATE TABLE `banks` (
-  `bank_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `banks`;
+CREATE TABLE IF NOT EXISTS `banks` (
+  `bank_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `bank_owner_id` int(10) UNSIGNED DEFAULT NULL,
   `bank_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bank_account_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bank_account_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`bank_id`),
+  KEY `banks_bank_owner_id_foreign` (`bank_owner_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1171 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `banks`
@@ -215,16 +218,19 @@ INSERT INTO `banks` (`bank_id`, `bank_owner_id`, `bank_name`, `bank_account_name
 -- Table structure for table `charges`
 --
 
-CREATE TABLE `charges` (
-  `charge_id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `charges`;
+CREATE TABLE IF NOT EXISTS `charges` (
+  `charge_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `charge_trans_id` int(10) UNSIGNED NOT NULL,
   `item` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amt` double(15,2) NOT NULL,
   `qty` int(11) NOT NULL,
   `total_amt` double(15,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`charge_id`),
+  KEY `charges_charge_trans_id_foreign` (`charge_trans_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -232,14 +238,18 @@ CREATE TABLE `charges` (
 -- Table structure for table `contracts`
 --
 
-CREATE TABLE `contracts` (
-  `contract_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `contracts`;
+CREATE TABLE IF NOT EXISTS `contracts` (
+  `contract_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `enrollment_date` date NOT NULL,
   `contract_owner_id` int(10) UNSIGNED NOT NULL,
   `contract_room_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`contract_id`),
+  KEY `contracts_contract_owner_id_foreign` (`contract_owner_id`),
+  KEY `contracts_contract_room_id_foreign` (`contract_room_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=191 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `contracts`
@@ -435,15 +445,18 @@ INSERT INTO `contracts` (`contract_id`, `enrollment_date`, `contract_owner_id`, 
 -- Table structure for table `guardians`
 --
 
-CREATE TABLE `guardians` (
-  `guardian_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `guardians`;
+CREATE TABLE IF NOT EXISTS `guardians` (
+  `guardian_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `guardian_resident_id` int(10) UNSIGNED DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `relationship` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`guardian_id`),
+  KEY `guardians_guardian_resident_id_foreign` (`guardian_resident_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1126 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `guardians`
@@ -548,7 +561,8 @@ INSERT INTO `guardians` (`guardian_id`, `guardian_resident_id`, `name`, `relatio
 (1121, 1228, 'sally Rose', NULL, '0907-245-7354', '2019-07-06 00:48:36', '2019-07-06 00:48:36'),
 (1122, 1229, 'Analyn lagasca', NULL, '09224899226/09364468577', '2019-07-06 00:54:02', '2019-07-06 00:54:02'),
 (1123, 1230, NULL, NULL, '0917-585-0293', '2019-07-10 01:05:57', '2019-07-10 01:05:57'),
-(1124, 1231, 'Gemma P.Dela Cruz', NULL, '0917-722-2543', '2019-07-10 19:24:51', '2019-07-10 19:24:51');
+(1124, 1231, 'Gemma P.Dela Cruz', NULL, '0917-722-2543', '2019-07-10 19:24:51', '2019-07-10 19:24:51'),
+(1125, 1232, 'jeffrey', NULL, '0977-331-1933', '2019-07-11 23:32:47', '2019-07-11 23:32:47');
 
 -- --------------------------------------------------------
 
@@ -556,11 +570,13 @@ INSERT INTO `guardians` (`guardian_id`, `guardian_resident_id`, `name`, `relatio
 -- Table structure for table `migrations`
 --
 
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -596,8 +612,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- Table structure for table `owners`
 --
 
-CREATE TABLE `owners` (
-  `owner_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `owners`;
+CREATE TABLE IF NOT EXISTS `owners` (
+  `owner_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `owner_first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_middle_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `owner_last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -617,8 +634,11 @@ CREATE TABLE `owners` (
   `owner_zip` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `owner_img` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`owner_id`),
+  UNIQUE KEY `owners_owner_email_address_unique` (`owner_email_address`),
+  UNIQUE KEY `owners_owner_mobile_number_unique` (`owner_mobile_number`)
+) ENGINE=MyISAM AUTO_INCREMENT=1175 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `owners`
@@ -798,10 +818,12 @@ INSERT INTO `owners` (`owner_id`, `owner_first_name`, `owner_middle_name`, `owne
 -- Table structure for table `password_resets`
 --
 
-CREATE TABLE `password_resets` (
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -810,8 +832,9 @@ CREATE TABLE `password_resets` (
 -- Table structure for table `payments`
 --
 
-CREATE TABLE `payments` (
-  `payment_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `payments`;
+CREATE TABLE IF NOT EXISTS `payments` (
+  `payment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `payment_transaction_id` int(10) UNSIGNED NOT NULL,
   `desc` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amt` int(11) DEFAULT NULL,
@@ -830,8 +853,10 @@ CREATE TABLE `payments` (
   `mgmt_fee` double(15,2) DEFAULT NULL,
   `condo_dues` double(15,2) DEFAULT NULL,
   `remittance_note` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `others` double(15,2) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `others` double(15,2) DEFAULT NULL,
+  PRIMARY KEY (`payment_id`),
+  KEY `payments_payment_transaction_id_foreign` (`payment_transaction_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1335 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `payments`
@@ -1041,9 +1066,9 @@ INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `
 (1267, 1128, 'sec_dep_utilities', 2000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-02-04 16:00:00', '2018-02-04 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1268, 1129, 'sec_dep_rent', 7000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-08-02 16:00:00', '2017-08-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1269, 1129, 'advance_rent', 7000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:54:02', '2017-08-02 16:00:00', 5420.85, 1200.00, 879.15, NULL, 0.00),
-(1326, 1114, 'monthly_rent', 11000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
+(1326, 1114, 'monthly_rent', 11000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', '2019-06-11 16:00:00', 7627.80, 2200.00, 1172.20, NULL, 0.00),
 (1325, 1113, 'monthly_rent', 11000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
-(1324, 1112, 'monthly_rent', 11000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
+(1324, 1112, 'monthly_rent', 11000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', '2019-06-11 16:00:00', 7627.80, 2200.00, 1172.20, NULL, 0.00),
 (1323, 1111, 'monthly_rent', 11000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
 (1322, 1110, 'monthly_rent', 11000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
 (1321, 1109, 'monthly_rent', 11000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
@@ -1067,7 +1092,11 @@ INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `
 (1327, 1089, 'monthly_rent', 12000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 9327.80, 1500.00, 1172.20, NULL, 0.00),
 (1328, 1100, 'monthly_rent', 12000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 9327.80, 1500.00, 1172.20, NULL, 0.00),
 (1329, 1102, 'monthly_rent', 12000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 9327.80, 1500.00, 1172.20, NULL, 0.00),
-(1330, 1108, 'monthly_rent', 12000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 9327.80, 1500.00, 1172.20, NULL, 0.00);
+(1330, 1108, 'monthly_rent', 12000, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 9327.80, 1500.00, 1172.20, NULL, 0.00),
+(1331, 1137, 'sec_dep_rent', 6000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1332, 1137, 'advance_rent', 6000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1333, 1137, 'sec_dep_utilities', 2000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1334, 1137, 'monthly_rent', 6000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-31 16:00:00', '2019-06-11 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00);
 
 -- --------------------------------------------------------
 
@@ -1075,10 +1104,12 @@ INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `
 -- Table structure for table `repairs`
 --
 
-CREATE TABLE `repairs` (
-  `repair_id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `repairs`;
+CREATE TABLE IF NOT EXISTS `repairs` (
+  `repair_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`repair_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1087,15 +1118,18 @@ CREATE TABLE `repairs` (
 -- Table structure for table `representatives`
 --
 
-CREATE TABLE `representatives` (
-  `rep_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `representatives`;
+CREATE TABLE IF NOT EXISTS `representatives` (
+  `rep_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `rep_owner_id` int(10) UNSIGNED DEFAULT NULL,
   `rep_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rep_relationship` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rep_mobile_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`rep_id`),
+  KEY `representatives_rep_owner_id_foreign` (`rep_owner_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1172 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `representatives`
@@ -1274,8 +1308,9 @@ INSERT INTO `representatives` (`rep_id`, `rep_owner_id`, `rep_name`, `rep_relati
 -- Table structure for table `residents`
 --
 
-CREATE TABLE `residents` (
-  `resident_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `residents`;
+CREATE TABLE IF NOT EXISTS `residents` (
+  `resident_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `middle_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1297,8 +1332,11 @@ CREATE TABLE `residents` (
   `img` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `primary_resident_id` int(10) UNSIGNED DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `primary_resident_id` int(10) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`resident_id`),
+  UNIQUE KEY `residents_email_address_unique` (`email_address`),
+  UNIQUE KEY `residents_mobile_number_unique` (`mobile_number`)
+) ENGINE=MyISAM AUTO_INCREMENT=1233 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `residents`
@@ -1494,7 +1532,8 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 (1228, 'Kim', NULL, 'Manarang', 'primary_resident', '1998-02-11', NULL, NULL, NULL, NULL, NULL, NULL, '0950-748-4702', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:48:33', '2019-07-06 00:48:33', NULL),
 (1229, 'louel mattew', NULL, 'Lagasca', 'primary_resident', '1998-08-02', NULL, NULL, NULL, NULL, NULL, 'lmdl.e12@gmail.com', '0915-205-7397', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:53:59', '2019-07-06 00:53:59', NULL),
 (1230, 'Stephen', NULL, 'Que', 'primary_resident', '1999-11-27', NULL, NULL, NULL, NULL, NULL, 'stephenque2yahoo.com', '0917-717-7586', NULL, NULL, 'Quezon Ave.', 'Vigan', 'Ilocos Sur', NULL, NULL, '2019-07-10 01:05:54', '2019-07-10 01:05:54', NULL),
-(1231, 'James Erdan', NULL, 'Dela Cruz', 'primary_resident', '0199-09-16', NULL, NULL, NULL, NULL, NULL, NULL, '0917-507-7633', NULL, NULL, NULL, 'San Pedro Sur', 'Vigan City', NULL, NULL, '2019-07-10 19:24:48', '2019-07-10 19:24:48', NULL);
+(1231, 'James Erdan', NULL, 'Dela Cruz', 'primary_resident', '0199-09-16', NULL, NULL, NULL, NULL, NULL, NULL, '0917-507-7633', NULL, NULL, NULL, 'San Pedro Sur', 'Vigan City', NULL, NULL, '2019-07-10 19:24:48', '2019-07-10 19:24:48', NULL),
+(1232, 'Roxxette', NULL, 'Delim', 'primary_resident', '1999-11-24', NULL, NULL, NULL, NULL, NULL, 'roxxettedelim24@gmail.com', '0945-583-3721', NULL, NULL, NULL, 'san carlos City', 'Pangasinan', NULL, NULL, '2019-07-11 23:32:44', '2019-07-11 23:32:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -1502,8 +1541,9 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 -- Table structure for table `rooms`
 --
 
-CREATE TABLE `rooms` (
-  `room_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `rooms`;
+CREATE TABLE IF NOT EXISTS `rooms` (
+  `room_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `room_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `project` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `building` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1516,8 +1556,10 @@ CREATE TABLE `rooms` (
   `remarks` longtext COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `floor_number` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `floor_number` int(11) NOT NULL,
+  PRIMARY KEY (`room_id`),
+  UNIQUE KEY `rooms_room_no_unique` (`room_no`)
+) ENGINE=MyISAM AUTO_INCREMENT=1265 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `rooms`
@@ -1642,7 +1684,7 @@ INSERT INTO `rooms` (`room_id`, `room_no`, `project`, `building`, `room_status`,
 (1116, 'GLR East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:20:08', '2019-06-24 18:20:08', 3),
 (1117, 'GLH West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:20:29', '2019-06-24 18:20:29', 3),
 (1118, 'GLM West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:20:47', '2019-06-24 18:20:47', 3),
-(1119, 'GLO West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:21:08', '2019-06-24 18:21:08', 3),
+(1119, 'GLO West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:21:08', '2019-06-24 18:21:08', 3),
 (1120, 'GLR West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:21:29', '2019-06-24 18:21:29', 3),
 (1121, '2LB East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:22:08', '2019-06-24 18:22:08', 4),
 (1122, '2LE East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:22:34', '2019-06-24 18:22:34', 4),
@@ -1790,8 +1832,9 @@ INSERT INTO `rooms` (`room_id`, `room_no`, `project`, `building`, `room_status`,
 -- Table structure for table `transactions`
 --
 
-CREATE TABLE `transactions` (
-  `trans_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `transactions`;
+CREATE TABLE IF NOT EXISTS `transactions` (
+  `trans_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `trans_date` date NOT NULL,
   `trans_room_id` int(10) UNSIGNED NOT NULL,
   `trans_resident_id` int(10) UNSIGNED NOT NULL,
@@ -1807,8 +1850,12 @@ CREATE TABLE `transactions` (
   `final_water_reading` int(11) DEFAULT NULL,
   `final_electric_reading` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`trans_id`),
+  KEY `transactions_trans_room_id_foreign` (`trans_room_id`),
+  KEY `transactions_trans_resident_id_foreign` (`trans_resident_id`),
+  KEY `transactions_trans_owner_id_foreign` (`trans_owner_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1138 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `transactions`
@@ -1918,7 +1965,8 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1129, '2017-08-03', 1247, 1229, 1131, 'inactive', '2018-08-03', 'end_of_contract', '2017-08-03', '2018-08-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-06 00:54:02', '2019-07-06 00:54:02'),
 (1130, '2018-08-06', 1210, 1230, 1093, 'active', NULL, NULL, '2018-08-06', '2019-08-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-10 01:05:57', '2019-07-10 01:05:57'),
 (1131, '2018-08-06', 1211, 1231, 1094, 'active', NULL, NULL, '2018-08-06', '2019-08-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-10 19:24:52', '2019-07-10 19:24:52'),
-(1136, '2019-02-27', 1188, 1222, 1089, 'inactive', '2019-03-27', 'cancelled', '2019-02-27', '2019-03-27', 'short_term', NULL, NULL, NULL, NULL, '2019-07-10 20:43:47', '2019-07-10 20:43:47');
+(1136, '2019-02-27', 1188, 1222, 1089, 'inactive', '2019-03-27', 'cancelled', '2019-02-27', '2019-03-27', 'short_term', NULL, NULL, NULL, NULL, '2019-07-10 20:43:47', '2019-07-10 20:43:47'),
+(1137, '2018-08-02', 1119, 1232, 1171, 'active', NULL, NULL, '2018-08-02', '2019-08-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-11 23:32:48', '2019-07-11 23:32:48');
 
 -- --------------------------------------------------------
 
@@ -1926,8 +1974,9 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `user_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1936,8 +1985,12 @@ CREATE TABLE `users` (
   `user_owner_id` int(10) UNSIGNED DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  KEY `users_user_resident_id_foreign` (`user_resident_id`),
+  KEY `users_user_owner_id_foreign` (`user_owner_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1309 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -2216,195 +2269,8 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `privilege`, `user_
 (1304, 'Sheila Marie Yacap', 'sheila_yacap@yahoo.com', '$2y$10$tnOM9RAp1vQeuwzsAf7WCOOnoN4eiwtJtPWbftndiG3UqQt2UJ34y', 'owner', NULL, 1171, NULL, '2019-07-12 09:00:09', '2019-07-12 09:00:09'),
 (1305, 'Nerissa Andaya', 'andayarisa@yahoo.com', '$2y$10$ZPJTMaiR4Cas6JlVZ4F0Yuf1R6mkYT3PddjHvzZ6j03avnEEq274S', 'owner', NULL, 1172, NULL, '2019-07-12 09:01:56', '2019-07-12 09:01:56'),
 (1306, 'Dina Quintos', 'dina66.quintos@outlook.com', '$2y$10$pCf2lPzkcdZ3pbUZmKbB5.ak/T/5mgDuDe.tjDSQirUXbklWxipAe', 'owner', NULL, 1173, NULL, '2019-07-12 09:03:16', '2019-07-12 09:03:16'),
-(1307, 'Racquel Aromin', 'cquelraca3@gmail.com', '$2y$10$8ZPgDoUUbyRlHgZtOXEBf.4uDT34pRmzgvuntdRF7U4g2urZEH0G.', 'owner', NULL, 1174, NULL, '2019-07-12 09:04:42', '2019-07-12 09:04:42');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `banks`
---
-ALTER TABLE `banks`
-  ADD PRIMARY KEY (`bank_id`),
-  ADD KEY `banks_bank_owner_id_foreign` (`bank_owner_id`);
-
---
--- Indexes for table `charges`
---
-ALTER TABLE `charges`
-  ADD PRIMARY KEY (`charge_id`),
-  ADD KEY `charges_charge_trans_id_foreign` (`charge_trans_id`);
-
---
--- Indexes for table `contracts`
---
-ALTER TABLE `contracts`
-  ADD PRIMARY KEY (`contract_id`),
-  ADD KEY `contracts_contract_owner_id_foreign` (`contract_owner_id`),
-  ADD KEY `contracts_contract_room_id_foreign` (`contract_room_id`);
-
---
--- Indexes for table `guardians`
---
-ALTER TABLE `guardians`
-  ADD PRIMARY KEY (`guardian_id`),
-  ADD KEY `guardians_guardian_resident_id_foreign` (`guardian_resident_id`);
-
---
--- Indexes for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `owners`
---
-ALTER TABLE `owners`
-  ADD PRIMARY KEY (`owner_id`),
-  ADD UNIQUE KEY `owners_owner_email_address_unique` (`owner_email_address`),
-  ADD UNIQUE KEY `owners_owner_mobile_number_unique` (`owner_mobile_number`);
-
---
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
-
---
--- Indexes for table `payments`
---
-ALTER TABLE `payments`
-  ADD PRIMARY KEY (`payment_id`),
-  ADD KEY `payments_payment_transaction_id_foreign` (`payment_transaction_id`);
-
---
--- Indexes for table `repairs`
---
-ALTER TABLE `repairs`
-  ADD PRIMARY KEY (`repair_id`);
-
---
--- Indexes for table `representatives`
---
-ALTER TABLE `representatives`
-  ADD PRIMARY KEY (`rep_id`),
-  ADD KEY `representatives_rep_owner_id_foreign` (`rep_owner_id`);
-
---
--- Indexes for table `residents`
---
-ALTER TABLE `residents`
-  ADD PRIMARY KEY (`resident_id`),
-  ADD UNIQUE KEY `residents_email_address_unique` (`email_address`),
-  ADD UNIQUE KEY `residents_mobile_number_unique` (`mobile_number`);
-
---
--- Indexes for table `rooms`
---
-ALTER TABLE `rooms`
-  ADD PRIMARY KEY (`room_id`),
-  ADD UNIQUE KEY `rooms_room_no_unique` (`room_no`);
-
---
--- Indexes for table `transactions`
---
-ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`trans_id`),
-  ADD KEY `transactions_trans_room_id_foreign` (`trans_room_id`),
-  ADD KEY `transactions_trans_resident_id_foreign` (`trans_resident_id`),
-  ADD KEY `transactions_trans_owner_id_foreign` (`trans_owner_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD KEY `users_user_resident_id_foreign` (`user_resident_id`),
-  ADD KEY `users_user_owner_id_foreign` (`user_owner_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `banks`
---
-ALTER TABLE `banks`
-  MODIFY `bank_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1171;
-
---
--- AUTO_INCREMENT for table `charges`
---
-ALTER TABLE `charges`
-  MODIFY `charge_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000;
-
---
--- AUTO_INCREMENT for table `contracts`
---
-ALTER TABLE `contracts`
-  MODIFY `contract_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
-
---
--- AUTO_INCREMENT for table `guardians`
---
-ALTER TABLE `guardians`
-  MODIFY `guardian_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1125;
-
---
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
-
---
--- AUTO_INCREMENT for table `owners`
---
-ALTER TABLE `owners`
-  MODIFY `owner_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1175;
-
---
--- AUTO_INCREMENT for table `payments`
---
-ALTER TABLE `payments`
-  MODIFY `payment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1331;
-
---
--- AUTO_INCREMENT for table `repairs`
---
-ALTER TABLE `repairs`
-  MODIFY `repair_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `representatives`
---
-ALTER TABLE `representatives`
-  MODIFY `rep_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1172;
-
---
--- AUTO_INCREMENT for table `residents`
---
-ALTER TABLE `residents`
-  MODIFY `resident_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1232;
-
---
--- AUTO_INCREMENT for table `rooms`
---
-ALTER TABLE `rooms`
-  MODIFY `room_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1265;
-
---
--- AUTO_INCREMENT for table `transactions`
---
-ALTER TABLE `transactions`
-  MODIFY `trans_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1137;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1308;
+(1307, 'Racquel Aromin', 'cquelraca3@gmail.com', '$2y$10$8ZPgDoUUbyRlHgZtOXEBf.4uDT34pRmzgvuntdRF7U4g2urZEH0G.', 'owner', NULL, 1174, NULL, '2019-07-12 09:04:42', '2019-07-12 09:04:42'),
+(1308, 'Roxxette Delim', 'roxxettedelim24@gmail.com', '$2y$10$iilOaGX05dowo4udjhEdLOzN5KnRUwV.Z3ebEQItYUxJ5Ry9KBzu.', 'resident', 1232, NULL, NULL, '2019-07-11 23:32:48', '2019-07-11 23:32:48');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
