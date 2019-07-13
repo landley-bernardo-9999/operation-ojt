@@ -94,18 +94,20 @@
                 <tr>
                     <th>#</th>
                     <th>Resident</th>
+                    <th>Building</th>
                     <th>Unit</th>
                     <th>Move Out Date</th>
                     <th></th>
                 </tr>
                 <?php $row_no = 1; ?>
-                @foreach ($about_to_move_out as $about_to_move_out)
+                @foreach ($about_to_move_out as $row)
                 <tr>
                     <th>{{ $row_no++ }}</th>
-                    <td>{{ $about_to_move_out->first_name}} {{ $about_to_move_out->last_name }}</td>
-                    <td>{{ $about_to_move_out->room_no}} </td>
-                    <td>{{Carbon\Carbon::parse(  $about_to_move_out->move_out_date )->formatLocalized('%b %d %Y')}}</td>
-                    <td><a href="rooms/{{ $about_to_move_out->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
+                    <td>{{ $row->first_name}} {{ $row->last_name }}</td>
+                    <td>{{ $row->building }}</td>
+                    <td>{{ $row->room_no}} </td>
+                    <td>{{Carbon\Carbon::parse(  $row->move_out_date )->formatLocalized('%b %d %Y')}}</td>
+                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
                 </tr>
                 @endforeach
                 @else
@@ -122,8 +124,8 @@
             <p class="text-danger">No reserved units.</p>
             @endif
             <ul>
-            @foreach ($reserved_rooms as $room)
-                <li><a href="/rooms/{{ $room->room_id }}">{{ $room->building }} {{ $room->room_no }}</a> - {{ $room->remarks }}.</li>
+            @foreach ($reserved_rooms as $row)
+                <li><a href="/rooms/{{ $row->room_id }}">{{ $row->building }} {{ $row->room_no }}</a> - {{ $row->remarks }}.</li>
             @endforeach
         </ul>
        </div>
@@ -133,8 +135,8 @@
             <p class="text-danger">No units under rectication.</p>
             @endif
             <ul>
-            @foreach ($rectification_rooms as $room)
-                <li><a href="/rooms/{{ $room->room_id }}">{{ $room->building }} {{ $room->room_no }}</a> - {{ $room->remarks }}.</li>
+            @foreach ($rectification_rooms as $row)
+                <li><a href="/rooms/{{ $row->room_id }}">{{ $row->building }} {{ $row->room_no }}</a> - {{ $row->remarks }}.</li>
             @endforeach
         </ul>
        </div>
@@ -176,13 +178,13 @@
                     <th></th>
                 </tr>
                 <?php $row_no_move_in = 1; ?>
-                @foreach ($move_in as $move_in)
+                @foreach ($move_in as $row)
                 <tr>
                     <th>{{ $row_no_move_in++ }}</th>
-                    <td>{{ $move_in->first_name}} {{ $move_in->last_name }}</td>
-                    <td>{{ $move_in->room_no}} </td>
-                    <td>{{Carbon\Carbon::parse(  $move_in->move_in_date )->formatLocalized('%b %d %Y')}}</td>
-                    <td><a href="rooms/{{ $move_in->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
+                    <td>{{ $row->first_name}} {{ $row->last_name }}</td>
+                    <td>{{ $row->room_no}} </td>
+                    <td>{{Carbon\Carbon::parse(  $row->move_in_date )->formatLocalized('%b %d %Y')}}</td>
+                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
                 </tr>
                 @endforeach
             </table>
@@ -199,13 +201,13 @@
                     <th></th>
                 </tr>
                 <?php $row_no_move_out = 1; ?>
-                @foreach ($move_out as $move_out)
+                @foreach ($move_out as $row)
                 <tr>
                     <th>{{ $row_no_move_out++ }}</th>
-                    <td>{{ $move_out->first_name}} {{ $move_out->last_name }}</td>
-                    <td>{{ $move_out->room_no}} </td>
-                    <td>{{Carbon\Carbon::parse(  $move_out->actual_move_out_date )->formatLocalized('%b %d %Y')}}</td>
-                    <td><a href="rooms/{{ $move_out->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
+                    <td>{{ $row->first_name}} {{ $row->last_name }}</td>
+                    <td>{{ $row->room_no}} </td>
+                    <td>{{Carbon\Carbon::parse(  $row->actual_move_out_date )->formatLocalized('%b %d %Y')}}</td>
+                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
                 </tr>
                 @endforeach
             </table>

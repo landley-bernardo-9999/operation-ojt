@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\User;
 use DB;
 use Illuminate\Support\Facades\Validator;
+use Hash;
+use Session;
 
 class UserController extends Controller
 {
@@ -144,34 +147,88 @@ class UserController extends Controller
      */
     public function update(Request $request, $user_id)
     {
-        $attributes = request()->validate([
-            'name' => [' '],
-            'email' => [' '],
-            'privilege' => [' '],
-            
-        ]);
+        if(auth()->user()->privilege !== 'admin'){
+           
+            $user = User::findOrFail($user_id);
 
-        if($request->user_resident_id != null){
-             DB::table('users')
-            ->join('residents', 'user_resident_id', 'resident_id')  
-            ->where('user_id', $user_id)
-            ->update([
-                        'email_address' => $request->email,                    
-                    ]);
-        } 
-        
-        if($request->user_owner_id != null){
-            DB::table('users')
-            ->join('owners', 'user_owner_id', 'owner_id')  
-            ->where('user_id', $user_id)
-            ->update([
-                        'owner_email_address' => $request->email,                    
-                   ]);
-        }    
+         if($request->password == null){
+           $user->name = $request->name;
+           $user->email = $request->email;
+           
+            if($request->user_resident_id != null){
+                DB::table('users')
+               ->join('residents', 'user_resident_id', 'resident_id')  
+               ->where('user_id', $user_id)
+               ->update([
+                           'email_address' => $request->email,                    
+                       ]);
+           } 
+           
+           if($request->user_owner_id != null){
+               DB::table('users')
+               ->join('owners', 'user_owner_id', 'owner_id')  
+               ->where('user_id', $user_id)
+               ->update([
+                           'owner_email_address' => $request->email,                    
+                      ]);
+           }    
+           $user->save();
 
-        User::findOrFail($user_id)->update($attributes);
+            return redirect('/users/'.$user_id)->with('success','User information has been updated successfully!');
+         }
+         else{
+            $this->validate($request,[
+                'password' => ['required', 'string', 'min:6', 'confirmed'],
+            ]);
 
-        return redirect('/users/'.$user_id)->with('success','User has been updated successfully!');
+            $user->password = Hash::make(request('password'));
+            $user->save();
+         }
+            Session::flush();
+            return redirect('/login')->with('success','Password has been changed successfully!');
+        }
+        else{
+
+            $user = User::findOrFail($request->user_id);
+
+            if($request->password == null){
+                $user->name = $request->name;
+                $user->email = $request->email;
+    
+                if($request->user_resident_id != null){
+                    DB::table('users')
+                   ->join('residents', 'user_resident_id', 'resident_id')  
+                   ->where('user_id', $request->user_id)
+                   ->update([
+                               'email_address' => $request->email,                    
+                           ]);
+               } 
+               
+               if($request->user_owner_id != null){
+                   DB::table('users')
+                   ->join('owners', 'user_owner_id', 'owner_id')  
+                   ->where('user_id', $request->user_id)
+                   ->update([
+                               'owner_email_address' => $request->email,                    
+                          ]);
+               }    
+    
+               $user->save();
+
+                return redirect('/users/'.$request->user_id)->with('success','User information has been updated successfully!');
+             }
+             else{
+                $this->validate($request,[
+                    'password' => ['required', 'string', 'min:6', 'confirmed'],
+                ]);
+    
+                $user->password = Hash::make(request('password'));
+                $user->save();
+             }
+                return redirect('/users/'.$request->user_id)->with('success','Password has been changed successfully!');
+           
+        }
+      
     }
 
     /**

@@ -15,7 +15,7 @@
         @if($users->count() > 0)
         <p>{{ $users->count() }} users found.</p>
         <tr>
-            <th>No. </th>
+            <th>#</th>
             <th>Name</th>
             <th>Email</th>
             <th>Privilege</th>
@@ -24,7 +24,7 @@
         </tr>   
         @foreach ($users as $user)
         <tr>
-            <td>{{ $row_no++ }}.</td>
+            <th>{{ $row_no++ }}</th>
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->privilege }}</td>

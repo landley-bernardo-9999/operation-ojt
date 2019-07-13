@@ -170,8 +170,8 @@
                 </div>
                 <br>
                 <div class="card-footer">
-                    <a class="btn-default" href="{{ URL::previous() }}"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>
-                    <button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="fas fa-arrow-circle-right"></i>&nbspSAVE</button>
+                    <a class="btn-default" href="{{ URL::previous() }}">BACK</a>
+                    <button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default">SAVE</button>
                 <br>
                 </div>
         </form>

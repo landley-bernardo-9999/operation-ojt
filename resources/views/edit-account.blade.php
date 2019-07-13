@@ -11,6 +11,8 @@
                         @method('PATCH')
                         {{ csrf_field() }}
 
+                        <input type="hidden" name="user_id" value="{{ $user->user_id }}" required>
+
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Name</label>
 
@@ -40,49 +42,14 @@
                                 @endif
                             </div>
                         </div>
-
-                        {{-- <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="privilege" class="col-md-4 control-label">Privilege</label>
-
-                            <div class="col-md-4">
-                            <select class="form-control{{ $errors->has('privilege') ? ' is-invalid' : '' }}" name="privilege" id="privilege" required autofocus>
-                                <option value="{{ $user->privilege }}" selected>{{ $user->privilege }}</option>
-                                <option value="leasingOfficer" {{ old('privilege') == 'leasingOfficer' ? 'selected' : ''}} >Leasing Officer</option>
-                                <option value="leasingManager" {{ old('privilege') == 'leasingManager' ? 'selected' : ''}}>Leasing Manager</option>
-                                <option value="admin" {{ old('privilege') == 'admin' ? 'selected': ''}}>Admin</option>
-                                <option value="treasury" {{ old('privilege') == 'treasury' ? 'selected': ''}}>Treasury</option>
-                            </select>
-
-                            @if ($errors->has('privilege'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('privilege') }}</strong>
-                            </span>
-                        @endif
-                            </div>
-
-                        </div> --}}
-
-                        {{-- <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                        
+                        <!-- Button trigger modal -->
+                        <div class="form-group row">
+                            <label for="password" class="col-md-8 control-label"> 
+                                <a href="#/" class="change-pass" data-toggle="modal" data-target="#exampleModal">Change my password.</a>
+                            </label>
                         </div>
-
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div> --}}
+                        
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
@@ -93,3 +60,44 @@
     </div>
 </div>
 @endsection
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+            <form method="POST" action="/users/{{ $user->user_id }}">
+                @method('PATCH')
+            @csrf
+            <div class="modal-body">
+                    <input type="hidden" name="user_id" value="{{ $user->user_id }}" required>  
+                  <div class="form-group row">
+                        <label for="" class="col-md-5 text-md-right">Enter your new password:</label>
+
+                    <div class="col-md-6">
+                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                        </div>
+                </div>      
+
+                <div class="form-group row">
+                    <label for="password-confirm" class="col-md-5 text-md-right">Confirm your new password:</label>
+                        <div class="col-md-6">
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                        </div>
+                </div>
+            </div>
+               
+            <div class="modal-footer">
+                 <button class=" btn-default" data-dismiss="modal" type="button">CANCEL</button>              
+                <button class=" btn-default" onclick="return confirm('Are you sure you want to perform this operation? ');" type="submit">UPDATE</button>     
+            </div>
+
+            </form> 
+    </div>
+  </div>
+</div>

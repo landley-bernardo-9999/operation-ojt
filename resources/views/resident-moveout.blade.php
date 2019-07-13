@@ -39,7 +39,7 @@
             <td>{{ $transaction->move_out_reason }}</td>    
             @else
             <td>Move Out Date:</td>
-            <td> <input type="date" class="form-control" style="width:50%" name="actual_move_out_date" value="{{$transaction->move_out_date}}" required></<td>
+            <td> <input type="date" class="form-control" style="width:40%" name="actual_move_out_date" value="{{$transaction->move_out_date}}" required></<td>
             <input type="hidden" name="trans_status" value="inactive">
             <td>Reason:</td>
             <td>
@@ -253,7 +253,7 @@
                 </tr> 
             </table>
             @if (auth()->user()->privilege === 'leasingOfficer')
-            <button onclick="return confirm('Are you sure you want to perform this operation? ');">Move out</button>            
+            <button onclick="return confirm('Are you sure you want to perform this operation? ');">MOVE OUT</button>            
             @endif
         @endif
         </form>
