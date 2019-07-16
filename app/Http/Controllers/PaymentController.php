@@ -90,9 +90,6 @@ class PaymentController extends Controller
         ->where('payment_id', $payment_id)
         ->get();  
 
-        
-
-        
         return view('show-remittance', compact('remittance','remittances_owner'));
     }
 

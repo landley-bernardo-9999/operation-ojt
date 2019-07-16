@@ -61,10 +61,13 @@ Route::get('/owner/remittances', function(){
     return view('owner-remittance');
 }); 
 
-Route::get('/billings/rooms', function(){
-    return view('search-rooms');
+Route::get('/residents/billing', function(){
+    return view('billing-resident');
 }); 
 
+Route::get('/owners/billing', function(){
+    return view('billing-owner');
+}); 
 
 Route::get('/dashboard', function(){
     if(auth()->user()->privilege === 'owner'){

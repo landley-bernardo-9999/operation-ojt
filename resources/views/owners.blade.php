@@ -26,7 +26,11 @@
             <th>{{ $row_no++ }}</th>
             <td>{{ $owner->owner_first_name }} {{ $owner->owner_last_name }}</td>
             <td>{{ $owner->building }} {{ $owner->room_no }}</td>
-            <td><a href="/rooms/{{ $owner->room_id }}" oncontextmenu="return false" >MORE INFO</a></td>
+            @if(auth()->user()->privilege === 'billingAndCollection')
+            <td><a href="/owners/{{ $owner->owner_id }}" oncontextmenu="return false">MORE INFO</a></td>
+            @else
+            <td><a href="/rooms/{{ $owner->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
+            @endif
         </tr>
         @endforeach
         @else

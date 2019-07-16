@@ -51,16 +51,6 @@ class RoomController extends Controller
                 ->get();
                 return view('rooms', compact('room', 'harvard', 'princeton', 'wharton', 'cy'));
             }
-            elseif (auth()->user()->privilege === 'billingAndCollection') {
-
-                $s = $request->query('s');
-
-                $rooms = DB::table('rooms')
-                ->where('room_no', 'like', "%{$s}%")
-                ->get();
-
-                return view('search-rooms', compact('rooms'));
-            }  
             else{
                 abort(404, "Forbidden Page.");
             }

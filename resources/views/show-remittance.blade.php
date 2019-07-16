@@ -1,18 +1,7 @@
 @extends('layouts.app')
-@section('title',  'Remittance')
-
-
+@section('title',  session('billing_owner_name'))
 @section('content')
 <div class="container">
-   
-    <div class="row">
-         <ul class="nav navbar-nav">
-            <li class="nav-item">
-                <a class=""href="/payments" oncontextmenu="return false">Back</a>
-            </li>
-        </ul>
-    </div>
- 
 @foreach ($remittance as $remittance)
 <form class="" method="POST" action="/payments/{{ $remittance->payment_id }}">
     @method('PATCH')
@@ -30,11 +19,11 @@
                 <th>Remmittance</th>
             </tr>
             <tr>
-                <td><input type="number" class="" style="width:50%" value="{{ $remittance->mgmt_fee }}" name="mgmt_fee" id="mgmt_fee" readonly></td>
-                <td><input type="number" class="" style="width:50%" value="{{ $remittance->condo_dues }}" name="condo_dues"  id="condo_dues" readonly></td>
-                <td><input type="text" class="" style="width:50%" value="{{ $remittance->others }}" name="others" id="others" onkeyup="auto_compute_remittance()"></td> 
-                <td> <input type="hidden" class="" style="width:50%" value="{{ $remittance->remittance_amt }}" name="dummy_remittance_amt" id="dummy_remittance_amt"></td>
-                <th><input type="number" class="" style="width:50%" value="{{ $remittance->remittance_amt }}" name="remittance_amt" id="remittance_amt" readonly> </th>
+                <td><input type="number" class="form-control" style="width:50%" value="{{ $remittance->mgmt_fee }}" name="mgmt_fee" id="mgmt_fee" readonly></td>
+                <td><input type="number" class="form-control" style="width:50%" value="{{ $remittance->condo_dues }}" name="condo_dues"  id="condo_dues" readonly></td>
+                <td><input type="text" class="form-control" style="width:50%" value="{{ $remittance->others }}" name="others" id="others" onkeyup="auto_compute_remittance()"></td> 
+                <td> <input type="hidden" class="form-control" style="width:50%" value="{{ $remittance->remittance_amt }}" name="dummy_remittance_amt" id="dummy_remittance_amt"></td>
+                <th><input type="number" class="form-control" style="width:50%" value="{{ number_format($remittance->remittance_amt,2) }}" name="remittance_amt" id="remittance_amt" readonly> </th>
             </tr>
         </table>
      </div>
@@ -56,5 +45,10 @@
         var dummy_remittance_amt = document.getElementById('dummy_remittance_amt').value;
         
         document.getElementById('remittance_amt').value = parseFloat((dummy_remittance_amt)  - parseFloat(others));
+
+        if( others === ''){
+            document.getElementById('remittance_amt').value = dummy_remittance_amt;
+        }
+        
      }
 </script>

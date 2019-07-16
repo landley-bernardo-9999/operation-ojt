@@ -22,7 +22,7 @@ class OwnerController extends Controller
     {
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer'  || auth()->user()->privilege === 'leasingManager' ){
+            if(auth()->user()->privilege === 'leasingOfficer'  || auth()->user()->privilege === 'leasingManager' || auth()->user()->privilege === 'billingAndCollection'  ){
 
                 $s = $request->query('s');
 
@@ -143,42 +143,44 @@ class OwnerController extends Controller
     {   
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_owner_id == $owner_id || auth()->user()->privilege === 'billingAndCollection'  || auth()->user()->privilege === 'leasingManager'){
+            $owner = Owner::findOrFail($owner_id);
+               
+            $owner_name = $owner->owner_first_name.' '.$owner->owner_last_name;
+            $owner_id = $owner->owner_id;
 
-                if( auth()->user()->privilege === 'billingAndCollection' ){
-                    
-                    $owner = Owner::findOrFail($owner_id);
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_owner_id == $owner_id || auth()->user()->privilege === 'leasingManager'){
+                $bank = DB::table('banks')->where('bank_owner_id', $owner_id)->get();
+                $representative = DB::table('representatives')->where('rep_owner_id', $owner_id)->get();
+                
+                //for leasing admin
+                session(['owner_name' => $owner_name]);
+                session(['owner_id' => $owner_id]);
 
-                    $remittances = DB::table('transactions')
-                    ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
-                    ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
-                    ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
-                    ->select('*', 'payments.created_at as billing_date')
-                    ->where('owner_id', $owner_id)
-                    ->whereIn('desc', ['monthly_rent', 'advance_rent'])
-                    
-                    ->get();
+                
+                
+                return view('show-owner', compact('owner', 'bank', 'representative'));     
+            }
+            elseif(auth()->user()->privilege === 'billingAndCollection'){
 
-                    return view('owner-remittance', compact('owner', 'remittances'));
+                //for leasing billing
+                session(['billing_owner_name' => $owner_name]);
 
-                }else{
-                    $owner = Owner::findOrFail($owner_id);
+                 $remittances = DB::table('transactions')
+                ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
+                ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->select('*', 'payments.created_at as billing_date')
+                ->where('trans_owner_id', $owner_id)
+                ->whereIn('desc', ['monthly_rent', 'advance_rent'])
+                ->orderBy('payments.created_at')
+                ->get();
 
-                    $owner_name = $owner->owner_first_name.' '.$owner->owner_last_name;
-            
-                    $owner_id = $owner->owner_id;
-            
-                    $bank = DB::table('banks')->where('bank_owner_id', $owner_id)->get();
-            
-                    $representative = DB::table('representatives')->where('rep_owner_id', $owner_id)->get();
-    
-                    if(auth()->user()->privilege === 'leasingOfficer' ){
-                        session(['owner_name' => $owner_name]);
-                        session(['owner_id' => $owner_id]);
-                    }
-                    
-                    return view('show-owner', compact('owner', 'bank', 'representative'));
-                }                
+                $unit = DB::table('contracts')
+                ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+                ->where('contract_owner_id', $owner_id)
+                ->get(['building','room_no']);
+
+                return view('owner-remittance', compact('owner', 'remittances', 'unit'));               
             }
             else{
                 abort(404, "Forbidden Page.");

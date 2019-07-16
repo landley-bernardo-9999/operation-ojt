@@ -260,7 +260,6 @@
     </div>    
 </div>
 <br>
-@endsection
 <script type="text/javascript">
 
     function sum_comforter(){
@@ -441,4 +440,4 @@
         }
     }
 </script>
-
+@endsection

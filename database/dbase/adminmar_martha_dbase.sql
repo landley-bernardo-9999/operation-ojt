@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 13, 2019 at 06:07 AM
+-- Generation Time: Jul 16, 2019 at 09:13 AM
 -- Server version: 5.7.21
 -- PHP Version: 7.2.4
 
@@ -1217,7 +1217,7 @@ INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `
 (1222, 1113, 'sec_dep_rent', 10000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-07-21 16:00:00', '2017-07-21 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1223, 1113, 'advance_rent', 10000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-07-21 16:00:00', '2017-07-21 16:00:00', 8327.80, 1500.00, 1172.20, NULL, 0.00),
 (1224, 1114, 'sec_dep_rent', 10000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-02 16:00:00', '2018-09-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1225, 1114, 'advance_rent', 10000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-02 16:00:00', '2018-09-02 16:00:00', 8327.80, 1500.00, 1172.20, NULL, 0.00),
+(1225, 1114, 'advance_rent', 10000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-02 16:00:00', '2019-07-16 01:06:47', 8327.80, 1500.00, 1172.20, NULL, NULL),
 (1226, 1114, 'sec_dep_utilities', 2000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-02 16:00:00', '2018-09-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1227, 1115, 'sec_dep_rent', 7000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1228, 1115, 'advance_rent', 7000, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-05 23:14:48', '2018-08-01 16:00:00', 5420.85, 1200.00, 879.15, NULL, 0.00),
@@ -2135,7 +2135,6 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1042, '2016-12-26', 1008, 1059, 1010, 'inactive', '2016-12-29', 'end_of_contract', '2016-12-26', '2016-12-29', 'transient', 92, 1424, NULL, NULL, '2019-06-26 22:07:33', '2019-06-26 22:11:01'),
 (1043, '2019-06-15', 1008, 1064, 1010, 'active', NULL, NULL, '2019-06-15', '2019-08-15', 'short_term', 468, 7916, NULL, NULL, '2019-06-26 22:33:24', '2019-07-10 17:04:42'),
 (1044, '2019-06-07', 1016, 1065, 1021, 'active', NULL, NULL, '2019-06-07', '2019-08-07', 'short_term', 468, 7916, NULL, NULL, '2019-06-26 22:41:31', '2019-06-26 22:42:40'),
-(1045, '2019-05-09', 1259, 1068, 1078, 'active', NULL, NULL, '2019-05-09', '2020-05-09', 'long_term', 7, 38, NULL, NULL, '2019-06-26 22:53:02', '2019-06-26 22:54:18'),
 (1046, '2016-07-05', 1001, 1071, 1002, 'inactive', '2016-08-05', 'end_of_contract', '2016-07-05', '2016-08-05', 'short_term', 15, 218, 16, 235, '2019-06-26 23:40:56', '2019-06-26 23:49:10'),
 (1047, '2016-12-21', 1001, 1072, 1002, 'inactive', '2016-12-22', 'end_of_contract', '2016-12-21', '2016-12-22', 'transient', 15, 218, 16, 235, '2019-06-26 23:45:17', '2019-06-27 01:10:08'),
 (1048, '2016-12-28', 1001, 1074, 1002, 'inactive', '2016-12-29', 'end_of_contract', '2016-12-28', '2016-12-29', 'transient', 18, 259, NULL, NULL, '2019-06-27 00:00:01', '2019-06-27 00:08:59'),
@@ -2247,14 +2246,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`),
   KEY `users_user_resident_id_foreign` (`user_resident_id`),
   KEY `users_user_owner_id_foreign` (`user_owner_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1370 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1371 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `privilege`, `user_resident_id`, `user_owner_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1005, 'Landley Bernardo', 'lmbernardo@slu.edu.ph', '$2y$10$ezsepllYr9aVYhaK.OcLUeekJqrNnMzY02oM38ATheWBnqZEhf6vC', 'billingAndCollection', NULL, NULL, NULL, '2019-06-17 22:30:33', '2019-06-17 22:30:33'),
+(1005, 'Landley Bernardo', 'lmbernardo@slu.edu.ph', '$2y$10$ezsepllYr9aVYhaK.OcLUeekJqrNnMzY02oM38ATheWBnqZEhf6vC', 'admin', NULL, NULL, NULL, '2019-06-17 22:30:33', '2019-06-17 22:30:33'),
 (1006, 'Violeta King', 'evrolpindo@yahoo.com.ph', '$2y$10$oNRrFhPKsGbrtX.NGoSM8e3KqFrR7ZuV4espjWhPtOAH9DYPGF.Hi', 'owner', NULL, 1003, NULL, '2019-06-18 06:44:06', '2019-06-18 06:44:06'),
 (1003, 'Jessie Amangyen', 'verone_1817@yahoo.com', '$2y$10$h/QNaJmHuz1eM.NsT1lRCuM17zw6Z7SOprcwRXCi.rpcRh.8RU7C.', 'owner', NULL, 1002, NULL, '2019-06-17 19:02:57', '2019-06-17 19:02:57'),
 (1045, 'Jennifer Salangsang', 'jenbsalangsang@yahoo.com', '$2y$10$VS6pTs7km2EwVgToQcHe5OkBxPJPL0SumK8t1YrxNICR4CYeqnqK.', 'owner', NULL, 1024, NULL, '2019-06-24 21:35:15', '2019-06-24 21:35:15'),
@@ -2263,7 +2262,7 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `privilege`, `user_
 (1047, 'Mariel Chavez', 'marielchavez777@yahoo.com', '$2y$10$VU7RL9HUsCbUfk.I1tGsiuMSoasvrCwcwsmOt9Y9JUsvjjmf3I3Oy', 'owner', NULL, 1026, NULL, '2019-06-24 21:45:42', '2019-06-24 21:45:42'),
 (1018, 'Kenneth Lu', 'ngal101958@gmail.com', '$2y$10$ZbxhuI24H63Fih4PhYimi.Pkq67j0RJfVkqt/.A86UtlvJitEDL6y', 'owner', NULL, 1004, NULL, '2019-06-19 00:18:07', '2019-06-19 00:18:07'),
 (1022, 'Perlita Martinez', 'DIANA717@YAHOO.COM', '$2y$10$JS7aIVpt4cV0Bh4.w4r.oezfOmK3N.X5OAXN.83iQl1EsdLvhrb82', 'owner', NULL, 1006, NULL, '2019-06-21 00:00:54', '2019-06-21 00:00:54'),
-(1023, 'MARY GRACE AQUINO', 'MARYGRACEAQUINO@ICLOUD.COM', '$2y$10$eGzl3cxST1lJisEYW.j3tOnf/N.9zdIXwcazNxea6.yQMFqXKm0z2', 'owner', NULL, 1007, NULL, '2019-06-21 00:20:20', '2019-06-30 22:08:21'),
+(1023, 'MARY GRACE AQUINO', 'MARYGRACEAQUINO@ICLOUD.COM', '$2y$10$sYN8eGK6p1NlfB1Y/wKf7eauUB/lseRCHFakU1g59Ywh4IA1QVoqK', 'owner', NULL, 1007, NULL, '2019-06-21 00:20:20', '2019-07-12 23:22:37'),
 (1024, 'MILAGROS ANCHETA', 'noemailadress1008@marthaservices.com', '$2y$10$UyApUDK5pgi9owQKST5zL.tvg3G7N.tTGuNvuByyrrzEBYL.44MzG', 'owner', NULL, 1008, NULL, '2019-06-21 00:22:44', '2019-06-21 00:22:44'),
 (1025, 'MANUEL ANCHETA', 'noemailadress1009@marthaservices.com', '$2y$10$dB/vStxmBNx/1eEJN5Cm5O7a5HEAMvaOOU9yu6RALEeg6/rWt//c2', 'owner', NULL, 1009, NULL, '2019-06-21 00:24:21', '2019-06-21 00:24:21'),
 (1026, 'GRACE ARCHOG', 'ARNELGRACE24@GMAIL.COM', '$2y$10$c9sgJOmxbfO0Np.Ny1EKhOB35wfpiUp2k1pU31mtrH3DB0a92ragi', 'owner', NULL, 1010, NULL, '2019-06-21 00:26:56', '2019-06-21 00:26:56'),
@@ -2328,7 +2327,7 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `privilege`, `user_
 (1097, 'Arizala Susan', 'danito.arizala@gmail.com', '$2y$10$4K.pIHJgQlTFJR5dE.NosO0r1tiKBrmnkBdzcLqBObiQ3EVDnUv46', 'resident', 1126, NULL, NULL, '2019-06-27 17:39:52', '2019-06-27 17:39:52'),
 (1098, 'Rayan Yagnmour', 'princerayan.ry24@gmail.com', '$2y$10$aMIaDnbaewJGYO/EL3MC8OXWJjZkGVnJGx6gHrtr/Ijt56Spf1AH2', 'resident', 1131, NULL, NULL, '2019-06-27 17:57:00', '2019-06-27 17:57:00'),
 (1099, 'Nathaniel Ramos', 'nathanielbramos@gmail.com', '$2y$10$sQGNCdttd5k3LpJJDtbgTOQPucOq3b50uwyY8Kv0NmLTAIkS2YNDi', 'resident', 1132, NULL, NULL, '2019-06-27 18:03:22', '2019-06-27 18:03:22'),
-(1100, 'Arleen Fatton', 'leasingassist@marthaservices.com', '$2y$10$liRAt/.42eomlODgzh3lFe6ZwQj31g8f1i5hppIN35OPBIobQUA1y', 'leasingOfficer', NULL, NULL, NULL, '2019-06-27 18:11:14', '2019-06-27 18:11:14'),
+(1100, 'Arleen Fatton', 'leasingassist@marthaservices.com', '$2y$10$tIDGtI/q.Z86.XUiy.rFMODbJjexIRtQByTZCmOI1.EPHcfjukci.', 'leasingOfficer', NULL, NULL, NULL, '2019-06-27 18:11:14', '2019-07-15 21:58:32'),
 (1101, 'Archie Ogbinar', 'noemailadress1136@marthaservices.com', '$2y$10$5BmEgiR0l9k/5Qz3GDa6kuezMOIW1RBQKLukbeei5haA6Lu..wfNi', 'resident', 1136, NULL, NULL, '2019-06-27 18:16:24', '2019-06-27 18:16:24'),
 (1102, 'Fhillip Rey Felipe', 'noemailadress1141@marthaservices.com', '$2y$10$PyyFTNC9WDk4YutErdoe1.X2QoxUuXldNtRIGkfjySuK3PPgNwmr6', 'resident', 1141, NULL, NULL, '2019-06-27 18:24:10', '2019-06-27 18:24:10'),
 (1103, 'Maria Veronica Sanchez', 'noemailadress1146@marthaservices.com', '$2y$10$sigL3QD6BbXysXZ7Wi.pjOAU1nVqhp/Ia36hj8LyfNNv1p0W0Oyk2', 'resident', 1146, NULL, NULL, '2019-06-27 18:28:49', '2019-06-27 18:28:49'),
@@ -2588,7 +2587,8 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `privilege`, `user_
 (1366, 'Mary Ann Limpayos', 'edmund.limpayos@snaboitiz.com', '$2y$10$F1aOK0cYIWnI0dDtzN8DpuHP8eSN68ZcyeDsEHopqc7YkjYXihvzm', 'owner', NULL, 1232, NULL, '2019-07-12 21:53:53', '2019-07-12 21:53:53'),
 (1367, 'Marcela Limjoco', 'jlimjoco@aol.com', '$2y$10$fr0DZl2C8Y2D8OkP2JhMh.MT/oZRv6JzcBtUfTWY0sLUTQtW2eIcy', 'owner', NULL, 1233, NULL, '2019-07-12 21:55:49', '2019-07-12 21:55:49'),
 (1368, 'Imelda Paraoan', 'ownernoemailadress1234@marthaservices.com', '$2y$10$r2sRapSMAU1ZFKJY0jYwU.ywag/lwU7HOHL35L1JHWLg8Ea/MPyty', 'owner', NULL, 1234, NULL, '2019-07-12 21:57:27', '2019-07-12 21:57:27'),
-(1369, 'Jayniwen Lapniten', 'jaynewinlapniten@yahoo.com/dickson.lapniwen@besra.com', '$2y$10$AZsUoHu.uJBMOJm3J3hyT.at3WaJrdKUUeK08MlWYViwHSvvEkuem', 'owner', NULL, 1235, NULL, '2019-07-12 21:59:01', '2019-07-12 21:59:01');
+(1369, 'Jayniwen Lapniten', 'jaynewinlapniten@yahoo.com/dickson.lapniwen@besra.com', '$2y$10$AZsUoHu.uJBMOJm3J3hyT.at3WaJrdKUUeK08MlWYViwHSvvEkuem', 'owner', NULL, 1235, NULL, '2019-07-12 21:59:01', '2019-07-12 21:59:01'),
+(1370, 'Shane Kaye Gonzales', 'leasingbilling@marthaservices.com', '$2y$10$0l99/DONKvI.HBen9nhmF.rf99IypBoRA5KaR1QWG4v8v0vjsVmGC', 'billingAndCollection', NULL, NULL, NULL, '2019-07-12 22:11:53', '2019-07-12 23:29:29');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

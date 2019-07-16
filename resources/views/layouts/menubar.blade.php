@@ -56,8 +56,10 @@
                     @endif
 
                     @if( auth()->user()->privilege === 'billingAndCollection' )
+
+                    <li><a href="/residents" oncontextmenu="return false"><i class="fas fa-users"></i>&nbspResidents</a></li>
+                    <li><a href="/owners" oncontextmenu="return false"><i class="fas fa-user-tie"></i>&nbspOwners</a></li>
                     
-                    <li><a href="/rooms" oncontextmenu="return false"><i class="fas fa-search"></i>&nbspSearch</a></li>
                     @endif
 
                     @if( auth()->user()->privilege === 'treasury' )

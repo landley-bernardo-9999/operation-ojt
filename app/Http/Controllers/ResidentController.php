@@ -17,7 +17,7 @@ class ResidentController extends Controller
     {
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer'  || auth()->user()->privilege === 'leasingManager'){
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->privilege === 'leasingManager' || auth()->user()->privilege === 'billingAndCollection'){
 
                 $s = $request->query('s');
 
@@ -145,7 +145,7 @@ class ResidentController extends Controller
     {
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_resident_id == $resident_id  || auth()->user()->privilege === 'billingAndCollection'  || auth()->user()->privilege === 'leasingManager'){
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->user_resident_id == $resident_id  || auth()->user()->privilege === 'leasingManager'){
 
                 $resident = Resident::findOrFail($resident_id);
 
@@ -177,6 +177,36 @@ class ResidentController extends Controller
                 ->get();
         
                 return view('show-resident', compact('resident', 'contract', 'repairs', 'payment', 'co_residents', 'guardian'));
+            }
+            elseif(auth()->user()->privilege === 'billingAndCollection'){
+                $resident = Resident::findOrFail($resident_id);
+
+                session(['billing_resident_name'=> $resident->first_name.' '.$resident->last_name]);
+
+                $payment = DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+                ->select('*', 'payments.created_at as billing_date')
+                ->where('residents.resident_id', $resident_id)
+                ->orderBy('payments.created_at', 'desc')
+                ->get();
+
+                $unit = DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->where('trans_resident_id', $resident_id)
+                ->get(['building','room_no']);
+
+                $balance = DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+                ->select('*', 'payments.created_at as billing_date')
+                ->where('residents.resident_id', $resident_id)
+                ->where('payment_status', 'unpaid')
+                ->sum('amt');
+                
+                return view('billing-resident', compact('payment', 'balance', 'unit'));
             }
             else{
                 abort(404, "Forbidden Page.");

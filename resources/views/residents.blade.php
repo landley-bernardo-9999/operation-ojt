@@ -28,7 +28,11 @@
             <td>{{ $resident->first_name }} {{ $resident->last_name }}</td>
             <td>{{ $resident->building }} {{ $resident->room_no }}</td>
             <td>{{ $resident->trans_status }}</td>
+            @if(auth()->user()->privilege === 'billingAndCollection')
+            <td><a href="/residents/{{ $resident->resident_id }}" oncontextmenu="return false">MORE INFO</a></td>
+            @else
             <td><a href="/rooms/{{ $resident->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
+            @endif
         </tr>
         @endforeach
         @else

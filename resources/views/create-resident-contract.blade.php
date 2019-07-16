@@ -91,8 +91,6 @@
         </div>
 </div>
 <br>
-@endsection
-
 <script>
 
 window.onload = function() {
@@ -422,7 +420,6 @@ window.onload = function() {
                 document.getElementById('total_payment').value = total_payment;
             }
         }
-
-
     }
 </script>
+@endsection
