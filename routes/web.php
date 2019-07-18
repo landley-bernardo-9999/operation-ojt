@@ -63,7 +63,7 @@ Route::get('/owner/remittances', function(){
 
 Route::get('/residents/billing', function(){
     return view('billing-resident');
-}); 
+});  
 
 Route::get('/owners/billing', function(){
     return view('billing-owner');
@@ -181,12 +181,12 @@ Route::get('/dashboard', function(){
                                                 ]);
 
           //move out rate per month
-          $collection_rate_past_5_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(5)->month)->whereYear('updated_at', Carbon::now()->year)->count();
-          $collection_rate_past_4_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(4)->month)->whereYear('updated_at', Carbon::now()->year)->count();
-          $collection_rate_past_3_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(3)->month)->whereYear('updated_at', Carbon::now()->year)->count();
-          $collection_rate_past_2_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(2)->month)->whereYear('updated_at', Carbon::now()->year)->count();
-          $collection_rate_past_1_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(1)->month)->whereYear('updated_at', Carbon::now()->year)->count();
-          $collection_rate_present_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->count();
+          $collection_rate_past_5_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(5)->month)->whereYear('updated_at', Carbon::now()->year)->count();
+          $collection_rate_past_4_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(4)->month)->whereYear('updated_at', Carbon::now()->year)->count();
+          $collection_rate_past_3_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(3)->month)->whereYear('updated_at', Carbon::now()->year)->count();
+          $collection_rate_past_2_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(2)->month)->whereYear('updated_at', Carbon::now()->year)->count();
+          $collection_rate_past_1_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(1)->month)->whereYear('updated_at', Carbon::now()->year)->count();
+          $collection_rate_present_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->count();
 
           //line
           $line = new DashboardChart;
@@ -282,6 +282,43 @@ Route::get('/dashboard', function(){
         ->whereBetween('move_out_date', [Carbon::now(), Carbon::now()->addDays(7)])
         ->get();  
 
+        $harvard_least_occupied_rooms = Room::
+        where('room_status', 'vacant')
+        ->where('building', 'harvard')
+        ->orderBy('updated_at')
+        ->get(); 
+        
+        $princeton_least_occupied_rooms = Room::
+        where('room_status', 'vacant')
+        ->where('building', 'princeton')
+        ->orderBy('updated_at')
+        ->get(); 
+
+        $wharton_least_occupied_rooms = Room::
+        where('room_status', 'vacant')
+        ->where('building', 'wharton')
+        ->orderBy('updated_at')
+        ->get(); 
+
+        $cy_least_occupied_rooms = Room::
+        where('room_status', 'vacant')
+        ->where('project', 'the_courtyards')
+        ->orderBy('updated_at')
+        ->get(); 
+
+        $nc_units_enrolled = DB::table('contracts')
+                        ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+                        ->where('project', 'the_courtyards')
+                        ->whereYear('enrollment_date', Carbon::now()->year)
+                        ->orderBy('enrollment_date','desc')
+                        ->get();
+
+        $cy_units_enrolled = DB::table('contracts')
+                        ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+                        ->where('project', 'north_cambridge')
+                        ->whereYear('enrollment_date', Carbon::now()->year)
+                        ->orderBy('enrollment_date', 'desc')
+                        ->get();
 
         $occupancy_nc =  DB::table('rooms')->where('project', 'north_cambridge')->where('room_status', 'occupied')->count() / DB::table('rooms')->where('project', 'north_cambridge')->count() * 100;
         $occupancy_cy =  DB::table('rooms')->where('room_status', 'occupied')->where('project', 'the_courtyards')->count() / DB::table('rooms')->where('project', 'the_courtyards')->count() * 100;
@@ -297,7 +334,9 @@ Route::get('/dashboard', function(){
             'nc_rooms','cy_rooms',
             'occupancy_nc','occupancy_cy',
             'reserved_rooms','rectification_rooms',
-            'about_to_move_out'
+            'about_to_move_out',
+            'harvard_least_occupied_rooms','princeton_least_occupied_rooms','wharton_least_occupied_rooms','cy_least_occupied_rooms',
+            'nc_units_enrolled','cy_units_enrolled'
         ));
     }  
     if(auth()->user()->privilege === 'leasingManager'){        
@@ -394,12 +433,12 @@ Route::get('/dashboard', function(){
 
 
                         //move out rate per month
-                $collection_rate_past_5_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(5)->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
-                $collection_rate_past_4_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(4)->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
-                $collection_rate_past_3_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(3)->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
-                $collection_rate_past_2_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(2)->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
-                $collection_rate_past_1_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(1)->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
-                    $collection_rate_present_months = Payment::where('desc', 'monthly_rent')->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->sum('amt');
+                $collection_rate_past_5_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(5)->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
+                $collection_rate_past_4_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(4)->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
+                $collection_rate_past_3_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(3)->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
+                $collection_rate_past_2_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(2)->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
+                $collection_rate_past_1_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(1)->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
+                $collection_rate_present_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
 
                 //line
                 $line3 = new DashboardChart;
@@ -413,11 +452,33 @@ Route::get('/dashboard', function(){
                                                                             $collection_rate_present_months
                                                                         ]);
 
-            $collection_rate_increase =  (($collection_rate_past_1_months - $collection_rate_present_months)/($collection_rate_past_1_months)) * 100;
+            $collection_rate_increase =  (($collection_rate_past_1_months - $collection_rate_present_months)/($collection_rate_past_1_months)) * -100;
 
             $move_out_rate_increase = (($move_out_past_1_months - $move_out_present_month)/($move_out_past_1_months)) * 100;
 
             $move_in_rate_increase = (($move_in_past_1_months - $move_in_present_month)/($move_in_past_1_months)) * 100;
+
+            $nc_units_enrolled = DB::table('contracts')
+                    ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+                    ->where('project', 'the_courtyards')
+                    ->whereYear('enrollment_date', Carbon::now()->year)
+                    ->orderBy('enrollment_date', 'desc')
+                    ->get();
+
+            $cy_units_enrolled = DB::table('contracts')
+                    ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+                    ->where('project', 'north_cambridge')
+                    ->whereYear('enrollment_date', Carbon::now()->year)
+                    ->orderBy('enrollment_date', 'desc')
+                    ->get();
+
+            $about_to_move_out = DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->orderBy('move_in_date', 'desc')
+                ->where('trans_status', 'active')
+                ->whereBetween('move_out_date', [Carbon::now(), Carbon::now()->addDays(7)])
+                ->get(); 
 
 
                 return view('leasing-manager-dashboard', compact('move_in', 'move_out', 'rooms', 'residents', 'owners',
@@ -431,7 +492,8 @@ Route::get('/dashboard', function(){
                     'nc_rooms','cy_rooms',
                     'occupancy_nc','occupancy_cy',
                     'chart', 'line', 'line2','line3','collection_rate_increase','move_in_rate_increase','move_out_rate_increase',
-                    'reserved_rooms'
+                    'reserved_rooms',
+                    'nc_units_enrolled','cy_units_enrolled','about_to_move_out'
                 ));
     }   
 

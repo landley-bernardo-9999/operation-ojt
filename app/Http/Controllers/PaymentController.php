@@ -11,6 +11,7 @@ use Hash;
 use DB;
 use App\Guardian;
 use App\User;
+use Illuminate\Support\Facades\Redirect;
 
 class PaymentController extends Controller
 {
@@ -71,7 +72,17 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $payment = new Payment();
+
+        $payment->created_at = $request->billing_date;
+        $payment->payment_transaction_id = $request->trans_id;
+        $payment->desc = $request->desc;
+        $payment->amt = $request->amt;
+        $payment->updated_at = null;
+        $payment->payment_status = 'unpaid';
+        $payment->save();
+
+        return Redirect::back()->with('success', 'Resident has been billed!');
     }
 
     /**
@@ -99,9 +110,11 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Payment $payment)
+    public function edit($payment_id)
     {
-        //
+        $payment = Payment::findOrFail($payment_id);
+
+        return view('treasury-resident',compact('payment'));
     }
 
     /**
@@ -122,6 +135,40 @@ class PaymentController extends Controller
             $remittance->save();
     
             return redirect('/payments/'.$payment_id)->with('success', 'Remittance has been updated successfully!');
+        }
+        elseif(auth()->user()->privilege === 'treasury'){
+
+            $payment = Payment::findOrFail($payment_id);
+            $payment->payment_status = 'paid';
+            $payment->note = $request->note;
+            $payment->or_number = $request->or_number;
+            $payment->updated_at = $request->payment_date;
+            $payment->form_of_payment = $request->form_of_payment;
+
+            if($request->form_of_payment === 'cash'){
+                $payment->amt_paid = $request->cash_value;
+               
+                $payment->save();
+
+                return Redirect::back()->with('success', 'Resident bill has been settled!');
+            }
+            elseif($request->form_of_payment === 'bank'){
+                $payment->amt_paid = $request->bank_value;
+                $payment->bank_name = $request->bank_name_value;
+                $payment->save();
+
+                return Redirect::back()->with('success', 'Resident bill has been settled!');
+            }
+            elseif($request->form_of_payment === 'check'){
+                $payment->amt_paid = $request->check_value;
+                $payment->check_no = $request->check_no_value;
+                $payment->save();
+
+                return Redirect::back()->with('success', 'Resident bill has been settled!');
+            }
+            else{
+                abort(404, "Forbidden Page.");
+            }
         }
         else{
             abort(404, "Forbidden Page.");

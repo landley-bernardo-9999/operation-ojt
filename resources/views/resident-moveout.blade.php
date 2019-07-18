@@ -8,7 +8,7 @@
     <div class="row">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="" href="/transactions/{{ $transaction->trans_id }}">Back</a>
+                <a class="" href="/transactions/{{ $transaction->trans_id }}"><i class="far fa-arrow-alt-circle-left"></i>&nbspBack</a>
             </li>
         </ul>
     </div>
@@ -253,7 +253,7 @@
                 </tr> 
             </table>
             @if (auth()->user()->privilege === 'leasingOfficer')
-            <button onclick="return confirm('Are you sure you want to perform this operation? ');">MOVE OUT</button>            
+            <button onclick="return confirm('Are you sure you want to perform this operation? ');"><i class="fas fa-sign-out-alt"></i>&nbspMOVE OUT</button>            
             @endif
         @endif
         </form>
@@ -267,14 +267,14 @@
         var amt_comforter = document.getElementById('amt_comforter').value;
 
         if(!isNaN(qty_comforter) && !isNaN(amt_comforter)){
-            document.getElementById('total_comforter').value = (parseInt(qty_comforter) * parseInt(amt_comforter)).toFixed(2);
+            document.getElementById('total_comforter').value = (parseFloat(qty_comforter) * parseFloat(amt_comforter)).toFixed(2);
         }
     }
     function sum_bedlining(){
         var qty_bedlining = document.getElementById('qty_bedlining').value;
         var amt_bedlining = document.getElementById('amt_bedlining').value;
         if(!isNaN(qty_bedlining) && !isNaN(amt_bedlining)){
-            document.getElementById('total_bedlining').value = (parseInt(qty_bedlining) * parseInt(amt_bedlining)).toFixed(2);;
+            document.getElementById('total_bedlining').value = (parseFloat(qty_bedlining) * parseFloat(amt_bedlining)).toFixed(2);;
         }
     }
 
@@ -282,7 +282,7 @@
         var qty_pillow_case = document.getElementById('qty_pillow_case').value;
         var amt_pillow_case = document.getElementById('amt_pillow_case').value;
         if(!isNaN(qty_pillow_case) && !isNaN(amt_pillow_case)){
-            document.getElementById('total_pillow_case').value =  (parseInt(qty_pillow_case) * parseInt(amt_pillow_case)).toFixed(2);
+            document.getElementById('total_pillow_case').value =  (parseFloat(qty_pillow_case) * parseFloat(amt_pillow_case)).toFixed(2);
         }
     }
     
@@ -290,7 +290,7 @@
         var qty_pillow = document.getElementById('qty_pillow').value;
         var amt_pillow = document.getElementById('amt_pillow').value;
         if(!isNaN(qty_pillow) && !isNaN(amt_pillow)){
-            document.getElementById('total_pillow').value =  (parseInt(qty_pillow) * parseInt(amt_pillow)).toFixed(2);
+            document.getElementById('total_pillow').value =  (parseFloat(qty_pillow) * parseFloat(amt_pillow)).toFixed(2);
         }
     }
  
@@ -298,7 +298,7 @@
         var qty_rug = document.getElementById('qty_rug').value;
         var amt_rug = document.getElementById('amt_rug').value;
         if(!isNaN(qty_rug) && !isNaN(amt_rug)){
-            document.getElementById('total_rug').value =  (parseInt(qty_rug) * parseInt(amt_rug)).toFixed(2);
+            document.getElementById('total_rug').value =  (parseFloat(qty_rug) * parseFloat(amt_rug)).toFixed(2);
         }
     }
     
@@ -306,7 +306,7 @@
         var qty_curtain = document.getElementById('qty_curtain').value;
         var amt_curtain = document.getElementById('amt_curtain').value;
         if(!isNaN(qty_curtain) && !isNaN(amt_curtain)){
-            document.getElementById('total_curtain').value =  (parseInt(qty_curtain) * parseInt(amt_curtain)).toFixed(2);
+            document.getElementById('total_curtain').value =  (parseFloat(qty_curtain) * parseFloat(amt_curtain)).toFixed(2);
         }
     }
     
@@ -314,7 +314,7 @@
         var qty_towel = document.getElementById('qty_towel').value;
         var amt_towel = document.getElementById('amt_towel').value;
         if(!isNaN(qty_towel) && !isNaN(amt_towel)){
-            document.getElementById('total_towel').value =  (parseInt(qty_towel) * parseInt(amt_towel)).toFixed(2);
+            document.getElementById('total_towel').value =  (parseFloat(qty_towel) * parseFloat(amt_towel)).toFixed(2);
         }
     }
 
@@ -322,7 +322,7 @@
         var qty = document.getElementById('qty').value;
         var amt = document.getElementById('amt').value;
         if(!isNaN(qty) && !isNaN(amt)){
-            document.getElementById('total_amt').value =  (parseInt(qty) * parseInt(amt)).toFixed(2);
+            document.getElementById('total_amt').value =  (parseFloat(qty) * parseFloat(amt)).toFixed(2);
         }
     }
 
@@ -424,18 +424,18 @@
             amt_gc = 1;
         }
         else{
-            document.getElementById('total_gc').value = parseInt(amt_gc).toFixed(2);
+            document.getElementById('total_gc').value = parseFloat(amt_gc).toFixed(2);
             document.getElementById('move_out_charges_grand_total').innerHTML = 
             (
-                parseInt(qty_comforter) * parseInt(amt_comforter)+
-                parseInt(qty_bedlining) * parseInt(amt_bedlining)+
-                parseInt(qty_pillow_case) * parseInt(amt_pillow_case)+
-                parseInt(qty_pillow) * parseInt(amt_pillow) +
-                parseInt(qty_rug) * parseInt(amt_rug) +
-                parseInt(qty_curtain) * parseInt(amt_curtain) +
-                parseInt(qty_towel) * parseInt(amt_towel) +
-                parseInt(qty) * parseInt(amt) +
-                parseInt(amt_gc)
+                parseFloat(qty_comforter) * parseFloat(amt_comforter)+
+                parseFloat(qty_bedlining) * parseFloat(amt_bedlining)+
+                parseFloat(qty_pillow_case) * parseFloat(amt_pillow_case)+
+                parseFloat(qty_pillow) * parseFloat(amt_pillow) +
+                parseFloat(qty_rug) * parseFloat(amt_rug) +
+                parseFloat(qty_curtain) * parseFloat(amt_curtain) +
+                parseFloat(qty_towel) * parseFloat(amt_towel) +
+                parseFloat(qty) * parseFloat(amt) +
+                parseFloat(amt_gc)
             ).toFixed(2);
         }
     }

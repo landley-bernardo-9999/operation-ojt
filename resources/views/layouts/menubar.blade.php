@@ -64,7 +64,7 @@
 
                     @if( auth()->user()->privilege === 'treasury' )
                     
-                    <li><a href="/owners" oncontextmenu="return false"><i class="fas fa-search"></i>&nbspSearch</a></li>
+                    <li><a href="/residents" oncontextmenu="return false"><i class="fas fa-users"></i>&nbspResidents</a></li>
                     @endif
                 </ul>
                     <li class="dropdown">

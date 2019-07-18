@@ -1,7 +1,5 @@
 @extends('layouts.app')
-@if(auth()->user()->privilege === 'owner')
-    @section('title',  'Profile')
-@elseif(auth()->user()->privilege === 'resident')
+@if(auth()->user()->privilege === 'owner' || auth()->user()->privilege === 'resident')
     @section('title',  'Profile')
 @else
     @section('title',  $owner->owner_first_name." ".$owner->owner_last_name)

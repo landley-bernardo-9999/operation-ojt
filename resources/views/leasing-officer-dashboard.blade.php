@@ -75,11 +75,11 @@
                 </tr>
                 <tr>
                     <th>TOTAL</th>
-                    <th>{{ $occupied_rooms_harvard + $occupied_rooms_princeton + $occupied_rooms_wharton + $occupied_rooms_colorado + $occupied_rooms_manors + $occupied_rooms_loft + $occupied_rooms_colorado + $occupied_rooms_arkansas }}</th>
-                    <th>{{ $vacant_rooms_harvard + $vacant_rooms_princeton + $vacant_rooms_wharton + $vacant_rooms_colorado + $vacant_rooms_manors + $vacant_rooms_loft + $vacant_rooms_colorado + $vacant_rooms_arkansas }}</th>
-                    <th>{{ $reserved_rooms_harvard + $reserved_rooms_princeton + $reserved_rooms_wharton + $reserved_rooms_colorado + $reserved_rooms_manors + $reserved_rooms_loft + $reserved_rooms_colorado + $reserved_rooms_arkansas }}</th>
-                    <th>{{ $rectification_rooms_harvard + $rectification_rooms_princeton + $rectification_rooms_wharton + $rectification_rooms_colorado + $rectification_rooms_manors + $rectification_rooms_loft + $rectification_rooms_colorado + $rectification_rooms_arkansas }}</th>
-                    <th></th>
+                    <th>{{ $occupied_rooms_harvard + $occupied_rooms_princeton + $occupied_rooms_wharton + $occupied_rooms_colorado + $occupied_rooms_manors + $occupied_rooms_loft + $occupied_rooms_arkansas }}</th>
+                    <th>{{ $vacant_rooms_harvard + $vacant_rooms_princeton + $vacant_rooms_wharton + $vacant_rooms_colorado + $vacant_rooms_manors + $vacant_rooms_loft + $vacant_rooms_arkansas }}</th>
+                    <th>{{ $reserved_rooms_harvard + $reserved_rooms_princeton + $reserved_rooms_wharton + $reserved_rooms_colorado + $reserved_rooms_manors + $reserved_rooms_loft + $reserved_rooms_arkansas }}</th>
+                    <th>{{ $rectification_rooms_harvard + $rectification_rooms_princeton + $rectification_rooms_wharton + $rectification_rooms_colorado + $rectification_rooms_manors + $rectification_rooms_loft +  $rectification_rooms_arkansas }}</th>
+                    <th>{{ $rooms }}</th>
                 </tr>
             </table>
         </div>
@@ -143,26 +143,28 @@
     </div>
 
     <div class="row">
+        <div class="col-md-12">
             <h3>Occupancy Rate</h3>
-        <div class="col-md-6 text-center">
-            <div class="panel">
-            <div class="panel-header">
-                <h3>North Cambridge</h3>
+            <div class="col-md-6 text-center">
+                <div class="panel">
+                <div class="panel-header">
+                    <h3>North Cambridge</h3>
+                </div>
+                <div class="panel-body">
+                    <h1>{{ number_format($occupancy_nc,2) }}%</h1>
+                </div>
             </div>
-            <div class="panel-body">
-                <h1>{{ number_format($occupancy_nc,2) }}%</h1>
             </div>
-        </div>
-        </div>
-        <div class="col-md-6 text-center">
-            <div class="panel">
-            <div class="panel-header">
-                <h3>The Courtyards</h3>
+            <div class="col-md-6 text-center">
+                <div class="panel">
+                <div class="panel-header">
+                    <h3>The Courtyards</h3>
+                </div>
+                <div class="panel-body">
+                    <h1>{{ number_format($occupancy_cy, 2) }}%</h1>
+                </div>
             </div>
-            <div class="panel-body">
-                <h1>{{ number_format($occupancy_cy, 2) }}%</h1>
             </div>
-        </div>
         </div>
     </div>
 
@@ -212,6 +214,111 @@
                 @endforeach
             </table>
         </div>
+    </div>
+
+
+    <h3>Least Occupied Units/Building</h3>
+    <div class="row">
+        <div class="col-md-3">
+            <h4>Harvard</h4>
+            <table class="table">
+                <?php $row_no = 1; ?>
+                @foreach ($harvard_least_occupied_rooms as $row)
+                <tr>
+                    <th>{{ $row_no++ }}</th>
+                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->room_no}} </a></td>
+                    <td>{{Carbon\Carbon::parse(  $row->updated_at )->formatLocalized('%b %d %Y')}}</td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
+        
+         <div class="col-md-3">
+            <h4>Princeton</h4>
+            <table class="table">
+                 <?php $row_no = 1; ?>
+                @foreach ($princeton_least_occupied_rooms as $row)
+                <tr>
+                    <th>{{ $row_no++ }}</th>
+                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->room_no}} </a></td>
+                    <td>{{Carbon\Carbon::parse(  $row->updated_at )->formatLocalized('%b %d %Y')}}</td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
+
+         <div class="col-md-3">
+            <h4>Wharton</h4>
+            <table class="table">
+                 <?php $row_no = 1; ?>
+                @foreach ($wharton_least_occupied_rooms as $row)
+                <tr>
+                    <th>{{ $row_no++ }}</th>
+                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->room_no}} </a></td>
+                    <td>{{Carbon\Carbon::parse(  $row->updated_at )->formatLocalized('%b %d %Y')}}</td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <h4>Courtyards</h4>
+            <table class="table">
+                 <?php $row_no = 1; ?>
+                  @foreach ($cy_least_occupied_rooms as $row)
+                <tr>
+                    <th>{{ $row_no++ }}</th>
+                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->room_no}} </a></td>
+                    <td>{{Carbon\Carbon::parse(  $row->updated_at )->formatLocalized('%b %d %Y')}}</td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+
+    <h3>Newly Enrolled Units</h3>
+    <div class="row">
+        <div class="col-md-6">
+                <h4>North Cambridge</h4>
+            <table class="table">
+                 @if($nc_units_enrolled->count() > 0)
+                <p>{{ $nc_units_enrolled->count() }} newly enrolled units in North Cambridge.</p>
+                <?php $row_no = 1; ?>
+                @foreach ($nc_units_enrolled as $row)
+                <tr>
+                    <th>{{ $row_no++ }}</th>
+                    <td>{{ $row->building }}</td>
+                    <td>{{ $row->room_no}}</td>
+                    <td>{{Carbon\Carbon::parse(  $row->enrollment_date )->formatLocalized('%b %d %Y')}}</td>
+                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">MORE INFO</td>
+                </tr>
+                @endforeach
+                @else
+                <p class="text-danger">No newly enrolled units in North Cambridge..</p>
+              @endif
+            </table>
+        </div> 
+
+        <div class="col-md-6">
+                <h4>Courtyards</h4>
+            <table class="table">
+                    @if($cy_units_enrolled->count() > 0)
+                    <p>{{ $cy_units_enrolled->count() }} newly enrolled units in Courtyards.</p>
+                <?php $row_no = 1; ?>
+                @foreach ($cy_units_enrolled as $row)
+                <tr>
+                    <th>{{ $row_no++ }}</th>
+                    <td>{{ $row->building }}</td>
+                    <td>{{ $row->room_no}}</td>
+                    <td>{{Carbon\Carbon::parse(  $row->enrollment_date )->formatLocalized('%b %d %Y')}}</td>
+                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">MORE INFO</td>
+                </tr>
+                @endforeach
+                @else
+                <p class="text-danger">No newly enrolled units in Courtyards.</p>
+              @endif
+            </table>
+        </div> 
     </div>
 </div>
 @endsection

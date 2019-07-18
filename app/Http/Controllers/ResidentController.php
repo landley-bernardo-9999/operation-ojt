@@ -17,7 +17,7 @@ class ResidentController extends Controller
     {
         try
         {
-            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->privilege === 'leasingManager' || auth()->user()->privilege === 'billingAndCollection'){
+            if(auth()->user()->privilege === 'leasingOfficer' || auth()->user()->privilege === 'leasingManager' || auth()->user()->privilege === 'billingAndCollection' || auth()->user()->privilege === 'treasury'){
 
                 $s = $request->query('s');
 
@@ -27,7 +27,7 @@ class ResidentController extends Controller
                 ->orWhere(DB::raw('CONCAT_WS(" ", first_name,last_name, " ")'), 'like', "%{$s}%")
                 ->orWhere('email_address', 'like', "%$s%")
                 ->orWhere('mobile_number', 'like', "%$s%")
-                ->orderBy('trans_date', 'desc')
+                ->orderBy('residents.created_at', 'desc')
                 ->get();  
 
                 return view ('residents', compact('residents'));
@@ -178,10 +178,11 @@ class ResidentController extends Controller
         
                 return view('show-resident', compact('resident', 'contract', 'repairs', 'payment', 'co_residents', 'guardian'));
             }
-            elseif(auth()->user()->privilege === 'billingAndCollection'){
+            elseif(auth()->user()->privilege === 'billingAndCollection' || auth()->user()->privilege === 'treasury'){
                 $resident = Resident::findOrFail($resident_id);
 
                 session(['billing_resident_name'=> $resident->first_name.' '.$resident->last_name]);
+                session(['treasury_resident_name'=> $resident->first_name.' '.$resident->last_name]);
 
                 $payment = DB::table('transactions')
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
@@ -197,6 +198,11 @@ class ResidentController extends Controller
                 ->where('trans_resident_id', $resident_id)
                 ->get(['building','room_no']);
 
+                $unit_selection = DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->where('trans_resident_id', $resident_id)
+                ->get(['building','room_no', 'trans_id']);
+
                 $balance = DB::table('transactions')
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
@@ -206,7 +212,7 @@ class ResidentController extends Controller
                 ->where('payment_status', 'unpaid')
                 ->sum('amt');
                 
-                return view('billing-resident', compact('payment', 'balance', 'unit'));
+                return view('billing-resident', compact('payment', 'balance', 'unit', 'unit_selection'));
             }
             else{
                 abort(404, "Forbidden Page.");

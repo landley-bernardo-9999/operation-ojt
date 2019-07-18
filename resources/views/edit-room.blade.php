@@ -127,8 +127,8 @@
                         </div>     
                 </div>
               
-                <a href="{{ URL::previous() }}" class="btn-default"></i>CANCEL</a>           
-                <button class="btn-default" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');">SAVE</button>         
+                <a href="{{ URL::previous() }}" class="btn-default"><i class="far fa-arrow-alt-circle-left"></i>&nbspCANCEL</a>           
+                <button class="btn-default" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');"><i class="far fa-save"></i>&nbspSAVE</button>         
             </form>    
         </div>
     </div> 

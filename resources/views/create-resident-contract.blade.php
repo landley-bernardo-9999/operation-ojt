@@ -83,8 +83,8 @@
             
                 <hr>
                 <div class="card-footer">
-                    <a class="btn-default" href="/residents/create">BACK</a>
-                    <button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default">SAVE</button>
+                    <a class="btn-default" href="/residents/create"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>
+                    <button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="fas fa-user-plus"></i>&nbspSAVE</button>
                 <br>
                 </div>
         </form>

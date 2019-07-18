@@ -5,14 +5,14 @@
 @if(auth()->user()->privilege === 'leasingOfficer')
     <div class="row">
         <ul class="nav navbar-nav">   
-            <li><a class="" href="{{ URL::previous() }}" oncontextmenu="return false">Back</a></li>
-            <li><a class="" href="/rooms/{{ $room->room_id }}/edit" oncontextmenu="return false">Edit</a></li>
+            <li><a class="" href="{{ URL::previous() }}" oncontextmenu="return false"><i class="far fa-arrow-alt-circle-left"></i>&nbspBack</a></li>
+            <li><a class="" href="/rooms/{{ $room->room_id }}/edit" oncontextmenu="return false"><i class="far fa-edit"></i>&nbspEdit</a></li>
             @if($room->room_status != 'vacant')
-            <li> <a title="You can't add a resident. The unit is already occupied." class="" href="#" aria-disabled="true" oncontextmenu="return false">Add Resident</a></li>
+            <li> <a title="You can't add a resident. The unit is already occupied." class="" href="#" aria-disabled="true" oncontextmenu="return false"><i class="fas fa-user-plus"></i>&nbspAdd Resident</a></li>
             @else
-            <li><a class="" href="/residents/create/" oncontextmenu="return false">Add Resident</a></li>
+            <li><a class="" href="/residents/create/" oncontextmenu="return false"><i class="fas fa-user-plus"></i>&nbspAdd Resident</a></li>
             @endif
-            <li><a class="" href="/owners/create/" oncontextmenu="return false">Add Owner</a></li>
+            <li><a class="" href="/owners/create/" oncontextmenu="return false"><i class="fas fa-user-plus"></i>&nbspAdd Owner</a></li>
             {{-- <li> 
                 <form method="POST" action="/rooms/{{ $room->room_id }}">
                     @method('delete')

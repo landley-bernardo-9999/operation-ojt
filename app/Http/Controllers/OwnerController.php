@@ -32,7 +32,7 @@ class OwnerController extends Controller
                 ->orWhere(DB::raw('CONCAT_WS(" ", owner_first_name,owner_last_name, " ")'), 'like', "%{$s}%")
                 ->orWhere('owner_email_address', 'like', "%$s%")
                 ->orWhere('owner_mobile_number', 'like', "%$s%")
-                ->orderBy('contracts.created_at', 'desc')
+                ->orderBy('owners.created_at', 'desc')
                 ->get();  
         
                 return view ('owners', compact('owners'));

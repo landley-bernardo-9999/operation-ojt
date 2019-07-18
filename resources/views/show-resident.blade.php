@@ -1,21 +1,25 @@
 @extends('layouts.app')
-@section('title',  $resident->first_name." ".$resident->last_name)
+@if(auth()->user()->privilege === 'owner' || auth()->user()->privilege === 'resident')
+    @section('title',  'Profile')
+@else
+    @section('title',  $resident->first_name." ".$resident->last_name)
+@endif
 @section('content')
 <div class="container">
         @if(auth()->user()->privilege === 'leasingOfficer')
     <div class="row">
         <ul class="nav navbar-nav">
             <li class="">
-                <a class="" href="/rooms/{{ session('sess_room_id') }}" oncontextmenu="return false">Back</a>
+                <a class="" href="/rooms/{{ session('sess_room_id') }}" oncontextmenu="return false"><i class="far fa-arrow-alt-circle-left"></i>&nbspBack</a>
             </li>
             <li class="">
-                <a class="" href="#" oncontextmenu="return false">Edit</a>
+                <a class="" href="#" oncontextmenu="return false"><i class="fas fa-user-edit"></i>&nbspEdit</a>
             </li>
             <li class="">
-                <a href="/co-tenant/create" oncontextmenu="return false">Add Co-Tenant</a>
+                <a href="/co-tenant/create" oncontextmenu="return false"><i class="fas fa-user-plus"></i>&nbspAdd Co-Tenant</a>
             </li>
             <li class="">
-                <a href="/room/add" oncontextmenu="return false">Add/Renewal/Transfer Contract</a>
+                <a href="/room/add" oncontextmenu="return false"><i class="far fa-edit"></i>&nbspAdd/Renewal/Transfer Contract</a>
             </li>
             <li class="">
                 <a href="#" oncontextmenu="return false">Add Repair</a>
@@ -225,9 +229,7 @@
                 <td>{{ $payment->payment_status }}</td>
            </tr>
            @endforeach
-          
         </table>
     </div>
-    
 </div>
 @endsection

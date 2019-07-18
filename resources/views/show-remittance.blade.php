@@ -7,8 +7,19 @@
     @method('PATCH')
     {{ csrf_field() }}
     <div class="row">
-     <p class="float-left">Date: {{Carbon\Carbon::parse(  $remittance->billing_date )->formatLocalized('%b %d %Y')}}</p>
-     <p class="float-right">Unit No: {{ $remittance->building }} {{ $remittance->room_no }}</p>
+        <table class="table">
+            <tr>
+                 <td>
+                    Date: <b>{{Carbon\Carbon::parse(  $remittance->billing_date )->formatLocalized('%b %d %Y')}}</b>
+                </td>
+            </tr>
+            <tr>
+                 <td>
+                    Unit:  <b>{{ $remittance->building }} {{ $remittance->room_no }}</b>
+                </td>
+            </tr>
+        </table>
+        
      <div class="container">
         <table class="table">
             <tr>
@@ -34,10 +45,12 @@
     </div>
 </form>
 @endforeach
-
 </div>
-@endsection
 <script>
+        window.onload = function() {
+        document.getElementById('show_row').style.display = 'none';
+    }
+ 
      function auto_compute_remittance(){    
         var mgmt_fee = document.getElementById('mgmt_fee').value;
         var condo_dues = document.getElementById('condo_dues').value;
@@ -52,3 +65,5 @@
         
      }
 </script>
+@endsection
+

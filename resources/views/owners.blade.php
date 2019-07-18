@@ -18,19 +18,23 @@
             <th>#</th>
             <th>Unit Owner</th>
             <th>Unit No</th>
+            <th>Status</th>
             <th></th>
             <?php $row_no = 1; ?>    
         </tr>   
-        @foreach ($owners as $owner)
+        @foreach ($owners as $row)
         <tr>
             <th>{{ $row_no++ }}</th>
-            <td>{{ $owner->owner_first_name }} {{ $owner->owner_last_name }}</td>
-            <td>{{ $owner->building }} {{ $owner->room_no }}</td>
+            <td>{{ $row->owner_first_name }} {{ $row->owner_last_name }}</td>
+            <td>{{ $row->building }} {{ $row->room_no }}</td>
+            <td>{{ $row->room_status }}</td>
             @if(auth()->user()->privilege === 'billingAndCollection')
-            <td><a href="/owners/{{ $owner->owner_id }}" oncontextmenu="return false">MORE INFO</a></td>
+            <td><a href="/owners/{{ $row->owner_id }}" oncontextmenu="return false">MORE INFO</a></td>
             @else
-            <td><a href="/rooms/{{ $owner->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
+            <td><a href="/rooms/{{ $row->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
             @endif
+           
+            <td></td>
         </tr>
         @endforeach
         @else

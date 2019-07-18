@@ -5,10 +5,10 @@
     <div class="row">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" href="/residents/{{ session('resident_id') }}" oncontextmenu="return false">Back</a>
+                <a class="nav-link" href="/residents/{{ session('resident_id') }}" oncontextmenu="return false"><i class="far fa-arrow-alt-circle-left"></i>&nbspBack</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/transactions/{{ $transaction->trans_id }}/edit" oncontextmenu="return false">Move Out</a>
+                <a class="nav-link" href="/transactions/{{ $transaction->trans_id }}/edit" oncontextmenu="return false"><i class="fas fa-sign-out-alt"></i>&nbspMove Out</a>
             </li>
         </ul>
     </div>
@@ -72,10 +72,12 @@
                 <td>Final  </td>
                 <td><input type="number" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_electric_reading }}"></td>
             </tr>
+            @if(auth()->user()->privilege === 'leasingOfficer')
             <tr>
-                <th><button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default">SAVE</button></th>
+                <th><button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="far fa-save"></i>&nbspSAVE</button></th>
                 <td></td>
             </tr>
+            @endif
             @else
              <tr>
                 <td>Initial</td>
