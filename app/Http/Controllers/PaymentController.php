@@ -142,6 +142,7 @@ class PaymentController extends Controller
             $payment->payment_status = 'paid';
             $payment->note = $request->note;
             $payment->or_number = $request->or_number;
+            $payment->ar_number = $request->ar_number;
             $payment->updated_at = $request->payment_date;
             $payment->form_of_payment = $request->form_of_payment;
 

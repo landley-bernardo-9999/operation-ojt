@@ -46,8 +46,7 @@ class RoomController extends Controller
     
                 $cy = DB::table('rooms')
                 ->where('project', 'the_courtyards')
-                ->orderBy('floor_number', 'asc')
-                ->orderBy('room_no', 'asc')
+                ->orderBy('building', 'asc')
                 ->get();
                 return view('rooms', compact('room', 'harvard', 'princeton', 'wharton', 'cy'));
             }

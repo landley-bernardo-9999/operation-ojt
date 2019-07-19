@@ -4,9 +4,9 @@
 <div class="container">
     <div class="row">
        @if($increase_rate < 0)
-            <h3>Collection Rate (+ {{ number_format($increase_rate,2) }} % )</h3>
+            <h3>Collection Rate ( +{{ number_format($increase_rate,2) }} % )</h3>
        @else
-            <h3>Collection Rate (- {{ number_format($increase_rate,2) }} % )</h3>
+            <h3>Collection Rate ( -{{ number_format($increase_rate,2) }} % )</h3>
        @endif
     </div>
      <div class="row">

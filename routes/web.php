@@ -118,7 +118,19 @@ Route::get('/dashboard', function(){
         return view('admin-dashboard');
     }
     if(auth()->user()->privilege === 'treasury'){
-        return view('treasury-dashboard');
+
+        $collection = DB::table('transactions')
+        ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+        ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+        ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
+        ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
+        ->select('*', 'payments.updated_at as payment_date')
+        ->where('payment_status', 'paid')
+        ->whereMonth('payments.updated_at', Carbon::now()->month)->whereYear('payments.updated_at', Carbon::now()->year)
+        ->orderBy('payments.updated_at', 'desc')
+        ->get();
+
+        return view('treasury-dashboard', compact('collection'));
     } 
     if(auth()->user()->privilege === 'billingAndCollection'){
 
@@ -181,13 +193,12 @@ Route::get('/dashboard', function(){
                                                 ]);
 
           //move out rate per month
-          $collection_rate_past_5_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(5)->month)->whereYear('updated_at', Carbon::now()->year)->count();
-          $collection_rate_past_4_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(4)->month)->whereYear('updated_at', Carbon::now()->year)->count();
-          $collection_rate_past_3_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(3)->month)->whereYear('updated_at', Carbon::now()->year)->count();
-          $collection_rate_past_2_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(2)->month)->whereYear('updated_at', Carbon::now()->year)->count();
-          $collection_rate_past_1_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(1)->month)->whereYear('updated_at', Carbon::now()->year)->count();
-          $collection_rate_present_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->count();
-
+            $collection_rate_past_5_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(5)->month)->whereYear('updated_at', Carbon::now()->year)->count();
+            $collection_rate_past_4_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(4)->month)->whereYear('updated_at', Carbon::now()->year)->count();
+            $collection_rate_past_3_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(3)->month)->whereYear('updated_at', Carbon::now()->year)->count();
+            $collection_rate_past_2_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(2)->month)->whereYear('updated_at', Carbon::now()->year)->count();
+            $collection_rate_past_1_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(1)->month)->whereYear('updated_at', Carbon::now()->year)->count();
+            $collection_rate_present_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->count();
           //line
           $line = new DashboardChart;
           $line->labels([Carbon::now()->subMonths(5)->format('M-Y'), Carbon::now()->subMonths(4)->format('M-Y'), Carbon::now()->subMonths(3)->format('M-Y'), Carbon::now()->subMonths(2)->format('M-Y'), Carbon::now()->subMonths(1)->format('M-Y'), Carbon::now()->format('M-Y')]);
@@ -433,12 +444,12 @@ Route::get('/dashboard', function(){
 
 
                         //move out rate per month
-                $collection_rate_past_5_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(5)->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
-                $collection_rate_past_4_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(4)->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
-                $collection_rate_past_3_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(3)->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
-                $collection_rate_past_2_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(2)->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
-                $collection_rate_past_1_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(1)->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
-                $collection_rate_present_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->sum('remittance_amt');
+                $collection_rate_past_5_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(5)->month)->whereYear('updated_at', Carbon::now()->year)->sum('mgmt_fee');
+                $collection_rate_past_4_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(4)->month)->whereYear('updated_at', Carbon::now()->year)->sum('mgmt_fee');
+                $collection_rate_past_3_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(3)->month)->whereYear('updated_at', Carbon::now()->year)->sum('mgmt_fee');
+                $collection_rate_past_2_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(2)->month)->whereYear('updated_at', Carbon::now()->year)->sum('mgmt_fee');
+                $collection_rate_past_1_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->subMonths(1)->month)->whereYear('updated_at', Carbon::now()->year)->sum('mgmt_fee');
+                $collection_rate_present_months = Payment::whereIn('desc', ['monthly_rent','advance_rent'])->where('payment_status', 'paid')->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->sum('mgmt_fee');
 
                 //line
                 $line3 = new DashboardChart;
