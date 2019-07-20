@@ -1,12 +1,12 @@
 @extends('layouts.app')
-@section('title',  session('billing_owner_name'))
+@section('title',  session('billing_owner_name').' '.auth()->user()->name)
 @section('content')
 <div class="container">
    <div class="row">
         <table class="table">
             <tr>
                  <td>
-                Unit Owner Name: <b>{{session('billing_owner_name')}}</b>
+                Unit Owner Name: <b>{{session('billing_owner_name')}} {{ auth()->user()->name }}</b>
                 </td>
             </tr>
             <tr>

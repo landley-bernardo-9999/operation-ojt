@@ -15,7 +15,7 @@
             </tr>
             <tr>
                  <td>
-                    Unit:  <b>{{ $remittance->building }} {{ $remittance->room_no }}</b>
+                    Unit No:  <b>{{ $remittance->building }} {{ $remittance->room_no }}</b>
                 </td>
             </tr>
         </table>

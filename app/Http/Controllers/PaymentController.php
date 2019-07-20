@@ -31,8 +31,13 @@ class PaymentController extends Controller
             ->where('owner_id', auth()->user()->user_owner_id)
             ->whereIn('desc', ['monthly_rent', 'advance_rent'])
             ->get();
+            
+            $unit = DB::table('contracts')
+            ->join('rooms', 'contracts.contract_room_id', 'rooms.room_id')
+            ->where('contract_owner_id',  auth()->user()->user_owner_id)
+            ->get(['building','room_no']);
     
-            return view('owner-remittance', compact('remittances'));
+            return view('owner-remittance', compact('remittances', 'unit'));
         } 
         elseif(auth()->user()->privilege === 'billingAndCollection'){
             $s = $request->query('s');

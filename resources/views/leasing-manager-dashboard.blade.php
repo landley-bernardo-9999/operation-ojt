@@ -256,7 +256,7 @@
        @if($collection_rate_increase > 0)
             <h3>Collection Rate ( +{{ number_format($collection_rate_increase,0) }} % )</h3>
        @else
-            <h3>Collection Rate ( -{{ number_format($collection_rate_increase,0) }} % )</h3>
+            <h3>Collection Rate ( {{ number_format($collection_rate_increase,0) }} % )</h3>
        @endif
     </div>
      <div class="row">

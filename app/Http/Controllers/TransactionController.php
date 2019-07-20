@@ -123,7 +123,7 @@ class TransactionController extends Controller
         //  ->where('room_id', session('sess_room_id'))
         //  ->update(['remarks' => 'THIS IS RESERVED. RESIDENT. FULL PAYMENT HAS NOT YET BEEN SETTLED.']);
 
-     return redirect('/residents/'.session('resident_id'))->with('success', 'Transaction has been added.');
+     return redirect('/residents/'.session('resident_id'))->with('success', 'Transaction has been added successfully!');
         }else {
             //create the resident.
          $resident = new Resident();

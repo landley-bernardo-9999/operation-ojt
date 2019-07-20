@@ -28,19 +28,19 @@ class RoomController extends Controller
 
                 $harvard = DB::table('rooms')
                 ->where('building', 'harvard')
-                ->orderBy('floor_number', 'asc')
+                ->orderBy('floor_number', 'desc')
                 ->orderBy('room_no', 'asc')
                 ->get();
 
                 $princeton = DB::table('rooms')
                 ->where('building', 'princeton')
-                ->orderBy('floor_number', 'asc')
+                ->orderBy('floor_number', 'desc')
                 ->orderBy('room_no', 'asc')
                 ->get();
 
                 $wharton = DB::table('rooms')
                 ->where('building', 'wharton')
-                ->orderBy('floor_number', 'asc')
+                ->orderBy('floor_number', 'desc')
                 ->orderBy('room_no', 'asc')
                 ->get();
     
@@ -191,6 +191,7 @@ class RoomController extends Controller
         $room->room_status = $request->room_status;
         $room->short_term_rent = $request->short_term_rent;
         $room->long_term_rent = $request->long_term_rent;
+        $room->floor_number = $request->floor_number;
         $room->transient = $request->transient;
         $room->size = $request->size;
         $room->no_of_beds = $request->no_of_beds;

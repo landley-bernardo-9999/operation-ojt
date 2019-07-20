@@ -12,7 +12,10 @@
             {{ csrf_field() }}
             
             <div class="row">
-                 <div class="float-right col-md-3">
+                <div class="col-md-3">
+                    <p>Resident Name: <b>{{session('resident_name')}} </b></p>    
+                </div>
+                 <div class="col-md-3">
                     <p>Unit No: <b>{{session('sess_room_building')}} {{session('sess_room_no')}}</b></p>    
                 </div>
 
@@ -53,8 +56,8 @@
         
                 <hr>
                 <div class="card-footer">
-                    <a class="float-left btn btn-primary" href="/residents/{{session('resident_id')}}"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>
-                    <button type="submit" class="float-right btn btn-primary"><i class="fas fa-arrow-circle-right"></i>&nbspSAVE</button>
+                    <a class="btn-default" href="/residents/{{session('resident_id')}}">BACK</a>
+                    <button type="submit" class="btn-default">SAVE</button>
                 <br>
                 </div>
         </form>

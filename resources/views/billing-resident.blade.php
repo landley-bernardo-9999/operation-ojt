@@ -48,7 +48,7 @@
                <th>Unit No</th>
                <th>Description</th>
                <th>Amount</th>
-               <th>Status</th>
+               <th>Balance</th>
            </tr>
            @foreach ($payment as $row)
            <tr>
@@ -57,7 +57,7 @@
                 <td>{{ $row->building }} {{ $row->room_no }}</td>
                 <td>{{ $row->desc }}</td>
                 <td>{{ number_format($row->amt, 2) }}</td>
-                <td>{{ $row->payment_status }}</td>
+                <td>{{ number_format(($row->amt - $row->amt_paid), 2) }}</td>
                 <td><a href="/payments/{{ $row->payment_id }}/edit">OPEN</a></td>
            </tr>
            @endforeach

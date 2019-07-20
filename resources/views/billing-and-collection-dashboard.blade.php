@@ -35,7 +35,7 @@
                 @foreach ($harvard_delinquent_account as $row)
                 <tr>
                     <th>{{ $row_no++ }}</th>
-                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
+                    <td><a href="residents/{{ $row->resident_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
                     <td>{{ $row->room_no}} </td>
                 </tr>
                 @endforeach
@@ -60,7 +60,7 @@
                 @foreach ($princeton_delinquent_account as $row)
                 <tr>
                     <th>{{ $row_no++ }}</th>
-                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
+                    <td><a href="residents/{{ $row->resident_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
                     <td>{{ $row->room_no}} </td>
                 </tr>
                 @endforeach
@@ -84,7 +84,7 @@
                 @foreach ($wharton_delinquent_account as $row)
                 <tr>
                     <th>{{ $row_no++ }}</th>
-                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
+                    <td><a href="residents/{{ $row->resident_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
                     <td>{{ $row->room_no}} </td>
                 </tr>
                 @endforeach
@@ -109,7 +109,7 @@
                 @foreach ($cy_delinquent_account as $row)
                 <tr>
                     <th>{{ $row_no++ }}</th>
-                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
+                    <td><a href="residents/{{ $row->resident_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
                     <td>{{ $row->room_no}} </td>
               
                 </tr>

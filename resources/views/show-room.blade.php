@@ -12,7 +12,7 @@
             @else
             <li><a class="" href="/residents/create/" oncontextmenu="return false"><i class="fas fa-user-plus"></i>&nbspAdd Resident</a></li>
             @endif
-            <li><a class="" href="/owners/create/" oncontextmenu="return false"><i class="fas fa-user-plus"></i>&nbspAdd Owner</a></li>
+            <li><a class="" href="/owners/create/" oncontextmenu="return false"><i class="fas fa-user-tie"></i>&nbspAdd Owner</a></li>
             {{-- <li> 
                 <form method="POST" action="/rooms/{{ $room->room_id }}">
                     @method('delete')
@@ -128,7 +128,12 @@
                 <td>{{Carbon\Carbon::parse(  $resident->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $resident->move_out_date )->formatLocalized('%b %d %Y')}} </td>
                 <td>{{ $resident->term }}</td>
                 <td>   
-                    <a href="/residents/{{$resident->resident_id}}" oncontextmenu="return false">MORE INFO</a>
+                     @if(auth()->user()->privilege === 'leasingOfficer')
+                        <a href="/residents/{{$resident->resident_id}}" oncontextmenu="return false">MORE INFO</a>
+                    @else
+                        <a href="/payments/{{$resident->resident_id}}" oncontextmenu="return false">MORE INFO</a>
+                    @endif
+                    
                 </td>
             </tr>
             @endforeach

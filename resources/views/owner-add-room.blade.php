@@ -28,7 +28,7 @@
                 <hr>
             <div class="card-footer">
                 <a class="btn-default" href="/owners/{{session('owner_id')}}"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>
-                <button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="fas fa-arrow-circle-right"></i>&nbspSAVE</button>
+                <button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="fas fa-check-circle"></i>&nbspSAVE</button>
             <br>
         </div>
         </form>
