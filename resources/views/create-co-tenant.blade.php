@@ -56,8 +56,8 @@
         
                 <hr>
                 <div class="card-footer">
-                    <a class="btn-default" href="/residents/{{session('resident_id')}}">BACK</a>
-                    <button type="submit" class="btn-default">SAVE</button>
+                    <a class="btn-default" href="/residents/{{session('resident_id')}}"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>
+                    <button type="submit" class="btn-default"><i class="fas fa-check-circle"></i>&nbspSUBMIT</button>
                 <br>
                 </div>
         </form>

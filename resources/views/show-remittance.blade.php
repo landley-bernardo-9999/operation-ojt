@@ -1,5 +1,9 @@
 @extends('layouts.app')
+@if(auth()->user()->privilege === 'leasingOfficer')
 @section('title',  session('billing_owner_name'))
+@else
+@section('title',  'MORE INFO')
+@endif
 @section('content')
 <div class="container">
 @foreach ($remittance as $remittance)

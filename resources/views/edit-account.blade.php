@@ -77,7 +77,7 @@
             <div class="modal-body">
                     <input type="hidden" name="user_id" value="{{ $user->user_id }}" required>  
                   <div class="form-group row">
-                        <label for="" class="col-md-5 text-md-right">Enter your new password:</label>
+                        <label for="" class="col-md-5">Enter your new password:</label>
 
                     <div class="col-md-6">
                             <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
@@ -85,7 +85,7 @@
                 </div>      
 
                 <div class="form-group row">
-                    <label for="password-confirm" class="col-md-5 text-md-right">Confirm your new password:</label>
+                    <label for="password-confirm" class="col-md-5">Confirm your new password:</label>
                         <div class="col-md-6">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                         </div>

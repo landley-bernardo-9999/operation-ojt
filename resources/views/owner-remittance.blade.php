@@ -1,8 +1,13 @@
 @extends('layouts.app')
+@if(auth()->user()->privilege === 'leasingOfficer')
 @section('title',  session('billing_owner_name').' '.auth()->user()->name)
+@else
+@section('title',  'Remittances')
+@endif
 @section('content')
 <div class="container">
-   <div class="row">
+     @if(auth()->user()->privilege === 'leasingOfficer')
+    <div class="row">
         <table class="table">
             <tr>
                  <td>
@@ -11,14 +16,15 @@
             </tr>
             <tr>
                  <td>
-                    Unit:   
+                    Unit No:   
                     @foreach ($unit as $unit)
                         <b>{{ $unit->building }} {{ $unit->room_no }}, </b>
                     @endforeach
                 </td>
             </tr>
         </table>
-        </div>
+    </div>
+    @endif
     <div class="row">
        <div class="col-md-12">
             <table class="table">

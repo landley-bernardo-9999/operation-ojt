@@ -98,19 +98,11 @@
     <div class="row">
         <table class="table">
             <tr>
-                @if(auth()->user()->privilege === 'leasingOfficer')
-                    <h3>Residents</h3>
-                @else
-                    <h3>Contracts</h3>
-                @endif
+                <h3>Contracts</h3>
             </tr>
             <?php $row_no = 1; ?>
             @if(!$resident->count() > 0)
-            @if(auth()->user()->privilege === 'leasingOfficer')
-                <p class="text-danger">No Residents Found.</p>
-            @else
-                <p class="text-danger">No Contracts Found.</p>
-            @endif
+            <p class="text-danger">No Contracts Found.</p>
             @else
              <tr>
                 <th>#</th>
@@ -123,7 +115,13 @@
             @foreach ($resident as $resident)
             <tr>
                 <th>{{ $row_no++ }}</th>
-                <td>{{ $resident->first_name }} {{ $resident->middle_name }} {{ $resident->last_name }}</td>
+                <td>
+                    @if(auth()->user()->privilege === 'leasingOfficer')
+                        {{ $resident->first_name }} {{ $resident->middle_name }} {{ $resident->last_name }}
+                    @else
+                        Resident {{ $row_no++ -1 }}
+                    @endif
+                </td>
                 <td>{{ $resident->trans_status }}</td>
                 <td>{{Carbon\Carbon::parse(  $resident->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $resident->move_out_date )->formatLocalized('%b %d %Y')}} </td>
                 <td>{{ $resident->term }}</td>
@@ -131,9 +129,8 @@
                      @if(auth()->user()->privilege === 'leasingOfficer')
                         <a href="/residents/{{$resident->resident_id}}" oncontextmenu="return false">MORE INFO</a>
                     @else
-                        <a href="/payments/{{$resident->resident_id}}" oncontextmenu="return false">MORE INFO</a>
+                        {{-- <a href="/payments/{{$resident->resident_id}}" oncontextmenu="return false">MORE INFO</a> --}}
                     @endif
-                    
                 </td>
             </tr>
             @endforeach

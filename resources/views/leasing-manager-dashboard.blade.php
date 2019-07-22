@@ -208,29 +208,33 @@
         {!! $chart->container() !!}
     </div>
     <br>
-    <div class="row">
-        <h4>Per Site</h4>
-        <div class="col-md-6 text-center">
-            <div class="panel">
-            <div class="panel-header">
-                <h3>North Cambridge</h3>
+    
+     <div class="row">
+        <div class="col-md-12">
+            <h3>Occupancy Rate</h3>
+            <div class="col-md-6 text-center">
+                <div class="panel">
+                <div class="panel-header">
+                    <h3>North Cambridge</h3>
+                </div>
+                <div class="panel-body">
+                    <h1>{{ number_format($occupancy_nc,2) }}%</h1>
+                </div>
             </div>
-            <div class="panel-body">
-                <h1>{{ number_format($occupancy_nc,2) }}%</h1>
             </div>
-        </div>
-        </div>
-        <div class="col-md-6 text-center">
-            <div class="panel">
-            <div class="panel-header">
-                <h3>Courtyards</h3>
+            <div class="col-md-6 text-center">
+                <div class="panel">
+                <div class="panel-header">
+                    <h3>The Courtyards</h3>
+                </div>
+                <div class="panel-body">
+                    <h1>{{ number_format($occupancy_cy, 2) }}%</h1>
+                </div>
             </div>
-            <div class="panel-body">
-                <h1>{{ number_format($occupancy_cy, 2) }}%</h1>
             </div>
-        </div>
         </div>
     </div>
+
    <div class="row">
        @if($move_in_rate_increase < 0)
             <h3>Move In Rate ( +{{ number_format($move_in_rate_increase,0) }} % )</h3>

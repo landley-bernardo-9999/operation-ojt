@@ -331,8 +331,8 @@ Route::get('/dashboard', function(){
                         ->orderBy('enrollment_date', 'desc')
                         ->get();
 
-        $occupancy_nc =  DB::table('rooms')->where('project', 'north_cambridge')->where('room_status', 'occupied')->count() / DB::table('rooms')->where('project', 'north_cambridge')->count() * 100;
-        $occupancy_cy =  DB::table('rooms')->where('room_status', 'occupied')->where('project', 'the_courtyards')->count() / DB::table('rooms')->where('project', 'the_courtyards')->count() * 100;
+        $occupancy_nc =  Room::where('project', 'north_cambridge')->where('room_status', 'occupied')->count() /Room::where('project', 'north_cambridge')->count() * 100;
+        $occupancy_cy =  Room::where('project', 'the_courtyards')->where('room_status', 'occupied')->count() /Room::where('project', 'the_courtyards')->count() * 100;
 
         return view('leasing-officer-dashboard', compact('move_in', 'move_out', 'rooms', 'residents', 'owners',
             'occupied_rooms_harvard', 'vacant_rooms_harvard', 'reserved_rooms_harvard', 'rectification_rooms_harvard',
@@ -398,15 +398,15 @@ Route::get('/dashboard', function(){
 
                 $reserved_rooms = Room::where('room_status', 'reserved')->get();
 
-
+                //occupancy rate per site
                 $occupancy_nc =  Room::where('project', 'north_cambridge')->where('room_status', 'occupied')->count() / Room::where('project', 'north_cambridge')->count() * 100;
-                $occupancy_cy =  Room::where('room_status', 'occupied')->where('project', 'the_courtyards')->count() / Room::where('project', 'the_courtyards')->count() * 100;
+                $occupancy_cy =  Room::where('project', 'the_courtyards')->where('room_status', 'occupied')->count() / Room::where('project', 'the_courtyards')->count() * 100;
         
                 //occupancy rate per building
                 $occupancy_harvard = (Room::where('building', 'harvard')->where('room_status', 'occupied')->count()/Room::where('building', 'harvard')->count()) * 100;
                 $occupancy_princeton =(Room::where('building', 'princeton')->where('room_status', 'occupied')->count()/Room::where('building', 'princeton')->count()) * 100;
                 $occupancy_wharton = (Room::where('building', 'wharton')->where('room_status', 'occupied')->count()/Room::where('building', 'wharton')->count()) * 100;
-                $occupancy_cy = (Room::where('project', 'the_courtyards')->where('room_status', 'occupied')->count()/Room::where('building', 'wharton')->count()) * 100;
+                $occupancy_cy =  Room::where('project', 'the_courtyards')->where('room_status', 'occupied')->count() / Room::where('project', 'the_courtyards')->count() * 100;
                 
                 //bar graph
                 $chart = new DashboardChart;
