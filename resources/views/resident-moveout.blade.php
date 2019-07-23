@@ -17,26 +17,26 @@
             <h3>Moveout Form</h3>
         </tr>
         <table class="table">
-             @foreach ($resident as $resident)
+             @foreach ($resident as $row)
         <tr>
             <td>Resident Name:</td>
-            <td>{{ $resident->first_name }} {{ $resident->last_name }}</td>
+            <th>{{ $row->first_name }} {{ $row->last_name }}</th>
             <td>Unit No:</td>
-            <td>{{ $resident->building }} {{ $resident->room_no }}</td>
+            <th>{{ $row->building }} {{ $row->room_no }}</th>
         </tr>
             @endforeach
         <tr>
             <td>Contract Period:</td>
-            <td>{{Carbon\Carbon::parse(  $transaction->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $transaction->move_out_date )->formatLocalized('%b %d %Y')}} ({{ $transaction->term }})</td>
+            <th>{{Carbon\Carbon::parse(  $transaction->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $transaction->move_out_date )->formatLocalized('%b %d %Y')}} ({{ $transaction->term }})</th>
             <td>Contract Status:</td>
-            <td>{{ $transaction->trans_status }}</td>
+            <th>{{ $transaction->trans_status }}</th>
         </tr>
         <tr>
             @if($transaction->trans_status == 'inactive')
             <td>Move Out Date:</td>
-            <td>{{Carbon\Carbon::parse(  $transaction->actual_move_out_date )->formatLocalized('%b %d %Y')}}</td>
+            <th>{{Carbon\Carbon::parse(  $transaction->actual_move_out_date )->formatLocalized('%b %d %Y')}}</th>
             <td>Reason:</td>
-            <td>{{ $transaction->move_out_reason }}</td>    
+            <th>{{ $transaction->move_out_reason }}</th>    
             @else
             <td>Move Out Date:</td>
             <td> <input type="date" class="form-control" style="width:40%" name="actual_move_out_date" value="{{$transaction->move_out_date}}" required></<td>
@@ -55,12 +55,8 @@
             </td>    
             @endif
         </tr>
-       
         </table>
 
-        <form method="POST" action="/transactions/{{ $transaction->trans_id }}">
-            @method('PATCH')
-        {{ csrf_field() }}
         <table class="table">
             <tr>
                 <h3>Utility Readings</h3>
@@ -74,26 +70,32 @@
             
             <tr>
                 <td>Initial:  </td>
-                <td>{{ $transaction->initial_water_reading }}</td>
+                <th>{{ $transaction->initial_water_reading }}</th>
                 <td>Initial: </td>
-                <td>{{ $transaction->initial_electric_reading }}</td>
+                <th>{{ $transaction->initial_electric_reading }}</th>
             </tr>
             <tr>
+            @if($transaction->trans_status == 'inactive')
                 <td>Final: </td>
-                <td> {{ $transaction->final_water_reading }}</td>
-                <td>Final:  </td>
-                <td>{{ $transaction->final_water_reading }}</td>
-            </tr>
+                <th>{{ $transaction->final_water_reading }}</th>
+                <td>Final: </td>
+                <th>{{ $transaction->final_electric_reading }}</th>
+            @else
+                <td>Final </td>
+                <td><input type="text" class="form-control" style="width:30%" name="final_water_reading" value="{{ $transaction->final_water_reading }}" required></td>
+                <td>Final  </td>
+                <td><input type="text" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_electric_reading }}" required></td>
+            @endif
+        </tr>
         </table>
-        </form>
     
         <table class="table">
            <tr>
                <h3>Security Deposit</h3>
            </tr>
-           <?php $row_no_payments_move_in = 1; ?>
+           <?php $row_no = 1; ?>
            @if(!$payment_move_ins->count() > 0)
-           <p class="text-danger">No Security Deposit.</p>
+           <p class="text-danger">No security deposit.</p>
            @else
            <tr>
                 <th>#</th>
@@ -102,13 +104,13 @@
                 <th>Amount</th>
                 <th>Status</th>
             </tr>
-            @foreach ($payment_move_ins as $payment)
+            @foreach ($payment_move_ins as $row)
             <tr>
-                 <th>{{ $row_no_payments_move_in++ }}</th>
-                 <td> {{Carbon\Carbon::parse(  $payment->trans_date )->formatLocalized('%b %d %Y')}}</td>
-                 <td>{{ $payment->desc }}</td>
-                 <td>{{ number_format($payment->amt, 2) }}</td>
-                 <td>{{ $payment->payment_status }}</td>
+                 <th>{{ $row_no++ }}</th>
+                 <td> {{Carbon\Carbon::parse(  $row->trans_date )->formatLocalized('%b %d %Y')}}</td>
+                 <td>{{ $row->desc }}</td>
+                 <td>{{ number_format($row->amt, 2) }}</td>
+                 <td>{{ $row->payment_status }}</td>
             </tr>
             @endforeach
             <tr>
@@ -119,8 +121,40 @@
                  <td></td>
              </tr>
            @endif
-          
         </table>
+        <table class="table">
+            <tr>
+                <h3>Unpaid Charges</h3>
+            </tr>
+            <?php $row_no = 1; ?>
+            @if(!$unpaid_charges->count() > 0)
+            <p class="text-danger">No unpaid charges.</p>
+            @else
+            <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+                
+            </tr>
+            @foreach ($unpaid_charges as $row)
+            <tr>
+                 <th>{{ $row_no++ }}</th>
+                 <td> {{Carbon\Carbon::parse(  $row->trans_date )->formatLocalized('%b %d %Y')}}</td>
+                 <td>{{ $row->desc }}</td>
+                 <td>{{ number_format($row->amt, 2) }}</td>
+                 
+            </tr>
+            @endforeach
+            <tr>
+                <td><b>TOTAL</b></td>
+                <td></td>
+                <td></td>
+                <td><b>{{ number_format($unpaid_charges->sum('amt'), 2) }}</b></td>
+                <td></td>
+            </tr>
+           @endif
+         </table>
 
 
         @if($transaction->trans_status == 'inactive')
@@ -128,9 +162,9 @@
            <tr>
                <h3>Move Out Charges</h3>
            </tr>
-           <?php $row_no_payments_move_out = 1; ?>
+           <?php $row_no = 1; ?>
            @if(!$payment_move_outs->count() > 0)
-           <p class="text-danger">No Moveout Charges.</p>
+           <p class="text-danger">No moveout charges.</p>
            @else
            <tr>
                <th>#</th>
@@ -139,13 +173,13 @@
                <th>Amount</th>
                <th>Status</th>
            </tr>
-           @foreach ($payment_move_outs as $payment)
+           @foreach ($payment_move_outs as $row)
            <tr>
-                <th>{{ $row_no_payments_move_out++ }}.</th>
-                <td> {{Carbon\Carbon::parse(  $payment->trans_date )->formatLocalized('%b %d %Y')}}</td>
-                <td>{{ $payment->desc }}</td>
-                <td>{{ number_format($payment->amt, 2) }}</td>
-                <td>{{ $payment->payment_status }}</td>
+                <th>{{ $row_no++ }}</th>
+                <td> {{Carbon\Carbon::parse(  $row->trans_date )->formatLocalized('%b %d %Y')}}</td>
+                <td>{{ $row->desc }}</td>
+                <td>{{ number_format($row->amt, 2) }}</td>
+                <td>{{ $row->payment_status }}</td>
            </tr>
            @endforeach
            <tr>

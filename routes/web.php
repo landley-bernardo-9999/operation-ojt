@@ -235,17 +235,9 @@ Route::get('/dashboard', function(){
         ->orderBy('actual_move_out_date', 'desc')
         ->where('trans_status', 'inactive')
         ->take(10)
-        ->get();  
-
-        $residents = DB::table('transactions')
-        ->leftJoin('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-        ->where('trans_status', 'active')
-        ->count();      
+        ->get();    
         
         $rooms = DB::table('rooms')->count();
-        $nc_rooms = DB::table('rooms')->where('project', 'north_cambridge')->count();
-        $cy_rooms = DB::table('rooms')->where('project', 'the_courtyards')->count();
-        $owners = DB::table('owners')->count();
 
         $occupied_rooms_harvard = Room::where('building', 'harvard')->where('room_status', 'occupied')->count();
         $vacant_rooms_harvard = Room::where('building', 'harvard')->where('room_status', 'vacant')->count();
@@ -334,7 +326,7 @@ Route::get('/dashboard', function(){
         $occupancy_nc =  Room::where('project', 'north_cambridge')->where('room_status', 'occupied')->count() /Room::where('project', 'north_cambridge')->count() * 100;
         $occupancy_cy =  Room::where('project', 'the_courtyards')->where('room_status', 'occupied')->count() /Room::where('project', 'the_courtyards')->count() * 100;
 
-        return view('leasing-officer-dashboard', compact('move_in', 'move_out', 'rooms', 'residents', 'owners',
+        return view('leasing-officer-dashboard', compact('move_in', 'move_out','rooms',
             'occupied_rooms_harvard', 'vacant_rooms_harvard', 'reserved_rooms_harvard', 'rectification_rooms_harvard',
             'occupied_rooms_princeton', 'vacant_rooms_princeton', 'reserved_rooms_princeton', 'rectification_rooms_princeton',
             'occupied_rooms_wharton', 'vacant_rooms_wharton', 'reserved_rooms_wharton', 'rectification_rooms_wharton',

@@ -24,44 +24,45 @@
         <hr>
         <div class="row"  style="visibility:hidden" id="table" >
             <div class="col-md-12">
-                <table class="table">
+                <table class="table table-responsive table-bordered">
                     <tr>
                         <th>Particulars</th>
+                        <th>Amount</th>
                         <th>OR #</th>
                         <th>AR #</th>
                         
                         <th style="visibility:hidden" id="bank_name_label">Bank Name</th>
-                        <th style="visibility:hidden" id="check_no_label">Check No</th>
-                        <th style="visibility:hidden" id="cash_label">Cash</th>
                         <th style="visibility:hidden" id="bank_label">Thru Bank</th>
+                        <th style="visibility:hidden" id="check_no_label">Check No</th>
                         <th style="visibility:hidden" id="check_label">Thru Check</th>
+                        <th style="visibility:hidden" id="cash_label">Cash</th>
                         
                     </tr>
                     <tr>
-                        <td>{{ $payment->desc }}</td>
+                        <td><input type="text" style="width:100%" name="desc" class="form-control" value="{{ $payment->desc }}" readonly></td>
+                        <td>{{ number_format($payment->amt,2) }}</td>
                         <td><input type="text" style="width:80%" name="or_number" class="form-control"></td>
                         <td><input type="text" style="width:80%" name="ar_number" class="form-control"></td>
 
                         <td><input type="text" style="width:80%" id="bank_name_value" name="bank_name_value" class="form-control"></td>
-                        <td><input type="text" style="width:80%" id="check_no_value" name="check_no_value" class="form-control"></td>
-                        <td><input type="text" style="width:80%" id="cash_value" name="cash_value" class="form-control"></td>
                         <td><input type="text" style="width:80%" id="bank_value" name="bank_value" class="form-control"></td>
+                        <td><input type="text" style="width:80%" id="check_no_value" name="check_no_value" class="form-control"></td>
                         <td><input type="text" style="width:80%" id="check_value" name="check_value" class="form-control"></td>
-                       
+                        <td><input type="text" style="width:80%" id="cash_value" name="cash_value" class="form-control"></td>
                     </tr>
                 </table>
-
-                <div class="form-group">
-                    <label for="note">Note</label>
+                <a href="#/" onclick="add_note()">Add Note</a>
+                <div class="form-group" id="note" style="visibility:hidden">
                     <textarea name="note" rows="3" class="form-control"></textarea>
                 </div>
             </div>
         </div>
-        <button style="visibility:hidden" id="submit" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default">SUBMIT</button>
+        <button style="visibility:hidden" id="submit" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="fas fa-check-circle"></i>&nbspSUBMIT</button>
     </form> 
     @else
         <a href=""></a>
         <p>Payment Date: <b>{{Carbon\Carbon::parse(  $payment->updated_at )->formatLocalized('%b %d %Y')}}</b></p>
+        <p>Particulars: <b> {{ $payment->desc }} </b></p>
         <p>Form of Payment: <b> {{ $payment->form_of_payment }} {{ $payment->bank_name }} {{ $payment->check_no }} </b></p>
         <p>OR #: <b> {{ $payment->or_number }} </b></p>
         <p>AR #: <b> {{ $payment->ar_number }} </b></p>
@@ -71,6 +72,9 @@
     @endif
 </div>         
 <script>
+    function add_note(){
+        document.getElementById('note').style.visibility = 'visible';
+    }
     function getNewVal(item)
     {
         if( item.value === 'cash'){

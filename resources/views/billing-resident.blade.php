@@ -11,7 +11,7 @@
         <ul class="nav navbar-nav">
             <li class="">
                 <!-- Button trigger modal -->
-                <a data-toggle="modal" data-target="#exampleModal" href="#/" oncontextmenu="return false"><i class="fas fa-plus"></i>&nbspBill Resident</a>
+                <a data-toggle="modal" data-target="#exampleModal" href="#/" oncontextmenu="return false"><i class="fas fa-plus"></i>&nbspAdd billing</a>
             </li>
         </ul>
     </div>
@@ -24,7 +24,7 @@
                 </td>
                
                 <td>
-                    Unpaid Amount: <b>{{ number_format($balance,2) }}</b>
+                    Total Balance: <b>{{ number_format($total_amt - $total_amt_paid,2)  }}</b>
                 </td>
             </tr>
             <tr>
@@ -58,7 +58,17 @@
                 <td>{{ $row->desc }}</td>
                 <td>{{ number_format($row->amt, 2) }}</td>
                 <td>{{ number_format(($row->amt - $row->amt_paid), 2) }}</td>
+                @if(auth()->user()->privilege === 'treasury')
                 <td><a href="/payments/{{ $row->payment_id }}/edit">OPEN</a></td>
+                @elseif(auth()->user()->privilege === 'billingAndCollection')
+                <td>
+                    <form method="POST" action="/payments/{{ $row->payment_id }}">
+                        @method('delete')
+                        {{ csrf_field() }}
+                        <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger"><i class="fas fa-times"></i></button>
+                    </form>
+                </td>
+                @endif
            </tr>
            @endforeach
            @else
@@ -108,7 +118,7 @@
             </div>
       </div>
       <div class="modal-footer">
-         <button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="fas fa-plus"></i>&nbspSAVE</button>
+         <button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="fas fa-check-circle"></i>&nbspSUBMIT</button>
       </div>
     </form>
     </div>

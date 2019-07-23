@@ -11,13 +11,13 @@
     <div class="row">
          <ul class="nav navbar-nav">
             <li class="nav-item">
-                <a class=""href="{{ URL::previous() }}" oncontextmenu="return false">Back</a>
+                <a class=""href="{{ URL::previous() }}" oncontextmenu="return false"><i class="far fa-arrow-alt-circle-left"></i>&nbspBack</a>
             </li>
             <li class="">
-                <a class="" href="/owners/{{ $owner->owner_id }}/edit" oncontextmenu="return false">Edit</a>
+                <a class="" href="/owners/{{ $owner->owner_id }}/edit" oncontextmenu="return false"><i class="far fa-edit"></i>&nbspEdit</a>
             </li>
             <li class="">
-                <a href="/owner/room/add" oncontextmenu="return false">Add Room</a>
+                <a href="/owner/room/add" oncontextmenu="return false"><i class="fas fa-home"></i>&nbspAdd Room</a>
             </li>
             
             {{-- <li class="">

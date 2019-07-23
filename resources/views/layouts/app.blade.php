@@ -29,7 +29,7 @@
     }
     </style>
 </head>
-<body onload="auto_compute_remittance()">
+<body>
     <div id="app">
         @include('layouts.menubar')
         <div class="container">

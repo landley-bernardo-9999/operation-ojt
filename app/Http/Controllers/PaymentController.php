@@ -143,6 +143,13 @@ class PaymentController extends Controller
         }
         elseif(auth()->user()->privilege === 'treasury'){
 
+            if($request->desc === 'sec_dep_rent'){
+                DB::table('transactions')
+                ->join('payments', 'transactions.trans_id','payments.payment_transaction_id')
+                ->where('payment_id', $payment_id)
+                ->update(['trans_status' => 'active']);
+            }
+
             $payment = Payment::findOrFail($payment_id);
             $payment->payment_status = 'paid';
             $payment->note = $request->note;
@@ -153,23 +160,19 @@ class PaymentController extends Controller
 
             if($request->form_of_payment === 'cash'){
                 $payment->amt_paid = $request->cash_value;
-               
                 $payment->save();
-
                 return Redirect::back()->with('success', 'Resident bill has been settled!');
             }
             elseif($request->form_of_payment === 'bank'){
                 $payment->amt_paid = $request->bank_value;
                 $payment->bank_name = $request->bank_name_value;
                 $payment->save();
-
                 return Redirect::back()->with('success', 'Resident bill has been settled!');
             }
             elseif($request->form_of_payment === 'check'){
                 $payment->amt_paid = $request->check_value;
                 $payment->check_no = $request->check_no_value;
                 $payment->save();
-
                 return Redirect::back()->with('success', 'Resident bill has been settled!');
             }
             else{
@@ -188,8 +191,10 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payment $payment)
+    public function destroy($payment_id)
     {
-        //
+        Payment::where('payment_id', $payment_id)->delete();
+
+        return Redirect::back()->with('success', 'Bill has been deleted!');
     }
 }

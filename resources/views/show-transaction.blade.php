@@ -62,34 +62,19 @@
             @if($transaction->trans_status == 'active' || $transaction->trans_resident_id != session('resident_id'))
             <tr>
                 <td>Initial</td>
-                <td><input type="number" class="form-control" style="width:30%" name="initial_water_reading" value="{{ $transaction->initial_water_reading }}"></td>
+                <td><input type="text" class="form-control" style="width:30%" name="initial_water_reading" value="{{ $transaction->initial_water_reading }}"></td>
                 <td>Initial</td>
-                <td><input type="number" class="form-control" style="width:30%" name="initial_electric_reading" value="{{ $transaction->initial_electric_reading }}"></td>
+                <td><input type="text" class="form-control" style="width:30%" name="initial_electric_reading" value="{{ $transaction->initial_electric_reading }}"></td>
+                @if(auth()->user()->privilege === 'leasingOfficer')
+                <th><button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="fas fa-check-circle"></i>&nbspSUBMIT</button></th>
+                @endif
             </tr>
-            <tr>
-                <td>Final </td>
-                <td><input type="number" class="form-control" style="width:30%" name="final_water_reading" value="{{ $transaction->final_water_reading }}"></td>
-                <td>Final  </td>
-                <td><input type="number" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_electric_reading }}"></td>
-            </tr>
-            @if(auth()->user()->privilege === 'leasingOfficer')
-            <tr>
-                <th><button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="far fa-save"></i>&nbspSAVE</button></th>
-                <td></td>
-            </tr>
-            @endif
             @else
              <tr>
                 <td>Initial</td>
                 <td>{{ $transaction->initial_water_reading }}</td>
                 <td>Initial</td>
                 <td>{{ $transaction->initial_electric_reading }}</td>
-            </tr>
-            <tr>
-                <td>Final </td>
-                <td>{{ $transaction->final_water_reading }}</td>
-                <td>Final  </td>
-                <td>{{ $transaction->final_water_reading }}</td>
             </tr>
             @endif
 

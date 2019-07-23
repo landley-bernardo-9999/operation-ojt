@@ -33,7 +33,7 @@
                     {{ csrf_field() }}
                     <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger">Delete</button>
                 </form>
-            </li> --}}
+            </li>  --}}
         </ul>
     </div>
     @endif
@@ -212,21 +212,21 @@
     <div class="row">
         <table class="table">
                <p><h4><b> Payments</b></<h4`></p>
-           <?php $row_no_payments = 1; ?>
+           <?php $row_no = 1; ?>
            <tr>
                <th>#</th>
                <th>Date</th>
                <th>Description</th>
                <th>Amount</th>
-               <th>Status</th>
+               <th>Balance</th>
            </tr>
-           @foreach ($payment as $payment)
+           @foreach ($payment as $row)
            <tr>
-                <th>{{ $row_no_payments++ }}</th>
-                <td> {{Carbon\Carbon::parse(  $payment->billing_date )->formatLocalized('%b %d %Y')}}</td>
-                <td>{{ $payment->desc }}</td>
-                <td>{{ number_format($payment->amt, 2) }}</td>
-                <td>{{ $payment->payment_status }}</td>
+                <th>{{ $row_no++ }}</th>
+                <td> {{Carbon\Carbon::parse(  $row->billing_date )->formatLocalized('%b %d %Y')}}</td>
+                <td>{{ $row->desc }}</td>
+                <td>{{ number_format($row->amt, 2) }}</td>
+                <td>{{ number_format(($row->amt - $row->amt_paid), 2) }}</td>
            </tr>
            @endforeach
         </table>

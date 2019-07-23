@@ -174,7 +174,7 @@ class ResidentController extends Controller
                 ->select('*', 'payments.created_at as billing_date')
                 ->where('residents.resident_id', $resident_id)
                 ->orderBy('payments.created_at', 'desc')
-                ->get();
+                ->get();            
         
                 return view('show-resident', compact('resident', 'contract', 'repairs', 'payment', 'co_residents', 'guardian'));
             }
@@ -203,16 +203,23 @@ class ResidentController extends Controller
                 ->where('trans_resident_id', $resident_id)
                 ->get(['building','room_no', 'trans_id']);
 
-                $balance = DB::table('transactions')
+                $total_amt = DB::table('transactions')
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
                 ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
                 ->select('*', 'payments.created_at as billing_date')
                 ->where('residents.resident_id', $resident_id)
-                ->where('payment_status', 'unpaid')
                 ->sum('amt');
+
+                $total_amt_paid = DB::table('transactions')
+                ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
+                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+                ->select('*', 'payments.created_at as billing_date')
+                ->where('residents.resident_id', $resident_id)
+                ->sum('amt_paid');
                 
-                return view('billing-resident', compact('payment', 'balance', 'unit', 'unit_selection'));
+                return view('billing-resident', compact('payment', 'total_amt','total_amt_paid', 'unit', 'unit_selection'));
             }
             else{
                 abort(404, "Forbidden Page.");
@@ -255,11 +262,11 @@ class ResidentController extends Controller
      */
     public function destroy($resident_id)
     {
-        DB::table('residents')->where('resident_id', $resident_id)->delete();
-        DB::table('guardians')->where('guardian_resident_id', $resident_id)->delete();
-        DB::table('transactions')->where('trans_resident_id', $resident_id)->delete();
-        DB::table('users')->where('user_resident_id', $resident_id)->delete();
-        DB::table('residents')->where('primary_resident_id', $resident_id)->delete();
+        Resident::where('guardian_resident_id', $resident_id)->delete();
+        Resident::where('trans_resident_id', $resident_id)->delete();
+        Resident::where('user_resident_id', $resident_id)->delete();
+        Resident::where('primary_resident_id', $resident_id)->delete();
+        Resident::where('resident_id', $resident_id)->delete();
 
         return redirect('/rooms/'.session('sess_room_id'))->with('success','Resident has been deleted!');
     }
