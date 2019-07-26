@@ -126,7 +126,7 @@ Route::get('/dashboard', function(){
         ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
         ->select('*', 'payments.updated_at as payment_date')
         ->where('payment_status', 'paid')
-        ->whereMonth('payments.updated_at', Carbon::now()->month)->whereYear('payments.updated_at', Carbon::now()->year)
+        ->whereDate('payments.updated_at', Carbon::now())
         ->orderBy('payments.updated_at', 'desc')
         ->get();
 
@@ -138,9 +138,7 @@ Route::get('/dashboard', function(){
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
             ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
-            ->select('*', DB::raw('sum(amt) as total'))
-            ->groupBy('payment_id')
-            ->havingRaw('total > 0')
+            
             ->whereIn('desc', ['advance_rent', 'monthly_rent'])
             ->where('payment_status', 'unpaid')
             ->where('building', 'harvard')
@@ -150,9 +148,7 @@ Route::get('/dashboard', function(){
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
             ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
-            ->select('*', DB::raw('sum(amt) as total'))
-            ->groupBy('payment_id')
-            ->havingRaw('total > 0')
+         
             ->whereIn('desc', ['advance_rent', 'monthly_rent'])
             ->where('payment_status', 'unpaid')
             ->where('building', 'princeton')
@@ -162,9 +158,7 @@ Route::get('/dashboard', function(){
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
             ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
-            ->select('*', DB::raw('sum(amt) as total'))
-            ->groupBy('payment_id')
-            ->havingRaw('total > 0')
+        
             ->whereIn('desc', ['advance_rent', 'monthly_rent'])
             ->where('payment_status', 'unpaid')
             ->where('building', 'wharton')
@@ -174,9 +168,6 @@ Route::get('/dashboard', function(){
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
             ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
-            ->select('*', DB::raw('sum(amt) as total'))
-            ->groupBy('payment_id')
-            ->havingRaw('total > 0')
             ->whereIn('desc', ['advance_rent', 'monthly_rent'])
             ->where('payment_status', 'unpaid')
             ->where('project', 'the_courtyards')
@@ -343,9 +334,7 @@ Route::get('/dashboard', function(){
         ));
     }  
     if(auth()->user()->privilege === 'leasingManager'){        
-                $residents = DB::table('transactions')
-                ->leftJoin('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-                ->where('trans_status', 'active')
+                $residents = Resident::where('updated_at',null)
                 ->count();      
                 
                 $rooms =Room::count();

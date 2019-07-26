@@ -53,7 +53,7 @@
 
         <tr>
             <td>Size:</td>
-            <td>{{ $room->size }}<span style="color:red">&nbspsqm</span></td>
+            <td>{{ number_format($room->size,2) }}<span style="color:red">&nbspsqm</span></td>
         </tr>
 
         <tr>

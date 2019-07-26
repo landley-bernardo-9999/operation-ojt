@@ -78,7 +78,7 @@ class TransactionController extends Controller
              $payment->payment_status = 'unpaid';
              $payment->payment_transaction_id = $transaction->trans_id;
              $payment->created_at = $transaction->trans_date;
-             $payment->updated_at = $transaction->trans_date;;
+             $payment->updated_at = null;
              $payment->save();
          }
 
@@ -89,7 +89,7 @@ class TransactionController extends Controller
              $payment->payment_status = 'unpaid';
              $payment->payment_transaction_id = $transaction->trans_id;
              $payment->created_at = $transaction->trans_date;
-             $payment->created_at = $transaction->trans_date;
+             $payment->updated_at = null;
              $payment->save();
          }
 
@@ -100,7 +100,7 @@ class TransactionController extends Controller
              $payment->payment_status = 'unpaid';
              $payment->payment_transaction_id = $transaction->trans_id;
              $payment->created_at = $transaction->trans_date;
-             $payment->updated_at = $transaction->trans_date;;
+             $payment->updated_at = null;
              $payment->save();
          }
 
@@ -111,7 +111,7 @@ class TransactionController extends Controller
              $payment->payment_status = 'unpaid';
              $payment->payment_transaction_id = $transaction->trans_id;
              $payment->created_at = $transaction->trans_date;
-             $payment->updated_at = $transaction->trans_date;;
+             $payment->updated_at = null;
              $payment->save();
          }
 
@@ -142,6 +142,7 @@ class TransactionController extends Controller
          $resident->municipality = session('sess_municipality');
          $resident->province = session('sess_province');
          $resident->zip = session('sess_zip');
+         $resident->updated_at = null;
          $resident->save();
 
          //create the guardian
@@ -184,7 +185,7 @@ class TransactionController extends Controller
             $payment->desc = 'sec_dep_rent';
             $payment->payment_status = 'unpaid';
             $payment->payment_transaction_id = $transaction->trans_id;
-            $payment->updated_at = $transaction->trans_date;;
+            $payment->updated_at = null;
             $payment->created_at = $transaction->trans_date;
             $payment->save();
          }
@@ -195,7 +196,7 @@ class TransactionController extends Controller
             $payment->desc = 'advance_rent';
             $payment->payment_status = 'unpaid';
             $payment->payment_transaction_id = $transaction->trans_id;
-            $payment->updated_at = $transaction->trans_date;
+            $payment->updated_at = null;
             $payment->created_at = $transaction->trans_date;
             
             //adding remittance info for the unit owner
@@ -282,7 +283,7 @@ class TransactionController extends Controller
             $payment->desc = 'sec_dep_utilities';
             $payment->payment_status = 'unpaid';
             $payment->payment_transaction_id = $transaction->trans_id;
-            $payment->updated_at = $transaction->trans_date;;
+            $payment->updated_at = null;
             $payment->created_at = $transaction->trans_date;
             $payment->save();
          }
@@ -293,7 +294,7 @@ class TransactionController extends Controller
             $payment->desc = 'transient';
             $payment->payment_status = 'unpaid';
             $payment->payment_transaction_id = $transaction->trans_id;
-            $payment->updated_at = $transaction->trans_date;;
+            $payment->updated_at = null;
             $payment->created_at = $transaction->trans_date;
             $payment->save();
          }
@@ -376,7 +377,7 @@ class TransactionController extends Controller
         ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
         ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
         ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
-        ->where('transactions.trans_id', $trans_id)
+        ->where('transactions.trans_room_id', session('sess_room_id'))
         ->whereIn('payments.desc',['sec_dep_utilities', 'sec_dep_rent'])
         ->get();
 
@@ -414,17 +415,27 @@ class TransactionController extends Controller
                 'move_out_reason' => ['required']
             ]);
 
-            DB::table('transactions')
-                ->where('transactions.trans_resident_id', session('resident_id'))
+            //change the transaction status to inactive.
+            Transaction::
+                where('transactions.trans_resident_id', session('resident_id'))
                 ->where('transactions.trans_room_id', session('sess_room_id'))
                 ->update([
                             'trans_status' => 'inactive',
                             'move_out_reason' => $request->move_out_reason,
                             'actual_move_out_date' => $request->actual_move_out_date                    
                         ]);
-
-            DB::table('rooms')
-                ->where('room_id', session('sess_room_id'))
+                   
+              //update the updated_at column of resident.     
+              Resident::
+                where('trans_resident_id', session('resident_id'))
+              ->where('primary_resident_id', session('resident_id'))
+                ->update([
+                            'updated_at' => now()
+                        ]);
+            
+            //change the room status to vacant.
+            Room::
+                where('room_id', session('sess_room_id'))
                 ->update([
                             'room_status' => 'vacant',
                             'remarks' => 'THE ROOM IS SET FOR GENERAL CLEANING'

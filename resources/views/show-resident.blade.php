@@ -224,7 +224,7 @@
            <tr>
                 <th>{{ $row_no++ }}</th>
                 <td> {{Carbon\Carbon::parse(  $row->billing_date )->formatLocalized('%b %d %Y')}}</td>
-                <td>{{ $row->desc }}</td>
+                <td>{{ $row->desc }}_{{ $row->building }}{{ $row->room_no }}</td>
                 <td>{{ number_format($row->amt, 2) }}</td>
                 <td>{{ number_format(($row->amt - $row->amt_paid), 2) }}</td>
            </tr>

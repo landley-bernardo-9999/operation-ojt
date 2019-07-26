@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Jul 22, 2019 at 04:04 AM
--- Server version: 5.7.21
--- PHP Version: 7.2.4
+-- Host: localhost:3306
+-- Generation Time: Jul 26, 2019 at 12:47 AM
+-- Server version: 5.6.41-84.1
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,18 +28,15 @@ SET time_zone = "+00:00";
 -- Table structure for table `banks`
 --
 
-DROP TABLE IF EXISTS `banks`;
-CREATE TABLE IF NOT EXISTS `banks` (
-  `bank_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `banks` (
+  `bank_id` int(10) UNSIGNED NOT NULL,
   `bank_owner_id` int(10) UNSIGNED DEFAULT NULL,
   `bank_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bank_account_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bank_account_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`bank_id`),
-  KEY `banks_bank_owner_id_foreign` (`bank_owner_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1232 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `banks`
@@ -271,7 +268,10 @@ INSERT INTO `banks` (`bank_id`, `bank_owner_id`, `bank_name`, `bank_account_name
 (1228, 1232, 'BDO', 'Mary Ann Limpayos', '5470005896', '2019-07-12 21:53:53', '2019-07-12 21:53:53'),
 (1229, 1233, NULL, NULL, NULL, '2019-07-12 21:55:49', '2019-07-12 21:55:49'),
 (1230, 1234, 'BDO', 'Mary Joyce Vinas', NULL, '2019-07-12 21:57:27', '2019-07-12 21:57:27'),
-(1231, 1235, 'BDO', 'Jaynewin O Lapniten', '5160292161', '2019-07-12 21:59:01', '2019-07-12 21:59:01');
+(1231, 1235, 'BDO', 'Jaynewin O Lapniten', '5160292161', '2019-07-12 21:59:01', '2019-07-12 21:59:01'),
+(1232, 1236, 'BDO', 'Jennifer O. Calma', '010020020538', '2019-07-25 08:54:20', '2019-07-25 08:54:20'),
+(1233, 1237, 'BPI', '3350-0118-96', 'Jovelle Fernandez', '2019-07-25 09:02:44', '2019-07-25 09:02:44'),
+(1234, 1238, 'BDO', 'Ronaldo Gapuz', '005050141061', '2019-07-25 09:23:15', '2019-07-25 09:23:15');
 
 -- --------------------------------------------------------
 
@@ -279,19 +279,16 @@ INSERT INTO `banks` (`bank_id`, `bank_owner_id`, `bank_name`, `bank_account_name
 -- Table structure for table `charges`
 --
 
-DROP TABLE IF EXISTS `charges`;
-CREATE TABLE IF NOT EXISTS `charges` (
-  `charge_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `charges` (
+  `charge_id` bigint(20) UNSIGNED NOT NULL,
   `charge_trans_id` int(10) UNSIGNED NOT NULL,
   `item` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amt` double(15,2) NOT NULL,
   `qty` int(11) NOT NULL,
   `total_amt` double(15,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`charge_id`),
-  KEY `charges_charge_trans_id_foreign` (`charge_trans_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -299,18 +296,14 @@ CREATE TABLE IF NOT EXISTS `charges` (
 -- Table structure for table `contracts`
 --
 
-DROP TABLE IF EXISTS `contracts`;
-CREATE TABLE IF NOT EXISTS `contracts` (
-  `contract_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `contracts` (
+  `contract_id` int(10) UNSIGNED NOT NULL,
   `enrollment_date` date NOT NULL,
   `contract_owner_id` int(10) UNSIGNED NOT NULL,
   `contract_room_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`contract_id`),
-  KEY `contracts_contract_owner_id_foreign` (`contract_owner_id`),
-  KEY `contracts_contract_room_id_foreign` (`contract_room_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=266 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `contracts`
@@ -539,7 +532,6 @@ INSERT INTO `contracts` (`contract_id`, `enrollment_date`, `contract_owner_id`, 
 (228, '2014-08-31', 1184, 1161, '2019-07-12 18:51:27', '2019-07-12 18:51:27'),
 (229, '2012-03-31', 1184, 1162, '2019-07-12 18:52:10', '2019-07-12 18:52:10'),
 (230, '2012-03-31', 1184, 1163, '2019-07-12 18:52:45', '2019-07-12 18:52:45'),
-(231, '2012-03-31', 1184, 1163, '2019-07-12 18:52:52', '2019-07-12 18:52:52'),
 (232, '2012-03-31', 1184, 1164, '2019-07-12 18:53:23', '2019-07-12 18:53:23'),
 (233, '2012-03-31', 1184, 1165, '2019-07-12 18:53:58', '2019-07-12 18:53:58'),
 (234, '2017-07-31', 1208, 1081, '2019-07-12 19:32:23', '2019-07-12 19:32:23'),
@@ -573,7 +565,11 @@ INSERT INTO `contracts` (`contract_id`, `enrollment_date`, `contract_owner_id`, 
 (262, '2014-11-08', 1234, 1184, '2019-07-12 21:57:27', '2019-07-12 21:57:27'),
 (263, '2017-07-13', 1235, 1180, '2019-07-12 21:59:01', '2019-07-12 21:59:01'),
 (264, '2012-06-09', 1105, 1265, '2019-07-19 19:03:29', '2019-07-19 19:03:29'),
-(265, '2016-06-24', 1187, 1266, '2019-07-19 20:04:15', '2019-07-19 20:04:15');
+(265, '2016-06-24', 1187, 1266, '2019-07-19 20:04:15', '2019-07-19 20:04:15'),
+(266, '2014-10-27', 1174, 1172, '2019-07-22 19:48:28', '2019-07-22 19:48:28'),
+(267, '2019-06-20', 1236, 1260, '2019-07-25 08:54:20', '2019-07-25 08:54:20'),
+(268, '2019-07-06', 1237, 1267, '2019-07-25 09:02:44', '2019-07-25 09:02:44'),
+(269, '2019-07-09', 1238, 1268, '2019-07-25 09:23:15', '2019-07-25 09:23:15');
 
 -- --------------------------------------------------------
 
@@ -581,18 +577,15 @@ INSERT INTO `contracts` (`contract_id`, `enrollment_date`, `contract_owner_id`, 
 -- Table structure for table `guardians`
 --
 
-DROP TABLE IF EXISTS `guardians`;
-CREATE TABLE IF NOT EXISTS `guardians` (
-  `guardian_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `guardians` (
+  `guardian_id` int(10) UNSIGNED NOT NULL,
   `guardian_resident_id` int(10) UNSIGNED DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `relationship` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`guardian_id`),
-  KEY `guardians_guardian_resident_id_foreign` (`guardian_resident_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1219 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `guardians`
@@ -789,7 +782,51 @@ INSERT INTO `guardians` (`guardian_id`, `guardian_resident_id`, `name`, `relatio
 (1215, 1343, 'guzman', NULL, '9612567777', '2019-07-21 19:27:39', '2019-07-21 19:27:39'),
 (1216, 1344, 'Renato Natividad', NULL, '0923-645-9197', '2019-07-21 19:46:54', '2019-07-21 19:46:54'),
 (1217, 1345, 'Noel Gamiz', NULL, '0906-607-7707', '2019-07-21 19:51:21', '2019-07-21 19:51:21'),
-(1218, 1346, 'Ronles Leonardo', 'father', '0997-667-6293', '2019-07-21 20:00:50', '2019-07-21 20:00:50');
+(1218, 1346, 'Ronles Leonardo', 'father', '0997-667-6293', '2019-07-21 20:00:50', '2019-07-21 20:00:50'),
+(1219, 1348, 'Leo Sto.Tomas', 'husband', '0927-796-1978', '2019-07-22 19:18:39', '2019-07-22 19:18:39'),
+(1220, 1349, 'Marilyn Dela Cruz', NULL, '0927-443-0538', '2019-07-22 19:20:54', '2019-07-22 19:20:54'),
+(1221, 1350, 'Roberto Milla', NULL, '0928-415-9843', '2019-07-22 19:24:15', '2019-07-22 19:24:15'),
+(1222, 1352, 'Corazon,Tan', 'Grandmother', '0916-622-3834', '2019-07-22 19:28:11', '2019-07-22 19:28:11'),
+(1223, 1353, NULL, NULL, '0917-863-2318', '2019-07-22 19:34:40', '2019-07-22 19:34:40'),
+(1224, 1354, NULL, NULL, '0977-836-3899', '2019-07-22 19:37:06', '2019-07-22 19:37:06'),
+(1225, 1355, 'Eva Paswick', 'Mother', '0918-415-5893', '2019-07-22 19:40:56', '2019-07-22 19:40:56'),
+(1226, 1356, 'Opuencia', 'father', '0917-822-2276', '2019-07-22 19:52:37', '2019-07-22 19:52:37'),
+(1227, 1357, 'Grachelle Talens', NULL, '0910-019-7775', '2019-07-22 19:55:14', '2019-07-22 19:55:14'),
+(1228, 1358, NULL, NULL, NULL, '2019-07-22 19:57:22', '2019-07-22 19:57:22'),
+(1229, 1359, 'Gary Reynolds', NULL, '0928-168-1387', '2019-07-22 20:03:41', '2019-07-22 20:03:41'),
+(1230, 1360, 'Marites Parangco', NULL, '0935-871-6172', '2019-07-22 20:05:25', '2019-07-22 20:05:25'),
+(1231, 1361, 'Lorena Bernardino', NULL, '0998-792-1089', '2019-07-22 20:08:04', '2019-07-22 20:08:04'),
+(1232, 1362, 'Dionicio Laungayan', NULL, '0977-350-4027', '2019-07-22 20:10:29', '2019-07-22 20:10:29'),
+(1233, 1363, 'dominga malibran', NULL, '0916-656-5456', '2019-07-22 20:12:57', '2019-07-22 20:12:57'),
+(1234, 1364, 'Ivan Enriques', NULL, '0916-715-5110', '2019-07-22 20:15:18', '2019-07-22 20:15:18'),
+(1235, 1365, 'Viviencio Cambay jr.', 'husband', '9255477825', '2019-07-22 20:56:08', '2019-07-22 20:56:08'),
+(1236, 1366, 'mark anthony', 'cousin', '0928-856-0232', '2019-07-22 20:57:53', '2019-07-22 20:57:53'),
+(1237, 1367, 'Mercedes Mejor', NULL, '0909-409-1378', '2019-07-22 21:03:53', '2019-07-22 21:03:53'),
+(1238, 1368, 'Percival P Robino', 'Father', '09177002907', '2019-07-22 21:06:20', '2019-07-22 21:06:20'),
+(1239, 1369, 'Johanna Ramirez', 'Sister', '0945-190-197', '2019-07-22 21:08:06', '2019-07-22 21:08:06'),
+(1240, 1370, NULL, NULL, '0907-755-0500', '2019-07-22 21:12:15', '2019-07-22 21:12:15'),
+(1241, 1371, 'Vivien Gabriel', NULL, '0922-897-2122', '2019-07-22 21:15:30', '2019-07-22 21:15:30'),
+(1242, 1372, 'Divina Moreno', 'Mother', '09155454886/09566849127', '2019-07-22 21:18:46', '2019-07-22 21:18:46'),
+(1243, 1373, 'reynaldo mesina', 'father', '0936-681-9492', '2019-07-22 21:20:47', '2019-07-22 21:20:47'),
+(1245, 1375, NULL, NULL, NULL, '2019-07-25 08:09:45', '2019-07-25 08:09:45'),
+(1246, 1376, 'Gina Gavina', 'Mother', '09276177950', '2019-07-26 07:53:54', '2019-07-26 07:53:54'),
+(1247, 1377, 'Manuel Sison', 'Father', '09278532040', '2019-07-26 07:57:03', '2019-07-26 07:57:03'),
+(1248, 1378, 'Benjamin Sapitula', NULL, '0916-792-7800', '2019-07-26 08:03:35', '2019-07-26 08:03:35'),
+(1249, 1379, NULL, NULL, NULL, '2019-07-26 08:09:14', '2019-07-26 08:09:14'),
+(1250, 1381, 'Gideon Omero', NULL, '0906-400-8525', '2019-07-26 08:15:51', '2019-07-26 08:15:51'),
+(1251, 1382, 'helen panergo', 'Aunt', '0919-678-4859', '2019-07-26 08:20:07', '2019-07-26 08:20:07'),
+(1252, 1383, 'Vidal Acopido', NULL, '0905-763-1673', '2019-07-26 08:22:20', '2019-07-26 08:22:20'),
+(1253, 1384, 'leodie,dlacat', 'Mother', '0927-555-8307', '2019-07-26 08:26:35', '2019-07-26 08:26:35'),
+(1254, 1385, 'karen Martinez', 'Mother', '0926-734-2834', '2019-07-26 08:29:22', '2019-07-26 08:29:22'),
+(1255, 1387, 'lyka Costales', NULL, '0927-803-4627', '2019-07-26 08:34:05', '2019-07-26 08:34:05'),
+(1256, 1388, 'myrna ganador', NULL, '09861592428', '2019-07-26 08:36:46', '2019-07-26 08:36:46'),
+(1257, 1389, 'Cinderella Perez', 'Girlfriend', '0905-936-9171', '2019-07-26 08:39:27', '2019-07-26 08:39:27'),
+(1258, 1390, 'Cinderella Perez', 'Girlfriend', '0905-936-9171', '2019-07-26 08:44:39', '2019-07-26 08:44:39'),
+(1259, 1391, 'Cinderella Perez', 'Girlfriend', '09059369171', '2019-07-26 08:50:40', '2019-07-26 08:50:40'),
+(1260, 1392, 'Cinderella Perez', 'Girlfriend', '09059369171', '2019-07-26 08:51:49', '2019-07-26 08:51:49'),
+(1261, 1394, 'Creselda Pascual', 'Mother', '0945-348-5815', '2019-07-26 08:59:41', '2019-07-26 08:59:41'),
+(1262, 1396, 'jaziel naomi reyes', 'tenant', '0997-5712-488', '2019-07-26 09:02:21', '2019-07-26 09:02:21'),
+(1263, 1397, 'Christopher Sebastian', NULL, '0916-478-5844/0916-627-3005', '2019-07-26 10:35:55', '2019-07-26 10:35:55');
 
 -- --------------------------------------------------------
 
@@ -797,13 +834,11 @@ INSERT INTO `guardians` (`guardian_id`, `guardian_resident_id`, `name`, `relatio
 -- Table structure for table `migrations`
 --
 
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE IF NOT EXISTS `migrations` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `batch` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -839,9 +874,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- Table structure for table `owners`
 --
 
-DROP TABLE IF EXISTS `owners`;
-CREATE TABLE IF NOT EXISTS `owners` (
-  `owner_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `owners` (
+  `owner_id` int(10) UNSIGNED NOT NULL,
   `owner_first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_middle_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `owner_last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -861,11 +895,8 @@ CREATE TABLE IF NOT EXISTS `owners` (
   `owner_zip` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `owner_img` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`owner_id`),
-  UNIQUE KEY `owners_owner_email_address_unique` (`owner_email_address`),
-  UNIQUE KEY `owners_owner_mobile_number_unique` (`owner_mobile_number`)
-) ENGINE=MyISAM AUTO_INCREMENT=1236 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `owners`
@@ -1099,7 +1130,10 @@ INSERT INTO `owners` (`owner_id`, `owner_first_name`, `owner_middle_name`, `owne
 (1232, 'Mary Ann', NULL, 'Limpayos', NULL, NULL, NULL, NULL, NULL, NULL, 'edmund.limpayos@snaboitiz.com', '09285504057/09285502077', NULL, 'JC 277 Central Pico', NULL, 'La Trinidad', 'Benguet', NULL, NULL, '2019-07-12 21:53:53', '2019-07-12 21:53:53'),
 (1233, 'Marcela', NULL, 'Limjoco', NULL, NULL, NULL, NULL, NULL, NULL, 'jlimjoco@aol.com', NULL, NULL, '8 Onyx St. Rockville II', NULL, 'Novaliches', 'Quezon City', NULL, NULL, '2019-07-12 21:55:49', '2019-07-12 21:55:49'),
 (1234, 'Imelda', NULL, 'Paraoan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09229926566/\'09236554631', NULL, '208 Galvez St.', 'San Juan', 'San Idelfonso', 'Bulacan', NULL, NULL, '2019-07-12 21:57:27', '2019-07-12 21:57:27'),
-(1235, 'Jayniwen', NULL, 'Lapniten', NULL, NULL, NULL, NULL, NULL, NULL, 'jaynewinlapniten@yahoo.com/dickson.lapniwen@besra.com', '9351243517/09219819859', NULL, '17B tower 4 avida tower', NULL, 'San lazaro', 'manila', NULL, NULL, '2019-07-12 21:59:01', '2019-07-12 21:59:01');
+(1235, 'Jayniwen', NULL, 'Lapniten', NULL, NULL, NULL, NULL, NULL, NULL, 'jaynewinlapniten@yahoo.com/dickson.lapniwen@besra.com', '9351243517/09219819859', NULL, '17B tower 4 avida tower', NULL, 'San lazaro', 'manila', NULL, NULL, '2019-07-12 21:59:01', '2019-07-12 21:59:01'),
+(1236, 'Jennifer', NULL, 'Calma', NULL, 'F', NULL, NULL, NULL, 'PASSPORT/P6152143A', 'jeni_oc1030@yahoo.com', '00917527533326', NULL, 'Ibayo', 'Binaritan', 'Morong', 'Bataan', NULL, NULL, '2019-07-25 08:54:20', '2019-07-25 08:54:20'),
+(1237, 'Jovelle', NULL, 'Fernandez', NULL, NULL, NULL, NULL, NULL, NULL, 'docalex5@yahoo.com', NULL, '+1 484 868 7055', '371', 'King of Prussia', 'PA', 'USA', NULL, NULL, '2019-07-25 09:02:44', '2019-07-25 09:02:44'),
+(1238, 'Ronaldo', NULL, 'Gapuz', NULL, 'M', NULL, NULL, NULL, NULL, 'ronald.gapuz@gmail.com', '0966502576625', NULL, '117', 'Banaoang, Sta. Maria', 'Barbara', 'Pangasinan', NULL, NULL, '2019-07-25 09:23:15', '2019-07-25 09:23:15');
 
 -- --------------------------------------------------------
 
@@ -1107,12 +1141,10 @@ INSERT INTO `owners` (`owner_id`, `owner_first_name`, `owner_middle_name`, `owne
 -- Table structure for table `password_resets`
 --
 
-DROP TABLE IF EXISTS `password_resets`;
-CREATE TABLE IF NOT EXISTS `password_resets` (
+CREATE TABLE `password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  KEY `password_resets_email_index` (`email`)
+  `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1121,9 +1153,8 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 -- Table structure for table `payments`
 --
 
-DROP TABLE IF EXISTS `payments`;
-CREATE TABLE IF NOT EXISTS `payments` (
-  `payment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `payments` (
+  `payment_id` int(10) UNSIGNED NOT NULL,
   `payment_transaction_id` int(10) UNSIGNED NOT NULL,
   `desc` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amt` double(15,2) DEFAULT NULL,
@@ -1142,10 +1173,8 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `mgmt_fee` double(15,2) DEFAULT NULL,
   `condo_dues` double(15,2) DEFAULT NULL,
   `remittance_note` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `others` double(15,2) DEFAULT NULL,
-  PRIMARY KEY (`payment_id`),
-  KEY `payments_payment_transaction_id_foreign` (`payment_transaction_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1613 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `others` double(15,2) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `payments`
@@ -1260,7 +1289,7 @@ INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `
 (1172, 1095, 'advance_rent', 12000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 12000.00, NULL, '2019-07-02 00:52:12', '2018-01-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1173, 1096, 'sec_dep_rent', 10000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 10000.00, NULL, '2018-09-03 16:00:00', '2018-09-03 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1174, 1096, 'advance_rent', 10000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 10000.00, NULL, '2019-07-02 00:57:56', '2018-09-03 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1175, 1097, 'sec_dep_rent', 10000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 10000.00, NULL, '2018-09-26 16:00:00', '2018-09-26 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1175, 1097, 'sec_dep_rent', 10000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 10000.00, NULL, '2018-09-26 16:00:00', '2019-07-22 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1176, 1097, 'advance_rent', 10000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 10000.00, NULL, '2018-09-26 16:00:00', '2018-09-26 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1177, 1097, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-09-26 16:00:00', '2018-09-26 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1178, 1098, 'sec_dep_rent', 22000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 22000.00, NULL, '2019-02-14 16:00:00', '2019-02-13 16:00:00', NULL, NULL, NULL, NULL, NULL),
@@ -1361,14 +1390,14 @@ INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `
 (1323, 1111, 'monthly_rent', 11000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
 (1322, 1110, 'monthly_rent', 11000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
 (1321, 1109, 'monthly_rent', 11000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
-(1320, 1107, 'monthly_rent', 11000.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
-(1319, 1105, 'monthly_rent', 11000.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
-(1318, 1104, 'monthly_rent', 11000.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
-(1317, 1103, 'monthly_rent', 11000.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
-(1316, 1101, 'monthly_rent', 11000.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
-(1315, 1099, 'monthly_rent', 11000.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
-(1314, 1098, 'monthly_rent', 11000.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
-(1313, 1097, 'monthly_rent', 11000.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
+(1320, 1107, 'monthly_rent', 11000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
+(1319, 1105, 'monthly_rent', 11000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
+(1318, 1104, 'monthly_rent', 11000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
+(1317, 1103, 'monthly_rent', 11000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
+(1316, 1101, 'monthly_rent', 11000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
+(1315, 1099, 'monthly_rent', 11000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
+(1314, 1098, 'monthly_rent', 11000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
+(1313, 1097, 'monthly_rent', 11000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 11000.00, NULL, '2019-07-01 05:00:00', NULL, 7627.80, 2200.00, 1172.20, NULL, 0.00),
 (1284, 1130, 'sec_dep_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7000.00, NULL, '2018-08-05 16:00:00', '2018-08-05 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1285, 1130, 'advance_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7000.00, NULL, '2018-08-05 16:00:00', '2018-08-05 16:00:00', 5420.85, 1200.00, 879.15, NULL, 0.00),
 (1286, 1130, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-08-05 16:00:00', '2018-08-05 16:00:00', NULL, NULL, NULL, NULL, NULL),
@@ -1590,69 +1619,280 @@ INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `
 (1547, 1213, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-07 16:00:00', '2018-08-07 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1548, 1213, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-07 16:00:00', '2018-08-07 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
 (1549, 1213, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-08-07 16:00:00', '2018-08-07 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1550, 1214, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-14 16:00:00', '2018-08-14 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1551, 1214, 'advance_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-14 16:00:00', '2018-08-14 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1552, 1215, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-28 16:00:00', '2019-05-28 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1553, 1215, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-28 16:00:00', '2019-05-28 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
-(1554, 1215, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-28 16:00:00', '2019-05-28 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1555, 1216, 'sec_dep_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-05 16:00:00', '2019-03-05 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1556, 1216, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-05 16:00:00', '2019-03-05 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1557, 1216, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-05 16:00:00', '2019-03-05 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1558, 1217, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-07-09 16:00:00', '2018-07-09 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1559, 1217, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-07-09 16:00:00', '2018-07-09 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1560, 1217, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-07-09 16:00:00', '2018-07-09 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1561, 1218, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-11-28 16:00:00', '2018-11-28 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1562, 1218, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-11-28 16:00:00', '2018-11-28 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
-(1563, 1219, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-06-30 16:00:00', '2017-06-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1564, 1219, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-06-30 16:00:00', '2017-06-30 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1565, 1220, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1566, 1220, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
-(1567, 1220, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1568, 1221, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-26 16:00:00', '2019-05-26 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
-(1569, 1222, 'sec_dep_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-07-29 16:00:00', '2018-07-29 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1570, 1222, 'advance_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-07-29 16:00:00', '2018-07-29 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1571, 1222, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-07-29 16:00:00', '2018-07-29 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1572, 1223, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-15 16:00:00', '2018-01-15 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1573, 1223, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-15 16:00:00', '2018-01-15 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1574, 1223, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-01-15 16:00:00', '2018-01-15 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1575, 1224, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-10-02 16:00:00', '2015-10-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1576, 1224, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-10-02 16:00:00', '2015-10-02 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1577, 1225, 'sec_dep_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-07-18 16:00:00', '2017-07-18 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1578, 1225, 'advance_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-07-18 16:00:00', '2017-07-18 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1579, 1226, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-02 16:00:00', '2018-04-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1580, 1226, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-02 16:00:00', '2018-04-02 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1581, 1226, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-02 16:00:00', '2018-04-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1582, 1227, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-06-14 16:00:00', '2017-06-14 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1583, 1227, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-06-14 16:00:00', '2017-06-14 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1584, 1228, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-05-01 16:00:00', '2018-05-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1585, 1228, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-05-01 16:00:00', '2018-05-01 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1586, 1228, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-05-01 16:00:00', '2018-05-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1587, 1229, 'sec_dep_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-04-30 16:00:00', '2019-04-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1588, 1229, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-04-30 16:00:00', '2019-04-30 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1589, 1229, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-04-30 16:00:00', '2019-04-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1590, 1230, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1591, 1230, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
-(1592, 1230, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1593, 1231, 'sec_dep_rent', 12000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-21 16:00:00', '2019-01-21 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1594, 1231, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-21 16:00:00', '2019-01-21 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1595, 1231, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-01-21 16:00:00', '2019-01-21 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1596, 1232, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-09-03 16:00:00', '2017-09-03 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1597, 1232, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-09-03 16:00:00', '2017-09-03 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1598, 1233, 'sec_dep_rent', 15600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-04-24 16:00:00', '2019-04-24 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1599, 1233, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-04-24 16:00:00', '2019-04-24 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
-(1600, 1233, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-04-24 16:00:00', '2019-04-24 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1601, 1234, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-02 16:00:00', '2019-06-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1602, 1234, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-02 16:00:00', '2019-06-02 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1603, 1234, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-02 16:00:00', '2019-06-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1604, 1235, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-07-30 16:00:00', '2018-07-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1605, 1235, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-07-30 16:00:00', '2018-07-30 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1606, 1235, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-07-30 16:00:00', '2018-07-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1607, 1236, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1608, 1236, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1609, 1236, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1610, 1237, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-12-28 16:00:00', '2018-12-28 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1611, 1237, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-12-28 16:00:00', '2018-12-28 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
-(1612, 1237, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-12-28 16:00:00', '2018-12-28 16:00:00', NULL, NULL, NULL, NULL, NULL);
+(1550, 1214, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2018-08-14 16:00:00', '2018-08-14 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1551, 1214, 'advance_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7000.00, NULL, '2018-08-14 16:00:00', '2018-08-14 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1552, 1215, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2019-05-28 16:00:00', '2019-05-28 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1553, 1215, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2019-05-28 16:00:00', '2019-05-28 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1554, 1215, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-05-28 16:00:00', '2019-05-28 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1555, 1216, 'sec_dep_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-03-05 16:00:00', '2019-03-05 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1556, 1216, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-03-05 16:00:00', '2019-03-05 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1557, 1216, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-03-05 16:00:00', '2019-03-05 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1558, 1217, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-07-09 16:00:00', '2018-07-09 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1559, 1217, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-07-09 16:00:00', '2018-07-09 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1560, 1217, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-07-09 16:00:00', '2018-07-09 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1561, 1218, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2018-11-28 16:00:00', '2018-11-28 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1562, 1218, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2018-11-28 16:00:00', '2018-11-28 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1563, 1219, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-06-30 16:00:00', '2017-06-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1564, 1219, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-06-30 16:00:00', '2017-06-30 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1565, 1220, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1566, 1220, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1567, 1220, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1568, 1221, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2019-05-26 16:00:00', '2019-05-26 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1569, 1222, 'sec_dep_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7000.00, NULL, '2018-07-29 16:00:00', '2018-07-29 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1570, 1222, 'advance_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7000.00, NULL, '2018-07-29 16:00:00', '2018-07-29 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1571, 1222, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-07-29 16:00:00', '2018-07-29 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1572, 1223, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-01-15 16:00:00', '2018-01-15 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1573, 1223, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-01-15 16:00:00', '2018-01-15 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1574, 1223, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-01-15 16:00:00', '2018-01-15 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1575, 1224, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2015-10-02 16:00:00', '2015-10-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1576, 1224, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2015-10-02 16:00:00', '2015-10-02 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1577, 1225, 'sec_dep_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7000.00, NULL, '2017-07-18 16:00:00', '2017-07-18 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1578, 1225, 'advance_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7000.00, NULL, '2017-07-18 16:00:00', '2017-07-18 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1579, 1226, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-04-02 16:00:00', '2018-04-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1580, 1226, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-04-02 16:00:00', '2018-04-02 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1581, 1226, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-04-02 16:00:00', '2018-04-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1582, 1227, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-06-14 16:00:00', '2017-06-14 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1583, 1227, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-06-14 16:00:00', '2017-06-14 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1584, 1228, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-05-01 16:00:00', '2018-05-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1585, 1228, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-05-01 16:00:00', '2018-05-01 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1586, 1228, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-05-01 16:00:00', '2018-05-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1587, 1229, 'sec_dep_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-04-30 16:00:00', '2019-04-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1588, 1229, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-04-30 16:00:00', '2019-04-30 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1589, 1229, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-04-30 16:00:00', '2019-04-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1590, 1230, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1591, 1230, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1592, 1230, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-01-06 16:00:00', '2019-01-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1593, 1231, 'sec_dep_rent', 12000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 12000.00, NULL, '2019-01-21 16:00:00', '2019-01-21 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1594, 1231, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2019-01-21 16:00:00', '2019-01-21 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1595, 1231, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-01-21 16:00:00', '2019-01-21 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1596, 1232, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-09-03 16:00:00', '2017-09-03 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1597, 1232, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-09-03 16:00:00', '2017-09-03 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1598, 1233, 'sec_dep_rent', 15600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 15600.00, NULL, '2019-04-24 16:00:00', '2019-04-24 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1599, 1233, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2019-04-24 16:00:00', '2019-04-24 16:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1600, 1233, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-04-24 16:00:00', '2019-04-24 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1601, 1234, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 13600.00, NULL, '2019-06-02 16:00:00', '2019-06-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1602, 1234, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-06-02 16:00:00', '2019-06-02 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1603, 1234, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-06-02 16:00:00', '2019-06-02 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1604, 1235, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-07-30 16:00:00', '2018-07-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1605, 1235, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-07-30 16:00:00', '2018-07-30 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1606, 1235, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-07-30 16:00:00', '2018-07-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1607, 1236, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1608, 1236, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1609, 1236, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1610, 1237, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-12-28 16:00:00', '2018-12-28 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1611, 1237, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-12-28 16:00:00', '2018-12-28 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1612, 1237, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-12-28 16:00:00', '2018-12-28 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1615, 1238, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 13600.00, NULL, '2019-05-21 16:00:00', '2019-05-21 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1616, 1238, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-05-21 16:00:00', '2019-05-21 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1617, 1238, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-05-21 16:00:00', '2019-05-21 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1618, 1239, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-22 16:00:00', '2018-08-22 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1619, 1239, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-22 16:00:00', '2018-08-22 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1620, 1239, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-08-22 16:00:00', '2018-08-22 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1621, 1240, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2015-08-13 16:00:00', '2015-08-13 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1622, 1240, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2015-08-13 16:00:00', '2015-08-13 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1623, 1241, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 13600.00, NULL, '2019-01-10 16:00:00', '2019-01-10 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1624, 1241, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-01-10 16:00:00', '2019-01-10 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1625, 1241, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-01-10 16:00:00', '2019-01-10 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1626, 1242, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2017-02-18 16:00:00', '2017-02-18 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1627, 1242, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2017-02-18 16:00:00', '2017-02-18 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1628, 1243, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-01-04 16:00:00', '2018-01-04 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1629, 1243, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-01-04 16:00:00', '2018-01-04 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1630, 1244, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-02-14 16:00:00', '2018-02-14 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1631, 1244, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-02-14 16:00:00', '2018-02-14 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1632, 1244, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-02-14 16:00:00', '2018-02-14 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1633, 1245, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-11-18 16:00:00', '2018-11-18 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1634, 1245, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-11-18 16:00:00', '2018-11-18 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1635, 1245, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-11-18 16:00:00', '2018-11-18 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1636, 1246, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-13 16:00:00', '2018-08-13 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1637, 1246, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-13 16:00:00', '2018-08-13 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1638, 1246, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-08-13 16:00:00', '2018-08-13 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1639, 1247, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2017-05-27 16:00:00', '2017-05-27 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1640, 1247, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-05-27 16:00:00', '2017-05-27 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1641, 1248, 'sec_dep_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7000.00, NULL, '2014-09-11 16:00:00', '2014-09-11 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1642, 1248, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2014-09-11 16:00:00', '2014-09-11 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1643, 1249, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1644, 1249, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1645, 1249, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1646, 1250, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-05 16:00:00', '2018-08-05 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1647, 1250, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-05 16:00:00', '2018-08-05 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1648, 1250, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-08-05 16:00:00', '2018-08-05 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1649, 1251, 'sec_dep_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2018-05-01 16:00:00', '2018-05-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1650, 1251, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-05-01 16:00:00', '2018-05-01 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1651, 1251, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-05-01 16:00:00', '2018-05-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1652, 1252, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-05 16:00:00', '2018-08-05 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1653, 1252, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-05 16:00:00', '2018-08-05 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1654, 1252, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-08-05 16:00:00', '2018-08-05 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1655, 1253, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-06-10 16:00:00', '2017-06-10 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1656, 1253, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-06-10 16:00:00', '2017-06-10 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1657, 1254, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 13600.00, NULL, '2019-05-28 16:00:00', '2019-05-28 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1658, 1254, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-05-28 16:00:00', '2019-05-28 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1659, 1254, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-05-28 16:00:00', '2019-05-28 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1660, 1255, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-24 16:00:00', '2018-08-24 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1661, 1255, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-24 16:00:00', '2018-08-24 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1662, 1255, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-08-24 16:00:00', '2018-08-24 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1663, 1256, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1664, 1256, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1665, 1256, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-08-01 16:00:00', '2018-08-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1666, 1257, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 13600.00, NULL, '2019-06-06 16:00:00', '2019-06-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1667, 1257, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-06-06 16:00:00', '2019-06-06 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1668, 1257, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-06-06 16:00:00', '2019-06-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1669, 1258, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 13600.00, NULL, '2019-04-16 16:00:00', '2019-04-16 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1670, 1258, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-04-16 16:00:00', '2019-04-16 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1671, 1258, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-04-16 16:00:00', '2019-04-16 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1672, 1259, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-07-06 16:00:00', '2018-07-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1673, 1259, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-07-06 16:00:00', '2018-07-06 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1674, 1259, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-07-06 16:00:00', '2018-07-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1675, 1260, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2014-08-06 16:00:00', '2014-08-06 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1676, 1260, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2014-08-06 16:00:00', '2014-08-06 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1677, 1261, 'sec_dep_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-05-01 16:00:00', '2019-05-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1678, 1261, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-05-01 16:00:00', '2019-05-01 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1679, 1261, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-05-01 16:00:00', '2019-05-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1680, 1262, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 13600.00, NULL, '2019-04-27 16:00:00', '2019-04-27 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1681, 1262, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-04-27 16:00:00', '2019-04-27 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00);
+INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `payment_status`, `or_number`, `ar_number`, `form_of_payment`, `check_no`, `date_deposited`, `bank_name`, `amt_paid`, `note`, `created_at`, `updated_at`, `remittance_amt`, `mgmt_fee`, `condo_dues`, `remittance_note`, `others`) VALUES
+(1682, 1262, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-04-27 16:00:00', '2019-04-27 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1695, 1137, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1696, 1181, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1697, 1201, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5840.85, 780.00, 879.15, NULL, 0.00),
+(1698, 1202, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1699, 1203, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1700, 1204, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1701, 1205, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1702, 1206, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1703, 1208, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1704, 1209, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1705, 1210, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1706, 1211, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1707, 1212, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1708, 1213, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1709, 1214, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1710, 1216, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1711, 1217, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1712, 1219, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1713, 1222, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1714, 1223, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1715, 1224, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1716, 1225, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1717, 1226, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1718, 1227, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1719, 1228, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1720, 1229, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1721, 1231, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1722, 1232, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1723, 1234, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1724, 1235, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1725, 1236, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1726, 1237, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1727, 1238, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1728, 1239, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1729, 1240, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1730, 1241, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1731, 1242, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1732, 1243, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1733, 1244, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1734, 1245, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1735, 1246, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1736, 1247, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1737, 1248, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1738, 1249, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1739, 1250, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1740, 1251, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1741, 1252, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1742, 1253, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1743, 1254, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1744, 1255, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1745, 1256, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1746, 1257, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1747, 1258, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1748, 1259, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1749, 1260, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1750, 1261, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1751, 1262, 'monthly_rent', 6800.00, 'unpaid', '', NULL, 'cash', NULL, NULL, NULL, 6800.00, NULL, '2019-07-01 05:00:00', '2019-07-24 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1752, 1215, 'monthly_rent', 7800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1753, 1218, 'monthly_rent', 7800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1754, 1220, 'monthly_rent', 7800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1755, 1221, 'monthly_rent', 7800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1756, 1230, 'monthly_rent', 7800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1757, 1233, 'monthly_rent', 7800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1758, 1130, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1759, 1131, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1760, 1140, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1761, 1142, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1762, 1144, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1763, 1147, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1764, 1148, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1765, 1149, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1766, 1150, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1767, 1151, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1768, 1152, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1769, 1153, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1770, 1156, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1771, 1157, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1772, 1158, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1773, 1159, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1774, 1160, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1775, 1161, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1776, 1162, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1777, 1163, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1778, 1164, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1779, 1165, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1780, 1166, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1781, 1168, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1782, 1170, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1783, 1171, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1784, 1172, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1785, 1173, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1786, 1174, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1787, 1175, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1788, 1177, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1789, 1178, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1790, 1179, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5420.85, 1200.00, 879.15, NULL, 0.00),
+(1797, 1265, 'sec_dep_rent', 14000.00, 'paid', NULL, NULL, 'cash', NULL, NULL, NULL, 14000.00, NULL, '2019-07-07 05:00:00', '2019-07-25 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1795, 1264, 'sec_dep_rent', 14000.00, 'paid', NULL, NULL, 'cash', NULL, NULL, NULL, 14000.00, NULL, '2019-01-21 06:00:00', '2019-07-25 08:10:51', NULL, NULL, NULL, NULL, NULL),
+(1796, 1264, 'advance_rent', 14000.00, 'paid', NULL, NULL, 'cash', NULL, NULL, NULL, 14000.00, NULL, '2019-01-21 06:00:00', '2019-07-25 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1798, 1265, 'advance_rent', 14000.00, 'paid', NULL, NULL, 'cash', NULL, NULL, NULL, 14000.00, NULL, '2019-07-07 05:00:00', '2019-07-25 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1799, 1266, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2019-05-31 05:00:00', '2019-05-31 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1800, 1266, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2019-05-31 05:00:00', '2019-05-31 05:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1801, 1266, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-05-31 05:00:00', '2019-05-31 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1802, 1267, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2019-05-20 05:00:00', '2019-05-20 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1803, 1267, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2019-05-20 05:00:00', '2019-05-20 05:00:00', 5360.85, 1560.00, 879.15, NULL, 0.00),
+(1804, 1267, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-05-20 05:00:00', '2019-05-20 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1805, 1268, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-08-05 05:00:00', '2017-08-05 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1806, 1268, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-08-05 05:00:00', '2017-08-05 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1807, 1269, 'sec_dep_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2016-05-20 05:00:00', '2016-05-20 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1808, 1269, 'advance_rent', 7800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7800.00, NULL, '2016-05-20 05:00:00', '2016-05-20 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1809, 1270, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-08-05 05:00:00', '2017-08-05 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1810, 1270, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2017-08-05 05:00:00', '2017-08-05 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1811, 1271, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 13600.00, NULL, '2019-03-18 05:00:00', '2019-03-18 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1812, 1271, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-03-18 05:00:00', '2019-03-18 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1813, 1271, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-03-18 05:00:00', '2019-03-18 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1814, 1272, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-04-16 05:00:00', '2018-04-16 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1815, 1272, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-04-16 05:00:00', '2018-04-16 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1816, 1272, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-04-16 05:00:00', '2018-04-16 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1817, 1273, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-09-18 05:00:00', '2018-09-18 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1818, 1273, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-09-18 05:00:00', '2018-09-18 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1819, 1273, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-09-18 05:00:00', '2018-09-18 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1820, 1274, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 13600.00, NULL, '2019-07-26 05:00:00', '2019-07-26 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1821, 1274, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-07-26 05:00:00', '2019-07-26 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1822, 1274, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-07-26 05:00:00', '2019-07-26 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1823, 1275, 'sec_dep_rent', 6000.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-07-27 05:00:00', '2018-07-27 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1824, 1275, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-07-27 05:00:00', '2018-07-27 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1825, 1275, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-07-27 05:00:00', '2018-07-27 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1826, 1276, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-06-21 05:00:00', '2018-06-21 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1827, 1276, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-06-21 05:00:00', '2018-06-21 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1828, 1276, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-06-21 05:00:00', '2018-06-21 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1829, 1277, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 13600.00, NULL, '2019-03-18 05:00:00', '2019-03-18 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1830, 1277, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-03-18 05:00:00', '2019-03-18 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1831, 1277, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-03-18 05:00:00', '2019-03-18 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1832, 1278, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-09-20 05:00:00', '2018-09-20 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1833, 1278, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-09-20 05:00:00', '2018-09-20 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1834, 1278, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-09-20 05:00:00', '2018-09-20 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1835, 1279, 'sec_dep_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-09-18 05:00:00', '2018-09-18 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1836, 1279, 'advance_rent', 6000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6000.00, NULL, '2018-09-18 05:00:00', '2018-09-18 05:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
+(1837, 1279, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-09-18 05:00:00', '2018-09-18 05:00:00', NULL, NULL, NULL, NULL, NULL),
+(1838, 1280, 'sec_dep_rent', 7800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-04 05:00:00', NULL, NULL, NULL, NULL, NULL, NULL),
+(1839, 1280, 'advance_rent', 7800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-04 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1840, 1280, 'sec_dep_utilities', 2000.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-08-04 05:00:00', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1660,12 +1900,10 @@ INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `
 -- Table structure for table `repairs`
 --
 
-DROP TABLE IF EXISTS `repairs`;
-CREATE TABLE IF NOT EXISTS `repairs` (
-  `repair_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `repairs` (
+  `repair_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`repair_id`)
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1674,18 +1912,15 @@ CREATE TABLE IF NOT EXISTS `repairs` (
 -- Table structure for table `representatives`
 --
 
-DROP TABLE IF EXISTS `representatives`;
-CREATE TABLE IF NOT EXISTS `representatives` (
-  `rep_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `representatives` (
+  `rep_id` int(10) UNSIGNED NOT NULL,
   `rep_owner_id` int(10) UNSIGNED DEFAULT NULL,
   `rep_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rep_relationship` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rep_mobile_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`rep_id`),
-  KEY `representatives_rep_owner_id_foreign` (`rep_owner_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1233 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `representatives`
@@ -1917,7 +2152,10 @@ INSERT INTO `representatives` (`rep_id`, `rep_owner_id`, `rep_name`, `rep_relati
 (1229, 1232, NULL, NULL, NULL, '2019-07-12 21:53:53', '2019-07-12 21:53:53'),
 (1230, 1233, NULL, NULL, NULL, '2019-07-12 21:55:49', '2019-07-12 21:55:49'),
 (1231, 1234, NULL, NULL, NULL, '2019-07-12 21:57:27', '2019-07-12 21:57:27'),
-(1232, 1235, NULL, NULL, NULL, '2019-07-12 21:59:01', '2019-07-12 21:59:01');
+(1232, 1235, NULL, NULL, NULL, '2019-07-12 21:59:01', '2019-07-12 21:59:01'),
+(1233, 1236, 'Nino Jacinto Calma', NULL, '00971506854576/onin_calma@yahoo.com', '2019-07-25 08:54:20', '2019-07-25 08:54:20'),
+(1234, 1237, NULL, NULL, NULL, '2019-07-25 09:02:44', '2019-07-25 09:02:44'),
+(1235, 1238, 'Maria Editha Gapuz', NULL, 'edith.gapuz@gmail.com', '2019-07-25 09:23:15', '2019-07-25 09:23:15');
 
 -- --------------------------------------------------------
 
@@ -1925,9 +2163,8 @@ INSERT INTO `representatives` (`rep_id`, `rep_owner_id`, `rep_name`, `rep_relati
 -- Table structure for table `residents`
 --
 
-DROP TABLE IF EXISTS `residents`;
-CREATE TABLE IF NOT EXISTS `residents` (
-  `resident_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `residents` (
+  `resident_id` int(10) UNSIGNED NOT NULL,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `middle_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1949,11 +2186,8 @@ CREATE TABLE IF NOT EXISTS `residents` (
   `img` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `primary_resident_id` int(10) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`resident_id`),
-  UNIQUE KEY `residents_email_address_unique` (`email_address`),
-  UNIQUE KEY `residents_mobile_number_unique` (`mobile_number`)
-) ENGINE=MyISAM AUTO_INCREMENT=1348 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `primary_resident_id` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `residents`
@@ -1967,8 +2201,8 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 (1039, 'Stella', 'Louvelle', 'Salvador', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 01:01:16', '2019-06-26 01:01:16', 1035),
 (1040, 'Santino Lino', 'L', 'Salvador', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 01:01:49', '2019-06-26 01:01:49', 1035),
 (1041, 'Hazel Mae', 'Fernandez', 'Doria', 'primary_resident', '1990-05-14', NULL, 'Filipino', 'M', NULL, NULL, 'hazel051490@yahoo.com', '09178518028', NULL, NULL, 'Calsib', 'Aguilar', 'Pangasinan', NULL, NULL, '2019-06-26 01:08:57', '2019-06-26 01:08:57', NULL),
-(1042, 'Necie', 'G', 'Taringting', 'primary_resident', '1989-01-15', NULL, 'Filipino', 'S', NULL, NULL, 'neciegombataringting@gmail.com', '09261141371', NULL, NULL, 'Jubasan', 'Mapanas', 'Northern Samar', NULL, NULL, '2019-06-26 01:16:59', '2019-06-26 01:16:59', NULL),
-(1043, 'Guilas', 'L', 'Kimberly Ann', 'primary_resident', '1999-11-05', NULL, 'Filipino', 'S', NULL, NULL, 'kimgls@icloud.com', '092482108521', NULL, NULL, 'Sta Maria Subd.', 'Mabalacat City', 'Pampanga', '2010', NULL, '2019-06-26 17:58:26', '2019-06-26 17:58:26', NULL),
+(1042, 'Necie', 'G', 'Taringting', 'primary_resident', '1989-01-15', NULL, 'Filipino', 'S', NULL, NULL, 'neciegombataringting@gmail.com', '09261141371', NULL, NULL, 'Jubasan', 'Mapanas', 'Northern Samar', NULL, NULL, '2019-06-26 01:16:59', NULL, NULL),
+(1043, 'Guilas', 'L', 'Kimberly Ann', 'primary_resident', '1999-11-05', NULL, 'Filipino', 'S', NULL, NULL, 'kimgls@icloud.com', '092482108521', NULL, NULL, 'Sta Maria Subd.', 'Mabalacat City', 'Pampanga', '2010', NULL, '2019-06-26 17:58:26', NULL, NULL),
 (1044, 'Jischiel Ane', NULL, 'Leonardo', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '091651669902', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 18:00:31', '2019-06-26 18:00:31', 1043),
 (1045, 'Andrea Rae Paula', NULL, 'Sison', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 18:02:10', '2019-06-26 18:02:10', 1043),
 (1046, 'Pauline Joyce', NULL, 'Castro', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09460185699', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 18:03:12', '2019-06-26 18:03:12', 1043),
@@ -1989,8 +2223,8 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 (1061, 'Linda', NULL, 'Subol', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 22:09:05', '2019-06-26 22:09:05', 1059),
 (1062, 'Leng', NULL, 'Subol', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 22:09:32', '2019-06-26 22:09:32', 1059),
 (1063, 'Leslie', NULL, 'Garcia', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 22:09:58', '2019-06-26 22:09:58', 1059),
-(1064, 'Fawaz', 'Moalammed', 'Alahmadi', 'primary_resident', '1995-12-10', NULL, 'Saudi', 'S', NULL, NULL, NULL, '09052988269', NULL, NULL, NULL, 'Maoinah', NULL, NULL, NULL, '2019-06-26 22:33:20', '2019-06-26 22:33:20', NULL),
-(1065, 'Khalid Mousa', 'Y', 'Alammari', 'primary_resident', '1991-11-10', NULL, 'Saudi', NULL, NULL, NULL, NULL, '09163307836', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 22:41:28', '2019-06-26 22:41:28', NULL),
+(1064, 'Fawaz', 'Moalammed', 'Alahmadi', 'primary_resident', '1995-12-10', NULL, 'Saudi', 'S', NULL, NULL, NULL, '09052988269', NULL, NULL, NULL, 'Maoinah', NULL, NULL, NULL, '2019-06-26 22:33:20', NULL, NULL),
+(1065, 'Khalid Mousa', 'Y', 'Alammari', 'primary_resident', '1991-11-10', NULL, 'Saudi', NULL, NULL, NULL, NULL, '09163307836', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 22:41:28', NULL, NULL),
 (1066, 'Abdalmalk', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 22:45:19', '2019-06-26 22:45:19', 1065),
 (1067, 'Muaadh', 'Omar', 'Maged', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-26 22:47:36', '2019-06-26 22:47:36', 1064),
 (1068, 'Angeline', 'P', 'Piñera', 'primary_resident', '1987-01-28', NULL, 'Filipino', 'M', NULL, NULL, 'cloudygel1990@gmail.com', '09288799043', NULL, NULL, 'Enst. Rembo', 'Makati', NULL, NULL, NULL, '2019-06-26 22:52:59', '2019-06-26 22:52:59', NULL),
@@ -2020,7 +2254,7 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 (1092, 'Editha', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 00:46:48', '2019-06-27 00:46:48', 1076),
 (1093, 'Juvy', 'B', 'Rivera', 'primary_resident', '1969-10-14', NULL, 'Filipino', 'M', NULL, NULL, NULL, '09176294425/09088157898', NULL, NULL, NULL, 'Angeles', 'Pampanga', NULL, NULL, '2019-06-27 00:47:24', '2019-06-27 00:47:24', NULL),
 (1094, 'Meredith', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 00:47:53', '2019-06-27 00:47:53', 1076),
-(1109, 'Led Ethelbert', 'F', 'Delos Trinos', 'primary_resident', '1971-01-02', NULL, 'Filipino', 'M', NULL, NULL, 'ifdelostrinos@yahoo.com', '09153844595', NULL, NULL, 'Brgy 12', 'Ladag', NULL, NULL, NULL, '2019-06-27 16:31:51', '2019-06-27 16:31:51', NULL),
+(1109, 'Led Ethelbert', 'F', 'Delos Trinos', 'primary_resident', '1971-01-02', NULL, 'Filipino', 'M', NULL, NULL, 'ifdelostrinos@yahoo.com', '09153844595', NULL, NULL, 'Brgy 12', 'Ladag', NULL, NULL, NULL, '2019-06-27 16:31:51', NULL, NULL),
 (1097, 'Celine', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 01:01:23', '2019-06-27 01:01:23', 1093),
 (1098, 'Rhoda', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 01:01:37', '2019-06-27 01:01:37', 1093),
 (1099, 'Ana', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 01:01:54', '2019-06-27 01:01:54', 1093),
@@ -2037,15 +2271,15 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 (1111, 'Vincent', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 16:34:01', '2019-06-27 16:34:01', 1109),
 (1112, 'Eva', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 16:34:29', '2019-06-27 16:34:29', 1109),
 (1113, 'Alna', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 16:35:16', '2019-06-27 16:35:16', 1109),
-(1114, 'Monica', 'E', 'Del Castillo', 'primary_resident', '1998-09-07', NULL, 'Filipino', 'S', NULL, NULL, 'monica_delcastillo@dlsu.edu.ph', '09175830907', NULL, NULL, 'San Roque', 'Tarlac', 'Tarlac', NULL, NULL, '2019-06-27 16:47:06', '2019-06-27 16:47:06', NULL),
+(1114, 'Monica', 'E', 'Del Castillo', 'primary_resident', '1998-09-07', NULL, 'Filipino', 'S', NULL, NULL, 'monica_delcastillo@dlsu.edu.ph', '09175830907', NULL, NULL, 'San Roque', 'Tarlac', 'Tarlac', NULL, NULL, '2019-06-27 16:47:06', NULL, NULL),
 (1115, 'Dime Carl', 'B', 'Tinio', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 16:49:42', '2019-06-27 16:49:42', 1114),
 (1116, 'Melvin', 'M', 'Elleran', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09157580905', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 16:50:47', '2019-06-27 16:50:47', 1114),
-(1117, 'Noresa', 'W', 'Bayado', 'primary_resident', '1983-11-15', NULL, 'Filipino', 'S', NULL, NULL, 'morezkim369@gmail,com', '09954412862', NULL, NULL, 'Rockwell', 'Makati', NULL, NULL, NULL, '2019-06-27 16:56:07', '2019-06-27 16:56:07', NULL),
+(1117, 'Noresa', 'W', 'Bayado', 'primary_resident', '1983-11-15', NULL, 'Filipino', 'S', NULL, NULL, 'morezkim369@gmail,com', '09954412862', NULL, NULL, 'Rockwell', 'Makati', NULL, NULL, NULL, '2019-06-27 16:56:07', NULL, NULL),
 (1118, 'Charlene', NULL, 'Bocales', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 16:58:47', '2019-06-27 16:58:47', 1117),
 (1119, 'Aeriel', 'Umalay', 'Bayani', 'primary_resident', '1993-11-04', NULL, 'Filipino', 'M', NULL, NULL, NULL, NULL, NULL, NULL, 'Molina ST. Alabang', 'Muntinlupa', NULL, NULL, NULL, '2019-06-27 17:08:16', '2019-06-27 17:08:16', NULL),
-(1120, 'Marilyn', 'B', 'Balacdao', 'primary_resident', '1981-03-12', NULL, 'Filipino', 'S', NULL, NULL, 'marilynbalacdao@gmail.com', '09504575298', NULL, NULL, 'Country Club Village', 'Baguio', 'Benguet', '2600', NULL, '2019-06-27 17:17:21', '2019-06-27 17:17:21', NULL),
+(1120, 'Marilyn', 'B', 'Balacdao', 'primary_resident', '1981-03-12', NULL, 'Filipino', 'S', NULL, NULL, 'marilynbalacdao@gmail.com', '09504575298', NULL, NULL, 'Country Club Village', 'Baguio', 'Benguet', '2600', NULL, '2019-06-27 17:17:21', NULL, NULL),
 (1121, 'Ivy Lita', 'L', 'Baguitan', 'primary_resident', '1987-06-21', NULL, 'Filipino', 'S', NULL, NULL, 'baguitan.ivylita@gmail.com', '09084115371', NULL, NULL, 'San Luis Village Km 2 Asin Road', 'Baguio', 'Benguet', '2600', NULL, '2019-06-27 17:23:28', '2019-06-27 17:23:28', NULL),
-(1122, 'Mark', 'Baraquil', 'Lascano', 'primary_resident', '1990-03-24', NULL, 'Filipino', 'M', NULL, NULL, 'Lascanomark@gmail.com', '09176570585', NULL, NULL, 'Carmencita', 'Florida Blanca', 'Pampanga', NULL, NULL, '2019-06-27 17:30:00', '2019-06-27 17:30:00', NULL),
+(1122, 'Mark', 'Baraquil', 'Lascano', 'primary_resident', '1990-03-24', NULL, 'Filipino', 'M', NULL, NULL, 'Lascanomark@gmail.com', '09176570585', NULL, NULL, 'Carmencita', 'Florida Blanca', 'Pampanga', NULL, NULL, '2019-06-27 17:30:00', NULL, NULL),
 (1123, 'Mark', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 17:32:48', '2019-06-27 17:32:48', 1122),
 (1124, 'JC', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 17:33:01', '2019-06-27 17:33:01', 1122),
 (1125, 'Jeff', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 17:33:15', '2019-06-27 17:33:15', 1122),
@@ -2055,7 +2289,7 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 (1129, 'Samantha', 'P', 'Arizala', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 17:44:56', '2019-06-27 17:44:56', 1126),
 (1130, 'Amber', 'P', 'Arizala', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 17:45:10', '2019-06-27 17:45:10', 1126),
 (1131, 'Rayan', 'T', 'Yagnmour', 'primary_resident', '2002-07-24', NULL, 'Saudi', 'S', NULL, NULL, 'princerayan.ry24@gmail.com', '09291307455', NULL, NULL, 'Felix Huertas St. Santa Cruz', 'Manila', NULL, NULL, NULL, '2019-06-27 17:56:57', '2019-06-27 17:56:57', NULL),
-(1132, 'Nathaniel', 'B', 'Ramos', 'primary_resident', '1992-09-26', NULL, 'Filipino', 'S', NULL, NULL, 'nathanielbramos@gmail.com', '09453264384', NULL, NULL, 'San Luis Village', 'Baguio', 'Benguet', '2600', NULL, '2019-06-27 18:03:19', '2019-06-27 18:03:19', NULL),
+(1132, 'Nathaniel', 'B', 'Ramos', 'primary_resident', '1992-09-26', NULL, 'Filipino', 'S', NULL, NULL, 'nathanielbramos@gmail.com', '09453264384', NULL, NULL, 'San Luis Village', 'Baguio', 'Benguet', '2600', NULL, '2019-06-27 18:03:19', NULL, NULL),
 (1133, 'Anri', NULL, 'Hiragi', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 18:05:21', '2019-06-27 18:05:21', 1132),
 (1134, 'Aiden Ryon', NULL, 'Hiragi', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 18:05:42', '2019-06-27 18:05:42', 1132),
 (1136, 'Archie', NULL, 'Ogbinar', 'primary_resident', '1980-01-25', NULL, 'Filipino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 18:16:21', '2019-06-27 18:16:21', NULL),
@@ -2079,7 +2313,7 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 (1154, 'Marius', NULL, 'Acerendo', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 18:38:48', '2019-06-27 18:38:48', 1152),
 (1155, 'Sarrah', NULL, 'Mendoza', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 18:39:06', '2019-06-27 18:39:06', 1152),
 (1156, 'Jhayne', 'O', 'Lomibao', 'primary_resident', '1992-05-16', NULL, 'Filipino', 'S', NULL, NULL, 'nyelomibae@yahoo.com', '09178121468', NULL, NULL, 'Santa Rosa', NULL, 'Laguna', NULL, NULL, '2019-06-27 18:43:05', '2019-06-27 18:43:05', NULL),
-(1157, 'Martin Clark', 'Mendoza', 'Nool', 'primary_resident', '1988-07-01', NULL, 'Filipino', 'M', NULL, NULL, 'christian.canlas9.cc64@gmail.com', '09469968536', NULL, NULL, 'Magaspac', 'Gerona', 'Tarlac', NULL, NULL, '2019-06-27 18:48:54', '2019-06-27 18:48:54', NULL),
+(1157, 'Martin Clark', 'Mendoza', 'Nool', 'primary_resident', '1988-07-01', NULL, 'Filipino', 'M', NULL, NULL, 'christian.canlas9.cc64@gmail.com', '09469968536', NULL, NULL, 'Magaspac', 'Gerona', 'Tarlac', NULL, NULL, '2019-06-27 18:48:54', NULL, NULL),
 (1158, 'Felix', NULL, 'Aganon Jr.', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 18:49:36', '2019-06-27 18:49:36', 1157),
 (1159, 'Christian', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 18:49:58', '2019-06-27 18:49:58', 1157),
 (1160, 'Soo Chul', NULL, 'Chun', 'primary_resident', '1970-12-24', NULL, 'South Korea', 'M', NULL, NULL, 'richardchun@gmail.com', '09063196498', NULL, NULL, 'East Rembo', 'Makati', NULL, NULL, NULL, '2019-06-27 18:55:26', '2019-06-27 18:55:26', NULL),
@@ -2091,7 +2325,7 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 (1166, 'Angelo', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 19:11:07', '2019-06-27 19:11:07', 1163),
 (1167, 'Arnold', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 19:11:40', '2019-06-27 19:11:40', 1163),
 (1168, 'Jaspher', NULL, 'NA', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 19:11:57', '2019-06-27 19:11:57', 1163),
-(1169, 'Marisa', 'U', 'Alfara', 'primary_resident', '1985-06-20', NULL, 'Filipino', 'S', NULL, NULL, 'marisa_alfara@yahoo.com', '09435419478', NULL, NULL, 'Zone VI Saturn Division Road Pawing', 'Palo Leyte', NULL, NULL, NULL, '2019-06-27 19:16:06', '2019-06-27 19:16:06', NULL),
+(1169, 'Marisa', 'U', 'Alfara', 'primary_resident', '1985-06-20', NULL, 'Filipino', 'S', NULL, NULL, 'marisa_alfara@yahoo.com', '09435419478', NULL, NULL, 'Zone VI Saturn Division Road Pawing', 'Palo Leyte', NULL, NULL, NULL, '2019-06-27 19:16:06', NULL, NULL),
 (1171, 'Mario', NULL, 'Tabiola', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 19:47:23', '2019-06-27 19:47:23', 1170),
 (1172, 'Charito', NULL, 'Tabiola', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 19:47:38', '2019-06-27 19:47:38', 1170),
 (1173, 'Jeffrey', NULL, 'Cornez', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-27 19:47:53', '2019-06-27 19:47:53', 1170),
@@ -2111,35 +2345,35 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 (1188, 'Ryne', NULL, 'Floresca', 'primary_resident', '1984-09-29', NULL, NULL, NULL, NULL, NULL, 'ryne.floresca@gmail.com', '0927-734-7225', NULL, NULL, 'Bradley', 'St.Downers Grove', 'Illinois', NULL, NULL, '2019-07-01 21:54:34', '2019-07-01 21:54:34', NULL),
 (1189, 'Geofrey', NULL, 'Pertudo', 'primary_resident', '1988-08-26', NULL, NULL, NULL, NULL, NULL, 'gpertudo27@gmail .com', '0917-7503-452', NULL, NULL, 'Pagon Sili', 'Aguilar', 'pangasinan', NULL, NULL, '2019-07-01 22:02:57', '2019-07-01 22:02:57', NULL),
 (1207, 'William Jr.', NULL, 'Crisology', 'primary_resident', '1988-11-10', NULL, NULL, NULL, NULL, NULL, NULL, '09175110590', NULL, NULL, '1-E Aguinaldo St. Faustina', 'San Bartolome', 'Quezon City', NULL, NULL, '2019-07-03 22:39:27', '2019-07-03 22:39:27', NULL),
-(1191, 'Ronald Allan', NULL, 'Guillermo', 'primary_resident', '1974-06-11', NULL, NULL, NULL, NULL, NULL, 'ral_jet@yahoo.com', '0917-803-0611', NULL, NULL, 'Doña Amada Ave.', 'Cabanatuan City', 'Nueva Ecija', NULL, NULL, '2019-07-01 22:32:29', '2019-07-01 22:32:29', NULL),
+(1191, 'Ronald Allan', NULL, 'Guillermo', 'primary_resident', '1974-06-11', NULL, NULL, NULL, NULL, NULL, 'ral_jet@yahoo.com', '0917-803-0611', NULL, NULL, 'Doña Amada Ave.', 'Cabanatuan City', 'Nueva Ecija', NULL, NULL, '2019-07-01 22:32:29', NULL, NULL),
 (1192, 'Avelina Santos', NULL, 'Santos Ronnie', 'primary_resident', '1961-11-12', NULL, NULL, NULL, NULL, NULL, 'ronsantos@gmail.com', '0917-704-2998', NULL, NULL, 'st,Angelo Subd,', 'Angeles City', 'Pampanga', NULL, NULL, '2019-07-01 22:53:02', '2019-07-01 22:53:02', NULL),
 (1193, 'Aries', NULL, 'Canlas', 'primary_resident', '1999-05-19', NULL, NULL, NULL, NULL, NULL, 'ariestonton@gmail.com', '0915-6373-091', NULL, NULL, NULL, 'Tarlac City', 'Tarlac', NULL, NULL, '2019-07-01 22:57:30', '2019-07-01 22:57:30', NULL),
 (1194, 'auditors', NULL, 'N/A', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-02 00:45:28', '2019-07-02 00:45:28', NULL),
 (1195, 'Lorenzo', NULL, 'Jeremy', 'primary_resident', '1978-08-12', NULL, NULL, NULL, NULL, NULL, 'jlc930@laposte.com', NULL, NULL, NULL, NULL, NULL, 'Paris', NULL, NULL, '2019-07-02 00:52:09', '2019-07-02 00:52:09', NULL),
 (1196, 'Prince', NULL, 'Liao', 'primary_resident', '1994-03-11', NULL, NULL, NULL, NULL, NULL, 'princeliao0012001@gmail.com', '0927-548-0749', NULL, NULL, 'Bagumbong', 'Caloocan City', NULL, NULL, NULL, '2019-07-02 00:57:52', '2019-07-02 00:57:52', NULL),
-(1197, 'Annie Michelle', NULL, 'Velasco', 'primary_resident', '1977-06-22', NULL, NULL, NULL, NULL, NULL, 'mitch062277@gmail.com', '0945-567-4584', NULL, NULL, 'Engineers Hill', 'Baguio City', NULL, NULL, NULL, '2019-07-03 18:30:40', '2019-07-03 18:30:40', NULL),
-(1198, 'Jaime', NULL, 'Castro', 'primary_resident', '1988-08-22', NULL, NULL, NULL, NULL, NULL, 'jamiecastro717@gmail.com', '0915-203-3641', NULL, NULL, 'Brgy M. roxas', 'Baguio City', NULL, NULL, NULL, '2019-07-03 19:59:32', '2019-07-03 19:59:32', NULL),
-(1199, 'Helen', NULL, 'Pavo', 'primary_resident', '1988-08-27', NULL, NULL, NULL, NULL, NULL, 'helen.pavo@yahoo.com', '0927-8448-454', NULL, NULL, NULL, 'Urdaneta City', NULL, NULL, NULL, '2019-07-03 20:01:53', '2019-07-03 20:01:53', NULL),
-(1200, 'Vincent', NULL, 'Passion', 'primary_resident', '1998-07-13', NULL, NULL, NULL, NULL, NULL, 'nickolpason13@gmail.com', '0945-459-0847', NULL, NULL, NULL, NULL, 'Ilocus sur', NULL, NULL, '2019-07-03 20:45:43', '2019-07-03 20:45:43', NULL),
-(1201, 'Kimberly', NULL, 'Jabonillo', 'primary_resident', '1993-10-30', NULL, NULL, NULL, NULL, NULL, 'kim_kat30@yahoo.com', '0999-103-9983', NULL, NULL, NULL, 'Santa Rosa', 'Nueva Ecija', NULL, NULL, '2019-07-03 20:49:08', '2019-07-03 20:49:08', NULL),
-(1202, 'Janelle', NULL, 'Lim', 'primary_resident', '1982-09-15', NULL, NULL, 'M', NULL, NULL, 'enthusiasticcoolweird@yahoo.com', '0916-707-5825', NULL, NULL, NULL, NULL, 'Quezon City', NULL, NULL, '2019-07-03 20:52:29', '2019-07-03 20:52:29', NULL),
-(1203, 'Garay', NULL, 'Victoriano', 'primary_resident', '1970-11-21', NULL, NULL, NULL, NULL, NULL, 'garayvictor22@yahoo.com', '0917-877-5597', NULL, NULL, 'Upper Rock Quarry', 'Baguio City', NULL, NULL, NULL, '2019-07-03 20:55:32', '2019-07-03 20:55:32', NULL),
-(1204, 'Jet Anthony', NULL, 'Neric', 'primary_resident', '1964-07-31', NULL, NULL, 'M', NULL, NULL, 'jetneric@gmail.com', '0917-8198-864', NULL, NULL, NULL, NULL, 'Quezon city', NULL, NULL, '2019-07-03 21:00:27', '2019-07-03 21:00:27', NULL),
-(1205, 'Nikki', NULL, 'Villanueva', 'primary_resident', '2001-09-17', NULL, NULL, NULL, NULL, NULL, 'nikkivilanueva88@gmail.com', '0950-881-3817', NULL, NULL, NULL, 'Bayambang', 'Pangasinan', NULL, NULL, '2019-07-03 21:03:00', '2019-07-03 21:03:00', NULL),
-(1206, 'Mikha', NULL, 'Hizkia', 'primary_resident', '1990-12-20', NULL, NULL, NULL, NULL, NULL, 'mikhahizuia@gmail.com', '9771745572', NULL, NULL, NULL, NULL, 'Indonesia', NULL, NULL, '2019-07-03 21:15:51', '2019-07-03 21:15:51', NULL),
-(1208, 'Nympha', NULL, 'Mandgan', 'primary_resident', '1994-01-17', NULL, NULL, NULL, NULL, NULL, NULL, '0926-0294-328', NULL, NULL, 'Amparo Heights', 'Baguio City', NULL, NULL, NULL, '2019-07-03 22:55:00', '2019-07-03 22:55:00', NULL),
+(1197, 'Annie Michelle', NULL, 'Velasco', 'primary_resident', '1977-06-22', NULL, NULL, NULL, NULL, NULL, 'mitch062277@gmail.com', '0945-567-4584', NULL, NULL, 'Engineers Hill', 'Baguio City', NULL, NULL, NULL, '2019-07-03 18:30:40', NULL, NULL),
+(1198, 'Jaime', NULL, 'Castro', 'primary_resident', '1988-08-22', NULL, NULL, NULL, NULL, NULL, 'jamiecastro717@gmail.com', '0915-203-3641', NULL, NULL, 'Brgy M. roxas', 'Baguio City', NULL, NULL, NULL, '2019-07-03 19:59:32', NULL, NULL),
+(1199, 'Helen', NULL, 'Pavo', 'primary_resident', '1988-08-27', NULL, NULL, NULL, NULL, NULL, 'helen.pavo@yahoo.com', '0927-8448-454', NULL, NULL, NULL, 'Urdaneta City', NULL, NULL, NULL, '2019-07-03 20:01:53', NULL, NULL),
+(1200, 'Vincent', NULL, 'Passion', 'primary_resident', '1998-07-13', NULL, NULL, NULL, NULL, NULL, 'nickolpason13@gmail.com', '0945-459-0847', NULL, NULL, NULL, NULL, 'Ilocus sur', NULL, NULL, '2019-07-03 20:45:43', NULL, NULL),
+(1201, 'Kimberly', NULL, 'Jabonillo', 'primary_resident', '1993-10-30', NULL, NULL, NULL, NULL, NULL, 'kim_kat30@yahoo.com', '0999-103-9983', NULL, NULL, NULL, 'Santa Rosa', 'Nueva Ecija', NULL, NULL, '2019-07-03 20:49:08', NULL, NULL),
+(1202, 'Janelle', NULL, 'Lim', 'primary_resident', '1982-09-15', NULL, NULL, 'M', NULL, NULL, 'enthusiasticcoolweird@yahoo.com', '0916-707-5825', NULL, NULL, NULL, NULL, 'Quezon City', NULL, NULL, '2019-07-03 20:52:29', NULL, NULL),
+(1203, 'Garay', NULL, 'Victoriano', 'primary_resident', '1970-11-21', NULL, NULL, NULL, NULL, NULL, 'garayvictor22@yahoo.com', '0917-877-5597', NULL, NULL, 'Upper Rock Quarry', 'Baguio City', NULL, NULL, NULL, '2019-07-03 20:55:32', NULL, NULL),
+(1204, 'Jet Anthony', NULL, 'Neric', 'primary_resident', '1964-07-31', NULL, NULL, 'M', NULL, NULL, 'jetneric@gmail.com', '0917-8198-864', NULL, NULL, NULL, NULL, 'Quezon city', NULL, NULL, '2019-07-03 21:00:27', NULL, NULL),
+(1205, 'Nikki', NULL, 'Villanueva', 'primary_resident', '2001-09-17', NULL, NULL, NULL, NULL, NULL, 'nikkivilanueva88@gmail.com', '0950-881-3817', NULL, NULL, NULL, 'Bayambang', 'Pangasinan', NULL, NULL, '2019-07-03 21:03:00', NULL, NULL),
+(1206, 'Mikha', NULL, 'Hizkia', 'primary_resident', '1990-12-20', NULL, NULL, NULL, NULL, NULL, 'mikhahizuia@gmail.com', '9771745572', NULL, NULL, NULL, NULL, 'Indonesia', NULL, NULL, '2019-07-03 21:15:51', NULL, NULL),
+(1208, 'Nympha', NULL, 'Mandgan', 'primary_resident', '1994-01-17', NULL, NULL, NULL, NULL, NULL, NULL, '0926-0294-328', NULL, NULL, 'Amparo Heights', 'Baguio City', NULL, NULL, NULL, '2019-07-03 22:55:00', NULL, NULL),
 (1209, 'Kyeongho', NULL, 'Shin', 'primary_resident', '1996-02-12', NULL, NULL, NULL, NULL, NULL, 'tlsrudgh7@gmail.com', '09055426816', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-05 17:19:01', '2019-07-05 17:19:01', NULL),
-(1211, 'David', NULL, 'Harris', 'primary_resident', '1942-01-07', NULL, 'Australian', NULL, NULL, NULL, 'thelovelydavid42@gmail.com', '9958111780', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-05 19:28:51', '2019-07-05 19:28:51', NULL),
-(1212, 'Kyna Abigail', NULL, 'Sobrevega', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-05 22:01:28', '2019-07-05 22:01:28', NULL),
-(1213, 'Gian Tricia', NULL, 'Mauricio', 'primary_resident', '1998-11-12', NULL, NULL, NULL, NULL, NULL, 'exiliume@yahoo.com', '0999-4070-193', NULL, NULL, 'St.Goldenville Subd.', 'cab.City', 'Nueva Ecija', NULL, NULL, '2019-07-05 22:59:50', '2019-07-05 22:59:50', NULL),
-(1214, 'Mariel', 'P.', 'Mejia', 'primary_resident', '2000-04-23', NULL, NULL, NULL, NULL, NULL, 'marielmayeng@icloud.com', '0926-3401-373', NULL, NULL, 'Sta ,Rosa', 'Bangued', 'Abra', NULL, NULL, '2019-07-05 23:04:40', '2019-07-05 23:04:40', NULL),
+(1211, 'David', NULL, 'Harris', 'primary_resident', '1942-01-07', NULL, 'Australian', NULL, NULL, NULL, 'thelovelydavid42@gmail.com', '9958111780', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-05 19:28:51', NULL, NULL),
+(1212, 'Kyna Abigail', NULL, 'Sobrevega', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-05 22:01:28', NULL, NULL),
+(1213, 'Gian Tricia', NULL, 'Mauricio', 'primary_resident', '1998-11-12', NULL, NULL, NULL, NULL, NULL, 'exiliume@yahoo.com', '0999-4070-193', NULL, NULL, 'St.Goldenville Subd.', 'cab.City', 'Nueva Ecija', NULL, NULL, '2019-07-05 22:59:50', NULL, NULL),
+(1214, 'Mariel', 'P.', 'Mejia', 'primary_resident', '2000-04-23', NULL, NULL, NULL, NULL, NULL, 'marielmayeng@icloud.com', '0926-3401-373', NULL, NULL, 'Sta ,Rosa', 'Bangued', 'Abra', NULL, NULL, '2019-07-05 23:04:40', NULL, NULL),
 (1215, 'Seyedthabibi', NULL, 'Nikabulin', 'primary_resident', '1999-09-29', NULL, NULL, NULL, NULL, NULL, NULL, '0936-674-7152', NULL, NULL, 'Bluehomes', 'zamboanga City', NULL, NULL, NULL, '2019-07-05 23:14:44', '2019-07-05 23:14:44', NULL),
 (1216, 'Alvin', NULL, 'Curpuz', 'primary_resident', '2000-12-08', NULL, NULL, NULL, NULL, NULL, NULL, '0927-449-6821', NULL, NULL, 'Carmen park Subd.', 'Cabanatuan City', 'Nueva Ecija', NULL, NULL, '2019-07-05 23:19:17', '2019-07-05 23:19:17', NULL),
 (1217, 'David Johnson', NULL, 'Dancel', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, 'daviddancel32@gmail.com', '0908-396-0790', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-05 23:30:47', '2019-07-05 23:30:47', NULL),
 (1218, 'Mart Noel', NULL, 'Rillorta', 'primary_resident', '2018-06-09', NULL, NULL, NULL, NULL, NULL, NULL, '0918-547-2187', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-05 23:52:05', '2019-07-05 23:52:05', NULL),
 (1219, 'jhon carlo', NULL, 'Opulencia', 'primary_resident', '1996-04-25', NULL, NULL, NULL, NULL, NULL, 'opulenciajohncarlo@gmail.com', '0936-941-5819', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-05 23:59:42', '2019-07-05 23:59:42', NULL),
 (1220, 'Aubrey', NULL, 'Bayya', 'primary_resident', '1999-02-26', NULL, NULL, NULL, NULL, NULL, NULL, '0905-662-6856', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:03:32', '2019-07-06 00:03:32', NULL),
-(1221, 'Cherry Mae', NULL, 'Palod', 'primary_resident', '1983-12-22', NULL, NULL, NULL, NULL, NULL, 'cherry_mae12@yahoo.com', '0915-7687-130', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:07:51', '2019-07-06 00:07:51', NULL),
+(1221, 'Cherry Mae', NULL, 'Palod', 'primary_resident', '1983-12-22', NULL, NULL, NULL, NULL, NULL, 'cherry_mae12@yahoo.com', '0915-7687-130', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:07:51', NULL, NULL),
 (1222, 'Lorenzo', NULL, 'Jeremy', 'primary_resident', '1978-12-08', NULL, NULL, NULL, NULL, NULL, 'jlc930@laposte.net', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:12:37', '2019-07-06 00:12:37', NULL),
 (1223, 'Charlene mae', NULL, 'pura', 'primary_resident', '1997-03-13', NULL, NULL, NULL, NULL, NULL, 'charlenemaepura@gmail.com', '0956-518-8821', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:17:15', '2019-07-06 00:17:15', NULL),
 (1224, 'Nerissa', NULL, 'Caligtan', 'primary_resident', '1996-10-25', NULL, NULL, NULL, NULL, NULL, 'nerissa.caligtan@gmail.com', '0946-140-2310', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:30:45', '2019-07-06 00:30:45', NULL),
@@ -2148,58 +2382,58 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 (1227, 'Nicole', NULL, 'Chiong', 'primary_resident', '1999-10-26', NULL, NULL, NULL, NULL, NULL, 'nicolechiong977@gmail.com', '0906-2122-858', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:44:37', '2019-07-06 00:44:37', NULL),
 (1228, 'Kim', NULL, 'Manarang', 'primary_resident', '1998-02-11', NULL, NULL, NULL, NULL, NULL, NULL, '0950-748-4702', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:48:33', '2019-07-06 00:48:33', NULL),
 (1229, 'louel mattew', NULL, 'Lagasca', 'primary_resident', '1998-08-02', NULL, NULL, NULL, NULL, NULL, 'lmdl.e12@gmail.com', '0915-205-7397', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-06 00:53:59', '2019-07-06 00:53:59', NULL),
-(1230, 'Stephen', NULL, 'Que', 'primary_resident', '1999-11-27', NULL, NULL, NULL, NULL, NULL, 'stephenque2yahoo.com', '0917-717-7586', NULL, NULL, 'Quezon Ave.', 'Vigan', 'Ilocos Sur', NULL, NULL, '2019-07-10 01:05:54', '2019-07-10 01:05:54', NULL),
-(1231, 'James Erdan', NULL, 'Dela Cruz', 'primary_resident', '0199-09-16', NULL, NULL, NULL, NULL, NULL, NULL, '0917-507-7633', NULL, NULL, NULL, 'San Pedro Sur', 'Vigan City', NULL, NULL, '2019-07-10 19:24:48', '2019-07-10 19:24:48', NULL),
-(1232, 'Roxxette', NULL, 'Delim', 'primary_resident', '1999-11-24', NULL, NULL, NULL, NULL, NULL, 'roxxettedelim24@gmail.com', '0945-583-3721', NULL, NULL, NULL, 'san carlos City', 'Pangasinan', NULL, NULL, '2019-07-11 23:32:44', '2019-07-11 23:32:44', NULL),
+(1230, 'Stephen', NULL, 'Que', 'primary_resident', '1999-11-27', NULL, NULL, NULL, NULL, NULL, 'stephenque2yahoo.com', '0917-717-7586', NULL, NULL, 'Quezon Ave.', 'Vigan', 'Ilocos Sur', NULL, NULL, '2019-07-10 01:05:54', NULL, NULL),
+(1231, 'James Erdan', NULL, 'Dela Cruz', 'primary_resident', '0199-09-16', NULL, NULL, NULL, NULL, NULL, NULL, '0917-507-7633', NULL, NULL, NULL, 'San Pedro Sur', 'Vigan City', NULL, NULL, '2019-07-10 19:24:48', NULL, NULL),
+(1232, 'Roxxette', NULL, 'Delim', 'primary_resident', '1999-11-24', NULL, NULL, NULL, NULL, NULL, 'roxxettedelim24@gmail.com', '0945-583-3721', NULL, NULL, NULL, 'san carlos City', 'Pangasinan', NULL, NULL, '2019-07-11 23:32:44', NULL, NULL),
 (1233, 'Maria', NULL, 'Pelagio', 'primary_resident', '1970-11-06', NULL, NULL, NULL, NULL, NULL, NULL, '0939-241-7744', NULL, NULL, 'Poro Cus San', 'Fernando City', 'La Union', NULL, NULL, '2019-07-16 17:06:12', '2019-07-16 17:06:12', NULL),
-(1235, 'Ana', 'Heidee', 'Dela Pena', 'primary_resident', '1999-02-22', NULL, NULL, NULL, NULL, NULL, NULL, '0977-175-7968', NULL, NULL, 'Camella Homes', 'Montinlupa', NULL, NULL, NULL, '2019-07-16 18:51:43', '2019-07-16 18:51:43', NULL),
+(1235, 'Ana', 'Heidee', 'Dela Pena', 'primary_resident', '1999-02-22', NULL, NULL, NULL, NULL, NULL, NULL, '0977-175-7968', NULL, NULL, 'Camella Homes', 'Montinlupa', NULL, NULL, NULL, '2019-07-16 18:51:43', NULL, NULL),
 (1236, 'Patricia Moraga', 'Verjo', 'Geronimo', 'primary_resident', '1999-06-14', NULL, NULL, NULL, NULL, NULL, 'pmica.moraga@yahoo.com', '09152986403', NULL, NULL, NULL, 'Palali Alaminos', 'Pangasinan', NULL, NULL, '2019-07-16 18:58:14', '2019-07-16 18:58:14', NULL),
-(1237, 'Giovanna Mina', NULL, 'Ramos', 'primary_resident', '2000-01-17', NULL, NULL, NULL, NULL, NULL, 'giovannaminana@gmail.com', '0999-8567-907', NULL, NULL, NULL, 'Bangued', 'Abra', NULL, NULL, '2019-07-16 19:02:51', '2019-07-16 19:02:51', NULL),
+(1237, 'Giovanna Mina', NULL, 'Ramos', 'primary_resident', '2000-01-17', NULL, NULL, NULL, NULL, NULL, 'giovannaminana@gmail.com', '0999-8567-907', NULL, NULL, NULL, 'Bangued', 'Abra', NULL, NULL, '2019-07-16 19:02:51', NULL, NULL),
 (1238, 'Christine Joy', NULL, 'Gannaban', 'primary_resident', '1997-12-25', NULL, NULL, NULL, NULL, NULL, NULL, '0905-465-3500', NULL, NULL, 'Cabuluan West', 'balesteros', 'Cagayan', NULL, NULL, '2019-07-16 19:07:14', '2019-07-16 19:07:14', NULL),
-(1239, 'Jeremiah Silva', NULL, 'Blah Khalid', 'primary_resident', '1998-12-16', NULL, NULL, NULL, NULL, NULL, 'jeremiahciprianosilva16@gmail.com', '0965-571-6247', NULL, NULL, NULL, 'talavera', 'Nueva Ecija', NULL, NULL, '2019-07-16 19:14:47', '2019-07-16 19:14:47', NULL),
+(1239, 'Jeremiah Silva', NULL, 'Blah Khalid', 'primary_resident', '1998-12-16', NULL, NULL, NULL, NULL, NULL, 'jeremiahciprianosilva16@gmail.com', '0965-571-6247', NULL, NULL, NULL, 'talavera', 'Nueva Ecija', NULL, NULL, '2019-07-16 19:14:47', NULL, NULL),
 (1240, 'Anne Claudettte', NULL, 'Manahan', 'primary_resident', '1999-02-08', NULL, NULL, NULL, NULL, NULL, 'ac.manahan8@yahoo.com', '0906-502-6705', NULL, NULL, 'mataas na kahoy gen', 'mamerto natividad', 'Nueva Ecija', NULL, NULL, '2019-07-16 19:23:57', '2019-07-16 19:23:57', NULL),
 (1241, 'Ana Marie', 'NA', 'De Guia', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-16 19:24:59', '2019-07-16 19:24:59', 1240),
 (1242, 'Kara', NULL, 'Dango', 'primary_resident', '1999-05-02', NULL, NULL, NULL, NULL, NULL, 'kharra.dango@gmail.com', '0995-599-2331', NULL, NULL, 'Poblacion East', 'Lagawe', 'Ifugao', NULL, NULL, '2019-07-16 19:30:24', '2019-07-16 19:30:24', NULL),
-(1243, 'Ilena Marie', NULL, 'Quiazon', 'primary_resident', '1997-04-04', NULL, NULL, NULL, NULL, NULL, 'ilenamrq04@gmail.com', '0956-720-8589', NULL, NULL, 'sta.ana', 'Manila', NULL, NULL, NULL, '2019-07-16 19:34:32', '2019-07-16 19:34:32', NULL),
-(1244, 'Elyza Carla', NULL, 'Rosario', 'primary_resident', '1997-09-27', NULL, NULL, NULL, NULL, NULL, 'elyzacarla027@gmail.com', '09179292208', NULL, NULL, NULL, 'Villasis', 'Pangasinan', NULL, NULL, '2019-07-16 19:38:06', '2019-07-16 19:38:06', NULL),
-(1245, 'Gladys', NULL, 'Acosta', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-16 19:39:37', '2019-07-16 19:39:37', 1244),
-(1246, 'Dave Angelo', NULL, 'Cabalteja', 'primary_resident', '1996-09-06', NULL, NULL, NULL, NULL, NULL, 'AwesomeDryy2gmail.com', '0916-437-6941', NULL, NULL, 'Paoy', NULL, 'Ilocus Norte', NULL, NULL, '2019-07-16 19:43:56', '2019-07-16 19:43:56', NULL),
-(1247, 'Patrick', NULL, 'Laguna', 'primary_resident', '1996-11-10', NULL, NULL, NULL, NULL, NULL, 'BRIDES6@Gmail.com', '0919-694-9954', NULL, NULL, 'Ortega H-way Santiago Norte City', 'San Fernando', 'La Union', NULL, NULL, '2019-07-16 19:53:46', '2019-07-16 19:53:46', NULL),
-(1248, 'Cliqou', NULL, 'Ukeje', 'primary_resident', '1990-12-25', NULL, NULL, NULL, NULL, NULL, 'ukejeh94@gmail.com', '09953367446', NULL, NULL, NULL, 'Nigerian', 'Africa', NULL, NULL, '2019-07-16 22:25:43', '2019-07-16 22:25:43', NULL),
-(1249, 'Michelle Valerie', NULL, 'Uy', 'primary_resident', '1989-12-08', NULL, NULL, NULL, NULL, NULL, 'michellevalerieuy@gmail.com', '09175064805', NULL, NULL, 'Legazpi st', 'makati City ph1229', NULL, NULL, NULL, '2019-07-16 22:30:10', '2019-07-16 22:30:10', NULL),
+(1243, 'Ilena Marie', NULL, 'Quiazon', 'primary_resident', '1997-04-04', NULL, NULL, NULL, NULL, NULL, 'ilenamrq04@gmail.com', '0956-720-8589', NULL, NULL, 'sta.ana', 'Manila', NULL, NULL, NULL, '2019-07-16 19:34:32', NULL, NULL),
+(1244, 'Elyza Carla', NULL, 'Rosario', 'primary_resident', '1997-09-27', NULL, NULL, NULL, NULL, NULL, 'elyzacarla027@gmail.com', '09179292208', NULL, NULL, NULL, 'Villasis', 'Pangasinan', NULL, NULL, '2019-07-16 19:38:06', NULL, NULL),
+(1245, 'Gladys', NULL, 'Acosta', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-16 19:39:37', NULL, 1244),
+(1246, 'Dave Angelo', NULL, 'Cabalteja', 'primary_resident', '1996-09-06', NULL, NULL, NULL, NULL, NULL, 'AwesomeDryy2gmail.com', '0916-437-6941', NULL, NULL, 'Paoy', NULL, 'Ilocus Norte', NULL, NULL, '2019-07-16 19:43:56', NULL, NULL),
+(1247, 'Patrick', NULL, 'Laguna', 'primary_resident', '1996-11-10', NULL, NULL, NULL, NULL, NULL, 'BRIDES6@Gmail.com', '0919-694-9954', NULL, NULL, 'Ortega H-way Santiago Norte City', 'San Fernando', 'La Union', NULL, NULL, '2019-07-16 19:53:46', NULL, NULL),
+(1248, 'Cliqou', NULL, 'Ukeje', 'primary_resident', '1990-12-25', NULL, NULL, NULL, NULL, NULL, 'ukejeh94@gmail.com', '09953367446', NULL, NULL, NULL, 'Nigerian', 'Africa', NULL, NULL, '2019-07-16 22:25:43', NULL, NULL),
+(1249, 'Michelle Valerie', NULL, 'Uy', 'primary_resident', '1989-12-08', NULL, NULL, NULL, NULL, NULL, 'michellevalerieuy@gmail.com', '09175064805', NULL, NULL, 'Legazpi st', 'makati City ph1229', NULL, NULL, NULL, '2019-07-16 22:30:10', NULL, NULL),
 (1251, 'Melissa', NULL, 'Rivera', 'primary_resident', '1993-05-01', NULL, NULL, NULL, NULL, NULL, 'semperfidelis289@gmail.com', '0919-491-6146', NULL, NULL, 'Bulanao Tabuk', 'Kalinga', NULL, NULL, NULL, '2019-07-17 00:22:31', '2019-07-17 00:22:31', NULL),
-(1252, 'Honey', 'Gheanne', 'Marra', 'primary_resident', '1999-11-23', NULL, NULL, NULL, NULL, NULL, 'honeygheanne@gmail.com', '0945-761-4181', NULL, NULL, 'Manaoag', 'Pangasinan', NULL, NULL, NULL, '2019-07-17 00:34:53', '2019-07-17 00:34:53', NULL),
-(1253, 'Jeco', NULL, 'Carabit', 'primary_resident', '1998-11-26', NULL, NULL, NULL, NULL, NULL, 'jeco.carabit26@gmail.com', '0929-181-0740', NULL, NULL, NULL, 'Sub,Iba', 'Zambales', NULL, NULL, '2019-07-17 00:38:28', '2019-07-17 00:38:28', NULL),
-(1254, 'Rey Christian', NULL, 'Dolor', 'primary_resident', '1998-08-04', NULL, NULL, NULL, NULL, NULL, 'redolorrrrr@gmail.com', '0916-611-1066', NULL, NULL, 'TanayTay', 'Alaminos City', 'Pangasinan', NULL, NULL, '2019-07-17 00:42:00', '2019-07-17 00:42:00', NULL),
-(1255, 'Jan Ronald', NULL, 'Patricio', 'primary_resident', '2000-06-06', NULL, NULL, NULL, NULL, NULL, NULL, '0933-874-2474', NULL, NULL, NULL, 'Urdaneta City', NULL, NULL, NULL, '2019-07-17 00:45:36', '2019-07-17 00:45:36', NULL),
-(1256, 'Gnyneth', 'Jemina', 'De Vera', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, 'deveragnwyneth@yahoo.com.ph', '0905-250-0011', NULL, NULL, 'Bliss village', 'Illagan', 'Isabela', NULL, NULL, '2019-07-17 00:54:01', '2019-07-17 00:54:01', NULL),
-(1257, 'Benjamin', NULL, 'Orencia', 'primary_resident', '1998-02-19', NULL, NULL, NULL, NULL, NULL, 'benjo.orencia@gmail.com', '0956-415-2813/09509992657', NULL, NULL, NULL, 'Agoo', 'La Union', NULL, NULL, '2019-07-17 00:57:19', '2019-07-17 00:57:19', NULL),
+(1252, 'Honey', 'Gheanne', 'Marra', 'primary_resident', '1999-11-23', NULL, NULL, NULL, NULL, NULL, 'honeygheanne@gmail.com', '0945-761-4181', NULL, NULL, 'Manaoag', 'Pangasinan', NULL, NULL, NULL, '2019-07-17 00:34:53', NULL, NULL),
+(1253, 'Jeco', NULL, 'Carabit', 'primary_resident', '1998-11-26', NULL, NULL, NULL, NULL, NULL, 'jeco.carabit26@gmail.com', '0929-181-0740', NULL, NULL, NULL, 'Sub,Iba', 'Zambales', NULL, NULL, '2019-07-17 00:38:28', NULL, NULL),
+(1254, 'Rey Christian', NULL, 'Dolor', 'primary_resident', '1998-08-04', NULL, NULL, NULL, NULL, NULL, 'redolorrrrr@gmail.com', '0916-611-1066', NULL, NULL, 'TanayTay', 'Alaminos City', 'Pangasinan', NULL, NULL, '2019-07-17 00:42:00', NULL, NULL),
+(1255, 'Jan Ronald', NULL, 'Patricio', 'primary_resident', '2000-06-06', NULL, NULL, NULL, NULL, NULL, NULL, '0933-874-2474', NULL, NULL, NULL, 'Urdaneta City', NULL, NULL, NULL, '2019-07-17 00:45:36', NULL, NULL),
+(1256, 'Gnyneth', 'Jemina', 'De Vera', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, 'deveragnwyneth@yahoo.com.ph', '0905-250-0011', NULL, NULL, 'Bliss village', 'Illagan', 'Isabela', NULL, NULL, '2019-07-17 00:54:01', NULL, NULL),
+(1257, 'Benjamin', NULL, 'Orencia', 'primary_resident', '1998-02-19', NULL, NULL, NULL, NULL, NULL, 'benjo.orencia@gmail.com', '0956-415-2813/09509992657', NULL, NULL, NULL, 'Agoo', 'La Union', NULL, NULL, '2019-07-17 00:57:19', NULL, NULL),
 (1258, 'Daryl', NULL, 'Chua', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-17 00:59:11', '2019-07-17 00:59:11', 1257),
-(1259, 'Romnie', NULL, 'Soriano', 'primary_resident', '2000-11-04', NULL, NULL, NULL, NULL, NULL, NULL, '0999-418-3489', NULL, NULL, 'Batakil', 'Pozorrubio', 'Pangasinan', NULL, NULL, '2019-07-17 01:02:08', '2019-07-17 01:02:08', NULL),
+(1259, 'Romnie', NULL, 'Soriano', 'primary_resident', '2000-11-04', NULL, NULL, NULL, NULL, NULL, NULL, '0999-418-3489', NULL, NULL, 'Batakil', 'Pozorrubio', 'Pangasinan', NULL, NULL, '2019-07-17 01:02:08', NULL, NULL),
 (1260, 'Kate Aubrey', NULL, 'Tandoc', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-17 01:04:30', '2019-07-17 01:04:30', 1259),
-(1261, 'Richelle Faye', NULL, 'Lacanlale', 'primary_resident', '1998-12-01', NULL, NULL, NULL, NULL, NULL, 'rche.lacanlale@gmail.com', '0975-577-6599', NULL, NULL, 'Soldiers Hill', 'Caloocan City', NULL, NULL, NULL, '2019-07-17 01:06:26', '2019-07-17 01:06:26', NULL),
-(1262, 'Nour Aisha', NULL, 'Mahir', 'primary_resident', '1977-07-29', NULL, NULL, NULL, NULL, NULL, 'seventeen_purple17@gmail.com', '0927-878-4257', NULL, NULL, 'Fields residentces', 'Sucat', 'Paranaque', NULL, NULL, '2019-07-17 01:08:51', '2019-07-17 01:08:51', NULL),
-(1263, 'Caitlin Jenelle', NULL, 'Artates', 'primary_resident', '1998-06-30', NULL, NULL, NULL, NULL, NULL, 'cj.artates@gmail.com', '0999-991-9207', NULL, NULL, 'San pedro 5,', 'Pasong Tamo', 'Quezon City', NULL, NULL, '2019-07-17 18:28:42', '2019-07-17 18:28:42', NULL),
-(1264, 'Cynder Galle', NULL, 'Gonzales', 'primary_resident', '1999-10-17', NULL, NULL, 'S', NULL, NULL, 'gonzalescyndergalle@gmail.com', '0927-976-1657', NULL, NULL, 'Pinangaan', 'Jaen', 'Nueva Ecija', NULL, NULL, '2019-07-18 22:10:25', '2019-07-18 22:10:25', NULL),
-(1265, 'Jeralmae', NULL, 'Paquiz', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-18 22:14:08', '2019-07-18 22:14:08', 1264);
-INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`, `type_of_resident`, `birthdate`, `gender`, `nationality`, `civil_status`, `ethnicity`, `id_info`, `email_address`, `mobile_number`, `telephone_number`, `house_number`, `barangay`, `municipality`, `province`, `zip`, `img`, `created_at`, `updated_at`, `primary_resident_id`) VALUES
+(1261, 'Richelle Faye', NULL, 'Lacanlale', 'primary_resident', '1998-12-01', NULL, NULL, NULL, NULL, NULL, 'rche.lacanlale@gmail.com', '0975-577-6599', NULL, NULL, 'Soldiers Hill', 'Caloocan City', NULL, NULL, NULL, '2019-07-17 01:06:26', NULL, NULL),
+(1262, 'Nour Aisha', NULL, 'Mahir', 'primary_resident', '1977-07-29', NULL, NULL, NULL, NULL, NULL, 'seventeen_purple17@gmail.com', '0927-878-4257', NULL, NULL, 'Fields residentces', 'Sucat', 'Paranaque', NULL, NULL, '2019-07-17 01:08:51', NULL, NULL),
+(1263, 'Caitlin Jenelle', NULL, 'Artates', 'primary_resident', '1998-06-30', NULL, NULL, NULL, NULL, NULL, 'cj.artates@gmail.com', '0999-991-9207', NULL, NULL, 'San pedro 5,', 'Pasong Tamo', 'Quezon City', NULL, NULL, '2019-07-17 18:28:42', NULL, NULL),
+(1264, 'Cynder Galle', NULL, 'Gonzales', 'primary_resident', '1999-10-17', NULL, NULL, 'S', NULL, NULL, 'gonzalescyndergalle@gmail.com', '0927-976-1657', NULL, NULL, 'Pinangaan', 'Jaen', 'Nueva Ecija', NULL, NULL, '2019-07-18 22:10:25', NULL, NULL),
+(1265, 'Jeralmae', NULL, 'Paquiz', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-18 22:14:08', '2019-07-18 22:14:08', 1264),
 (1266, 'Erycah', NULL, 'Corpuz', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-18 22:14:58', '2019-07-18 22:14:58', 1264),
 (1267, 'Nadine Angeline', NULL, 'Gomez', 'primary_resident', '1990-05-11', NULL, NULL, NULL, NULL, NULL, 'gomeznadineangeline@gmail.com', '0927-995-6481', NULL, NULL, 'zone 3', 'bayombong', 'pangasinan', NULL, NULL, '2019-07-18 22:20:50', '2019-07-18 22:20:50', NULL),
-(1268, 'Edward', NULL, 'Macariola', 'primary_resident', '1992-03-28', NULL, NULL, NULL, NULL, NULL, 'edmacariola@yahoo.com', '0917-420-2424', NULL, NULL, NULL, 'Sipi daraga', 'albay', NULL, NULL, '2019-07-18 22:28:44', '2019-07-18 22:28:44', NULL),
-(1269, 'hazzel Joyce', NULL, 'Flores', 'primary_resident', '1999-11-20', NULL, NULL, NULL, NULL, NULL, 'hflores78@yahoo.com', '0909-6566-667', NULL, NULL, NULL, 'San fernando', 'Pampanga', NULL, NULL, '2019-07-18 22:34:18', '2019-07-18 22:34:18', NULL),
-(1270, 'Julius Ceazar', NULL, 'Puyat', 'primary_resident', '2000-03-02', NULL, NULL, NULL, NULL, NULL, 'puyatjc@gmail.com', '0916-555-0139', NULL, NULL, NULL, 'Cabanatuan City', 'Nueva Ecija', NULL, NULL, '2019-07-18 22:38:05', '2019-07-18 22:38:05', NULL),
-(1271, 'Vincent', NULL, 'jun', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-18 22:38:46', '2019-07-18 22:38:46', 1270),
-(1272, 'Joni', NULL, 'Macatbag', 'primary_resident', '1994-10-20', NULL, NULL, NULL, NULL, NULL, '102094joni@gmail.com', '0906-0416-265', NULL, NULL, 'Paddad', 'Alicia', 'Isabela', NULL, NULL, '2019-07-18 22:41:55', '2019-07-18 22:41:55', NULL),
+(1268, 'Edward', NULL, 'Macariola', 'primary_resident', '1992-03-28', NULL, NULL, NULL, NULL, NULL, 'edmacariola@yahoo.com', '0917-420-2424', NULL, NULL, NULL, 'Sipi daraga', 'albay', NULL, NULL, '2019-07-18 22:28:44', NULL, NULL),
+(1269, 'hazzel Joyce', NULL, 'Flores', 'primary_resident', '1999-11-20', NULL, NULL, NULL, NULL, NULL, 'hflores78@yahoo.com', '0909-6566-667', NULL, NULL, NULL, 'San fernando', 'Pampanga', NULL, NULL, '2019-07-18 22:34:18', '2019-07-18 22:34:18', NULL);
+INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`, `type_of_resident`, `birthdate`, `gender`, `nationality`, `civil_status`, `ethnicity`, `id_info`, `email_address`, `mobile_number`, `telephone_number`, `house_number`, `barangay`, `municipality`, `province`, `zip`, `img`, `created_at`, `updated_at`, `primary_resident_id`) VALUES
+(1270, 'Julius Ceazar', NULL, 'Puyat', 'primary_resident', '2000-03-02', NULL, NULL, NULL, NULL, NULL, 'puyatjc@gmail.com', '0916-555-0139', NULL, NULL, NULL, 'Cabanatuan City', 'Nueva Ecija', NULL, NULL, '2019-07-18 22:38:05', NULL, NULL),
+(1271, 'Vincent', NULL, 'jun', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-18 22:38:46', NULL, 1270),
+(1272, 'Joni', NULL, 'Macatbag', 'primary_resident', '1994-10-20', NULL, NULL, NULL, NULL, NULL, '102094joni@gmail.com', '0906-0416-265', NULL, NULL, 'Paddad', 'Alicia', 'Isabela', NULL, NULL, '2019-07-18 22:41:55', NULL, NULL),
 (1273, 'Arvin', NULL, 'Pascua', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-18 22:42:32', '2019-07-18 22:42:32', 1272),
-(1274, 'Vanessa Mae', NULL, 'Fayloga', 'primary_resident', '2000-04-10', NULL, NULL, NULL, NULL, NULL, 'mae.fayloga@icloud.com', '09455-425-496', NULL, NULL, NULL, 'Pagudpud', 'Ilocus Norte', NULL, NULL, '2019-07-18 22:45:54', '2019-07-18 22:45:54', NULL),
-(1275, 'Phoebe', NULL, 'Ang', 'primary_resident', '1982-05-04', NULL, NULL, NULL, NULL, NULL, 'angmimilove@gmail.com', '0908-868-7138', NULL, NULL, 'A.B Fernandez Ave.', 'Dagupan City', NULL, NULL, NULL, '2019-07-18 23:05:54', '2019-07-18 23:05:54', NULL),
+(1274, 'Vanessa Mae', NULL, 'Fayloga', 'primary_resident', '2000-04-10', NULL, NULL, NULL, NULL, NULL, 'mae.fayloga@icloud.com', '09455-425-496', NULL, NULL, NULL, 'Pagudpud', 'Ilocus Norte', NULL, NULL, '2019-07-18 22:45:54', NULL, NULL),
+(1275, 'Phoebe', NULL, 'Ang', 'primary_resident', '1982-05-04', NULL, NULL, NULL, NULL, NULL, 'angmimilove@gmail.com', '0908-868-7138', NULL, NULL, 'A.B Fernandez Ave.', 'Dagupan City', NULL, NULL, NULL, '2019-07-18 23:05:54', NULL, NULL),
 (1276, 'Vanessa', NULL, 'Dulay', 'primary_resident', '2000-10-21', NULL, NULL, NULL, NULL, NULL, 'vanessadulay1124@gmail.com', '0927-767-8553', NULL, NULL, 'Dps Comp', 'Baguio City', NULL, NULL, NULL, '2019-07-18 23:10:08', '2019-07-18 23:10:08', NULL),
-(1277, 'mila', NULL, 'palapar', 'primary_resident', '1962-03-28', NULL, NULL, NULL, NULL, NULL, NULL, '0926-6761-789', NULL, NULL, 'esrella', 'san mateo', 'Isablela', NULL, NULL, '2019-07-18 23:24:59', '2019-07-18 23:24:59', NULL),
-(1278, 'Philip', NULL, 'Palapar', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-18 23:25:41', '2019-07-18 23:25:41', 1277),
-(1279, 'Valeriano', NULL, 'Palapar', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-18 23:26:12', '2019-07-18 23:26:12', 1277),
-(1280, 'Kyle', NULL, 'Delos Trinos', 'primary_resident', '1998-11-30', NULL, NULL, NULL, NULL, NULL, NULL, '09369855671', NULL, NULL, 'Bonfal West,', 'Bayombong', 'Nueva Vizcaya', NULL, NULL, '2019-07-18 23:30:55', '2019-07-18 23:30:55', NULL),
+(1277, 'mila', NULL, 'palapar', 'primary_resident', '1962-03-28', NULL, NULL, NULL, NULL, NULL, NULL, '0926-6761-789', NULL, NULL, 'esrella', 'san mateo', 'Isablela', NULL, NULL, '2019-07-18 23:24:59', NULL, NULL),
+(1278, 'Philip', NULL, 'Palapar', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-18 23:25:41', NULL, 1277),
+(1279, 'Valeriano', NULL, 'Palapar', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-18 23:26:12', NULL, 1277),
+(1280, 'Kyle', NULL, 'Delos Trinos', 'primary_resident', '1998-11-30', NULL, NULL, NULL, NULL, NULL, NULL, '09369855671', NULL, NULL, 'Bonfal West,', 'Bayombong', 'Nueva Vizcaya', NULL, NULL, '2019-07-18 23:30:55', NULL, NULL),
 (1281, 'DeenMary', NULL, 'Agbayani', 'primary_resident', '1999-02-04', NULL, NULL, NULL, NULL, NULL, NULL, '0947-435-3130', NULL, NULL, 'Brgy 40,', 'bacarra', 'I.N', NULL, NULL, '2019-07-18 23:49:28', '2019-07-18 23:49:28', NULL),
-(1282, 'Jewel', NULL, 'Bravo', 'primary_resident', '1998-07-10', NULL, NULL, NULL, NULL, NULL, 'jevel.v.bravo@gmail.com', '0927-474-7837', NULL, NULL, 'St Berbard Sub.abogado', 'Paniqui', 'tarlac', NULL, NULL, '2019-07-18 23:55:25', '2019-07-18 23:55:25', NULL),
+(1282, 'Jewel', NULL, 'Bravo', 'primary_resident', '1998-07-10', NULL, NULL, NULL, NULL, NULL, 'jevel.v.bravo@gmail.com', '0927-474-7837', NULL, NULL, 'St Berbard Sub.abogado', 'Paniqui', 'tarlac', NULL, NULL, '2019-07-18 23:55:25', NULL, NULL),
 (1283, 'recca', NULL, 'Viray', 'primary_resident', '1999-10-13', NULL, NULL, NULL, NULL, NULL, 'acceryariu@gmail.com', '0995-964-2443', NULL, NULL, 'Alacan', 'san fabian', 'Pangasinan', NULL, NULL, '2019-07-18 23:59:55', '2019-07-18 23:59:55', NULL),
 (1284, 'Rebecca', NULL, 'Gadayan', 'primary_resident', '1971-05-19', NULL, NULL, NULL, NULL, NULL, 'becgadayan@yahoo.com.ph', '0917-773-3877', NULL, NULL, NULL, 'Brooke\'s Point,', 'Palawan', NULL, NULL, '2019-07-19 00:05:25', '2019-07-19 00:05:25', NULL),
 (1285, 'royan', NULL, 'gadayan', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-19 00:06:03', '2019-07-19 00:06:03', 1284),
@@ -2226,45 +2460,91 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 (1306, 'Granil Mary Rose', NULL, 'Granile', 'primary_resident', '1999-01-31', NULL, NULL, NULL, NULL, NULL, 'idgranil@yahoo.com', '0917-831-4659', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-19 19:51:15', '2019-07-19 19:51:15', NULL),
 (1307, 'Winnie', 'M', 'Andres', 'primary_resident', '1998-05-18', NULL, NULL, NULL, NULL, NULL, 'waniandres@gmail.com', '0997-804-5517/0997-974-7064', NULL, NULL, 'Poblacion North', 'Solano', 'Nueva vizcaya', NULL, NULL, '2019-07-19 19:55:47', '2019-07-19 19:55:47', NULL),
 (1308, 'Chrislyn', NULL, 'Tortosa', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-19 19:56:33', '2019-07-19 19:56:33', 1307),
-(1309, 'Joanne', NULL, 'Medina', 'primary_resident', '1975-12-06', NULL, NULL, NULL, NULL, NULL, 'joannevmedina@gmail.com', '0917-590-1935', NULL, NULL, 'bakakeng', 'b.c', NULL, NULL, NULL, '2019-07-19 20:07:10', '2019-07-19 20:07:10', NULL),
-(1310, 'Margielou Ann', NULL, 'Franza', 'primary_resident', '1998-06-07', NULL, NULL, NULL, NULL, NULL, 'margielou_franza@yahoo.com', '0965-047-1237', NULL, NULL, NULL, 'San Carlos City', 'Pangasinan', NULL, NULL, '2019-07-19 20:27:57', '2019-07-19 20:27:57', NULL),
-(1311, 'Marhiel', NULL, 'Calizo', 'primary_resident', '1993-10-25', NULL, NULL, NULL, NULL, NULL, 'marhielcalizo@gmail.com', '0926-953-8749', NULL, NULL, NULL, 'Ilagan', 'Isabela', NULL, NULL, '2019-07-19 21:12:20', '2019-07-19 21:12:20', NULL),
-(1312, 'Ma. Rozalinda', NULL, 'Gonzales', 'primary_resident', '1991-09-10', NULL, NULL, NULL, NULL, NULL, 'rozgonzales102gmail.com', '0917-606-0582', NULL, NULL, 'Bakakeng norte', NULL, NULL, NULL, NULL, '2019-07-19 21:17:27', '2019-07-19 21:17:27', NULL),
+(1309, 'Joanne', NULL, 'Medina', 'primary_resident', '1975-12-06', NULL, NULL, NULL, NULL, NULL, 'joannevmedina@gmail.com', '0917-590-1935', NULL, NULL, 'bakakeng', 'b.c', NULL, NULL, NULL, '2019-07-19 20:07:10', NULL, NULL),
+(1310, 'Margielou Ann', NULL, 'Franza', 'primary_resident', '1998-06-07', NULL, NULL, NULL, NULL, NULL, 'margielou_franza@yahoo.com', '0965-047-1237', NULL, NULL, NULL, 'San Carlos City', 'Pangasinan', NULL, NULL, '2019-07-19 20:27:57', NULL, NULL),
+(1311, 'Marhiel', NULL, 'Calizo', 'primary_resident', '1993-10-25', NULL, NULL, NULL, NULL, NULL, 'marhielcalizo@gmail.com', '0926-953-8749', NULL, NULL, NULL, 'Ilagan', 'Isabela', NULL, NULL, '2019-07-19 21:12:20', NULL, NULL),
+(1312, 'Ma. Rozalinda', NULL, 'Gonzales', 'primary_resident', '1991-09-10', NULL, NULL, NULL, NULL, NULL, 'rozgonzales102gmail.com', '0917-606-0582', NULL, NULL, 'Bakakeng norte', NULL, NULL, NULL, NULL, '2019-07-19 21:17:27', NULL, NULL),
 (1313, 'Luther', NULL, 'Calawa', 'primary_resident', '1989-05-12', NULL, NULL, NULL, NULL, NULL, 'lccalawa@gmail.com', '0977-826-6816', NULL, NULL, NULL, 'La Trinidad', 'Benguet', NULL, NULL, '2019-07-19 22:11:02', '2019-07-19 22:11:02', NULL),
-(1314, 'Earl Milo', NULL, 'Perez', 'primary_resident', '1973-11-06', NULL, NULL, 'M', NULL, NULL, NULL, '09209545132', 'earlmili_perez@gmail.com', NULL, 'Bonfal West', 'Bayombong', 'Nueva Vizcaya', NULL, NULL, '2019-07-19 22:15:21', '2019-07-19 22:15:21', NULL),
-(1315, 'Mary Danielle', NULL, 'Julo', 'primary_resident', '1999-03-22', NULL, NULL, NULL, NULL, NULL, 'deneejulo@gmail.com', '0916-269-0993', NULL, NULL, NULL, 'Visayas Ave.', 'Quezon City', NULL, NULL, '2019-07-19 22:19:09', '2019-07-19 22:19:09', NULL),
-(1316, 'Christian', NULL, 'Arcillo', 'primary_resident', '1997-05-31', NULL, NULL, NULL, NULL, NULL, 'christianarcillo31@gmail.com', '0927-2895-693', NULL, NULL, NULL, NULL, 'Nueva Ecija', NULL, NULL, '2019-07-19 22:24:02', '2019-07-19 22:24:02', NULL),
-(1317, 'Bernadette', NULL, 'Mones', 'primary_resident', '2000-04-08', NULL, NULL, NULL, NULL, NULL, NULL, '0949-1510-593', NULL, NULL, NULL, NULL, 'Pangasinan', NULL, NULL, '2019-07-19 22:28:31', '2019-07-19 22:28:31', NULL),
-(1318, 'Vhina Grace', NULL, 'Mones', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-19 22:30:36', '2019-07-19 22:30:36', 1317),
-(1319, 'Fred', NULL, 'Tan', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0945-366-1901', NULL, NULL, NULL, 'Malate', 'Manila', NULL, NULL, '2019-07-19 22:44:13', '2019-07-19 22:44:13', NULL),
-(1320, 'Frances Gabrielle', NULL, 'Pascual', 'primary_resident', '1999-11-14', NULL, NULL, NULL, NULL, NULL, 'francesgabrielleP@gmail.com', '0995-536-4401', NULL, NULL, 'Purera', 'Sta.mesa', NULL, NULL, NULL, '2019-07-19 22:47:21', '2019-07-19 22:47:21', NULL),
-(1321, 'Jovero Maria', NULL, 'Alondra', 'primary_resident', '1999-03-05', NULL, NULL, NULL, NULL, NULL, 'alondra_jovero@yahoo.com', '0915-324-9883', NULL, NULL, NULL, 'Sta Barbara', 'Pangasinan', NULL, NULL, '2019-07-21 17:42:25', '2019-07-21 17:42:25', NULL),
-(1322, 'Joanna Loi', 'C', 'Abaya', 'primary_resident', '1994-12-20', NULL, NULL, 'S', NULL, NULL, 'joannaloiabaya@gmail.com', '9172735418', NULL, NULL, 'Brgy Barcelona', 'Solso', 'Ilocos Norte', NULL, NULL, '2019-07-21 17:45:58', '2019-07-21 17:45:58', NULL),
-(1323, 'Edgar', NULL, 'Gomultin', 'primary_resident', '1967-02-12', NULL, NULL, NULL, NULL, NULL, 'bin2.bg@yahoo.com', '0933-829-9776', NULL, NULL, NULL, 'Cubao', 'Quezon City', NULL, NULL, '2019-07-21 17:53:28', '2019-07-21 17:53:28', NULL),
-(1324, 'Ericka Alliah', NULL, 'Brutas', 'primary_resident', '2000-03-11', NULL, NULL, NULL, NULL, NULL, 'erickabrutas@gmail.com', '0995-235-2093', NULL, NULL, NULL, 'Conception', 'Tarlac', NULL, NULL, '2019-07-21 17:56:44', '2019-07-21 17:56:44', NULL),
-(1325, 'Adam', NULL, 'Arseniuk', 'primary_resident', '1982-11-17', NULL, NULL, NULL, NULL, NULL, 'adam_arseniuk@wp.pl', '0999-705-3968', NULL, NULL, NULL, 'Gorsk', 'Poland', NULL, NULL, '2019-07-21 18:00:59', '2019-07-21 18:00:59', NULL),
-(1326, 'Mary Mae', NULL, 'Rosal', 'primary_resident', '1990-07-23', NULL, NULL, NULL, NULL, NULL, 'mairosal0101@gmail.com', '0956-678-3823', NULL, NULL, NULL, 'apokan', 't.c,don', NULL, NULL, '2019-07-21 18:03:55', '2019-07-21 18:03:55', NULL),
-(1327, 'Crisalyn Andrea', NULL, 'Cortiguerra', 'primary_resident', '1999-03-03', NULL, NULL, NULL, NULL, NULL, 'chrisajacang@yahoo.com', '0906-364-2734', NULL, NULL, 'San Miguel', 'Agoo', 'La Union', NULL, NULL, '2019-07-21 18:08:55', '2019-07-21 18:08:55', NULL),
-(1328, 'Jeremy', NULL, 'Ramirez', 'primary_resident', '1997-09-03', NULL, NULL, NULL, NULL, NULL, 'jrremy.ramirez@yahoo.com', '0975-252-8522', NULL, NULL, NULL, 'Santiago City', 'Isabela', NULL, NULL, '2019-07-21 18:12:31', '2019-07-21 18:12:31', NULL),
-(1329, 'Aliyah Rocella', NULL, 'Alsaybar', 'primary_resident', '2000-05-09', NULL, NULL, NULL, NULL, NULL, 'zhelcaposadas_95@yahoo.com', '0956-152-2438', NULL, NULL, 'Del Pilar St.', 'Munoz', 'Nueva Ecija', NULL, NULL, '2019-07-21 18:16:13', '2019-07-21 18:16:13', NULL),
+(1314, 'Earl Milo', NULL, 'Perez', 'primary_resident', '1973-11-06', NULL, NULL, 'M', NULL, NULL, NULL, '09209545132', 'earlmili_perez@gmail.com', NULL, 'Bonfal West', 'Bayombong', 'Nueva Vizcaya', NULL, NULL, '2019-07-19 22:15:21', NULL, NULL),
+(1315, 'Mary Danielle', NULL, 'Julo', 'primary_resident', '1999-03-22', NULL, NULL, NULL, NULL, NULL, 'deneejulo@gmail.com', '0916-269-0993', NULL, NULL, NULL, 'Visayas Ave.', 'Quezon City', NULL, NULL, '2019-07-19 22:19:09', NULL, NULL),
+(1316, 'Christian', NULL, 'Arcillo', 'primary_resident', '1997-05-31', NULL, NULL, NULL, NULL, NULL, 'christianarcillo31@gmail.com', '0927-2895-693', NULL, NULL, NULL, NULL, 'Nueva Ecija', NULL, NULL, '2019-07-19 22:24:02', NULL, NULL),
+(1317, 'Bernadette', NULL, 'Mones', 'primary_resident', '2000-04-08', NULL, NULL, NULL, NULL, NULL, NULL, '0949-1510-593', NULL, NULL, NULL, NULL, 'Pangasinan', NULL, NULL, '2019-07-19 22:28:31', '2019-07-19 22:30:36', NULL),
+(1318, 'Vhina Grace', NULL, 'Mones', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-19 22:30:36', NULL, 1317),
+(1319, 'Fred', NULL, 'Tan', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0945-366-1901', NULL, NULL, NULL, 'Malate', 'Manila', NULL, NULL, '2019-07-19 22:44:13', NULL, NULL),
+(1320, 'Frances Gabrielle', NULL, 'Pascual', 'primary_resident', '1999-11-14', NULL, NULL, NULL, NULL, NULL, 'francesgabrielleP@gmail.com', '0995-536-4401', NULL, NULL, 'Purera', 'Sta.mesa', NULL, NULL, NULL, '2019-07-19 22:47:21', NULL, NULL),
+(1321, 'Jovero Maria', NULL, 'Alondra', 'primary_resident', '1999-03-05', NULL, NULL, NULL, NULL, NULL, 'alondra_jovero@yahoo.com', '0915-324-9883', NULL, NULL, NULL, 'Sta Barbara', 'Pangasinan', NULL, NULL, '2019-07-21 17:42:25', NULL, NULL),
+(1322, 'Joanna Loi', 'C', 'Abaya', 'primary_resident', '1994-12-20', NULL, NULL, 'S', NULL, NULL, 'joannaloiabaya@gmail.com', '9172735418', NULL, NULL, 'Brgy Barcelona', 'Solso', 'Ilocos Norte', NULL, NULL, '2019-07-21 17:45:58', NULL, NULL),
+(1323, 'Edgar', NULL, 'Gomultin', 'primary_resident', '1967-02-12', NULL, NULL, NULL, NULL, NULL, 'bin2.bg@yahoo.com', '0933-829-9776', NULL, NULL, NULL, 'Cubao', 'Quezon City', NULL, NULL, '2019-07-21 17:53:28', NULL, NULL),
+(1324, 'Ericka Alliah', NULL, 'Brutas', 'primary_resident', '2000-03-11', NULL, NULL, NULL, NULL, NULL, 'erickabrutas@gmail.com', '0995-235-2093', NULL, NULL, NULL, 'Conception', 'Tarlac', NULL, NULL, '2019-07-21 17:56:44', NULL, NULL),
+(1325, 'Adam', NULL, 'Arseniuk', 'primary_resident', '1982-11-17', NULL, NULL, NULL, NULL, NULL, 'adam_arseniuk@wp.pl', '0999-705-3968', NULL, NULL, NULL, 'Gorsk', 'Poland', NULL, NULL, '2019-07-21 18:00:59', NULL, NULL),
+(1326, 'Mary Mae', NULL, 'Rosal', 'primary_resident', '1990-07-23', NULL, NULL, NULL, NULL, NULL, 'mairosal0101@gmail.com', '0956-678-3823', NULL, NULL, NULL, 'apokan', 't.c,don', NULL, NULL, '2019-07-21 18:03:55', NULL, NULL),
+(1327, 'Crisalyn Andrea', NULL, 'Cortiguerra', 'primary_resident', '1999-03-03', NULL, NULL, NULL, NULL, NULL, 'chrisajacang@yahoo.com', '0906-364-2734', NULL, NULL, 'San Miguel', 'Agoo', 'La Union', NULL, NULL, '2019-07-21 18:08:55', NULL, NULL),
+(1328, 'Jeremy', NULL, 'Ramirez', 'primary_resident', '1997-09-03', NULL, NULL, NULL, NULL, NULL, 'jrremy.ramirez@yahoo.com', '0975-252-8522', NULL, NULL, NULL, 'Santiago City', 'Isabela', NULL, NULL, '2019-07-21 18:12:31', NULL, NULL),
+(1329, 'Aliyah Rocella', NULL, 'Alsaybar', 'primary_resident', '2000-05-09', NULL, NULL, NULL, NULL, NULL, 'zhelcaposadas_95@yahoo.com', '0956-152-2438', NULL, NULL, 'Del Pilar St.', 'Munoz', 'Nueva Ecija', NULL, NULL, '2019-07-21 18:16:13', NULL, NULL),
 (1330, 'Joel', NULL, 'Bernardino', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-21 18:16:39', '2019-07-21 18:16:39', 1329),
-(1331, 'Rakesh', NULL, 'Mandarapu', 'primary_resident', '1965-02-18', NULL, NULL, NULL, NULL, NULL, 'rowena.asistio@gmail.com', '0975-554-1940', NULL, NULL, 'bakakeng sur Phase 2', 'Baguio City', 'Benguet', NULL, NULL, '2019-07-21 18:21:41', '2019-07-21 18:21:41', NULL),
-(1332, 'Kimberly', NULL, 'Rino', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, 'rinokimberly@gmail.com', '0999-708-0384', NULL, NULL, 'Tagudin', 'Mabini', 'Pangasinan', NULL, NULL, '2019-07-21 18:23:36', '2019-07-21 18:23:36', NULL),
-(1333, 'Stephen James', NULL, 'Ignacio', 'primary_resident', '1996-04-28', NULL, NULL, NULL, NULL, NULL, 'stephenignacio12@yahoo.com', '0925-506-7804', NULL, NULL, 'San Miguel', 'Quezon', 'Nueva Ecija', NULL, NULL, '2019-07-21 18:25:54', '2019-07-21 18:25:54', NULL),
-(1334, 'Marlene', NULL, 'Mange', 'primary_resident', '1988-01-19', NULL, NULL, NULL, NULL, NULL, 'lovelymarl8800Gmail.com', '0916-399-7669', NULL, NULL, NULL, 'Rosales', 'Pangasinan', NULL, NULL, '2019-07-21 18:29:18', '2019-07-21 18:29:18', NULL),
-(1335, 'Jake', NULL, 'Manaois', 'primary_resident', '1990-11-14', NULL, NULL, NULL, NULL, NULL, 'jakemanaoisern@yahoo.com', '0995-265-8300', NULL, NULL, 'Calepaan', 'Asingan', 'Pangasinan', NULL, NULL, '2019-07-21 18:33:28', '2019-07-21 18:33:28', NULL),
-(1336, 'Zeila', NULL, 'Calison', 'primary_resident', '1990-06-03', NULL, NULL, NULL, NULL, NULL, NULL, '0916-920-5849', NULL, NULL, 'Calot', 'Sablan', 'Benguet', NULL, NULL, '2019-07-21 18:36:02', '2019-07-21 18:36:02', NULL),
-(1337, 'Jojo', NULL, 'Dapnisan', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-21 18:36:37', '2019-07-21 18:36:37', 1336),
-(1338, 'Daryl john', NULL, 'Milanes', 'primary_resident', '1992-03-23', NULL, NULL, NULL, NULL, NULL, 'daryljohnmilanes@gmail.com', '0917-1633-192', NULL, NULL, NULL, 'Calamba City', 'Laguna', NULL, NULL, '2019-07-21 18:46:04', '2019-07-21 18:46:04', NULL),
-(1339, 'Dominic Austin', NULL, 'Sicat', 'primary_resident', '1999-12-21', NULL, NULL, NULL, NULL, NULL, 'austinsicat00@gmail.com', '0956-537-865/0916-497-1728', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-21 19:11:22', '2019-07-21 19:11:22', NULL),
-(1340, 'Ervin Angel', NULL, 'Tañada', 'primary_resident', '1978-03-15', NULL, NULL, NULL, NULL, NULL, NULL, '0922-892-5939', NULL, NULL, 'Dalanguiring', 'Urbiztondo', 'Pangasinan', NULL, NULL, '2019-07-21 19:19:31', '2019-07-21 19:19:31', NULL),
-(1341, 'James', NULL, 'Baybayan', 'primary_resident', '1992-09-18', NULL, NULL, 'S', NULL, NULL, 'james0919@gmail.com', '0936-954-0690', NULL, NULL, 'Camayaan', 'Binalunan', 'Pangasinan', NULL, NULL, '2019-07-21 19:22:00', '2019-07-21 19:22:00', NULL),
-(1342, 'Lory Lynne', NULL, 'Huet', 'primary_resident', '1982-12-03', NULL, NULL, NULL, NULL, NULL, 'lorilynne0233@yahoo.com', '0933-824-1424', NULL, NULL, 'Sto. Rosario', 'Capsa', 'Tarlac', NULL, NULL, '2019-07-21 19:24:12', '2019-07-21 19:24:12', NULL),
-(1343, 'Tristan Allan', NULL, 'Correra', 'primary_resident', '1997-04-30', NULL, NULL, NULL, NULL, NULL, 'jakewoof007@gmail.com', '9506663101', NULL, NULL, 'pilot proj.', 'pinsao', NULL, NULL, NULL, '2019-07-21 19:27:36', '2019-07-21 19:27:36', NULL),
-(1344, 'Hudson Kit', NULL, 'Natividad', 'primary_resident', '1999-12-17', NULL, NULL, NULL, NULL, NULL, 'hudsonnatividad@gmail.com', '0921-276-6143', NULL, NULL, 'poblacion', 'binalonan', 'pangasinan', NULL, NULL, '2019-07-21 19:46:51', '2019-07-21 19:46:51', NULL),
-(1345, 'Vincent Nel', NULL, 'Gamiz', 'primary_resident', '2000-07-04', NULL, NULL, NULL, NULL, NULL, 'vincentgamiz@gmail.com', '0997-617-8547', NULL, NULL, 'Ambatali', 'Ramon', 'Isabela', NULL, NULL, '2019-07-21 19:51:18', '2019-07-21 19:51:18', NULL),
-(1346, 'Vironica', NULL, 'Leonardo', 'primary_resident', '1996-12-08', NULL, NULL, NULL, NULL, NULL, 'vironicaleonardo@gmail.com', '0916-8956-234', NULL, NULL, 'Brgy San Manuel', NULL, 'Tarlac City', NULL, NULL, '2019-07-21 20:00:47', '2019-07-21 20:00:47', NULL),
-(1347, 'Ma.victoria', NULL, 'Leonardo', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-21 20:02:46', '2019-07-21 20:02:46', 1346);
+(1331, 'Rakesh', NULL, 'Mandarapu', 'primary_resident', '1965-02-18', NULL, NULL, NULL, NULL, NULL, 'rowena.asistio@gmail.com', '0975-554-1940', NULL, NULL, 'bakakeng sur Phase 2', 'Baguio City', 'Benguet', NULL, NULL, '2019-07-21 18:21:41', NULL, NULL),
+(1332, 'Kimberly', NULL, 'Rino', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, 'rinokimberly@gmail.com', '0999-708-0384', NULL, NULL, 'Tagudin', 'Mabini', 'Pangasinan', NULL, NULL, '2019-07-21 18:23:36', NULL, NULL),
+(1333, 'Stephen James', NULL, 'Ignacio', 'primary_resident', '1996-04-28', NULL, NULL, NULL, NULL, NULL, 'stephenignacio12@yahoo.com', '0925-506-7804', NULL, NULL, 'San Miguel', 'Quezon', 'Nueva Ecija', NULL, NULL, '2019-07-21 18:25:54', NULL, NULL),
+(1334, 'Marlene', NULL, 'Mange', 'primary_resident', '1988-01-19', NULL, NULL, NULL, NULL, NULL, 'lovelymarl8800Gmail.com', '0916-399-7669', NULL, NULL, NULL, 'Rosales', 'Pangasinan', NULL, NULL, '2019-07-21 18:29:18', NULL, NULL),
+(1335, 'Jake', NULL, 'Manaois', 'primary_resident', '1990-11-14', NULL, NULL, NULL, NULL, NULL, 'jakemanaoisern@yahoo.com', '0995-265-8300', NULL, NULL, 'Calepaan', 'Asingan', 'Pangasinan', NULL, NULL, '2019-07-21 18:33:28', NULL, NULL),
+(1336, 'Zeila', NULL, 'Calison', 'primary_resident', '1990-06-03', NULL, NULL, NULL, NULL, NULL, NULL, '0916-920-5849', NULL, NULL, 'Calot', 'Sablan', 'Benguet', NULL, NULL, '2019-07-21 18:36:02', NULL, NULL),
+(1337, 'Jojo', NULL, 'Dapnisan', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-21 18:36:37', NULL, 1336),
+(1338, 'Daryl john', NULL, 'Milanes', 'primary_resident', '1992-03-23', NULL, NULL, NULL, NULL, NULL, 'daryljohnmilanes@gmail.com', '0917-1633-192', NULL, NULL, NULL, 'Calamba City', 'Laguna', NULL, NULL, '2019-07-21 18:46:04', NULL, NULL),
+(1339, 'Dominic Austin', NULL, 'Sicat', 'primary_resident', '1999-12-21', NULL, NULL, NULL, NULL, NULL, 'austinsicat00@gmail.com', '0956-537-865/0916-497-1728', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-21 19:11:22', NULL, NULL),
+(1340, 'Ervin Angel', NULL, 'Tañada', 'primary_resident', '1978-03-15', NULL, NULL, NULL, NULL, NULL, NULL, '0922-892-5939', NULL, NULL, 'Dalanguiring', 'Urbiztondo', 'Pangasinan', NULL, NULL, '2019-07-21 19:19:31', NULL, NULL),
+(1341, 'James', NULL, 'Baybayan', 'primary_resident', '1992-09-18', NULL, NULL, 'S', NULL, NULL, 'james0919@gmail.com', '0936-954-0690', NULL, NULL, 'Camayaan', 'Binalunan', 'Pangasinan', NULL, NULL, '2019-07-21 19:22:00', NULL, NULL),
+(1342, 'Lory Lynne', NULL, 'Huet', 'primary_resident', '1982-12-03', NULL, NULL, NULL, NULL, NULL, 'lorilynne0233@yahoo.com', '0933-824-1424', NULL, NULL, 'Sto. Rosario', 'Capsa', 'Tarlac', NULL, NULL, '2019-07-21 19:24:12', NULL, NULL),
+(1343, 'Tristan Allan', NULL, 'Correra', 'primary_resident', '1997-04-30', NULL, NULL, NULL, NULL, NULL, 'jakewoof007@gmail.com', '9506663101', NULL, NULL, 'pilot proj.', 'pinsao', NULL, NULL, NULL, '2019-07-21 19:27:36', NULL, NULL),
+(1344, 'Hudson Kit', NULL, 'Natividad', 'primary_resident', '1999-12-17', NULL, NULL, NULL, NULL, NULL, 'hudsonnatividad@gmail.com', '0921-276-6143', NULL, NULL, 'poblacion', 'binalonan', 'pangasinan', NULL, NULL, '2019-07-21 19:46:51', NULL, NULL),
+(1345, 'Vincent Nel', NULL, 'Gamiz', 'primary_resident', '2000-07-04', NULL, NULL, NULL, NULL, NULL, 'vincentgamiz@gmail.com', '0997-617-8547', NULL, NULL, 'Ambatali', 'Ramon', 'Isabela', NULL, NULL, '2019-07-21 19:51:18', NULL, NULL),
+(1346, 'Vironica', NULL, 'Leonardo', 'primary_resident', '1996-12-08', NULL, NULL, NULL, NULL, NULL, 'vironicaleonardo@gmail.com', '0916-8956-234', NULL, NULL, 'Brgy San Manuel', NULL, 'Tarlac City', NULL, NULL, '2019-07-21 20:00:47', NULL, NULL),
+(1347, 'Ma.victoria', NULL, 'Leonardo', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-21 20:02:46', NULL, 1346),
+(1348, 'Nikki Karla', NULL, 'Sto,Tomas', 'primary_resident', '1985-05-27', NULL, NULL, 'M', NULL, NULL, 'prettyaisha30@gmail.com', '9952678490', NULL, NULL, NULL, 'Pozurubio', 'Pangasinan', NULL, NULL, '2019-07-22 19:18:36', NULL, NULL),
+(1349, 'Reileen Mits', NULL, 'Dela Cruz', 'primary_resident', '1996-09-03', NULL, NULL, NULL, NULL, NULL, NULL, '0927-388-1861', NULL, NULL, 'Poblacion', 'Bugallion', 'Pangasinan', NULL, NULL, '2019-07-22 19:20:51', NULL, NULL),
+(1350, 'Christian', NULL, 'Milla', 'primary_resident', '1998-09-10', NULL, NULL, NULL, NULL, NULL, 'johnmilla@live.com', '0926-730-3676', NULL, NULL, NULL, 'Camilling', 'Tarlac', NULL, NULL, '2019-07-22 19:24:12', NULL, NULL),
+(1351, 'Craig', NULL, 'Berganio', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-22 19:25:18', '2019-07-22 19:25:18', 1349),
+(1352, 'Jerimiah Jordan', NULL, 'Tan', 'primary_resident', '2001-01-18', NULL, NULL, NULL, NULL, NULL, 'jiordan18tan@gmail.com', '0908-2965-893', NULL, NULL, NULL, NULL, 'Ilocus sur', NULL, NULL, '2019-07-22 19:28:08', NULL, NULL),
+(1353, 'Josephine', NULL, 'Bernardos', 'primary_resident', '1997-04-16', NULL, NULL, NULL, NULL, NULL, NULL, '0917-863-2318/0935-536-9627', NULL, NULL, 'Palridel Subd.', 'Santiago City', 'Isabela', NULL, NULL, '2019-07-22 19:34:37', NULL, NULL),
+(1354, 'Marion Dave', NULL, 'Maniego', 'primary_resident', '1997-10-26', NULL, NULL, NULL, NULL, NULL, 'davemaniego22@icloud.com', '0995-458-9347', NULL, NULL, NULL, 'Roxas', 'Isabela', NULL, NULL, '2019-07-22 19:37:02', NULL, NULL),
+(1355, 'Jeff Danielle', NULL, 'Paswick', 'primary_resident', '1999-05-05', NULL, NULL, 'S', NULL, NULL, 'aizenkeltwin@gmail.com', '0906-579-2344/09217099892', NULL, NULL, 'Upper Quezon Hill', 'Baguio City', 'Benguet', NULL, NULL, '2019-07-22 19:40:53', NULL, NULL),
+(1356, 'Nelson', NULL, 'Muigua', 'primary_resident', '1984-09-03', NULL, NULL, NULL, NULL, NULL, 'muigua2000@yahoo.com', '0906-359-3903', NULL, NULL, NULL, 'kiambu', 'Kenya', NULL, NULL, '2019-07-22 19:52:34', NULL, NULL),
+(1357, 'Anne Louis', NULL, 'Talens', 'primary_resident', '1998-08-15', NULL, NULL, NULL, NULL, NULL, 'talenslouised2gmail.com', '0945-240-5856', NULL, NULL, 'San Fernando', 'Norte Cabiao', 'Nueva Ecija', NULL, NULL, '2019-07-22 19:55:10', NULL, NULL),
+(1358, 'Shari Rose', NULL, 'Brioso', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09171038880', NULL, NULL, NULL, 'Rosario', 'Cavite', NULL, NULL, '2019-07-22 19:57:19', NULL, NULL),
+(1359, 'Janet', NULL, 'Reynolds', 'primary_resident', '1979-06-17', NULL, NULL, NULL, NULL, NULL, NULL, '0907-690-6882', NULL, NULL, NULL, 'Valecia', 'Mindanao', NULL, NULL, '2019-07-22 20:03:38', NULL, NULL),
+(1360, 'Erjay', NULL, 'Alvarez', 'primary_resident', '2000-02-21', NULL, NULL, 'S', NULL, NULL, NULL, '0916-429-5933', NULL, NULL, NULL, 'San Jose City', 'Nueva Ecija', NULL, NULL, '2019-07-22 20:05:21', NULL, NULL),
+(1361, 'Raylore', NULL, 'Bernardino', 'primary_resident', '2000-07-29', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'San Jose City', NULL, NULL, NULL, '2019-07-22 20:08:01', NULL, NULL),
+(1362, 'Karen joy', NULL, 'Laungayan', 'primary_resident', '1998-03-09', NULL, NULL, NULL, NULL, NULL, 'karenjblaungayan@gmail.com', '0906-364-2652', NULL, NULL, NULL, '.San Andres', 'Santiago City', NULL, NULL, '2019-07-22 20:10:26', NULL, NULL),
+(1363, 'Jerry Jr.', NULL, 'Malibran', 'primary_resident', '2000-07-30', NULL, NULL, NULL, NULL, NULL, 'jerry.u.malibran@gmail.com', '09166-565-466', NULL, NULL, 'brgy Camaya', 'Mariviles', 'Bataan', NULL, NULL, '2019-07-22 20:12:54', NULL, NULL),
+(1364, 'Charlene', NULL, 'Estacio', 'primary_resident', '1986-10-11', NULL, NULL, NULL, NULL, NULL, 'kayeestacio@gmail.com', '0917-304-9315', NULL, NULL, 'tibet shangrila vill', 'san luis', 'baguio city', NULL, NULL, '2019-07-22 20:15:15', NULL, NULL),
+(1365, 'Jorie', NULL, 'Cambay', 'primary_resident', '1970-02-02', NULL, NULL, NULL, NULL, NULL, NULL, '09255477825', NULL, NULL, 'nancamaliran west', 'Urdaneta City', 'Pangasinan', NULL, NULL, '2019-07-22 20:56:04', NULL, NULL),
+(1366, 'Mac Romer', NULL, 'Solomon', 'primary_resident', '1996-02-27', NULL, NULL, NULL, NULL, NULL, 'macromer27@gmail.com', '0950-9717-993', NULL, NULL, NULL, 'Bayambang', 'Pangasinan', NULL, NULL, '2019-07-22 20:57:50', NULL, NULL),
+(1367, 'Gene Ysobelle', NULL, 'Mejor', 'primary_resident', '2000-07-08', NULL, NULL, 'S', NULL, NULL, 'mejorysobelle@gmail.com', '0905-321-7654', NULL, NULL, 'San Pablo', 'Dinalupihan', 'Bataan', NULL, NULL, '2019-07-22 21:03:50', NULL, NULL),
+(1368, 'Cyril', NULL, 'Robino', 'primary_resident', '2001-04-12', NULL, NULL, 'S', NULL, NULL, 'cyrilrobino@gmail.com', '9209181908', NULL, NULL, 'Villa Carolina', 'La Granja', 'Iloilo City', NULL, NULL, '2019-07-22 21:06:17', NULL, NULL),
+(1369, 'Jonathan Keith', NULL, 'Ramirez', 'primary_resident', '1992-09-19', NULL, NULL, NULL, NULL, NULL, 'jonyramirez@gmail.com', '0966-492-9886', NULL, NULL, 'San Juan', 'Agoo', 'La Union', NULL, NULL, '2019-07-22 21:08:03', NULL, NULL),
+(1370, 'Francis', 'Morales', 'Trinidad', 'primary_resident', '1975-04-09', NULL, NULL, NULL, NULL, NULL, NULL, '0936-334-7959', NULL, NULL, ',Esquerra dist.', 'Talavera', 'Nueva Ecija', NULL, NULL, '2019-07-22 21:12:12', NULL, NULL),
+(1371, 'Venus', NULL, 'Gabriel', 'primary_resident', '1998-04-14', NULL, NULL, 'S', NULL, NULL, NULL, '0946-840-9089', NULL, NULL, NULL, 'Bayambang', 'Pangasinan', NULL, NULL, '2019-07-22 21:15:26', NULL, NULL),
+(1372, 'Ibarra', NULL, 'Moreno', 'primary_resident', '1988-03-05', NULL, NULL, NULL, NULL, NULL, NULL, '9771926475', NULL, NULL, 'San Jose', 'San Fernando City', 'Pampanga', NULL, NULL, '2019-07-22 21:18:43', NULL, NULL),
+(1373, 'Mesina', NULL, 'Reynold', 'primary_resident', '1995-01-18', NULL, NULL, NULL, NULL, NULL, 'mesinareynold_08@gmail.com', '0905-219-7115', NULL, NULL, 'Patucanay', 'Tayom', 'Abra', NULL, NULL, '2019-07-22 21:20:44', NULL, NULL),
+(1375, 'Salvador', NULL, 'Araos', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0927-281-6925', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-25 08:09:45', '2019-07-26 08:10:56', NULL),
+(1376, 'Trixie', 'Amyr', 'Gavina', 'primary_resident', '1998-02-03', NULL, NULL, NULL, NULL, NULL, 'trixamyr@yahoo.com', '09451142514', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-26 07:53:54', NULL, NULL),
+(1377, 'Paola Nicole', NULL, 'Sison', 'primary_resident', '1998-01-04', NULL, NULL, NULL, NULL, NULL, 'paola.sison18@gmail.com', '09053054618', NULL, NULL, NULL, 'Urdaneta City', NULL, NULL, NULL, '2019-07-26 07:57:03', '2019-07-26 08:10:56', NULL),
+(1378, 'Rose Belen', NULL, 'Sapitula', 'primary_resident', '1997-10-03', NULL, NULL, NULL, NULL, NULL, 'sapitularosebelen@gmail.com', '0999-481-4805', NULL, NULL, 'NamBoongan', 'Sto.tomas', 'La Union', NULL, NULL, '2019-07-26 08:03:35', NULL, NULL),
+(1379, 'Leomel', NULL, 'Valencia', 'primary_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0917-663-6536', NULL, NULL, 'Poblacion East', 'Pidigan', 'Abra', NULL, NULL, '2019-07-26 08:09:14', '2019-07-26 08:10:56', NULL),
+(1380, 'Jearhro', NULL, 'Valencia', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-26 08:10:56', '2019-07-26 08:10:56', 1379),
+(1381, 'Victoria', NULL, 'Franz', 'primary_resident', '1998-08-01', NULL, NULL, NULL, NULL, NULL, 'jaucianfranzvittoria@yahoo.com', '0927-661-6923', NULL, NULL, 'poblacion Norte', 'Satiago', 'Ilocos Sur', NULL, NULL, '2019-07-26 08:15:51', NULL, NULL),
+(1382, 'Irish', 'Ma', 'Viray', 'primary_resident', '1981-09-13', NULL, NULL, NULL, NULL, NULL, 'irish.viray@gmail.com', '0926-732-1065', NULL, NULL, 'Damortise', 'Sto Tomas', 'La Union', NULL, NULL, '2019-07-26 08:20:07', NULL, NULL),
+(1383, 'Roma', 'Genevieve', 'Alejandro', 'primary_resident', '1992-12-08', NULL, NULL, NULL, NULL, NULL, 'rockiztah_gen09@yahoo.com', '0917-550-0895', NULL, NULL, 'Bantug Angdaan', 'Isabela', NULL, NULL, NULL, '2019-07-26 08:22:20', NULL, NULL),
+(1384, 'Samuel Aaron', NULL, 'Dalacat', 'primary_resident', '1992-03-07', NULL, NULL, NULL, NULL, NULL, 'aronlet92@gmail.com', '0945-718-5600', NULL, NULL, NULL, 'Gabaldon', 'Nueva ecija', NULL, NULL, '2019-07-26 08:26:35', NULL, NULL),
+(1385, 'Francis', NULL, 'Bernal', 'primary_resident', '2001-03-06', NULL, NULL, NULL, NULL, NULL, 'jennybernal1524@gmail.com', '0926-7392-834', NULL, NULL, 'Malasin Dupax del Norte', 'Nueva Vizcaya', NULL, NULL, NULL, '2019-07-26 08:29:22', NULL, NULL),
+(1386, 'Pine Ivan', NULL, 'Martinez', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-26 08:30:44', NULL, 1385),
+(1387, 'Chriselle Jorge', NULL, 'Costales', 'primary_resident', '2000-03-25', NULL, NULL, NULL, NULL, NULL, 'chrisellejorge@gmail.com', '0966-274-1311', NULL, NULL, 'Borot', 'tarlac', NULL, NULL, NULL, '2019-07-26 08:34:05', NULL, NULL),
+(1388, 'Virgilio', NULL, 'Dela Cruz', 'primary_resident', '1952-11-27', NULL, NULL, NULL, NULL, NULL, NULL, '0927-987-6214', NULL, NULL, 'del monte', 'bulacan', NULL, NULL, NULL, '2019-07-26 08:36:46', NULL, NULL),
+(1392, 'Mohammed', NULL, 'Elhussain', 'primary_resident', '1998-12-09', NULL, NULL, NULL, NULL, NULL, NULL, '09958460225', NULL, NULL, 'Tagudin', 'Mabini', 'Pangasinan', NULL, NULL, '2019-07-26 08:51:49', NULL, NULL),
+(1393, 'Cinderella', NULL, 'Perez', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-26 08:53:39', NULL, 1392),
+(1394, 'Kobi', NULL, 'Casas', 'primary_resident', '1999-07-10', NULL, NULL, NULL, NULL, NULL, 'kobicasas14@gmail.com', '0935-824-3993', NULL, NULL, 'Brgy Kapinikan la Paz', 'Tarlac', NULL, NULL, NULL, '2019-07-26 08:59:41', NULL, NULL),
+(1395, 'Clarissa', NULL, 'Pascual', 'co_resident', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-26 09:00:18', NULL, 1394),
+(1396, 'Jacinta', NULL, 'Corpuz', 'primary_resident', '1952-08-16', NULL, NULL, NULL, NULL, NULL, 'jpcorpuz816@gmail.com', '0917-653-7791', NULL, NULL, 'kalikid', 'norte cale,city', NULL, NULL, NULL, '2019-07-26 09:02:21', NULL, NULL),
+(1397, 'Johann Sebastian', NULL, 'Servas', 'primary_resident', '1999-01-14', NULL, NULL, NULL, NULL, NULL, 'jojoservas@yahoo.com', '0917-500-7330', NULL, NULL, 'purok 1 mabanogbog', 'Urdaneta City', 'Pangasinan', NULL, NULL, '2019-07-26 10:35:55', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2272,9 +2552,8 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 -- Table structure for table `rooms`
 --
 
-DROP TABLE IF EXISTS `rooms`;
-CREATE TABLE IF NOT EXISTS `rooms` (
-  `room_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `rooms` (
+  `room_id` int(10) UNSIGNED NOT NULL,
   `room_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `project` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `building` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2287,38 +2566,36 @@ CREATE TABLE IF NOT EXISTS `rooms` (
   `remarks` longtext COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `floor_number` int(11) NOT NULL,
-  PRIMARY KEY (`room_id`),
-  UNIQUE KEY `rooms_room_no_unique` (`room_no`)
-) ENGINE=MyISAM AUTO_INCREMENT=1267 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `floor_number` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `rooms`
 --
 
 INSERT INTO `rooms` (`room_id`, `room_no`, `project`, `building`, `room_status`, `short_term_rent`, `long_term_rent`, `transient`, `size`, `no_of_beds`, `remarks`, `created_at`, `updated_at`, `floor_number`) VALUES
-(1000, '6LA West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2DD', NULL, '2019-06-17 17:50:18', '2019-06-17 17:50:18', 8),
+(1000, '6LA West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2DD', NULL, '2019-06-17 17:50:18', '2019-06-17 17:50:18', 8),
 (1001, '614', 'the_courtyards', 'manors', 'occupied', 16000.00000000, 15000.00000000, 0.00, 42.00000000, '2BR', NULL, '2019-06-17 18:19:31', '2019-07-16 17:53:06', 1),
 (1062, 'LG 06 West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 16:55:00', '2019-07-10 21:18:42', 1),
 (1002, 'GF 01', 'north_cambridge', 'wharton', 'occupied', 12000.00000000, 11000.00000000, 2000.00, 20.00000000, '1SB', NULL, '2019-06-18 06:28:42', '2019-06-18 06:28:42', 1),
 (1003, 'GF 10', 'north_cambridge', 'wharton', 'vacant', 12000.00000000, 11000.00000000, 2000.00, 20.00000000, '1SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-19 00:13:03', '2019-06-19 00:13:03', 1),
 (1061, 'LGK West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 16:51:33', '2019-06-24 16:51:33', 1),
 (1004, 'GF 11', 'north_cambridge', 'wharton', 'vacant', 12000.00000000, 11000.00000000, 2000.00, 20.00000000, '1SB', NULL, '2019-06-19 00:58:50', '2019-06-19 00:58:50', 1),
-(1060, 'LGF East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'asdasda', '2019-06-24 16:49:47', '2019-07-16 17:55:54', 1),
-(1005, '214', 'the_courtyards', 'loft', 'occupied', 16000.00000000, 15000.00000000, 0.00, 28.00000000, '1SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-20 23:22:19', '2019-06-20 23:22:19', 4),
-(1006, '209', 'the_courtyards', 'loft', 'occupied', 14000.00000000, 13000.00000000, 0.00, 28.00000000, '1SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-20 23:25:10', '2019-06-20 23:25:10', 2),
+(1060, 'LGF East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'asdasda', '2019-06-24 16:49:47', '2019-07-16 17:55:54', 1),
+(1005, '214', 'the_courtyards', 'loft', 'occupied', 14000.00000000, 13000.00000000, 0.00, 28.00000000, '1SB', NULL, '2019-06-20 23:22:19', '2019-07-25 08:15:05', 4),
+(1006, '209', 'the_courtyards', 'loft', 'vacant', 14000.00000000, 13000.00000000, 0.00, 28.00000000, '1SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-20 23:25:10', '2019-07-25 08:08:38', 2),
 (1007, '2B 06', 'the_courtyards', 'manors', 'occupied', 16000.00000000, 15000.00000000, 0.00, 42.00000000, '2BR', NULL, '2019-06-20 23:31:27', '2019-07-21 18:52:09', 2),
 (1008, '117', 'the_courtyards', 'manors', 'occupied', 16000.00000000, 15000.00000000, 0.00, 42.00000000, '2BR', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-20 23:32:22', '2019-06-20 23:32:22', 1),
 (1009, '518', 'the_courtyards', 'manors', 'occupied', 16000.00000000, 15000.00000000, 0.00, 42.00000000, '2BR', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-20 23:37:42', '2019-06-20 23:37:42', 1),
-(1010, 'CC 3D', 'the_courtyards', 'colorado', 'occupied', 16000.00000000, 15000.00000000, 0.00, 25.00000000, '2BR', NULL, '2019-06-20 23:39:49', '2019-07-21 18:49:12', 1),
-(1011, 'CA 3B', 'the_courtyards', 'colorado', 'vacant', 16000.00000000, 15000.00000000, 0.00, 25.00000000, '2BR', NULL, '2019-06-20 23:46:15', '2019-07-02 17:15:40', 3),
+(1010, 'CC 3D', 'the_courtyards', 'colorado', 'occupied', 16000.00000000, 15000.00000000, 0.00, 36.00000000, '2BR', NULL, '2019-06-20 23:39:49', '2019-07-21 18:49:12', 1),
+(1011, 'CA 3B', 'the_courtyards', 'colorado', 'vacant', 16000.00000000, 15000.00000000, 0.00, 36.00000000, '2BR', NULL, '2019-06-20 23:46:15', '2019-07-02 17:15:40', 3),
 (1012, '505', 'the_courtyards', 'manors', 'occupied', 17000.00000000, 16000.00000000, 0.00, 42.00000000, '2BR', NULL, '2019-06-20 23:47:24', '2019-06-20 23:47:24', 3),
-(1013, '202', 'the_courtyards', 'loft', 'occupied', 14000.00000000, 13000.00000000, 0.00, 25.00000000, '1SB', NULL, '2019-06-20 23:48:13', '2019-07-21 18:53:53', 2),
+(1013, '202', 'the_courtyards', 'loft', 'occupied', 14000.00000000, 13000.00000000, 0.00, 28.00000000, '1SB', NULL, '2019-06-20 23:48:13', '2019-07-21 18:53:53', 2),
 (1014, '616', 'the_courtyards', 'manors', 'occupied', 17000.00000000, 16000.00000000, 0.00, 42.00000000, '2BR', NULL, '2019-06-20 23:49:15', '2019-06-20 23:49:15', 1),
 (1015, '512', 'the_courtyards', 'manors', 'occupied', 16000.00000000, 15000.00000000, 0.00, 42.00000000, '2BR', NULL, '2019-06-20 23:50:18', '2019-07-21 18:52:53', 2),
-(1016, 'CB 4B', 'the_courtyards', 'arkansas', 'vacant', 17000.00000000, 16000.00000000, 0.00, 42.00000000, '2BR', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-20 23:51:19', '2019-06-20 23:51:19', 1),
+(1016, 'CB 4B', 'the_courtyards', 'arkansas', 'vacant', 13000.00000000, 12000.00000000, 0.00, 36.00000000, '2BR', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-20 23:51:19', '2019-06-20 23:51:19', 1),
 (1017, '312', 'the_courtyards', 'manors', 'occupied', 17000.00000000, 16000.00000000, 0.00, 42.00000000, '2BR', '', '2019-06-20 23:52:12', '2019-06-20 23:52:12', 2),
-(1018, '313', 'the_courtyards', 'loft', 'occupied', 14000.00000000, 13000.00000000, 0.00, 25.00000000, '1SB', NULL, '2019-06-20 23:57:49', '2019-07-12 07:04:14', 4),
+(1018, '313', 'the_courtyards', 'loft', 'occupied', 14000.00000000, 13000.00000000, 0.00, 28.00000000, '1SB', NULL, '2019-06-20 23:57:49', '2019-07-12 07:04:14', 4),
 (1019, 'GF 18', 'north_cambridge', 'wharton', 'vacant', 12000.00000000, 11000.00000000, 2000.00, 20.00000000, '1SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-23 23:57:47', '2019-06-23 23:57:47', 1),
 (1020, '2F 09', 'north_cambridge', 'wharton', 'vacant', 12000.00000000, 11000.00000000, 2000.00, 20.00000000, '1SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-23 23:58:23', '2019-06-23 23:58:23', 2),
 (1021, '2F 12', 'north_cambridge', 'wharton', 'vacant', 12000.00000000, 11000.00000000, 2000.00, 20.00000000, '1SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-23 23:59:44', '2019-06-23 23:59:44', 2),
@@ -2361,7 +2638,7 @@ INSERT INTO `rooms` (`room_id`, `room_no`, `project`, `building`, `room_status`,
 (1059, '6F 26', 'north_cambridge', 'wharton', 'occupied', 12000.00000000, 11000.00000000, 2000.00, 20.00000000, '1SB', NULL, '2019-06-24 00:17:23', '2019-06-24 00:17:23', 6),
 (1063, 'LGP East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 16:55:57', '2019-06-24 16:55:57', 1),
 (1064, 'LGG West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 16:58:13', '2019-06-24 16:58:13', 2),
-(1065, 'UGE East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 16:58:53', '2019-06-24 16:58:53', 2),
+(1065, 'UGE East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 16:58:53', '2019-06-24 16:58:53', 2),
 (1066, 'UGG West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 16:59:51', '2019-06-24 16:59:51', 2),
 (1067, 'UGN East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1DD', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 17:00:25', '2019-06-24 17:00:25', 2),
 (1068, 'UGQ East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 17:00:58', '2019-06-24 17:00:58', 2),
@@ -2370,38 +2647,38 @@ INSERT INTO `rooms` (`room_id`, `room_no`, `project`, `building`, `room_status`,
 (1071, 'GLD West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:03:41', '2019-06-24 17:03:41', 3),
 (1072, 'GLI West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 17:04:02', '2019-06-24 17:04:02', 3),
 (1073, 'GLP West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:04:22', '2019-06-24 17:04:22', 3),
-(1074, '2LR East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:04:50', '2019-06-24 17:04:50', 4),
+(1074, '2LR East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:04:50', '2019-06-24 17:04:50', 4),
 (1075, '2LD East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 17:05:15', '2019-06-24 17:05:15', 4),
 (1076, '2LI East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2DD', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 17:50:31', '2019-06-24 17:50:31', 4),
 (1077, '2LM East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 17:51:16', '2019-06-24 17:51:16', 4),
 (1078, '3LK East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:52:21', '2019-06-24 17:52:21', 5),
 (1079, '4LC West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:53:16', '2019-06-24 17:53:16', 6),
 (1080, '4LD West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:53:46', '2019-06-24 17:53:46', 6),
-(1081, '4LP East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:54:14', '2019-06-24 17:54:14', 6),
+(1081, '4LP East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 17:54:14', '2019-06-24 17:54:14', 6),
 (1082, '5LA West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:54:34', '2019-06-24 17:54:34', 7),
 (1083, '5LD West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:55:01', '2019-06-24 17:55:01', 7),
-(1084, '5LI West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:55:27', '2019-06-24 17:55:27', 7),
+(1084, '5LI West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:55:27', '2019-06-24 17:55:27', 7),
 (1085, '3LH West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:56:10', '2019-06-24 17:56:10', 5),
 (1086, '4LF West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:57:33', '2019-06-24 17:57:33', 6),
 (1087, '4LF East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', NULL, '2019-06-24 17:58:31', '2019-06-24 17:58:31', 6),
-(1088, 'LGA East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', NULL, '2019-06-24 17:59:02', '2019-06-24 17:59:02', 1),
-(1089, 'LGB East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 17:59:32', '2019-06-24 17:59:32', 1),
+(1088, 'LGA East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', NULL, '2019-06-24 17:59:02', '2019-06-24 17:59:02', 1),
+(1089, 'LGB East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 17:59:32', '2019-06-24 17:59:32', 1),
 (1090, 'LGC East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:08:08', '2019-06-24 18:08:08', 1),
-(1091, 'LGD East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:08:34', '2019-07-12 06:37:47', 1),
+(1091, 'LGD East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:08:34', '2019-07-12 06:37:47', 1),
 (1092, 'LGE East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB&1DD', NULL, '2019-06-24 18:09:05', '2019-06-24 18:09:05', 1),
-(1093, 'LGG East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:09:26', '2019-06-24 18:09:26', 1),
-(1094, 'LGK East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:09:55', '2019-06-24 18:09:55', 1),
-(1095, 'LGO East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:10:15', '2019-06-24 18:10:15', 1),
+(1093, 'LGG East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:09:26', '2019-06-24 18:09:26', 1),
+(1094, 'LGK East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:09:55', '2019-06-24 18:09:55', 1),
+(1095, 'LGO East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:10:15', '2019-06-24 18:10:15', 1),
 (1096, 'LGQ East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:10:39', '2019-06-24 18:10:39', 1),
-(1097, 'LGR East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:10:54', '2019-06-24 18:10:54', 1),
+(1097, 'LGR East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:10:54', '2019-06-24 18:10:54', 1),
 (1098, 'LGB West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:11:25', '2019-06-24 18:11:25', 1),
 (1099, 'LGC West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:11:49', '2019-06-24 18:11:49', 1),
 (1100, 'LGH West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:12:08', '2019-06-24 18:12:08', 1),
-(1101, 'UGA East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:12:41', '2019-06-24 18:12:41', 2),
-(1102, 'UGF East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:13:32', '2019-06-24 18:13:32', 2),
+(1101, 'UGA East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:12:41', '2019-06-24 18:12:41', 2),
+(1102, 'UGF East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:13:32', '2019-06-24 18:13:32', 2),
 (1103, 'UGG East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:13:58', '2019-06-24 18:13:58', 2),
-(1104, 'UGH East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:14:32', '2019-06-24 18:14:32', 2),
-(1105, 'UGK East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:15:07', '2019-06-24 18:15:07', 2),
+(1104, 'UGH East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:14:32', '2019-06-24 18:14:32', 2),
+(1105, 'UGK East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:15:07', '2019-06-24 18:15:07', 2),
 (1106, 'UGL West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:15:28', '2019-06-30 22:16:22', 2),
 (1107, 'GLC East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:15:53', '2019-06-24 18:15:53', 3),
 (1108, 'GLE East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:16:15', '2019-06-24 18:16:15', 3),
@@ -2423,7 +2700,7 @@ INSERT INTO `rooms` (`room_id`, `room_no`, `project`, `building`, `room_status`,
 (1124, '2LP East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:24:42', '2019-06-24 18:24:42', 4),
 (1125, '2LA West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:26:22', '2019-06-24 18:26:22', 4),
 (1126, '2LE West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:26:37', '2019-06-24 18:26:37', 4),
-(1127, '2LL West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:30:46', '2019-06-24 18:30:46', 4),
+(1127, '2LL West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-24 18:30:46', '2019-06-24 18:30:46', 4),
 (1128, '2LN West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:31:49', '2019-06-24 18:31:49', 4),
 (1129, '2LI West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:32:04', '2019-06-24 18:32:04', 4),
 (1130, '2LO West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 18:32:51', '2019-06-24 18:32:51', 4),
@@ -2452,32 +2729,32 @@ INSERT INTO `rooms` (`room_id`, `room_no`, `project`, `building`, `room_status`,
 (1156, '5LC East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:14:47', '2019-06-24 19:14:47', 7),
 (1157, '5LD East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:21:38', '2019-06-24 19:21:38', 7),
 (1158, '5LF East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:21:59', '2019-06-24 19:21:59', 7),
-(1159, '5LJ East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:22:39', '2019-06-24 19:22:39', 7),
-(1160, '5LK East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:26:58', '2019-06-24 19:26:58', 7),
-(1161, '5LM East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:29:39', '2019-06-24 19:29:39', 7),
-(1162, '5LN East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:30:00', '2019-06-24 19:30:00', 7),
-(1163, '5LO East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:30:26', '2019-06-24 19:30:26', 7),
-(1164, '5LP East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:30:44', '2019-06-24 19:30:44', 7),
-(1165, '5LQ East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:31:13', '2019-06-24 19:31:13', 7),
+(1159, '5LJ East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:22:39', '2019-06-24 19:22:39', 7),
+(1160, '5LK East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:26:58', '2019-06-24 19:26:58', 7),
+(1161, '5LM East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:29:39', '2019-06-24 19:29:39', 7),
+(1162, '5LN East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:30:00', '2019-06-24 19:30:00', 7),
+(1163, '5LO East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:30:26', '2019-06-24 19:30:26', 7),
+(1164, '5LP East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:30:44', '2019-06-24 19:30:44', 7),
+(1165, '5LQ East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:31:13', '2019-06-24 19:31:13', 7),
 (1166, '5LC West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:31:34', '2019-06-24 19:31:34', 7),
 (1167, '5LF West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:32:07', '2019-06-24 19:32:07', 7),
 (1168, '5LH West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:32:35', '2019-06-24 19:32:35', 7),
-(1169, '5LJ West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:33:17', '2019-06-24 19:33:17', 7),
-(1170, '5LK West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:33:37', '2019-06-24 19:33:37', 7),
-(1171, '5LL West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:33:53', '2019-06-24 19:33:53', 7),
-(1172, '5LM West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:34:30', '2019-06-24 19:34:30', 7),
-(1173, '5LN West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', NULL, '2019-06-24 19:34:50', '2019-06-24 19:34:50', 7),
-(1174, '5LP West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:38:34', '2019-06-24 19:38:34', 7),
-(1175, '5LQ West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:39:23', '2019-06-24 19:39:23', 7),
-(1176, '5LR West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:40:43', '2019-06-24 19:40:43', 7),
-(1177, '6LH East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', NULL, '2019-06-24 19:41:08', '2019-06-24 19:41:08', 8),
-(1178, '6LN East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:42:03', '2019-06-24 19:42:03', 8),
-(1179, '6LK East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:42:17', '2019-06-24 19:42:17', 8),
-(1180, '6LR East', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:42:31', '2019-06-24 19:42:31', 8),
-(1181, '6LL West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:42:49', '2019-06-24 19:42:49', 8),
-(1182, '6LM West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB&1DD', NULL, '2019-06-24 19:43:15', '2019-06-24 19:43:15', 8),
-(1183, '6LO West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:44:47', '2019-06-24 19:44:47', 8),
-(1184, '6LP West', 'north_cambridge', 'harvard', 'vacant', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', NULL, '2019-06-24 19:45:08', '2019-06-24 19:45:08', 8),
+(1169, '5LJ West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:33:17', '2019-06-24 19:33:17', 7),
+(1170, '5LK West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:33:37', '2019-06-24 19:33:37', 7),
+(1171, '5LL West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:33:53', '2019-06-24 19:33:53', 7),
+(1172, '5LM West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:34:30', '2019-06-24 19:34:30', 7),
+(1173, '5LN West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', NULL, '2019-06-24 19:34:50', '2019-06-24 19:34:50', 7),
+(1174, '5LP West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:38:34', '2019-06-24 19:38:34', 7),
+(1175, '5LQ West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:39:23', '2019-06-24 19:39:23', 7),
+(1176, '5LR West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:40:43', '2019-06-24 19:40:43', 7),
+(1177, '6LH East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', NULL, '2019-06-24 19:41:08', '2019-06-24 19:41:08', 8),
+(1178, '6LN East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:42:03', '2019-06-24 19:42:03', 8),
+(1179, '6LK East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:42:17', '2019-06-24 19:42:17', 8),
+(1180, '6LR East', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:42:31', '2019-06-24 19:42:31', 8),
+(1181, '6LL West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:42:49', '2019-06-24 19:42:49', 8),
+(1182, '6LM West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB&1DD', NULL, '2019-06-24 19:43:15', '2019-06-24 19:43:15', 8),
+(1183, '6LO West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-24 19:44:47', '2019-06-24 19:44:47', 8),
+(1184, '6LP West', 'north_cambridge', 'harvard', 'occupied', 7800.00000000, 6800.00000000, 1200.00, 15.00000000, '1SB', NULL, '2019-06-24 19:45:08', '2019-06-24 19:45:08', 8),
 (1186, '2LGF B', 'north_cambridge', 'princeton', 'vacant', 8500.00000000, 7500.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-25 12:31:45', '2019-07-05 23:27:54', 2),
 (1187, 'LGF 1', 'north_cambridge', 'princeton', 'vacant', 8500.00000000, 7500.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-25 12:33:12', '2019-06-25 12:33:12', 3),
 (1188, 'GF C', 'north_cambridge', 'princeton', 'vacant', 8500.00000000, 7500.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-25 12:33:48', '2019-07-10 20:47:05', 5),
@@ -2551,13 +2828,15 @@ INSERT INTO `rooms` (`room_id`, `room_no`, `project`, `building`, `room_status`,
 (1256, '6F F', 'north_cambridge', 'princeton', 'occupied', 8500.00000000, 7500.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-25 01:02:17', '2019-06-25 01:02:17', 10),
 (1257, '6F I', 'north_cambridge', 'princeton', 'vacant', 8500.00000000, 7500.00000000, 1200.00, 15.00000000, '2SB', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-06-25 01:02:41', '2019-06-25 01:02:41', 10),
 (1258, '6F J', 'north_cambridge', 'princeton', 'occupied', 8500.00000000, 7500.00000000, 1200.00, 15.00000000, '2SB', NULL, '2019-06-25 01:02:59', '2019-06-25 01:02:59', 10),
-(1259, '2B 010', 'the_courtyards', 'manors', 'occupied', 17000.00000000, 16000.00000000, 0.00, 3500.00000000, '2BR', NULL, '2019-06-26 22:32:23', '2019-06-26 22:32:23', 2),
+(1259, '2B 010', 'the_courtyards', 'manors', 'occupied', 17000.00000000, 16000.00000000, 0.00, 42.00000000, '2BR', NULL, '2019-06-26 22:32:23', '2019-06-26 22:32:23', 2),
 (1261, '4F 04', 'north_cambridge', 'wharton', 'occupied', 12000.00000000, 11000.00000000, 2000.00, 20.00000000, '1SB', NULL, '2019-06-28 00:58:15', '2019-06-28 00:58:15', 4),
 (1260, '3B 004', 'the_courtyards', 'manors', 'vacant', 17000.00000000, 16000.00000000, 3500.00, 42.00000000, '2BR', NULL, '2019-06-27 00:56:54', '2019-06-27 00:56:54', 3),
 (1262, '6F 20', 'north_cambridge', 'wharton', 'vacant', 12000.00000000, 11000.00000000, 2000.00, 20.00000000, '1SB', NULL, '2019-06-28 20:40:09', '2019-06-28 20:40:09', 6),
 (1264, '5F 10', 'north_cambridge', 'princeton', 'vacant', 8500.00000000, 7500.00000000, 1500.00, 15.00000000, '2SB', NULL, '2019-06-30 20:48:35', '2019-07-20 00:13:23', 9),
 (1265, 'UGL East', 'north_cambridge', 'harvard', 'vacant', 8500.00000000, 7500.00000000, 1200.00, 15.00000000, '1DD', 'THE ROOM IS SET FOR GENERAL CLEANING', '2019-07-19 19:01:49', '2019-07-19 19:01:49', 2),
-(1266, '3LC East', 'north_cambridge', 'harvard', 'occupied', 8500.00000000, 7500.00000000, 1200.00, 15.00000000, '2DD', NULL, '2019-07-19 20:02:31', '2019-07-19 20:02:31', 5);
+(1266, '3LC East', 'north_cambridge', 'harvard', 'occupied', 8500.00000000, 7500.00000000, 1200.00, 15.00000000, '2DD', NULL, '2019-07-19 20:02:31', '2019-07-19 20:02:31', 5),
+(1267, '509', 'the_courtyards', 'manors', 'vacant', 17000.00000000, 16000.00000000, 3500.00, 42.00000000, '2BR', NULL, '2019-07-25 08:58:30', '2019-07-25 08:58:30', 2),
+(1268, '215', 'the_courtyards', 'loft', 'vacant', 14000.00000000, 13000.00000000, 3500.00, 28.00000000, '1SB', NULL, '2019-07-25 09:17:14', '2019-07-25 09:17:14', 4);
 
 -- --------------------------------------------------------
 
@@ -2565,9 +2844,8 @@ INSERT INTO `rooms` (`room_id`, `room_no`, `project`, `building`, `room_status`,
 -- Table structure for table `transactions`
 --
 
-DROP TABLE IF EXISTS `transactions`;
-CREATE TABLE IF NOT EXISTS `transactions` (
-  `trans_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `transactions` (
+  `trans_id` int(10) UNSIGNED NOT NULL,
   `trans_date` date NOT NULL,
   `trans_room_id` int(10) UNSIGNED NOT NULL,
   `trans_resident_id` int(10) UNSIGNED NOT NULL,
@@ -2583,12 +2861,8 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `final_water_reading` int(11) DEFAULT NULL,
   `final_electric_reading` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`trans_id`),
-  KEY `transactions_trans_room_id_foreign` (`trans_room_id`),
-  KEY `transactions_trans_resident_id_foreign` (`trans_resident_id`),
-  KEY `transactions_trans_owner_id_foreign` (`trans_owner_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1238 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `transactions`
@@ -2655,7 +2929,6 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1086, '2018-01-21', 1041, 1187, 1041, 'inactive', '2018-12-21', 'end_of_contract', '2018-01-21', '2018-12-21', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 21:49:02', '2019-07-01 21:49:02'),
 (1087, '2018-04-13', 1020, 1188, 1043, 'inactive', '2018-10-13', 'end_of_contract', '2018-04-13', '2018-10-13', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 21:54:39', '2019-07-01 21:54:39'),
 (1088, '2017-07-01', 1021, 1189, 1046, 'inactive', '2019-04-01', 'end_of_contract', '2017-07-01', '2019-04-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 22:03:01', '2019-07-01 22:03:01'),
-(1089, '2019-04-06', 1043, 1190, 1047, 'active', NULL, NULL, '2019-04-06', '2019-09-06', 'short_term', NULL, NULL, NULL, NULL, '2019-07-01 22:27:47', '2019-07-01 22:27:47'),
 (1090, '2018-07-31', 1022, 1191, 1050, 'inactive', '2019-01-31', 'end_of_contract', '2018-07-31', '2019-01-31', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 22:32:32', '2019-07-01 22:32:32'),
 (1091, '2018-05-29', 1047, 1192, 1053, 'inactive', '2019-05-29', 'end_of_contract', '2018-05-29', '2019-05-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 22:53:05', '2019-07-01 22:53:05'),
 (1092, '2017-09-28', 1024, 1193, 1054, 'inactive', '2018-09-28', 'end_of_contract', '2017-09-28', '2018-09-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 22:57:34', '2019-07-01 22:57:34'),
@@ -2676,7 +2949,6 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1107, '2018-07-02', 1056, 1206, 1074, 'active', NULL, NULL, '2018-07-02', '2019-07-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 21:15:54', '2019-07-03 21:15:54'),
 (1108, '2019-06-19', 1261, 1207, 1058, 'active', NULL, NULL, '2019-06-19', '2019-07-19', 'short_term', NULL, NULL, NULL, NULL, '2019-07-03 22:39:30', '2019-07-03 22:39:30'),
 (1109, '2016-11-28', 1002, 1208, 1003, 'active', NULL, NULL, '2016-11-28', '2020-06-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 22:55:03', '2019-07-03 22:55:03'),
-(1110, '2019-01-31', 1033, 1210, 1074, 'active', NULL, NULL, '2019-01-31', '2019-09-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-05 19:22:21', '2019-07-05 19:22:21'),
 (1111, '2019-01-31', 1033, 1211, 1074, 'active', NULL, NULL, '2019-01-31', '2019-09-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-05 19:28:54', '2019-07-05 19:28:54'),
 (1112, '2018-07-14', 1057, 1212, 1075, 'active', NULL, NULL, '2018-07-14', '2019-07-14', 'long_term', NULL, NULL, NULL, NULL, '2019-07-05 22:01:32', '2019-07-05 22:01:32'),
 (1113, '2017-07-22', 1058, 1213, 1076, 'active', NULL, NULL, '2017-07-22', '2019-07-22', 'long_term', NULL, NULL, NULL, NULL, '2019-07-05 22:59:54', '2019-07-05 22:59:54'),
@@ -2796,7 +3068,49 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1234, '2019-06-03', 1166, 1343, 1214, 'active', NULL, NULL, '2019-06-03', '2019-12-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 19:27:39', '2019-07-21 19:27:39'),
 (1235, '2018-07-31', 1158, 1344, 1215, 'active', NULL, NULL, '2018-07-31', '2019-07-31', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 19:46:54', '2019-07-21 19:46:54'),
 (1236, '2018-08-02', 1167, 1345, 1216, 'active', NULL, NULL, '2018-08-02', '2019-08-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 19:51:22', '2019-07-21 19:51:22'),
-(1237, '2018-12-29', 1168, 1346, 1217, 'active', NULL, NULL, '2018-12-29', '2019-06-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 20:00:50', '2019-07-21 20:00:50');
+(1237, '2018-12-29', 1168, 1346, 1217, 'active', NULL, NULL, '2018-12-29', '2019-06-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 20:00:50', '2019-07-21 20:00:50'),
+(1238, '2019-05-22', 1084, 1348, 1218, 'active', NULL, NULL, '2019-05-22', '2019-11-22', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:18:39', '2019-07-22 19:18:39'),
+(1239, '2018-08-23', 1159, 1349, 1219, 'active', NULL, NULL, '2018-08-23', '2019-08-23', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:20:54', '2019-07-22 19:20:54'),
+(1240, '2015-08-14', 1169, 1350, 1220, 'active', NULL, NULL, '2015-08-14', '2018-08-14', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:24:15', '2019-07-22 19:24:15'),
+(1241, '2019-01-11', 1160, 1352, 1221, 'active', NULL, NULL, '2019-01-11', '2019-12-11', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:28:12', '2019-07-22 19:28:12'),
+(1242, '2017-02-19', 1170, 1353, 1222, 'active', NULL, NULL, '2017-02-19', '2019-08-19', 'long_term', 10, 11, NULL, NULL, '2019-07-22 19:34:40', '2019-07-22 21:34:50'),
+(1243, '2018-01-05', 1171, 1354, 1222, 'active', NULL, NULL, '2018-01-05', '2019-07-05', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:37:06', '2019-07-22 19:37:06'),
+(1244, '2018-02-15', 1161, 1355, 1184, 'active', NULL, NULL, '2018-02-15', '2019-08-15', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:40:56', '2019-07-22 19:40:56'),
+(1245, '2018-11-19', 1172, 1356, 1174, 'active', NULL, NULL, '2018-11-19', '2019-05-19', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:52:38', '2019-07-22 19:52:38'),
+(1246, '2018-08-14', 1162, 1357, 1184, 'active', NULL, NULL, '2018-08-14', '2019-06-14', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:55:14', '2019-07-22 19:55:14'),
+(1247, '2017-05-28', 1173, 1358, 1223, 'active', NULL, NULL, '2017-05-28', '2019-06-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:57:22', '2019-07-22 19:57:22'),
+(1248, '2014-09-12', 1163, 1359, 1184, 'active', NULL, NULL, '2014-09-12', '2018-12-12', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:03:41', '2019-07-22 20:03:41'),
+(1249, '2018-08-02', 1164, 1360, 1184, 'active', NULL, NULL, '2018-08-02', '2019-02-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:05:26', '2019-07-22 20:05:26'),
+(1250, '2018-08-06', 1174, 1361, 1224, 'active', NULL, NULL, '2018-08-06', '2019-02-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:08:04', '2019-07-22 20:08:04'),
+(1251, '2018-05-02', 1165, 1362, 1184, 'active', NULL, NULL, '2018-05-02', '2019-12-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:10:29', '2019-07-22 20:10:29'),
+(1252, '2018-08-06', 1175, 1363, 1225, 'active', NULL, NULL, '2018-08-06', '2019-02-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:12:57', '2019-07-22 20:12:57'),
+(1253, '2017-06-11', 1176, 1364, 1226, 'active', NULL, NULL, '2017-06-11', '2018-07-11', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:15:18', '2019-07-22 20:15:18'),
+(1254, '2019-05-29', 1000, 1365, 1227, 'active', NULL, NULL, '2019-05-29', '2020-05-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:56:08', '2019-07-22 20:56:08'),
+(1255, '2018-08-25', 1177, 1366, 1228, 'active', NULL, NULL, '2018-08-25', '2019-07-25', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:57:53', '2019-07-22 20:57:53'),
+(1256, '2018-08-02', 1179, 1367, 1229, 'active', NULL, NULL, '2018-08-02', '2019-08-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:03:53', '2019-07-22 21:03:53'),
+(1257, '2019-06-07', 1181, 1368, 1230, 'active', NULL, NULL, '2019-06-07', '2019-12-07', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:06:20', '2019-07-22 21:06:20'),
+(1258, '2019-04-17', 1182, 1369, 1231, 'active', NULL, NULL, '2019-04-17', '2020-04-17', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:08:06', '2019-07-22 21:08:06'),
+(1259, '2018-07-07', 1178, 1370, 1232, 'active', NULL, NULL, '2018-07-07', '2021-01-07', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:12:15', '2019-07-22 21:12:15'),
+(1260, '2014-08-07', 1183, 1371, 1233, 'active', NULL, NULL, '2014-08-07', '2018-02-08', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:15:30', '2019-07-22 21:15:30'),
+(1261, '2019-05-02', 1184, 1372, 1234, 'active', NULL, NULL, '2019-05-02', '2020-05-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:18:47', '2019-07-22 21:18:47'),
+(1262, '2019-04-28', 1180, 1373, 1235, 'active', NULL, NULL, '2019-04-28', '2019-10-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:20:47', '2019-07-22 21:20:47'),
+(1264, '2019-01-21', 1006, 1375, 1007, 'inactive', '2019-02-21', 'end_of_contract', '2019-01-21', '2019-02-21', 'short_term', NULL, NULL, NULL, NULL, '2019-07-25 08:09:45', '2019-07-25 08:09:45'),
+(1265, '2019-07-07', 1005, 1122, 1006, 'active', NULL, NULL, '2019-07-07', '2019-08-07', 'short_term', NULL, NULL, NULL, NULL, '2019-07-25 08:34:03', '2019-07-25 08:34:03'),
+(1266, '2019-05-31', 1074, 1376, 1185, 'active', NULL, NULL, '2019-05-31', '2019-07-31', 'short_term', NULL, NULL, NULL, NULL, '2019-07-26 07:53:55', '2019-07-26 07:53:55'),
+(1267, '2019-05-20', 1127, 1377, 1181, 'inactive', '2019-07-20', 'end_of_contract', '2019-05-20', '2019-07-20', 'short_term', NULL, NULL, NULL, NULL, '2019-07-26 07:57:03', '2019-07-26 07:57:03'),
+(1268, '2017-08-05', 1088, 1378, 1144, 'active', NULL, NULL, '2017-08-05', '2020-01-05', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:03:35', '2019-07-26 08:03:35'),
+(1269, '2016-05-20', 1089, 1379, 1145, 'inactive', '2019-05-20', 'end_of_contract', '2016-05-20', '2019-05-20', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:09:14', '2019-07-26 08:09:14'),
+(1270, '2017-08-05', 1091, 1381, 1025, 'active', NULL, NULL, '2017-08-05', '2020-01-05', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:15:51', '2019-07-26 08:15:51'),
+(1271, '2019-03-18', 1060, 1382, 1027, 'active', NULL, NULL, '2019-03-18', '2019-09-18', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:20:07', '2019-07-26 08:20:07'),
+(1272, '2018-04-16', 1093, 1383, 1031, 'active', NULL, NULL, '2018-04-16', '2019-10-16', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:22:20', '2019-07-26 08:22:20'),
+(1273, '2018-09-18', 1094, 1384, 1028, 'active', NULL, NULL, '2018-09-18', '2019-09-18', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:26:35', '2019-07-26 08:26:35'),
+(1274, '2019-07-26', 1097, 1385, 1143, 'active', NULL, NULL, '2019-07-26', '2020-07-26', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:29:22', '2019-07-26 08:29:22'),
+(1275, '2018-07-27', 1095, 1387, 1032, 'active', NULL, NULL, '2018-07-27', '2019-07-27', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:34:05', '2019-07-26 08:34:05'),
+(1276, '2018-06-21', 1101, 1388, 1152, 'active', NULL, NULL, '2018-06-21', '2020-06-21', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:36:46', '2019-07-26 08:36:46'),
+(1277, '2019-03-18', 1065, 1392, 1153, 'active', NULL, NULL, '2019-03-18', '2019-09-18', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:51:50', '2019-07-26 08:51:50'),
+(1278, '2018-09-20', 1102, 1394, 1153, 'active', NULL, NULL, '2018-09-20', '2019-09-20', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:59:41', '2019-07-26 08:59:41'),
+(1279, '2018-09-18', 1104, 1396, 1156, 'active', NULL, NULL, '2018-09-18', '2019-09-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 09:02:21', '2019-07-26 09:02:21'),
+(1280, '2018-08-04', 1105, 1397, 1157, 'pending', NULL, NULL, '2018-08-04', '2019-02-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 10:35:56', '2019-07-26 10:35:56');
 
 -- --------------------------------------------------------
 
@@ -2804,9 +3118,8 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `user_id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2815,12 +3128,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_owner_id` int(10) UNSIGNED DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `users_email_unique` (`email`),
-  KEY `users_user_resident_id_foreign` (`user_resident_id`),
-  KEY `users_user_owner_id_foreign` (`user_owner_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1465 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -3254,7 +3563,241 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `privilege`, `user_
 (1461, 'Tristan Allan Correra', 'jakewoof007@gmail.com', '$2y$10$Do3hdvqesKMyoym9k/gvReyj9Gwok.W/Kl5CgLejb7Kd689XoBBEq', 'resident', 1343, NULL, NULL, '2019-07-21 19:27:39', '2019-07-21 19:27:39'),
 (1462, 'Hudson Kit Natividad', 'hudsonnatividad@gmail.com', '$2y$10$D/XX8k.FKavhwFyYA/7SWe8gIuxLMBUeXbgl1aXcgTPxTmhCEVDui', 'resident', 1344, NULL, NULL, '2019-07-21 19:46:54', '2019-07-21 19:46:54'),
 (1463, 'Vincent Nel Gamiz', 'vincentgamiz@gmail.com', '$2y$10$GyckXan3KgHu6OTKj6msluxSrHyykigB3pj6T3vxtxPG.g9vnHTq6', 'resident', 1345, NULL, NULL, '2019-07-21 19:51:22', '2019-07-21 19:51:22'),
-(1464, 'Vironica Leonardo', 'vironicaleonardo@gmail.com', '$2y$10$tM7sR4XGcRMC0.jsWVa/Cu2CYxfc/LXNVbk68gsDRMrtss6vuZdJS', 'resident', 1346, NULL, NULL, '2019-07-21 20:00:50', '2019-07-21 20:00:50');
+(1464, 'Vironica Leonardo', 'vironicaleonardo@gmail.com', '$2y$10$tM7sR4XGcRMC0.jsWVa/Cu2CYxfc/LXNVbk68gsDRMrtss6vuZdJS', 'resident', 1346, NULL, NULL, '2019-07-21 20:00:50', '2019-07-21 20:00:50'),
+(1465, 'Nikki Karla Sto,Tomas', 'prettyaisha30@gmail.com', '$2y$10$Fvqoz2/o.7iGiwKxy9uSJOL41ZWIPyGmb4ItFTOO8sSimL5wtDm7W', 'resident', 1348, NULL, NULL, '2019-07-22 19:18:39', '2019-07-22 19:18:39'),
+(1466, 'Reileen Mits Dela Cruz', 'residentnoemailadress1349@marthaservices.com', '$2y$10$1lqdgsXJNy0mBErlsXmEZeueFRp0I1DoWVauzwRPm6pDv0hGF3p22', 'resident', 1349, NULL, NULL, '2019-07-22 19:20:54', '2019-07-22 19:20:54'),
+(1467, 'Christian Milla', 'johnmilla@live.com', '$2y$10$D/keYAiQPPCuqEUse71whuG0J72o6Tr9NNwGjNyNkoC07vdIUN5Zm', 'resident', 1350, NULL, NULL, '2019-07-22 19:24:15', '2019-07-22 19:24:15'),
+(1468, 'Jerimiah Jordan Tan', 'jiordan18tan@gmail.com', '$2y$10$7Gh8RoYSBpqWTkSmdTgoq.2XKmTeEkF/PT0u2dEFSy/CqCOfP39ry', 'resident', 1352, NULL, NULL, '2019-07-22 19:28:12', '2019-07-22 19:28:12'),
+(1469, 'Josephine Bernardos', 'residentnoemailadress1353@marthaservices.com', '$2y$10$nuIl3Ya9Zd5bHF9nXmzZxuEdIRy2P.kxgYt1RddNbCEjwkNOBKJf2', 'resident', 1353, NULL, NULL, '2019-07-22 19:34:40', '2019-07-22 19:34:40'),
+(1470, 'Marion Dave Maniego', 'davemaniego22@icloud.com', '$2y$10$t/6h5nyHz4fKLLMRSElHeOJLrbHCvR//4Zw3ragyrLUFKuqOWYzLC', 'resident', 1354, NULL, NULL, '2019-07-22 19:37:06', '2019-07-22 19:37:06'),
+(1471, 'Jeff Danielle Paswick', 'aizenkeltwin@gmail.com', '$2y$10$BxsPdHoIruSs50U8f6lpLurn14WBulH987n2/uv37m68wQGgdm.i2', 'resident', 1355, NULL, NULL, '2019-07-22 19:40:56', '2019-07-22 19:40:56'),
+(1472, 'Nelson Muigua', 'muigua2000@yahoo.com', '$2y$10$iVpGhSt56TMOcWHsi0uld.sOvmnxh8BQ.y9nW/9yyoXPuSA2UQl8S', 'resident', 1356, NULL, NULL, '2019-07-22 19:52:37', '2019-07-22 19:52:37'),
+(1473, 'Anne Louis Talens', 'talenslouised2gmail.com', '$2y$10$6uBLvpJVBaZBoHNzIC3vc.ih6T2g2lSMLy7m1fw58OV/dYGVUzkE6', 'resident', 1357, NULL, NULL, '2019-07-22 19:55:14', '2019-07-22 19:55:14'),
+(1474, 'Shari Rose Brioso', 'residentnoemailadress1358@marthaservices.com', '$2y$10$Fikh9WramD3NwfAoVzqkOO7tXT/9IkZGXBuJe1fDKx7//4brFMzn.', 'resident', 1358, NULL, NULL, '2019-07-22 19:57:22', '2019-07-22 19:57:22'),
+(1475, 'Janet Reynolds', 'residentnoemailadress1359@marthaservices.com', '$2y$10$M3cx7fxvIErdMTgSlo3MROCIy5KeCDCIGWI4v.0FZyOkIKhpKs8Wy', 'resident', 1359, NULL, NULL, '2019-07-22 20:03:41', '2019-07-22 20:03:41'),
+(1476, 'Erjay Alvarez', 'residentnoemailadress1360@marthaservices.com', '$2y$10$BZdQ14IsC1u7Iz.ssXcrbu5oOxUj37GL0Qk7r13OAn.LQwhgKSsou', 'resident', 1360, NULL, NULL, '2019-07-22 20:05:26', '2019-07-22 20:05:26'),
+(1477, 'Raylore Bernardino', 'residentnoemailadress1361@marthaservices.com', '$2y$10$bdSokn007vLkWnePUFNC9ucfbQjLULb/DPjQ5OSq0Jk4p/5z8OVFS', 'resident', 1361, NULL, NULL, '2019-07-22 20:08:04', '2019-07-22 20:08:04'),
+(1478, 'Karen joy Laungayan', 'karenjblaungayan@gmail.com', '$2y$10$DFoCrN2qjlpUTwzGDCkNM.8u9feAG9EpC6GMoAzdKdG/IRFby5DqS', 'resident', 1362, NULL, NULL, '2019-07-22 20:10:29', '2019-07-22 20:10:29'),
+(1479, 'Jerry Jr. Malibran', 'jerry.u.malibran@gmail.com', '$2y$10$.cFmi7xLau47lUeG6x8LduxHHlPehmpoeGcAj4Px9BE1t1lHtnauy', 'resident', 1363, NULL, NULL, '2019-07-22 20:12:57', '2019-07-22 20:12:57'),
+(1480, 'Charlene Estacio', 'kayeestacio@gmail.com', '$2y$10$.y8BaGFp45YMcRN7p5HRVuDXdZ2FXFyanhuYCJ/vnOWWACJ3M.a.C', 'resident', 1364, NULL, NULL, '2019-07-22 20:15:18', '2019-07-22 20:15:18'),
+(1481, 'Jorie Cambay', 'residentnoemailadress1365@marthaservices.com', '$2y$10$phUSeJn5877m8icZx9xCUu9Oz32MoTFEt237FOGTgTJ8039WrzKNu', 'resident', 1365, NULL, NULL, '2019-07-22 20:56:08', '2019-07-22 20:56:08'),
+(1482, 'Mac Romer Solomon', 'macromer27@gmail.com', '$2y$10$xUErUmvYX1ImPQm/9WSppuxJck65yejhqPTY8Bm.1W2sk3F7j66M2', 'resident', 1366, NULL, NULL, '2019-07-22 20:57:53', '2019-07-22 20:57:53'),
+(1483, 'Gene Ysobelle Mejor', 'mejorysobelle@gmail.com', '$2y$10$wXdRUvzLCbvHnS56VW6k1uYSJ3MWgdH8ot4.jl1JMqXF2Eix6zQ9a', 'resident', 1367, NULL, NULL, '2019-07-22 21:03:53', '2019-07-22 21:03:53'),
+(1484, 'Cyril Robino', 'cyrilrobino@gmail.com', '$2y$10$GpInFtbnInKQfDiQAtZnm.aWiO2yywREQtTwtZz7zRARP2G0VO8tK', 'resident', 1368, NULL, NULL, '2019-07-22 21:06:20', '2019-07-22 21:06:20'),
+(1485, 'Jonathan Keith Ramirez', 'jonyramirez@gmail.com', '$2y$10$G4i.F.9FMLjIPMJfWc.qoeTUfvig/1BuuxD11VDAFzA.6PR2HUA76', 'resident', 1369, NULL, NULL, '2019-07-22 21:08:06', '2019-07-22 21:08:06'),
+(1486, 'Francis Trinidad', 'residentnoemailadress1370@marthaservices.com', '$2y$10$GZmwVvroZnc0mR5GVk48Ke9RkcHUzKSyq30S5K2nbq5i2/Ytj/bx6', 'resident', 1370, NULL, NULL, '2019-07-22 21:12:15', '2019-07-22 21:12:15'),
+(1487, 'Venus Gabriel', 'residentnoemailadress1371@marthaservices.com', '$2y$10$1Ca1CYBdMIc22b/4/I6NtOMi7s.6je68v5jGgkNGa6H5g4POWnhC2', 'resident', 1371, NULL, NULL, '2019-07-22 21:15:30', '2019-07-22 21:15:30'),
+(1488, 'Ibarra Moreno', 'residentnoemailadress1372@marthaservices.com', '$2y$10$ZlHW82Qgdx4tGTdaZpbamuT6kSgYME7.Ns0akaC.yhh91bmpsJxiO', 'resident', 1372, NULL, NULL, '2019-07-22 21:18:47', '2019-07-22 21:18:47'),
+(1489, 'Mesina Reynold', 'mesinareynold_08@gmail.com', '$2y$10$prm62eCT0oVyfXKDvKvQKOtqtg.SksuiT.0pargN8hr30tagn/Xcu', 'resident', 1373, NULL, NULL, '2019-07-22 21:20:47', '2019-07-22 21:20:47'),
+(1490, 'Landley Bernardo', 'residentnoemailadress1374@marthaservices.com', '$2y$10$Jpzfsp9d7CdV7GaC83idsuT4C8QQEEK7HGD0UcrGkwsTO7fGSSrhe', 'resident', 1374, NULL, NULL, '2019-07-22 21:54:46', '2019-07-22 21:54:46'),
+(1491, 'Salvador Araos', 'residentnoemailadress1375@marthaservices.com', '$2y$10$UeLtCMRapOzNMbCacDZ1SOrT8Ou.UEZGfIN/4lxAKvp.saNSCHb6K', 'resident', 1375, NULL, NULL, '2019-07-25 08:09:45', '2019-07-25 08:09:45'),
+(1492, 'Jennifer Calma', 'jeni_oc1030@yahoo.com', '$2y$10$uGiceByV7VhJe8i5WvjZXu6438zEb54VWFHksCD8fbWMTCJ.nEE1i', 'owner', NULL, 1236, NULL, '2019-07-25 08:54:20', '2019-07-25 08:54:20'),
+(1493, 'Jovelle Fernandez', 'docalex5@yahoo.com', '$2y$10$.pMAgU6pxaJ4TSP1gq6v5e4KJlmuBv4fxDUSYcnqkMnpPp1aiamMC', 'owner', NULL, 1237, NULL, '2019-07-25 09:02:44', '2019-07-25 09:02:44'),
+(1494, 'Ronaldo Gapuz', 'ronald.gapuz@gmail.com', '$2y$10$O8BmnIS18JI2MWiuwwHopeZP5amDk30YzqIe6b70cryHDfi9WFdhG', 'owner', NULL, 1238, NULL, '2019-07-25 09:23:15', '2019-07-25 09:23:15'),
+(1495, 'Trixie Gavina', 'trixamyr@yahoo.com', '$2y$10$98yWThvL4KK9CuyVIdN4h.WSsrv8wp.35z5qkoQPEBEd9V0GhDS2K', 'resident', 1376, NULL, NULL, '2019-07-26 07:53:55', '2019-07-26 07:53:55'),
+(1496, 'Paola Nicole Sison', 'paola.sison18@gmail.com', '$2y$10$qpiHKxDxnyxzhBMVq8Bfj.QpPyj1iTcasg01y0M6vTOZnsYc7sjem', 'resident', 1377, NULL, NULL, '2019-07-26 07:57:03', '2019-07-26 07:57:03'),
+(1497, 'Rose Belen Sapitula', 'sapitularosebelen@gmail.com', '$2y$10$8vwoDf8rFFMU4mFCOqingemZEPa5mvPggQEpLpo.sdk06XNngO8Ou', 'resident', 1378, NULL, NULL, '2019-07-26 08:03:35', '2019-07-26 08:03:35'),
+(1498, 'Leomel Valencia', 'residentnoemailadress1379@marthaservices.com', '$2y$10$nQQ3znPuowO5QiMRS1s1d.oLtokl46jfMkE4Ik1cou.jvR1zKYBb2', 'resident', 1379, NULL, NULL, '2019-07-26 08:09:14', '2019-07-26 08:09:14'),
+(1499, 'Victoria Franz', 'jaucianfranzvittoria@yahoo.com', '$2y$10$TsvbjDrL.tPrbmYDi3rC0u3VinLe77HIk26BqkITT6JhU/TiB4NB2', 'resident', 1381, NULL, NULL, '2019-07-26 08:15:51', '2019-07-26 08:15:51'),
+(1500, 'Irish Viray', 'irish.viray@gmail.com', '$2y$10$eMxMmpWxIoXMetUfTSbPV.7okp8ckNhPDFSKr0ejIYckdjCtqAb0q', 'resident', 1382, NULL, NULL, '2019-07-26 08:20:07', '2019-07-26 08:20:07'),
+(1501, 'Roma Alejandro', 'rockiztah_gen09@yahoo.com', '$2y$10$3l/6P6DIbyxe53Rcc3y5K.3RQyBP2T5LJ8l0pnFtuUYdKHPbmh.Qu', 'resident', 1383, NULL, NULL, '2019-07-26 08:22:20', '2019-07-26 08:22:20'),
+(1502, 'Samuel Aaron Dalacat', 'aronlet92@gmail.com', '$2y$10$BT88eDkexlDawFAeSRx31Oen4xR7h7PF6aLS4nLwRFf6NhXbNEldm', 'resident', 1384, NULL, NULL, '2019-07-26 08:26:35', '2019-07-26 08:26:35'),
+(1503, 'Francis Bernal', 'jennybernal1524@gmail.com', '$2y$10$mKXPejxlqm8t4.Wnz2QlFOFKANSa4PpNUzXSNswE9ntmtHZhHDKOu', 'resident', 1385, NULL, NULL, '2019-07-26 08:29:22', '2019-07-26 08:29:22'),
+(1504, 'Chriselle Jorge Costales', 'chrisellejorge@gmail.com', '$2y$10$1AM7HZN9PDE8c66T8B7SE.KFnb0DeGyvk/R3pnZ2ZXDVlOrw51Hf2', 'resident', 1387, NULL, NULL, '2019-07-26 08:34:05', '2019-07-26 08:34:05'),
+(1505, 'Virgilio Dela Cruz', 'residentnoemailadress1388@marthaservices.com', '$2y$10$3bcATMHnkBzcC0Ktc7xbnucPXWc4fEBwEPK6YPlwSIr5z.Id7W8MO', 'resident', 1388, NULL, NULL, '2019-07-26 08:36:46', '2019-07-26 08:36:46'),
+(1506, 'Elhussain Mohamed', 'mhcall468@gmail.com', '$2y$10$dJOyYisxMU/nE3Qa7uk5nuOb3DsfUiHN.1xK3H9x7Fe2mr81MaU7u', 'resident', 1389, NULL, NULL, '2019-07-26 08:39:27', '2019-07-26 08:39:27'),
+(1507, 'Mohammed Elhussain', 'residentnoemailadress1392@marthaservices.com', '$2y$10$a2IY0Gur/RyPIJIyf4KLTek8HPgn1SOOI0qY4eL9LnARsdDlZx.A6', 'resident', 1392, NULL, NULL, '2019-07-26 08:51:50', '2019-07-26 08:51:50'),
+(1508, 'Kobi Casas', 'kobicasas14@gmail.com', '$2y$10$y9fdra9lPugRp9WCaerFReOIzctZrWA3c/BFyFuC2LUuhoKPVrBjy', 'resident', 1394, NULL, NULL, '2019-07-26 08:59:41', '2019-07-26 08:59:41'),
+(1509, 'Jacinta Corpuz', 'jpcorpuz816@gmail.com', '$2y$10$QycL7L2m8W3oDY2/MIcKu.0Bx1qp4LGvANUymQ3JLn2hdzB/hbPS6', 'resident', 1396, NULL, NULL, '2019-07-26 09:02:21', '2019-07-26 09:02:21'),
+(1510, 'Johann Sebastian Servas', 'jojoservas@yahoo.com', '$2y$10$62AMIiyK9TKDJ2rVRI7V/.k/ffUqWr7eiTU.wp/c0glVAwm0fiY1q', 'resident', 1397, NULL, NULL, '2019-07-26 10:35:56', '2019-07-26 10:35:56');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `banks`
+--
+ALTER TABLE `banks`
+  ADD PRIMARY KEY (`bank_id`),
+  ADD KEY `banks_bank_owner_id_foreign` (`bank_owner_id`);
+
+--
+-- Indexes for table `charges`
+--
+ALTER TABLE `charges`
+  ADD PRIMARY KEY (`charge_id`),
+  ADD KEY `charges_charge_trans_id_foreign` (`charge_trans_id`);
+
+--
+-- Indexes for table `contracts`
+--
+ALTER TABLE `contracts`
+  ADD PRIMARY KEY (`contract_id`),
+  ADD KEY `contracts_contract_owner_id_foreign` (`contract_owner_id`),
+  ADD KEY `contracts_contract_room_id_foreign` (`contract_room_id`);
+
+--
+-- Indexes for table `guardians`
+--
+ALTER TABLE `guardians`
+  ADD PRIMARY KEY (`guardian_id`),
+  ADD KEY `guardians_guardian_resident_id_foreign` (`guardian_resident_id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `owners`
+--
+ALTER TABLE `owners`
+  ADD PRIMARY KEY (`owner_id`),
+  ADD UNIQUE KEY `owners_owner_email_address_unique` (`owner_email_address`),
+  ADD UNIQUE KEY `owners_owner_mobile_number_unique` (`owner_mobile_number`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`payment_id`),
+  ADD KEY `payments_payment_transaction_id_foreign` (`payment_transaction_id`);
+
+--
+-- Indexes for table `repairs`
+--
+ALTER TABLE `repairs`
+  ADD PRIMARY KEY (`repair_id`);
+
+--
+-- Indexes for table `representatives`
+--
+ALTER TABLE `representatives`
+  ADD PRIMARY KEY (`rep_id`),
+  ADD KEY `representatives_rep_owner_id_foreign` (`rep_owner_id`);
+
+--
+-- Indexes for table `residents`
+--
+ALTER TABLE `residents`
+  ADD PRIMARY KEY (`resident_id`),
+  ADD UNIQUE KEY `residents_email_address_unique` (`email_address`),
+  ADD UNIQUE KEY `residents_mobile_number_unique` (`mobile_number`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`room_id`),
+  ADD UNIQUE KEY `rooms_room_no_unique` (`room_no`);
+
+--
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`trans_id`),
+  ADD KEY `transactions_trans_room_id_foreign` (`trans_room_id`),
+  ADD KEY `transactions_trans_resident_id_foreign` (`trans_resident_id`),
+  ADD KEY `transactions_trans_owner_id_foreign` (`trans_owner_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD KEY `users_user_resident_id_foreign` (`user_resident_id`),
+  ADD KEY `users_user_owner_id_foreign` (`user_owner_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `banks`
+--
+ALTER TABLE `banks`
+  MODIFY `bank_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1235;
+
+--
+-- AUTO_INCREMENT for table `charges`
+--
+ALTER TABLE `charges`
+  MODIFY `charge_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000;
+
+--
+-- AUTO_INCREMENT for table `contracts`
+--
+ALTER TABLE `contracts`
+  MODIFY `contract_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=270;
+
+--
+-- AUTO_INCREMENT for table `guardians`
+--
+ALTER TABLE `guardians`
+  MODIFY `guardian_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1264;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+
+--
+-- AUTO_INCREMENT for table `owners`
+--
+ALTER TABLE `owners`
+  MODIFY `owner_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1239;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `payment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1841;
+
+--
+-- AUTO_INCREMENT for table `repairs`
+--
+ALTER TABLE `repairs`
+  MODIFY `repair_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `representatives`
+--
+ALTER TABLE `representatives`
+  MODIFY `rep_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1236;
+
+--
+-- AUTO_INCREMENT for table `residents`
+--
+ALTER TABLE `residents`
+  MODIFY `resident_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1398;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `room_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1269;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `trans_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1281;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1511;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

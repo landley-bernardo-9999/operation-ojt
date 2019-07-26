@@ -82,9 +82,9 @@
                 <th>{{ $transaction->final_electric_reading }}</th>
             @else
                 <td>Final </td>
-                <td><input type="text" class="form-control" style="width:30%" name="final_water_reading" value="{{ $transaction->final_water_reading }}" required></td>
+                <td><input type="text" class="form-control" style="width:30%" name="final_water_reading" value="{{ $transaction->final_water_reading }}" ></td>
                 <td>Final  </td>
-                <td><input type="text" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_electric_reading }}" required></td>
+                <td><input type="text" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_electric_reading }}" ></td>
             @endif
         </tr>
         </table>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Resident;
 use Illuminate\Http\Request;
 use DB;
+use App\Transaction;
+use App\Payment;
+use Carbon\Carbon;
 
 class ResidentController extends Controller
 {
@@ -29,8 +32,12 @@ class ResidentController extends Controller
                 ->orWhere('mobile_number', 'like', "%$s%")
                 ->orderBy('residents.created_at', 'desc')
                 ->get();  
+                
+                $active_residents = Transaction::where('trans_status','active')->count();
+                
+                $billed_residents = Payment::whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->where('desc', 'monthly_rent')->count();
 
-                return view ('residents', compact('residents'));
+                return view ('residents', compact('residents', 'active_residents', 'billed_residents'));
             }
             else{
                 abort(404, "Forbidden Page.");
@@ -78,6 +85,7 @@ class ResidentController extends Controller
             $resident->mobile_number = $request->mobile_number;
             $resident->telephone_number = $request->telephone_number;
             $resident->primary_resident_id = session('resident_id');
+			$resident->updated_at = null;
             $resident->save();
 
             return redirect('/co-tenant/create')->with('success', 'Co-resident has been added!');

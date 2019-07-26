@@ -188,7 +188,7 @@ window.onload = function() {
         }
 
         //computation of payment for princeton.
-        if( building === 'princeton'){
+        else if( building === 'princeton'){
             if( document.getElementById('term').value === 'long_term'){
                 var sec_dep_rent = document.getElementById('sec_dep_rent').value = 7500*2;
                 var advance_rent = document.getElementById('advance_rent').value = 7500;
@@ -229,7 +229,7 @@ window.onload = function() {
         }
 
         //computation of payment fo wharton.
-        if( building === 'wharton'){
+        else if( building === 'wharton'){
             if( document.getElementById('term').value === 'long_term'){
                 var sec_dep_rent = document.getElementById('sec_dep_rent').value = 11000*2;
                 var advance_rent = document.getElementById('advance_rent').value = 11000;
@@ -268,9 +268,22 @@ window.onload = function() {
 
         }
 
-                //computation of payment fo wharton.
-        if( building === 'manors'){
+        //computation of payment fo wharton.
+        else if( building === 'manors'){
             if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 16000;
+                var advance_rent = document.getElementById('advance_rent').value = 16000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else if( document.getElementById('term').value === 'short_term'){
                 var sec_dep_rent = document.getElementById('sec_dep_rent').value = 17000;
                 var advance_rent = document.getElementById('advance_rent').value = 17000;
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
@@ -283,9 +296,77 @@ window.onload = function() {
           
                 document.getElementById('total_payment').value = total_payment;
             }
+            else{
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 0;
+                var advance_rent = document.getElementById('advance_rent').value = 0;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 2000 * DaysDiff;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities + transient;
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+
+        }
+         //computation of payment fo arkansas.
+        else if( building === 'arkansas'){
+            if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 12000;
+                var advance_rent = document.getElementById('advance_rent').value = 12000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
+                document.getElementById('total_payment').value = total_payment;
+            }
             else if( document.getElementById('term').value === 'short_term'){
-                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 18000;
-                var advance_rent = document.getElementById('advance_rent').value = 18000;
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 13000;
+                var advance_rent = document.getElementById('advance_rent').value = 13000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else{
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 0;
+                var advance_rent = document.getElementById('advance_rent').value = 0;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 2000 * DaysDiff;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities + transient;
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+
+        }  
+
+         //computation of payment fo loft.
+        else if( building === 'loft'){
+            if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 13000;
+                var advance_rent = document.getElementById('advance_rent').value = 13000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else if( document.getElementById('term').value === 'short_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 14000;
+                var advance_rent = document.getElementById('advance_rent').value = 14000;
                 var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
                 var transient = document.getElementById('transient').value = 0;
 
@@ -308,6 +389,47 @@ window.onload = function() {
             }
 
         }   
+         //computation of payment fo colorado.
+         else if( building === 'colorado'){
+            if( document.getElementById('term').value === 'long_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 15000;
+                var advance_rent = document.getElementById('advance_rent').value = 15000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else if( document.getElementById('term').value === 'short_term'){
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 16000;
+                var advance_rent = document.getElementById('advance_rent').value = 16000;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 0;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities;
+                document.getElementById('payment_info').style.display = 'block';
+                document.getElementById('transient').style.display = 'none';
+                document.getElementById('transient_label').style.display = 'none';
+          
+                document.getElementById('total_payment').value = total_payment;
+            }
+            else{
+                var sec_dep_rent = document.getElementById('sec_dep_rent').value = 0;
+                var advance_rent = document.getElementById('advance_rent').value = 0;
+                var sec_dep_utilities = document.getElementById('sec_dep_utilities').value = 0;
+                var transient = document.getElementById('transient').value = 2000 * DaysDiff;
+
+                var total_payment = sec_dep_rent + advance_rent + sec_dep_utilities + transient;
+
+                document.getElementById('total_payment').value = total_payment;
+            }
+
+        }  
+   
     }
 
 </script>
