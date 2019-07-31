@@ -82,9 +82,9 @@
                 <th>{{ $transaction->final_electric_reading }}</th>
             @else
                 <td>Final </td>
-                <td><input type="text" class="form-control" style="width:30%" name="final_water_reading" value="{{ $transaction->final_water_reading }}" required></td>
+                <td><input type="text" class="form-control" style="width:30%" name="final_water_reading" value="{{ $transaction->final_water_reading }}" ></td>
                 <td>Final  </td>
-                <td><input type="text" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_electric_reading }}" required></td>
+                <td><input type="text" class="form-control" style="width:30%" name="final_electric_reading" value="{{ $transaction->final_electric_reading }}" ></td>
             @endif
         </tr>
         </table>
@@ -102,7 +102,6 @@
                 <th>Date</th>
                 <th>Description</th>
                 <th>Amount</th>
-                <th>Status</th>
             </tr>
             @foreach ($payment_move_ins as $row)
             <tr>
@@ -110,7 +109,6 @@
                  <td> {{Carbon\Carbon::parse(  $row->trans_date )->formatLocalized('%b %d %Y')}}</td>
                  <td>{{ $row->desc }}</td>
                  <td>{{ number_format($row->amt, 2) }}</td>
-                 <td>{{ $row->payment_status }}</td>
             </tr>
             @endforeach
             <tr>
@@ -286,13 +284,12 @@
                    <td id="move_out_charges_grand_total" name="move_out_charges_grand_total"><b>0.00</b></td>
                 </tr> 
             </table>
-            @if (auth()->user()->privilege === 'leasingOfficer')
+            @if (auth()->user()->privilege === 'leasingOfficer' && $transaction->created_at != null)
             <button onclick="return confirm('Are you sure you want to perform this operation? ');"><i class="fas fa-sign-out-alt"></i>&nbspMOVE OUT</button>            
             @endif
         @endif
         </form>
     </div>    
-</div>
 <br>
 <script type="text/javascript">
 

@@ -8,9 +8,19 @@
                 <a class="nav-link" href="/residents/{{ session('resident_id') }}" oncontextmenu="return false"><i class="far fa-arrow-alt-circle-left"></i>&nbspBack</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/transactions/{{ $transaction->trans_id }}/edit" oncontextmenu="return false"><i class="fas fa-sign-out-alt"></i>&nbspMove Out</a>
+                @if($transaction->updated_at != null)
+                    <a class="nav-link" href="/transactions/{{ $transaction->trans_id }}/edit" oncontextmenu="return false"><i class="fas fa-sign-out-alt"></i>&nbspMove out resident.</a>
             </li>
         </ul>
+                @else
+                    <form action="/transactions/{{ $transaction->trans_id }}" method="POST">
+                        @method('PATCH')
+                        {{ csrf_field() }}
+                        <p>
+                            <button class="btn-default" onclick="return confirm('Are you sure you want to perform this operation? ');"><i class="fas fa-sign-out-alt"></i>&nbspRequest for move out.</button>   
+                        </p> 
+                    </form>
+                @endif
     </div>
     <div class="row">
         <table class="table">

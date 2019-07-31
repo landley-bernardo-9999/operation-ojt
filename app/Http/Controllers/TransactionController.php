@@ -12,6 +12,8 @@ use App\Guardian;
 use App\User;
 use App\Remittance;
 use Hash;
+use App\Room;
+use Illuminate\Support\Facades\Redirect;
 
 class TransactionController extends Controller
 {
@@ -68,6 +70,8 @@ class TransactionController extends Controller
          $transaction->trans_owner_id = $pieces[0];
          $transaction->trans_status = 'pending';
          $transaction->term = $term;
+         $transaction->created_at = null;
+         $transaction->updated_at = null;
          $transaction->save();
  
           //create the payment.
@@ -78,7 +82,7 @@ class TransactionController extends Controller
              $payment->payment_status = 'unpaid';
              $payment->payment_transaction_id = $transaction->trans_id;
              $payment->created_at = $transaction->trans_date;
-             $payment->updated_at = $transaction->trans_date;;
+             $payment->updated_at = null;
              $payment->save();
          }
 
@@ -89,7 +93,7 @@ class TransactionController extends Controller
              $payment->payment_status = 'unpaid';
              $payment->payment_transaction_id = $transaction->trans_id;
              $payment->created_at = $transaction->trans_date;
-             $payment->created_at = $transaction->trans_date;
+             $payment->updated_at = null;
              $payment->save();
          }
 
@@ -100,7 +104,7 @@ class TransactionController extends Controller
              $payment->payment_status = 'unpaid';
              $payment->payment_transaction_id = $transaction->trans_id;
              $payment->created_at = $transaction->trans_date;
-             $payment->updated_at = $transaction->trans_date;;
+             $payment->updated_at = null;
              $payment->save();
          }
 
@@ -111,7 +115,7 @@ class TransactionController extends Controller
              $payment->payment_status = 'unpaid';
              $payment->payment_transaction_id = $transaction->trans_id;
              $payment->created_at = $transaction->trans_date;
-             $payment->updated_at = $transaction->trans_date;;
+             $payment->updated_at = null;
              $payment->save();
          }
 
@@ -142,6 +146,7 @@ class TransactionController extends Controller
          $resident->municipality = session('sess_municipality');
          $resident->province = session('sess_province');
          $resident->zip = session('sess_zip');
+         $resident->updated_at = null;
          $resident->save();
 
          //create the guardian
@@ -175,6 +180,8 @@ class TransactionController extends Controller
          $transaction->trans_owner_id = session('sess_owner_id');
          $transaction->trans_status = 'pending';
          $transaction->term = $term;
+         $transaction->created_at = null;
+         $transaction->updated_at = null;
          $transaction->save();
  
           //create the payment.
@@ -184,7 +191,7 @@ class TransactionController extends Controller
             $payment->desc = 'sec_dep_rent';
             $payment->payment_status = 'unpaid';
             $payment->payment_transaction_id = $transaction->trans_id;
-            $payment->updated_at = $transaction->trans_date;;
+            $payment->updated_at = null;
             $payment->created_at = $transaction->trans_date;
             $payment->save();
          }
@@ -195,7 +202,7 @@ class TransactionController extends Controller
             $payment->desc = 'advance_rent';
             $payment->payment_status = 'unpaid';
             $payment->payment_transaction_id = $transaction->trans_id;
-            $payment->updated_at = $transaction->trans_date;
+            $payment->updated_at = null;
             $payment->created_at = $transaction->trans_date;
             
             //adding remittance info for the unit owner
@@ -282,7 +289,7 @@ class TransactionController extends Controller
             $payment->desc = 'sec_dep_utilities';
             $payment->payment_status = 'unpaid';
             $payment->payment_transaction_id = $transaction->trans_id;
-            $payment->updated_at = $transaction->trans_date;;
+            $payment->updated_at = null;
             $payment->created_at = $transaction->trans_date;
             $payment->save();
          }
@@ -293,7 +300,7 @@ class TransactionController extends Controller
             $payment->desc = 'transient';
             $payment->payment_status = 'unpaid';
             $payment->payment_transaction_id = $transaction->trans_id;
-            $payment->updated_at = $transaction->trans_date;;
+            $payment->updated_at = null;
             $payment->created_at = $transaction->trans_date;
             $payment->save();
          }
@@ -376,7 +383,8 @@ class TransactionController extends Controller
         ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
         ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
         ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
-        ->where('transactions.trans_id', $trans_id)
+        ->where('transactions.trans_room_id', session('sess_room_id'))
+        ->where('payment_status', 'paid')
         ->whereIn('payments.desc',['sec_dep_utilities', 'sec_dep_rent'])
         ->get();
 
@@ -408,131 +416,172 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $trans_id)
     {
-        if($request->trans_status === 'inactive' || $request->trans_status === 'pending' ){ 
+        $transaction = Transaction::findOrFail($trans_id);
 
-            request()->validate([
-                'move_out_reason' => ['required']
-            ]);
+        if(auth()->user()->privilege === 'leasingManager'){
+            $transaction->updated_at = now();
+            $transaction->save();
 
-            DB::table('transactions')
-                ->where('transactions.trans_resident_id', session('resident_id'))
-                ->where('transactions.trans_room_id', session('sess_room_id'))
-                ->update([
-                            'trans_status' => 'inactive',
-                            'move_out_reason' => $request->move_out_reason,
-                            'actual_move_out_date' => $request->actual_move_out_date                    
-                        ]);
+            return redirect('dashboard')->with('success','Resident move out has been approved!');
+        }   
 
-            DB::table('rooms')
-                ->where('room_id', session('sess_room_id'))
-                ->update([
-                            'room_status' => 'vacant',
-                            'remarks' => 'THE ROOM IS SET FOR GENERAL CLEANING'
-                        ]);
+        elseif(auth()->user()->privilege === 'leasingOfficer'){
+            if($request->trans_status === 'inactive' || $request->trans_status === 'pending' ){ 
 
-            $data = $request->all();
-            Transaction::findOrFail($trans_id)->update($data);   
-
-            if($request->total_comforter > 0){
-                $payment = new Payment();
-                $payment->amt = $request->total_comforter;
-                $payment->desc = $request->qty_comforter.'_curtain';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $trans_id;
-                $payment->updated_at = null;
-                $payment->save();
+                request()->validate([
+                    'move_out_reason' => ['required']
+                ]);
+    
+                //change the transaction status to inactive.
+                Transaction::
+                    where('transactions.trans_resident_id', session('resident_id'))
+                    ->where('transactions.trans_room_id', session('sess_room_id'))
+                    ->update([
+                                'trans_status' => 'inactive',
+                                'move_out_reason' => $request->move_out_reason,
+                                'actual_move_out_date' => $request->actual_move_out_date                    
+                            ]);
+                       
+                  //update the updated_at column of resident.     
+                  Resident::
+                    where('resident_id', session('resident_id'))
+                 ->where('primary_resident_id', session('resident_id'))
+                    ->update([
+                                'updated_at' => $request->actual_move_out_date
+                            ]);
+                
+                //update the room created_at column
+                Room::
+                    where('room_id', session('sess_room_id'))
+                    ->update([
+                                'created_at' =>  $request->actual_move_out_date  
+                            ]);
+    
+                //change the room status to vacant.
+                Room::
+                    where('room_id', session('sess_room_id'))
+                    ->update([
+                                'room_status' => 'vacant',
+                                'remarks' => 'THE ROOM IS SET FOR GENERAL CLEANING'
+                            ]);
+    
+                $data = $request->all();
+                Transaction::findOrFail($trans_id)->update($data);   
+    
+                if($request->total_comforter > 0){
+                    $payment = new Payment();
+                    $payment->amt = $request->total_comforter;
+                    $payment->desc = $request->qty_comforter.'_curtain';
+                    $payment->payment_status = 'unpaid';
+                    $payment->payment_transaction_id = $trans_id;
+                    $payment->updated_at = null;
+                    $payment->save();
+                }
+    
+                if($request->total_bedlining > 0){
+                    $payment = new Payment();
+                    $payment->amt = $request->total_bedlining;
+                    $payment->desc = $request->qty_bedlining.'_bedlining';
+                    $payment->payment_status = 'unpaid';
+                    $payment->payment_transaction_id = $trans_id;
+                    $payment->updated_at = null;
+                    $payment->save();
+                }
+       
+                if($request->total_pillow_case > 0){
+                    $payment = new Payment();
+                    $payment->amt = $request->total_pillow_case;
+                    $payment->desc = $request->qty_pillow_case.'_pillow_case';
+                    $payment->payment_status = 'unpaid';
+                    $payment->payment_transaction_id = $trans_id;
+                    $payment->updated_at = null;
+                    $payment->save();
+                }
+    
+                if($request->total_pillow > 0){
+                    $payment = new Payment();
+                    $payment->amt = $request->total_pillow;
+                    $payment->desc = $request->qty_pillow.'_pillow';
+                    $payment->payment_status = 'unpaid';
+                    $payment->payment_transaction_id = $trans_id;
+                    $payment->updated_at = null;
+                    $payment->save();
+                }
+    
+                if($request->total_rug > 0){
+                    $payment = new Payment();
+                    $payment->amt = $request->total_rug;
+                    $payment->desc = $request->qty_rug.'_rug';
+                    $payment->payment_status = 'unpaid';
+                    $payment->payment_transaction_id = $trans_id;
+                    $payment->updated_at = null;
+                    $payment->save();
+                }
+    
+                if($request->total_curtain > 0){
+                    $payment = new Payment();
+                    $payment->amt = $request->total_curtain;
+                    $payment->desc = $request->qty_curtain.'_curtain';
+                    $payment->payment_status = 'unpaid';
+                    $payment->payment_transaction_id = $trans_id;
+                    $payment->updated_at = null;
+                    $payment->save();
+                }
+    
+                if($request->total_towel > 0){
+                    $payment = new Payment();
+                    $payment->amt = $request->total_towel;
+                    $payment->desc = $request->qty_towel.'_pillow_case';
+                    $payment->payment_status = 'unpaid';
+                    $payment->payment_transaction_id = $trans_id;
+                    $payment->updated_at = null;
+                    $payment->save();
+                }
+    
+                if($request->total_gc > 0){
+                    $payment = new Payment();
+                    $payment->amt = $request->total_gc;
+                    $payment->desc = 'general_cleaning';
+                    $payment->payment_status = 'unpaid';
+                    $payment->payment_transaction_id = $trans_id;
+                    $payment->updated_at = null;
+                    $payment->save();
+                }
+    
+                if($request->total_amt > 0){
+                    $payment = new Payment();
+                    $payment->amt = $request->total_amt;
+                    $payment->desc = 'other_charges';
+                    $payment->payment_status = 'unpaid';
+                    $payment->payment_transaction_id = $trans_id;
+                    $payment->updated_at = null;
+                    $payment->save();
+                }
+                return Redirect::back()->with('success', 'Resident has move out!');
             }
 
-            if($request->total_bedlining > 0){
-                $payment = new Payment();
-                $payment->amt = $request->total_bedlining;
-                $payment->desc = $request->qty_bedlining.'_bedlining';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
-   
-            if($request->total_pillow_case > 0){
-                $payment = new Payment();
-                $payment->amt = $request->total_pillow_case;
-                $payment->desc = $request->qty_pillow_case.'_pillow_case';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
+            elseif($transaction->trans_status === 'active' ){
+                //requesting for move out to the manager.
+               if($transaction->created_at == null){
+                    $transaction->updated_at = null;
+                    $transaction->created_at = now();
+                    $transaction->save();
 
-            if($request->total_pillow > 0){
-                $payment = new Payment();
-                $payment->amt = $request->total_pillow;
-                $payment->desc = $request->qty_pillow.'_pillow';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
+                    return Redirect::back()->with('success', 'Request for moveout has been sent!');
 
-            if($request->total_rug > 0){
-                $payment = new Payment();
-                $payment->amt = $request->total_rug;
-                $payment->desc = $request->qty_rug.'_rug';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
-
-            if($request->total_curtain > 0){
-                $payment = new Payment();
-                $payment->amt = $request->total_curtain;
-                $payment->desc = $request->qty_curtain.'_curtain';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
-
-            if($request->total_towel > 0){
-                $payment = new Payment();
-                $payment->amt = $request->total_towel;
-                $payment->desc = $request->qty_towel.'_pillow_case';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
-
-            if($request->total_gc > 0){
-                $payment = new Payment();
-                $payment->amt = $request->total_gc;
-                $payment->desc = 'general_cleaning';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
-
-            if($request->total_amt > 0){
-                $payment = new Payment();
-                $payment->amt = $request->total_amt;
-                $payment->desc = 'other_charges';
-                $payment->payment_status = 'unpaid';
-                $payment->payment_transaction_id = $trans_id;
-                $payment->updated_at = null;
-                $payment->save();
-            }
-            return redirect('transactions/'.$trans_id.'/edit')->with('success','Resident has moved out!');
+               }
+               //adding and updating the utilities of the resident.
+               else{
+                $data = $request->all();
+                Transaction::findOrFail($trans_id)->update($data);       
+                
+                return Redirect::back()->with('success', 'Reading for utilities has been added!');
+               } 
         }
-        else{
-            $data = $request->all();
-            Transaction::findOrFail($trans_id)->update($data);       
-            
-            return redirect('transactions/'.$trans_id)->with('success','Utility readings has been added!');
-        }
-
+        }else{
+            abort(404, "Forbidden Page.");
+        }   
       
-
     }
 
     /**

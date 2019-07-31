@@ -126,31 +126,41 @@
     </div>
      <div class="row">
         <div class="col-md-12">
-            <h3>Upcoming Moveouts</h3>
+            <h3>Request for moveout</h3>
             <table class="table">
                 @if($about_to_move_out->count() > 0)
-                <p>{{ $about_to_move_out->count() }} upcoming moveouts.</p>
+                <p>{{ $about_to_move_out->count() }} request for moveouts</p>
                 <tr>
                     <th>#</th>
                     <th>Resident</th>
                     <th>Building</th>
                     <th>Unit</th>
                     <th>Move Out Date</th>
+                
                     <th></th>
                 </tr>
                 <?php $row_no = 1; ?>
                 @foreach ($about_to_move_out as $row)
                 <tr>
                     <th>{{ $row_no++ }}</th>
-                    <td>{{ $row->first_name}} {{ $row->last_name }}</td>
+                    <td><a href="/residents/{{ $row->resident_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
                     <td>{{ $row->building }}</td>
                     <td>{{ $row->room_no}} </td>
                     <td>{{Carbon\Carbon::parse(  $row->move_out_date )->formatLocalized('%b %d %Y')}}</td>
-                    <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">MORE INFO</a></td>
+                   
+                    <td>  
+                        <form action="/transactions/{{ $row->trans_id }}" method="POST">
+                        @method('PATCH')
+                        {{ csrf_field() }}
+                        <p>
+                            <button class="btn-default" onclick="return confirm('Are you sure you want to perform this operation? ');"><i class="fas fa-sign-out-alt"></i>&nbspALLOW</button>   
+                        </p> 
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
                 @else
-                <p class="text-danger">No upcoming moveouts yet.</p>
+                <p class="text-danger">No request for moveout.</p>
               @endif
             </table>
         </div>                
@@ -239,7 +249,7 @@
        @if($move_in_rate_increase < 0)
             <h3>Move In Rate ( +{{ number_format($move_in_rate_increase,0) }} % )</h3>
        @else
-            <h3>Move In Rate ( -{{ number_format($move_in_rate_increase,0) }} % )</h3>
+            <h3>Move In Rate ( {{ number_format($move_in_rate_increase,0) }} % )</h3>
        @endif
     </div>
      <div class="row">
@@ -250,7 +260,7 @@
        @if($move_out_rate_increase > 0)
             <h3>Move Out Rate ( +{{ number_format($move_out_rate_increase,0) }} % )</h3>
        @else
-            <h3>Move Out Rate ( -{{ number_format($move_out_rate_increase,0) }} % )</h3>
+            <h3>Move Out Rate ( {{ number_format($move_out_rate_increase,0) }} % )</h3>
        @endif
     </div>
      <div class="row">

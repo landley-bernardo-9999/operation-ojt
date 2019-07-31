@@ -8,6 +8,8 @@ class Transaction extends Model
 {
     protected $primaryKey = 'trans_id';
 
+    public $timestamps  = false;
+
     protected $fillable = [
         'trans_date',
         'trans_room_id',

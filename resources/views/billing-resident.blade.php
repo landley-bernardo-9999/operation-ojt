@@ -65,7 +65,7 @@
                     <form method="POST" action="/payments/{{ $row->payment_id }}">
                         @method('delete')
                         {{ csrf_field() }}
-                        <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger"><i class="fas fa-times"></i></button>
+                        <button title="remove this row" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-danger"><i class="fas fa-times"></i></button>
                     </form>
                 </td>
                 @endif
@@ -109,6 +109,10 @@
                    <option value="" selected>Select Description</option>
                     <option value="electric_bill">Electric Bill</option>
                     <option value="water_bill">Water Bill</option>
+                    <option value="monthly_rent">Montly Rent</option>
+                    <option value="advance_rent">Advance Rent</option>
+                    <option value="sec_dep_utilities">Security Deposit For Utilities</option>
+                    <option value="sec_dep_rent">Security Deposit For Rent</option>
                    <option value="others">Others</option>
                </select>
             </div>

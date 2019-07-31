@@ -4,7 +4,7 @@
 <div class="container">
   <div class="row">
       <div class="col-md-3">    
-        <h3>Enter resident name</h3> 
+        <h3>Enter resident name</h3>  
       </div>
     </div>
     <form class="" action="/search/residents" method="GET">
@@ -14,6 +14,10 @@
     <table class="table">
         @if($residents->count() > 0)
         <p>{{ $residents->count() }} residents found.</p>
+        @if(auth()->user()->privilege === 'billingAndCollection')
+        <h4 class="text-right">Billed residents: {{ $billed_residents }}/{{ $active_residents }} for {{ Date('F Y') }} 
+        </h4>
+        @endif
         <tr>
             <th>#</th>
             <th>Resident</th>

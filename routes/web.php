@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use App\Charts\DashboardChart;
 use App\User;
 use App\Payment;
-
+use App\Contract;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,7 +126,7 @@ Route::get('/dashboard', function(){
         ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
         ->select('*', 'payments.updated_at as payment_date')
         ->where('payment_status', 'paid')
-        ->whereMonth('payments.updated_at', Carbon::now()->month)->whereYear('payments.updated_at', Carbon::now()->year)
+        ->whereDate('payments.updated_at', Carbon::now())
         ->orderBy('payments.updated_at', 'desc')
         ->get();
 
@@ -138,9 +138,7 @@ Route::get('/dashboard', function(){
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
             ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
-            ->select('*', DB::raw('sum(amt) as total'))
-            ->groupBy('payment_id')
-            ->havingRaw('total > 0')
+            
             ->whereIn('desc', ['advance_rent', 'monthly_rent'])
             ->where('payment_status', 'unpaid')
             ->where('building', 'harvard')
@@ -150,9 +148,7 @@ Route::get('/dashboard', function(){
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
             ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
-            ->select('*', DB::raw('sum(amt) as total'))
-            ->groupBy('payment_id')
-            ->havingRaw('total > 0')
+         
             ->whereIn('desc', ['advance_rent', 'monthly_rent'])
             ->where('payment_status', 'unpaid')
             ->where('building', 'princeton')
@@ -162,9 +158,7 @@ Route::get('/dashboard', function(){
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
             ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
-            ->select('*', DB::raw('sum(amt) as total'))
-            ->groupBy('payment_id')
-            ->havingRaw('total > 0')
+        
             ->whereIn('desc', ['advance_rent', 'monthly_rent'])
             ->where('payment_status', 'unpaid')
             ->where('building', 'wharton')
@@ -174,9 +168,6 @@ Route::get('/dashboard', function(){
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
             ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
-            ->select('*', DB::raw('sum(amt) as total'))
-            ->groupBy('payment_id')
-            ->havingRaw('total > 0')
             ->whereIn('desc', ['advance_rent', 'monthly_rent'])
             ->where('payment_status', 'unpaid')
             ->where('project', 'the_courtyards')
@@ -280,33 +271,36 @@ Route::get('/dashboard', function(){
         $about_to_move_out = DB::table('transactions')
         ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
         ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-        ->orderBy('move_in_date', 'desc')
+        ->orderBy('move_out_date')
         ->where('trans_status', 'active')
-        ->whereBetween('move_out_date', [Carbon::now(), Carbon::now()->addDays(7)])
+         ->whereBetween('move_out_date', [
+                                Carbon::now()->subDay(1), 
+                                Carbon::now()->addDays(6)
+                                        ])
         ->get();  
 
         $harvard_least_occupied_rooms = Room::
         where('room_status', 'vacant')
         ->where('building', 'harvard')
-        ->orderBy('updated_at')
+        ->orderBy('created_at')
         ->get(); 
         
         $princeton_least_occupied_rooms = Room::
         where('room_status', 'vacant')
         ->where('building', 'princeton')
-        ->orderBy('updated_at')
+        ->orderBy('created_at')
         ->get(); 
 
         $wharton_least_occupied_rooms = Room::
         where('room_status', 'vacant')
         ->where('building', 'wharton')
-        ->orderBy('updated_at')
+        ->orderBy('created_at')
         ->get(); 
 
         $cy_least_occupied_rooms = Room::
         where('room_status', 'vacant')
         ->where('project', 'the_courtyards')
-        ->orderBy('updated_at')
+        ->orderBy('created_at')
         ->get(); 
 
         $nc_units_enrolled = DB::table('contracts')
@@ -343,9 +337,7 @@ Route::get('/dashboard', function(){
         ));
     }  
     if(auth()->user()->privilege === 'leasingManager'){        
-                $residents = DB::table('transactions')
-                ->leftJoin('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-                ->where('trans_status', 'active')
+                $residents = Resident::where('updated_at',null)
                 ->count();      
                 
                 $rooms =Room::count();
@@ -478,11 +470,10 @@ Route::get('/dashboard', function(){
             $about_to_move_out = DB::table('transactions')
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-                ->orderBy('move_in_date', 'desc')
+                ->orderBy('move_out_date')
                 ->where('trans_status', 'active')
-                ->whereBetween('move_out_date', [Carbon::now(), Carbon::now()->addDays(7)])
+                ->where('transactions.created_at', '!=' , null)
                 ->get(); 
-
 
                 return view('leasing-manager-dashboard', compact('move_in', 'move_out', 'rooms', 'residents', 'owners',
                     'occupied_rooms_harvard', 'vacant_rooms_harvard', 'reserved_rooms_harvard', 'rectification_rooms_harvard',

@@ -29,7 +29,9 @@ class PaymentController extends Controller
             ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
             ->select('*', 'payments.created_at as billing_date')
             ->where('owner_id', auth()->user()->user_owner_id)
+            ->where('payment_status','paid')
             ->whereIn('desc', ['monthly_rent', 'advance_rent'])
+            ->orderBy('payments.created_at', 'desc')
             ->get();
             
             $unit = DB::table('contracts')
@@ -147,7 +149,9 @@ class PaymentController extends Controller
                 DB::table('transactions')
                 ->join('payments', 'transactions.trans_id','payments.payment_transaction_id')
                 ->where('payment_id', $payment_id)
-                ->update(['trans_status' => 'active']);
+                ->update(
+                            ['trans_status' => 'active']
+                        );
             }
 
             $payment = Payment::findOrFail($payment_id);

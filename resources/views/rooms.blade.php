@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <a href="/rooms/create" oncontextmenu="return false">ADD ROOM</a>   
+            <a href="/rooms/create" oncontextmenu="return false"><i class="fas fa-home"></i>&nbspAdd Room</a>   
         </div>  
     </div>
     <div class="row">
@@ -469,7 +469,7 @@
                         @elseif($cy->room_no === '313')
                             <br>
                             <p>Loft</p>
-                        @elseif($cy->room_no === '3B 004')
+                        @elseif($cy->room_no === '509')
                             <br>
                             <p>Manors</p>
                         @endif
@@ -489,7 +489,7 @@
                         @elseif($cy->room_no === '313')
                             <br>
                             <p>Loft</p>
-                        @elseif($cy->room_no === '3B 004')
+                        @elseif($cy->room_no === '509')
                             <br>
                             <p>Manors</p>
                         @endif
@@ -509,7 +509,7 @@
                         @elseif($cy->room_no === '313')
                             <br>
                             <p>Loft</p>
-                        @elseif($cy->room_no === '3B 004')
+                        @elseif($cy->room_no === '509')
                             <br>
                             <p>Manors</p>
                         @endif
@@ -529,7 +529,7 @@
                         @elseif($cy->room_no === '313')
                             <br>
                             <p>Loft</p>
-                        @elseif($cy->room_no === '3B 004')
+                        @elseif($cy->room_no === '509')
                             <br>
                             <p>Manors</p>
                         @endif

@@ -227,7 +227,7 @@
                 <tr>
                     <th>{{ $row_no++ }}</th>
                     <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->room_no}} </a></td>
-                    <td>{{Carbon\Carbon::parse(  $row->updated_at )->formatLocalized('%b %d %Y')}}</td>
+                    <td>{{Carbon\Carbon::parse(  $row->created_at )->formatLocalized('%b %d %Y')}}</td>
                 </tr>
                 @endforeach
             </table>
@@ -241,7 +241,7 @@
                 <tr>
                     <th>{{ $row_no++ }}</th>
                     <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->room_no}} </a></td>
-                    <td>{{Carbon\Carbon::parse(  $row->updated_at )->formatLocalized('%b %d %Y')}}</td>
+                    <td>{{Carbon\Carbon::parse(  $row->created_at )->formatLocalized('%b %d %Y')}}</td>
                 </tr>
                 @endforeach
             </table>
@@ -255,7 +255,7 @@
                 <tr>
                     <th>{{ $row_no++ }}</th>
                     <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->room_no}} </a></td>
-                    <td>{{Carbon\Carbon::parse(  $row->updated_at )->formatLocalized('%b %d %Y')}}</td>
+                    <td>{{Carbon\Carbon::parse(  $row->created_at )->formatLocalized('%b %d %Y')}}</td>
                 </tr>
                 @endforeach
             </table>
@@ -269,7 +269,7 @@
                 <tr>
                     <th>{{ $row_no++ }}</th>
                     <td><a href="rooms/{{ $row->room_id }}" oncontextmenu="return false">{{ $row->room_no}} </a></td>
-                    <td>{{Carbon\Carbon::parse(  $row->updated_at )->formatLocalized('%b %d %Y')}}</td>
+                    <td>{{Carbon\Carbon::parse(  $row->created_at )->formatLocalized('%b %d %Y')}}</td>
                 </tr>
                 @endforeach
             </table>
@@ -279,10 +279,10 @@
     <h3>Newly Enrolled Units</h3>
     <div class="row">
         <div class="col-md-6">
-                <h4>North Cambridge</h4>
+                <h4>Courtyards</h4>
             <table class="table">
                  @if($nc_units_enrolled->count() > 0)
-                <p>{{ $nc_units_enrolled->count() }} newly enrolled units in North Cambridge.</p>
+                <p>{{ $nc_units_enrolled->count() }} newly enrolled units in Courtyards.</p>
                 <?php $row_no = 1; ?>
                 @foreach ($nc_units_enrolled as $row)
                 <tr>
@@ -294,16 +294,16 @@
                 </tr>
                 @endforeach
                 @else
-                <p class="text-danger">No newly enrolled units in North Cambridge..</p>
+                <p class="text-danger">No newly enrolled units in Courtyards.</p>
               @endif
             </table>
         </div> 
 
         <div class="col-md-6">
-                <h4>Courtyards</h4>
+                <h4>North Cambridge</h4>
             <table class="table">
                     @if($cy_units_enrolled->count() > 0)
-                    <p>{{ $cy_units_enrolled->count() }} newly enrolled units in Courtyards.</p>
+                    <p>{{ $cy_units_enrolled->count() }} newly enrolled units in North Cambridge.</p>
                 <?php $row_no = 1; ?>
                 @foreach ($cy_units_enrolled as $row)
                 <tr>
@@ -315,7 +315,7 @@
                 </tr>
                 @endforeach
                 @else
-                <p class="text-danger">No newly enrolled units in Courtyards.</p>
+                <p class="text-danger">No newly enrolled units in North Cambridge.</p>
               @endif
             </table>
         </div> 

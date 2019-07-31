@@ -105,8 +105,8 @@
                 </div>
               
             <div class="row">
-                <a href="/rooms" class="btn btn-danger"></i>CANCEL</a>           
-                <button class="btn btn-primary" type="submit">CREATE</button>         
+                <a href="/rooms" class="btn-default"></i>CANCEL</a>           
+                <button class="btn-default" type="submit">SUBMIT</button>         
             </div>  
             
             </form>    
