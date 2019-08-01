@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jul 30, 2019 at 10:12 PM
--- Server version: 5.6.41-84.1
--- PHP Version: 7.2.7
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jul 31, 2019 at 06:28 AM
+-- Server version: 5.7.21
+-- PHP Version: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,15 +28,18 @@ SET time_zone = "+00:00";
 -- Table structure for table `banks`
 --
 
-CREATE TABLE `banks` (
-  `bank_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `banks`;
+CREATE TABLE IF NOT EXISTS `banks` (
+  `bank_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `bank_owner_id` int(10) UNSIGNED DEFAULT NULL,
   `bank_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bank_account_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bank_account_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`bank_id`),
+  KEY `banks_bank_owner_id_foreign` (`bank_owner_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1243 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `banks`
@@ -287,16 +290,19 @@ INSERT INTO `banks` (`bank_id`, `bank_owner_id`, `bank_name`, `bank_account_name
 -- Table structure for table `charges`
 --
 
-CREATE TABLE `charges` (
-  `charge_id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `charges`;
+CREATE TABLE IF NOT EXISTS `charges` (
+  `charge_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `charge_trans_id` int(10) UNSIGNED NOT NULL,
   `item` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amt` double(15,2) NOT NULL,
   `qty` int(11) NOT NULL,
   `total_amt` double(15,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`charge_id`),
+  KEY `charges_charge_trans_id_foreign` (`charge_trans_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -304,14 +310,18 @@ CREATE TABLE `charges` (
 -- Table structure for table `contracts`
 --
 
-CREATE TABLE `contracts` (
-  `contract_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `contracts`;
+CREATE TABLE IF NOT EXISTS `contracts` (
+  `contract_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `enrollment_date` date NOT NULL,
   `contract_owner_id` int(10) UNSIGNED NOT NULL,
   `contract_room_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`contract_id`),
+  KEY `contracts_contract_owner_id_foreign` (`contract_owner_id`),
+  KEY `contracts_contract_room_id_foreign` (`contract_room_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=279 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `contracts`
@@ -594,15 +604,18 @@ INSERT INTO `contracts` (`contract_id`, `enrollment_date`, `contract_owner_id`, 
 -- Table structure for table `guardians`
 --
 
-CREATE TABLE `guardians` (
-  `guardian_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `guardians`;
+CREATE TABLE IF NOT EXISTS `guardians` (
+  `guardian_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `guardian_resident_id` int(10) UNSIGNED DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `relationship` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`guardian_id`),
+  KEY `guardians_guardian_resident_id_foreign` (`guardian_resident_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1308 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `guardians`
@@ -895,11 +908,13 @@ INSERT INTO `guardians` (`guardian_id`, `guardian_resident_id`, `name`, `relatio
 -- Table structure for table `migrations`
 --
 
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -935,8 +950,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- Table structure for table `owners`
 --
 
-CREATE TABLE `owners` (
-  `owner_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `owners`;
+CREATE TABLE IF NOT EXISTS `owners` (
+  `owner_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `owner_first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner_middle_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `owner_last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -956,8 +972,11 @@ CREATE TABLE `owners` (
   `owner_zip` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `owner_img` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`owner_id`),
+  UNIQUE KEY `owners_owner_email_address_unique` (`owner_email_address`),
+  UNIQUE KEY `owners_owner_mobile_number_unique` (`owner_mobile_number`)
+) ENGINE=MyISAM AUTO_INCREMENT=1247 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `owners`
@@ -1210,10 +1229,12 @@ INSERT INTO `owners` (`owner_id`, `owner_first_name`, `owner_middle_name`, `owne
 -- Table structure for table `password_resets`
 --
 
-CREATE TABLE `password_resets` (
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1222,8 +1243,9 @@ CREATE TABLE `password_resets` (
 -- Table structure for table `payments`
 --
 
-CREATE TABLE `payments` (
-  `payment_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `payments`;
+CREATE TABLE IF NOT EXISTS `payments` (
+  `payment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `payment_transaction_id` int(10) UNSIGNED NOT NULL,
   `desc` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amt` double(15,2) DEFAULT NULL,
@@ -1242,8 +1264,10 @@ CREATE TABLE `payments` (
   `mgmt_fee` double(15,2) DEFAULT NULL,
   `condo_dues` double(15,2) DEFAULT NULL,
   `remittance_note` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `others` double(15,2) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `others` double(15,2) DEFAULT NULL,
+  PRIMARY KEY (`payment_id`),
+  KEY `payments_payment_transaction_id_foreign` (`payment_transaction_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1955 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `payments`
@@ -1575,9 +1599,7 @@ INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `
 (1434, 1172, 'sec_dep_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7000.00, NULL, '2018-10-11 16:00:00', '2018-10-11 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1435, 1172, 'advance_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7000.00, NULL, '2018-10-11 16:00:00', '2018-10-11 16:00:00', 5420.85, 1200.00, 879.15, NULL, 0.00),
 (1436, 1172, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2018-10-11 16:00:00', '2018-10-11 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1437, 1173, 'sec_dep_rent', 15000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 15000.00, NULL, '2019-01-30 16:00:00', '2019-01-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1438, 1173, 'advance_rent', 7500.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7500.00, NULL, '2019-01-30 16:00:00', '2019-07-18 22:56:53', NULL, NULL, NULL, NULL, NULL),
-(1439, 1173, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-01-30 16:00:00', '2019-01-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
+(1439, 1174, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-01-30 16:00:00', '2019-01-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1440, 1174, 'sec_dep_rent', 14000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 14000.00, NULL, '2019-01-30 16:00:00', '2019-01-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1441, 1174, 'advance_rent', 7000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 7000.00, NULL, '2019-01-30 16:00:00', '2019-07-18 22:57:31', NULL, NULL, NULL, NULL, NULL),
 (1442, 1174, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-01-30 16:00:00', '2019-01-30 16:00:00', NULL, NULL, NULL, NULL, NULL),
@@ -1817,10 +1839,10 @@ INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `
 (1678, 1261, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-05-01 16:00:00', '2019-05-01 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
 (1679, 1261, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-05-01 16:00:00', '2019-05-01 16:00:00', NULL, NULL, NULL, NULL, NULL),
 (1680, 1262, 'sec_dep_rent', 13600.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 13600.00, NULL, '2019-04-27 16:00:00', '2019-04-27 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1681, 1262, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-04-27 16:00:00', '2019-04-27 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00);
-INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `payment_status`, `or_number`, `ar_number`, `form_of_payment`, `check_no`, `date_deposited`, `bank_name`, `amt_paid`, `note`, `created_at`, `updated_at`, `remittance_amt`, `mgmt_fee`, `condo_dues`, `remittance_note`, `others`) VALUES
+(1681, 1262, 'advance_rent', 6800.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 6800.00, NULL, '2019-04-27 16:00:00', '2019-04-27 16:00:00', 5140.85, 780.00, 879.15, NULL, 0.00),
 (1682, 1262, 'sec_dep_utilities', 2000.00, 'paid', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, '2019-04-27 16:00:00', '2019-04-27 16:00:00', NULL, NULL, NULL, NULL, NULL),
-(1695, 1137, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
+(1695, 1137, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00);
+INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `payment_status`, `or_number`, `ar_number`, `form_of_payment`, `check_no`, `date_deposited`, `bank_name`, `amt_paid`, `note`, `created_at`, `updated_at`, `remittance_amt`, `mgmt_fee`, `condo_dues`, `remittance_note`, `others`) VALUES
 (1696, 1181, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
 (1697, 1201, 'monthly_rent', 7500.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5840.85, 780.00, 879.15, NULL, 0.00),
 (1698, 1202, 'monthly_rent', 6800.00, 'unpaid', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-01 05:00:00', NULL, 5140.85, 780.00, 879.15, NULL, 0.00),
@@ -2083,10 +2105,12 @@ INSERT INTO `payments` (`payment_id`, `payment_transaction_id`, `desc`, `amt`, `
 -- Table structure for table `repairs`
 --
 
-CREATE TABLE `repairs` (
-  `repair_id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `repairs`;
+CREATE TABLE IF NOT EXISTS `repairs` (
+  `repair_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`repair_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2095,15 +2119,18 @@ CREATE TABLE `repairs` (
 -- Table structure for table `representatives`
 --
 
-CREATE TABLE `representatives` (
-  `rep_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `representatives`;
+CREATE TABLE IF NOT EXISTS `representatives` (
+  `rep_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `rep_owner_id` int(10) UNSIGNED DEFAULT NULL,
   `rep_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rep_relationship` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rep_mobile_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`rep_id`),
+  KEY `representatives_rep_owner_id_foreign` (`rep_owner_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1244 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `representatives`
@@ -2354,8 +2381,9 @@ INSERT INTO `representatives` (`rep_id`, `rep_owner_id`, `rep_name`, `rep_relati
 -- Table structure for table `residents`
 --
 
-CREATE TABLE `residents` (
-  `resident_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `residents`;
+CREATE TABLE IF NOT EXISTS `residents` (
+  `resident_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `middle_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2377,8 +2405,11 @@ CREATE TABLE `residents` (
   `img` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `primary_resident_id` int(10) UNSIGNED DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `primary_resident_id` int(10) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`resident_id`),
+  UNIQUE KEY `residents_email_address_unique` (`email_address`),
+  UNIQUE KEY `residents_mobile_number_unique` (`mobile_number`)
+) ENGINE=MyISAM AUTO_INCREMENT=1454 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `residents`
@@ -2798,8 +2829,9 @@ INSERT INTO `residents` (`resident_id`, `first_name`, `middle_name`, `last_name`
 -- Table structure for table `rooms`
 --
 
-CREATE TABLE `rooms` (
-  `room_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `rooms`;
+CREATE TABLE IF NOT EXISTS `rooms` (
+  `room_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `room_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `project` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `building` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2812,8 +2844,10 @@ CREATE TABLE `rooms` (
   `remarks` longtext COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `floor_number` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `floor_number` int(11) NOT NULL,
+  PRIMARY KEY (`room_id`),
+  UNIQUE KEY `rooms_room_no_unique` (`room_no`)
+) ENGINE=MyISAM AUTO_INCREMENT=1275 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `rooms`
@@ -3095,8 +3129,9 @@ INSERT INTO `rooms` (`room_id`, `room_no`, `project`, `building`, `room_status`,
 -- Table structure for table `transactions`
 --
 
-CREATE TABLE `transactions` (
-  `trans_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `transactions`;
+CREATE TABLE IF NOT EXISTS `transactions` (
+  `trans_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `trans_date` date NOT NULL,
   `trans_room_id` int(10) UNSIGNED NOT NULL,
   `trans_resident_id` int(10) UNSIGNED NOT NULL,
@@ -3112,8 +3147,12 @@ CREATE TABLE `transactions` (
   `final_water_reading` int(11) DEFAULT NULL,
   `final_electric_reading` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`trans_id`),
+  KEY `transactions_trans_room_id_foreign` (`trans_room_id`),
+  KEY `transactions_trans_resident_id_foreign` (`trans_resident_id`),
+  KEY `transactions_trans_owner_id_foreign` (`trans_owner_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1325 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `transactions`
@@ -3122,8 +3161,8 @@ CREATE TABLE `transactions` (
 INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_resident_id`, `trans_owner_id`, `trans_status`, `actual_move_out_date`, `move_out_reason`, `move_in_date`, `move_out_date`, `term`, `initial_water_reading`, `initial_electric_reading`, `final_water_reading`, `final_electric_reading`, `created_at`, `updated_at`) VALUES
 (1029, '2019-01-19', 1017, 1035, 1022, 'inactive', '2019-02-19', 'end_of_contract', '2019-01-19', '2019-02-19', 'short_term', NULL, NULL, NULL, NULL, '2019-06-26 00:56:39', '2019-06-26 00:56:39'),
 (1030, '2019-04-29', 1017, 1041, 1022, 'inactive', '2019-05-01', 'end_of_contract', '2019-04-29', '2019-05-01', 'transient', NULL, NULL, NULL, NULL, '2019-06-26 01:09:00', '2019-06-26 01:09:00'),
-(1031, '2019-06-06', 1017, 1042, 1022, 'active', NULL, NULL, '2019-06-06', '2019-12-06', 'long_term', 51, 1785, NULL, NULL, '2019-06-26 01:17:02', '2019-06-26 01:18:01'),
-(1032, '2018-09-22', 1014, 1043, 1019, 'active', NULL, NULL, '2018-09-22', '2019-09-22', 'long_term', NULL, NULL, NULL, NULL, '2019-06-26 17:58:29', '2019-06-26 17:58:29'),
+(1031, '2019-06-06', 1017, 1042, 1022, 'active', NULL, NULL, '2019-06-06', '2019-12-06', 'long_term', 51, 1785, NULL, NULL, NULL, NULL),
+(1032, '2018-09-22', 1014, 1043, 1019, 'active', NULL, NULL, '2018-09-22', '2019-09-22', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1033, '2015-12-26', 1008, 1047, 1010, 'inactive', '2016-12-26', 'end_of_contract', '2015-12-26', '2016-12-26', 'long_term', NULL, NULL, NULL, NULL, '2019-06-26 18:18:29', '2019-06-26 18:18:29'),
 (1034, '2017-02-10', 1008, 1048, 1010, 'inactive', '2017-02-12', 'end_of_contract', '2017-02-10', '2017-02-12', 'transient', NULL, NULL, NULL, NULL, '2019-06-26 18:34:36', '2019-06-26 18:34:36'),
 (1035, '2019-06-27', 1008, 1049, 1010, 'inactive', '2017-04-08', 'end_of_contract', '2017-03-08', '2017-04-08', 'short_term', 94, 1461, NULL, NULL, '2019-06-26 18:50:25', '2019-06-26 18:53:27'),
@@ -3134,8 +3173,8 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1040, '2018-08-03', 1008, 1054, 1010, 'inactive', '2019-01-26', 'end_of_contract', '2018-08-03', '2019-01-26', 'short_term', NULL, NULL, NULL, NULL, '2019-06-26 21:45:34', '2019-06-26 21:45:34'),
 (1041, '2017-12-30', 1008, 1058, 1010, 'inactive', '2018-01-01', 'end_of_contract', '2017-12-30', '2018-01-01', 'transient', 173, 2389, 175, 2314, '2019-06-26 21:58:40', '2019-06-26 21:59:57'),
 (1042, '2016-12-26', 1008, 1059, 1010, 'inactive', '2016-12-29', 'end_of_contract', '2016-12-26', '2016-12-29', 'transient', 92, 1424, NULL, NULL, '2019-06-26 22:07:33', '2019-06-26 22:11:01'),
-(1043, '2019-06-15', 1008, 1064, 1010, 'active', NULL, NULL, '2019-06-15', '2019-08-15', 'short_term', 468, 7916, NULL, NULL, '2019-06-26 22:33:24', '2019-07-10 17:04:42'),
-(1044, '2019-06-07', 1016, 1065, 1021, 'active', NULL, NULL, '2019-06-07', '2019-08-07', 'short_term', 468, 7916, NULL, NULL, '2019-06-26 22:41:31', '2019-06-26 22:42:40'),
+(1043, '2019-06-15', 1008, 1064, 1010, 'active', NULL, NULL, '2019-06-15', '2019-08-15', 'short_term', 468, 7916, NULL, NULL, NULL, NULL),
+(1044, '2019-06-07', 1016, 1065, 1021, 'active', NULL, NULL, '2019-06-07', '2019-08-07', 'short_term', 468, 7916, NULL, NULL, NULL, NULL),
 (1138, '2018-01-28', 1208, 1233, 1080, 'inactive', '2018-09-28', 'end_of_contract', '2018-01-28', '2018-09-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 17:06:15', '2019-07-16 17:06:15'),
 (1046, '2016-07-05', 1001, 1071, 1002, 'inactive', '2016-08-05', 'end_of_contract', '2016-07-05', '2016-08-05', 'short_term', 15, 218, 16, 235, '2019-06-26 23:40:56', '2019-06-26 23:49:10'),
 (1047, '2016-12-21', 1001, 1072, 1002, 'inactive', '2016-12-22', 'end_of_contract', '2016-12-21', '2016-12-22', 'transient', 15, 218, 16, 235, '2019-06-26 23:45:17', '2019-06-27 01:10:08'),
@@ -3148,8 +3187,8 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1054, '2017-04-11', 1001, 1090, 1002, 'inactive', '2017-04-12', 'end_of_contract', '2017-04-11', '2017-04-12', 'transient', 24, 425, 25, 429, '2019-06-27 00:41:02', '2019-06-27 00:45:26'),
 (1055, '2017-04-19', 1001, 1093, 1002, 'inactive', '2017-04-20', 'end_of_contract', '2017-04-19', '2017-04-20', 'transient', 25, 429, 26, NULL, '2019-06-27 00:47:27', '2019-06-27 00:55:12'),
 (1056, '2017-04-30', 1001, 1100, 1002, 'inactive', '2017-05-02', 'end_of_contract', '2017-04-30', '2017-05-02', 'transient', 24, 336, NULL, NULL, '2019-06-27 01:18:01', '2019-06-27 16:26:32'),
-(1057, '2017-05-30', 1001, 1109, 1002, 'active', '2018-05-30', 'end_of_contract', '2017-05-30', '2020-05-30', 'long_term', 27, 350, NULL, NULL, '2019-06-27 16:31:55', '2019-06-27 16:33:10'),
-(1058, '2019-06-26', 1012, 1114, 1017, 'active', NULL, NULL, '2019-06-26', '2019-09-26', 'short_term', 9, 81, NULL, NULL, '2019-06-27 16:47:09', '2019-06-27 16:48:24'),
+(1057, '2017-05-30', 1001, 1109, 1002, 'active', '2018-05-30', 'end_of_contract', '2017-05-30', '2020-05-30', 'long_term', 27, 350, NULL, NULL, NULL, NULL),
+(1058, '2019-06-26', 1012, 1114, 1017, 'active', NULL, NULL, '2019-06-26', '2019-09-26', 'short_term', 9, 81, NULL, NULL, NULL, NULL),
 (1059, '2018-05-07', 1007, 1117, 1009, 'inactive', '2019-05-07', 'end_of_contract', '2018-05-07', '2019-05-07', 'long_term', NULL, NULL, NULL, NULL, '2019-06-27 16:56:10', '2019-06-27 16:56:10'),
 (1060, '2018-03-29', 1007, 1119, 1009, 'inactive', '2018-03-30', 'end_of_contract', '2018-03-29', '2018-03-30', 'transient', 3, 3, 3, 4, '2019-06-27 17:08:19', '2019-06-27 17:09:32'),
 (1061, '2018-12-22', 1016, 1120, 1021, 'inactive', '2019-06-01', 'end_of_contract', '2018-12-22', '2019-06-22', 'long_term', NULL, NULL, 468, NULL, '2019-06-27 17:17:25', '2019-06-27 17:18:10'),
@@ -3157,21 +3196,21 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1063, '2018-12-07', 1005, 1122, 1006, 'inactive', '2018-12-06', 'end_of_contract', '2018-12-07', '2019-07-07', 'long_term', NULL, NULL, NULL, NULL, '2019-06-27 17:30:03', '2019-06-27 17:30:03'),
 (1064, '2018-04-30', 1005, 1126, 1006, 'inactive', '2019-04-30', 'end_of_contract', '2018-04-30', '2019-04-30', 'long_term', NULL, NULL, NULL, NULL, '2019-06-27 17:39:52', '2019-06-27 17:39:52'),
 (1065, '2018-11-27', 1018, 1131, 1023, 'inactive', '2019-02-27', 'end_of_contract', '2018-11-27', '2019-02-27', 'short_term', NULL, NULL, 11, 215, '2019-06-27 17:57:00', '2019-06-27 17:58:49'),
-(1066, '2019-04-30', 1018, 1132, 1023, 'active', NULL, NULL, '2019-04-30', '2019-12-30', 'long_term', 12, 216, NULL, NULL, '2019-06-27 18:03:22', '2019-06-27 18:04:07'),
+(1066, '2019-04-30', 1018, 1132, 1023, 'active', NULL, NULL, '2019-04-30', '2019-12-30', 'long_term', 12, 216, NULL, NULL, NULL, NULL),
 (1067, '2017-10-14', 1009, 1136, 1013, 'inactive', '2017-10-16', 'end_of_contract', '2017-10-14', '2017-10-16', 'transient', 139, 12, 140, 26, '2019-06-27 18:16:24', '2019-06-27 18:17:41'),
 (1068, '2017-10-24', 1009, 1141, 1013, 'inactive', '2017-10-25', 'end_of_contract', '2017-10-24', '2017-10-25', 'transient', 140, 16, 141, 21, '2019-06-27 18:24:10', '2019-06-27 18:25:08'),
 (1069, '2017-11-13', 1009, 1146, 1013, 'inactive', '2017-11-16', 'end_of_contract', '2017-11-13', '2017-11-16', 'transient', 142, 26, 143, 39, '2019-06-27 18:28:49', '2019-06-27 18:29:45'),
 (1070, '2017-11-18', 1009, 1152, 1013, 'inactive', '2017-11-19', 'end_of_contract', '2017-11-18', '2017-11-19', 'transient', 144, 40, 144, 42, '2019-06-27 18:36:51', '2019-06-27 18:37:56'),
 (1071, '2018-01-06', 1009, 1156, 1013, 'inactive', '2018-01-07', 'end_of_contract', '2018-01-06', '2018-01-07', 'transient', 149, 76, 149, 84, '2019-06-27 18:43:08', '2019-06-27 18:45:23'),
-(1072, '2018-08-28', 1009, 1157, 1013, 'active', NULL, NULL, '2018-08-28', '2019-08-28', 'long_term', NULL, NULL, NULL, NULL, '2019-06-27 18:48:57', '2019-06-27 18:48:57'),
+(1072, '2018-08-28', 1009, 1157, 1013, 'active', NULL, NULL, '2018-08-28', '2019-08-28', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1073, '2017-03-12', 1010, 1160, 1015, 'inactive', '2017-09-12', 'end_of_contract', '2017-03-12', '2017-09-12', 'long_term', NULL, NULL, NULL, NULL, '2019-06-27 18:55:29', '2019-06-27 18:55:29'),
 (1074, '2018-03-29', 1010, 1163, 1015, 'inactive', '2018-03-30', 'end_of_contract', '2018-03-29', '2018-03-30', 'transient', 5752, 297, 5757, 298, '2019-06-27 19:05:54', '2019-06-27 19:10:55'),
-(1075, '2018-08-18', 1010, 1169, 1013, 'active', NULL, NULL, '2018-08-18', '2019-08-18', 'long_term', NULL, NULL, NULL, NULL, '2019-06-27 19:16:09', '2019-06-27 19:26:43'),
-(1076, '2018-12-07', 1013, 1122, 1018, 'active', NULL, NULL, '2018-12-07', '2019-07-07', 'long_term', NULL, NULL, NULL, NULL, '2019-06-27 19:36:42', '2019-06-27 19:36:42'),
+(1075, '2018-08-18', 1010, 1169, 1013, 'active', NULL, NULL, '2018-08-18', '2019-08-18', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1076, '2018-12-07', 1013, 1122, 1018, 'active', NULL, NULL, '2018-12-07', '2019-07-07', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1077, '2018-02-03', 1015, 1170, 1020, 'inactive', '2018-02-04', 'end_of_contract', '2018-02-03', '2018-02-04', 'transient', NULL, NULL, NULL, NULL, '2019-06-27 19:46:36', '2019-06-27 19:46:36'),
 (1078, '2018-01-14', 1015, 1177, 1020, 'inactive', '2018-01-16', 'end_of_contract', '2018-01-14', '2018-01-16', 'transient', NULL, NULL, NULL, NULL, '2019-06-27 19:56:25', '2019-06-27 19:56:25'),
 (1079, '2018-02-16', 1015, 1180, 1020, 'inactive', '2018-02-18', 'end_of_contract', '2018-02-16', '2018-02-18', 'transient', 25, 2217, NULL, NULL, '2019-06-27 20:02:27', '2019-06-27 20:03:31'),
-(1080, '2018-09-08', 1015, 1117, 1020, 'active', NULL, NULL, '2018-09-08', '2019-09-07', 'long_term', NULL, NULL, NULL, NULL, '2019-06-27 20:09:16', '2019-06-27 20:09:16'),
+(1080, '2018-09-08', 1015, 1117, 1020, 'active', NULL, NULL, '2018-09-08', '2019-09-07', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1081, '2018-02-13', 1011, 1181, 1016, 'inactive', '2018-02-13', 'end_of_contract', '2018-02-13', '2018-02-13', 'transient', NULL, NULL, NULL, NULL, '2019-06-27 22:05:23', '2019-06-27 22:05:23'),
 (1082, '2018-07-20', 1003, 1183, 1004, 'inactive', '2019-01-20', 'end_of_contract', '2018-07-20', '2019-01-20', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 21:05:48', '2019-07-01 21:05:48'),
 (1083, '2018-08-04', 1019, 1184, 1005, 'inactive', '2019-02-04', 'end_of_contract', '2018-08-04', '2019-02-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 21:18:19', '2019-07-01 21:18:19'),
@@ -3180,7 +3219,7 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1086, '2018-01-21', 1041, 1187, 1041, 'inactive', '2018-12-21', 'end_of_contract', '2018-01-21', '2018-12-21', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 21:49:02', '2019-07-01 21:49:02'),
 (1087, '2018-04-13', 1020, 1188, 1043, 'inactive', '2018-10-13', 'end_of_contract', '2018-04-13', '2018-10-13', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 21:54:39', '2019-07-01 21:54:39'),
 (1088, '2017-07-01', 1021, 1189, 1046, 'inactive', '2019-04-01', 'end_of_contract', '2017-07-01', '2019-04-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 22:03:01', '2019-07-01 22:03:01'),
-(1283, '2017-08-14', 1271, 1400, 1239, 'active', NULL, NULL, '2017-08-14', '2019-08-14', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 12:11:16', '2019-07-26 12:11:16'),
+(1283, '2017-08-14', 1271, 1400, 1239, 'active', NULL, NULL, '2017-08-14', '2019-08-14', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1090, '2018-07-31', 1022, 1191, 1050, 'inactive', '2019-01-31', 'end_of_contract', '2018-07-31', '2019-01-31', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 22:32:32', '2019-07-01 22:32:32'),
 (1091, '2018-05-29', 1047, 1192, 1053, 'inactive', '2019-05-29', 'end_of_contract', '2018-05-29', '2019-05-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 22:53:05', '2019-07-01 22:53:05'),
 (1092, '2017-09-28', 1024, 1193, 1054, 'inactive', '2018-09-28', 'end_of_contract', '2017-09-28', '2018-09-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-01 22:57:34', '2019-07-01 22:57:34'),
@@ -3188,24 +3227,24 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1094, '2019-03-06', 1025, 1194, 1060, 'inactive', '2019-04-06', 'end_of_contract', '2019-03-06', '2019-04-06', 'short_term', NULL, NULL, NULL, NULL, '2019-07-02 00:45:31', '2019-07-02 00:45:31'),
 (1095, '2018-01-03', 1026, 1195, 1061, 'inactive', '2018-12-03', 'end_of_contract', '2018-01-03', '2018-12-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-02 00:52:12', '2019-07-02 00:52:12'),
 (1096, '2018-09-04', 1027, 1196, 1068, 'inactive', '2019-03-04', 'end_of_contract', '2018-09-04', '2019-03-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-02 00:57:55', '2019-07-02 00:57:55'),
-(1097, '2018-09-27', 1050, 1197, 1062, 'active', NULL, NULL, '2018-09-27', '2019-09-27', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 18:30:43', '2019-07-03 18:30:43'),
-(1098, '2019-02-14', 1051, 1198, 1063, 'active', NULL, NULL, '2019-02-14', '2019-08-14', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 19:59:35', '2019-07-03 19:59:35'),
-(1099, '2018-08-08', 1052, 1199, 1066, 'active', NULL, NULL, '2018-08-08', '2019-08-08', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 20:01:57', '2019-07-03 20:01:57'),
-(1100, '2019-05-29', 1053, 1200, 1067, 'active', NULL, NULL, '2019-05-29', '2019-07-29', 'short_term', NULL, NULL, NULL, NULL, '2019-07-03 20:45:46', '2019-07-03 20:45:46'),
-(1101, '2018-05-03', 1055, 1201, 1070, 'active', NULL, NULL, '2018-05-03', '2019-02-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 20:49:11', '2019-07-03 20:49:11'),
-(1102, '2019-03-15', 1028, 1202, 1069, 'active', NULL, NULL, '2019-03-15', '2019-04-15', 'short_term', NULL, NULL, NULL, NULL, '2019-07-03 20:52:32', '2019-07-03 20:52:32'),
-(1103, '2018-08-11', 1054, 1203, 1003, 'active', NULL, NULL, '2018-08-11', '2019-08-11', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 20:55:36', '2019-07-03 20:55:36'),
-(1104, '2019-03-09', 1029, 1204, 1071, 'active', NULL, NULL, '2019-03-09', '2019-09-09', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 21:00:31', '2019-07-03 21:00:31'),
-(1105, '2019-04-15', 1030, 1205, 1072, 'active', NULL, NULL, '2019-04-15', '2020-04-16', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 21:03:03', '2019-07-03 21:03:03'),
+(1097, '2018-09-27', 1050, 1197, 1062, 'active', NULL, NULL, '2018-09-27', '2019-09-27', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1098, '2019-02-14', 1051, 1198, 1063, 'active', NULL, NULL, '2019-02-14', '2019-08-14', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1099, '2018-08-08', 1052, 1199, 1066, 'active', NULL, NULL, '2018-08-08', '2019-08-08', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1100, '2019-05-29', 1053, 1200, 1067, 'active', NULL, NULL, '2019-05-29', '2019-07-29', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1101, '2018-05-03', 1055, 1201, 1070, 'active', NULL, NULL, '2018-05-03', '2019-02-03', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1102, '2019-03-15', 1028, 1202, 1069, 'active', NULL, NULL, '2019-03-15', '2019-04-15', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1103, '2018-08-11', 1054, 1203, 1003, 'active', NULL, NULL, '2018-08-11', '2019-08-11', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1104, '2019-03-09', 1029, 1204, 1071, 'active', NULL, NULL, '2019-03-09', '2019-09-09', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1105, '2019-04-15', 1030, 1205, 1072, 'active', NULL, NULL, '2019-04-15', '2020-04-16', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1106, '2018-06-06', 1032, 1122, 1073, 'inactive', '2018-12-06', 'end_of_contract', '2018-06-06', '2018-12-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 21:06:24', '2019-07-03 21:11:29'),
-(1107, '2018-07-02', 1056, 1206, 1074, 'active', NULL, NULL, '2018-07-02', '2019-07-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 21:15:54', '2019-07-03 21:15:54'),
-(1108, '2019-06-19', 1261, 1207, 1058, 'active', NULL, NULL, '2019-06-19', '2019-07-19', 'short_term', NULL, NULL, NULL, NULL, '2019-07-03 22:39:30', '2019-07-03 22:39:30'),
-(1109, '2016-11-28', 1002, 1208, 1003, 'active', NULL, NULL, '2016-11-28', '2020-06-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-03 22:55:03', '2019-07-03 22:55:03'),
-(1282, '2018-08-04', 1270, 1399, 1157, 'active', NULL, NULL, '2018-08-04', '2019-08-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 11:57:21', '2019-07-26 11:57:21'),
-(1111, '2019-01-31', 1033, 1211, 1074, 'active', NULL, NULL, '2019-01-31', '2019-09-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-05 19:28:54', '2019-07-05 19:28:54'),
-(1112, '2018-07-14', 1057, 1212, 1075, 'active', NULL, NULL, '2018-07-14', '2019-07-14', 'long_term', NULL, NULL, NULL, NULL, '2019-07-05 22:01:32', '2019-07-05 22:01:32'),
-(1113, '2017-07-22', 1058, 1213, 1076, 'active', NULL, NULL, '2017-07-22', '2019-07-22', 'long_term', NULL, NULL, NULL, NULL, '2019-07-05 22:59:54', '2019-07-05 22:59:54'),
-(1114, '2018-09-03', 1059, 1214, 1078, 'active', NULL, NULL, '2018-09-03', '2019-08-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-05 23:04:44', '2019-07-05 23:04:44'),
+(1107, '2018-07-02', 1056, 1206, 1074, 'active', NULL, NULL, '2018-07-02', '2019-07-02', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1108, '2019-06-19', 1261, 1207, 1058, 'active', NULL, NULL, '2019-06-19', '2019-07-19', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1109, '2016-11-28', 1002, 1208, 1003, 'active', NULL, NULL, '2016-11-28', '2020-06-28', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1282, '2018-08-04', 1270, 1399, 1157, 'active', NULL, NULL, '2018-08-04', '2019-08-04', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1111, '2019-01-31', 1033, 1211, 1074, 'active', NULL, NULL, '2019-01-31', '2019-09-02', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1112, '2018-07-14', 1057, 1212, 1075, 'active', NULL, NULL, '2018-07-14', '2019-07-14', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1113, '2017-07-22', 1058, 1213, 1076, 'active', NULL, NULL, '2017-07-22', '2019-07-22', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1114, '2018-09-03', 1059, 1214, 1078, 'active', NULL, NULL, '2018-09-03', '2019-08-03', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1115, '2018-08-02', 1195, 1215, 1081, 'inactive', '2019-06-02', 'end_of_contract', '2018-08-02', '2019-06-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-05 23:14:48', '2019-07-05 23:15:35'),
 (1116, '2018-08-01', 1186, 1216, 1080, 'inactive', '2019-02-01', 'end_of_contract', '2018-08-01', '2019-02-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-05 23:19:20', '2019-07-05 23:20:49'),
 (1117, '2018-05-26', 1187, 1217, 1079, 'inactive', '2018-11-26', 'end_of_contract', '2018-05-26', '2018-11-26', 'long_term', NULL, NULL, NULL, NULL, '2019-07-05 23:30:50', '2019-07-05 23:44:38'),
@@ -3221,51 +3260,50 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1127, '2018-10-04', 1214, 1227, 1099, 'inactive', '2019-06-04', 'end_of_contract', '2018-10-04', '2019-06-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-06 00:44:40', '2019-07-06 00:44:40'),
 (1128, '2018-02-05', 1228, 1228, 1108, 'inactive', '2019-07-05', 'end_of_contract', '2018-02-05', '2019-07-05', 'long_term', NULL, NULL, NULL, NULL, '2019-07-06 00:48:36', '2019-07-06 00:48:36'),
 (1129, '2017-08-03', 1247, 1229, 1131, 'inactive', '2018-08-03', 'end_of_contract', '2017-08-03', '2018-08-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-06 00:54:02', '2019-07-06 00:54:02'),
-(1130, '2018-08-06', 1210, 1230, 1093, 'active', NULL, NULL, '2018-08-06', '2019-08-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-10 01:05:57', '2019-07-10 01:05:57'),
-(1131, '2018-08-06', 1211, 1231, 1094, 'active', NULL, NULL, '2018-08-06', '2019-08-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-10 19:24:52', '2019-07-10 19:24:52'),
+(1130, '2018-08-06', 1210, 1230, 1093, 'active', NULL, NULL, '2018-08-06', '2019-08-06', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1131, '2018-08-06', 1211, 1231, 1094, 'active', NULL, NULL, '2018-08-06', '2019-08-06', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1136, '2019-02-27', 1188, 1222, 1089, 'inactive', '2019-03-27', 'cancelled', '2019-02-27', '2019-03-27', 'short_term', NULL, NULL, NULL, NULL, '2019-07-10 20:43:47', '2019-07-10 20:43:47'),
-(1137, '2018-08-02', 1119, 1232, 1171, 'active', NULL, NULL, '2018-08-02', '2019-08-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-11 23:32:48', '2019-07-11 23:32:48'),
-(1140, '2018-04-01', 1215, 1235, 1101, 'active', NULL, NULL, '2018-04-01', '2019-04-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 18:51:47', '2019-07-16 18:51:47'),
+(1137, '2018-08-02', 1119, 1232, 1171, 'active', NULL, NULL, '2018-08-02', '2019-08-02', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1140, '2018-04-01', 1215, 1235, 1101, 'active', NULL, NULL, '2018-04-01', '2019-04-01', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1141, '2018-04-10', 1216, 1236, 1102, 'inactive', '2018-10-10', 'end_of_contract', '2018-04-10', '2018-10-10', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 18:58:18', '2019-07-16 18:58:18'),
-(1142, '2018-07-21', 1217, 1237, 1103, 'active', NULL, NULL, '2018-07-21', '2019-07-21', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 19:02:54', '2019-07-16 19:02:54'),
+(1142, '2018-07-21', 1217, 1237, 1103, 'active', NULL, NULL, '2018-07-21', '2019-07-21', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1143, '2017-08-01', 1218, 1238, 1103, 'inactive', '2019-06-01', 'end_of_contract', '2017-08-01', '2019-06-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 19:07:18', '2019-07-16 19:07:18'),
-(1144, '2018-08-04', 1219, 1239, 1104, 'active', NULL, NULL, '2018-08-04', '2019-08-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 19:14:51', '2019-07-16 19:14:51'),
+(1144, '2018-08-04', 1219, 1239, 1104, 'active', NULL, NULL, '2018-08-04', '2019-08-04', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1145, '2018-06-04', 1220, 1240, 1105, 'inactive', '2019-06-04', 'end_of_contract', '2018-06-04', '2019-06-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 19:24:01', '2019-07-16 19:24:01'),
 (1146, '2017-12-16', 1221, 1242, 1102, 'inactive', '2018-12-16', 'end_of_contract', '2017-12-16', '2018-12-16', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 19:30:28', '2019-07-16 19:30:28'),
-(1147, '2018-08-25', 1222, 1243, 1106, 'active', NULL, NULL, '2018-08-25', '2019-08-25', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 19:34:35', '2019-07-16 19:34:35'),
-(1148, '2019-06-11', 1229, 1244, 1108, 'active', NULL, NULL, '2019-06-11', '2019-12-11', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 19:38:10', '2019-07-16 19:38:10'),
-(1149, '2017-08-07', 1230, 1246, 1110, 'active', NULL, NULL, '2017-08-07', '2019-09-07', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 19:44:00', '2019-07-16 19:44:00'),
-(1150, '2018-12-11', 1231, 1247, 1111, 'active', NULL, NULL, '2018-12-11', '2019-12-11', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 19:53:50', '2019-07-16 19:53:50'),
-(1151, '2019-05-18', 1223, 1221, 1113, 'active', NULL, NULL, '2019-05-18', '2019-11-18', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 19:59:13', '2019-07-16 19:59:13'),
-(1152, '2019-06-08', 1224, 1248, 1088, 'active', NULL, NULL, '2019-06-08', '2019-12-08', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 22:25:47', '2019-07-16 22:25:47'),
-(1153, '2019-05-21', 1225, 1249, 1080, 'active', NULL, NULL, '2019-05-21', '2019-11-21', 'long_term', NULL, NULL, NULL, NULL, '2019-07-16 22:30:16', '2019-07-16 22:30:16'),
+(1147, '2018-08-25', 1222, 1243, 1106, 'active', NULL, NULL, '2018-08-25', '2019-08-25', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1148, '2019-06-11', 1229, 1244, 1108, 'active', NULL, NULL, '2019-06-11', '2019-12-11', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1149, '2017-08-07', 1230, 1246, 1110, 'active', NULL, NULL, '2017-08-07', '2019-09-07', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1150, '2018-12-11', 1231, 1247, 1111, 'active', NULL, NULL, '2018-12-11', '2019-12-11', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1151, '2019-05-18', 1223, 1221, 1113, 'active', NULL, NULL, '2019-05-18', '2019-11-18', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1152, '2019-06-08', 1224, 1248, 1088, 'active', NULL, NULL, '2019-06-08', '2019-12-08', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1153, '2019-05-21', 1225, 1249, 1080, 'active', NULL, NULL, '2019-05-21', '2019-11-21', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1155, '2019-04-08', 1226, 1251, 1114, 'inactive', '2019-06-08', 'end_of_contract', '2019-04-08', '2019-06-08', 'short_term', NULL, NULL, NULL, NULL, '2019-07-17 00:22:34', '2019-07-17 00:22:34'),
-(1156, '2018-09-24', 1232, 1252, 1112, 'active', NULL, NULL, '2018-09-24', '2019-09-24', 'long_term', NULL, NULL, NULL, NULL, '2019-07-17 00:34:56', '2019-07-17 00:34:56'),
-(1157, '2017-08-02', 1233, 1253, 1115, 'active', NULL, NULL, '2017-08-02', '2019-08-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-17 00:38:31', '2019-07-17 00:38:31'),
-(1158, '2017-08-06', 1235, 1254, 1117, 'active', NULL, NULL, '2017-08-06', '2019-08-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-17 00:42:03', '2019-07-17 00:42:03'),
-(1159, '2017-08-04', 1236, 1255, 1117, 'active', NULL, NULL, '2017-08-04', '2019-08-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-17 00:45:40', '2019-07-17 00:45:40'),
-(1160, '2018-08-03', 1237, 1256, 1118, 'active', NULL, NULL, '2018-08-03', '2019-08-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-17 00:54:05', '2019-07-17 00:54:05'),
-(1161, '2017-04-29', 1238, 1257, 1121, 'active', NULL, NULL, '2017-04-29', '2017-10-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-17 00:57:23', '2019-07-17 00:57:23'),
-(1162, '2019-07-01', 1239, 1259, 1122, 'active', NULL, NULL, '2019-07-01', '2020-07-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-17 01:02:11', '2019-07-17 01:02:11'),
-(1163, '2018-01-20', 1240, 1261, 1123, 'active', NULL, NULL, '2018-01-20', '2019-07-20', 'long_term', NULL, NULL, NULL, NULL, '2019-07-17 01:06:30', '2019-07-17 01:06:30'),
-(1164, '2018-11-09', 1241, 1262, 1124, 'active', NULL, NULL, '2018-11-09', '2019-11-09', 'long_term', NULL, NULL, NULL, NULL, '2019-07-17 01:08:55', '2019-07-17 01:08:55'),
-(1165, '2018-08-01', 1242, 1263, 1125, 'active', NULL, NULL, '2018-08-01', '2019-08-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-17 18:28:46', '2019-07-17 18:28:46'),
-(1166, '2018-07-26', 1243, 1264, 1126, 'active', NULL, NULL, '2018-07-26', '2019-07-26', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 22:10:29', '2019-07-18 22:10:29'),
+(1156, '2018-09-24', 1232, 1252, 1112, 'active', NULL, NULL, '2018-09-24', '2019-09-24', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1157, '2017-08-02', 1233, 1253, 1115, 'active', NULL, NULL, '2017-08-02', '2019-08-02', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1158, '2017-08-06', 1235, 1254, 1117, 'active', NULL, NULL, '2017-08-06', '2019-08-06', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1159, '2017-08-04', 1236, 1255, 1117, 'active', NULL, NULL, '2017-08-04', '2019-08-04', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1160, '2018-08-03', 1237, 1256, 1118, 'active', NULL, NULL, '2018-08-03', '2019-08-03', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1161, '2017-04-29', 1238, 1257, 1121, 'active', NULL, NULL, '2017-04-29', '2017-10-29', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1162, '2019-07-01', 1239, 1259, 1122, 'active', NULL, NULL, '2019-07-01', '2020-07-01', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1163, '2018-01-20', 1240, 1261, 1123, 'active', NULL, NULL, '2018-01-20', '2019-07-20', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1164, '2018-11-09', 1241, 1262, 1124, 'active', NULL, NULL, '2018-11-09', '2019-11-09', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1165, '2018-08-01', 1242, 1263, 1125, 'active', NULL, NULL, '2018-08-01', '2019-08-01', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1166, '2018-07-26', 1243, 1264, 1126, 'active', NULL, NULL, '2018-07-26', '2019-07-26', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1167, '2018-05-30', 1244, 1267, 1127, 'inactive', '2018-12-30', 'end_of_contract', '2018-05-30', '2018-12-30', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 22:20:54', '2019-07-18 22:20:54'),
-(1168, '2018-02-01', 1245, 1268, 1128, 'active', NULL, NULL, '2018-02-01', '2020-02-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 22:28:48', '2019-07-18 22:28:48'),
+(1168, '2018-02-01', 1245, 1268, 1128, 'active', NULL, NULL, '2018-02-01', '2020-02-01', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1169, '2018-10-26', 1246, 1269, 1130, 'inactive', '2019-04-26', 'end_of_contract', '2018-10-26', '2019-04-26', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 22:34:22', '2019-07-18 22:34:22'),
-(1170, '2018-08-03', 1249, 1270, 1133, 'active', NULL, NULL, '2018-08-03', '2019-08-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 22:38:09', '2019-07-18 22:38:09'),
-(1171, '2018-09-07', 1251, 1272, 1139, 'active', NULL, NULL, '2018-09-07', '2019-03-07', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 22:41:59', '2019-07-18 22:41:59'),
-(1172, '2018-10-12', 1253, 1274, 1142, 'active', NULL, NULL, '2018-10-12', '2020-10-12', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 22:45:58', '2019-07-18 22:45:58'),
-(1173, '2019-01-31', 1255, 1191, 1135, 'active', NULL, NULL, '2019-01-31', '2019-07-31', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 22:56:50', '2019-07-18 22:56:50'),
-(1174, '2019-01-31', 1255, 1191, 1135, 'active', NULL, NULL, '2019-01-31', '2019-07-31', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 22:57:27', '2019-07-18 22:57:27'),
-(1175, '2018-04-03', 1256, 1275, 1126, 'active', NULL, NULL, '2018-04-03', '2019-10-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 23:05:57', '2019-07-18 23:05:57'),
+(1170, '2018-08-03', 1249, 1270, 1133, 'active', NULL, NULL, '2018-08-03', '2019-08-03', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1171, '2018-09-07', 1251, 1272, 1139, 'active', NULL, NULL, '2018-09-07', '2019-03-07', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1172, '2018-10-12', 1253, 1274, 1142, 'active', NULL, NULL, '2018-10-12', '2020-10-12', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1174, '2019-01-31', 1255, 1191, 1135, 'active', NULL, NULL, '2019-01-31', '2019-07-31', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1175, '2018-04-03', 1256, 1275, 1126, 'active', NULL, NULL, '2018-04-03', '2019-10-03', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1176, '2017-07-03', 1257, 1276, 1137, 'inactive', '2019-07-02', 'end_of_contract', '2017-07-03', '2019-07-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 23:10:11', '2019-07-18 23:10:11'),
-(1177, '2019-06-04', 1258, 1227, 1136, 'active', NULL, NULL, '2019-06-04', '2020-06-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 23:17:37', '2019-07-18 23:17:37'),
-(1178, '2019-02-28', 1191, 1277, 1138, 'active', NULL, NULL, '2019-02-28', '2019-08-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 23:25:02', '2019-07-18 23:25:02'),
-(1179, '2017-09-23', 1203, 1280, 1138, 'active', NULL, NULL, '2017-09-23', '2020-03-23', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 23:30:58', '2019-07-18 23:30:58'),
+(1177, '2019-06-04', 1258, 1227, 1136, 'active', NULL, NULL, '2019-06-04', '2020-06-04', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1178, '2019-02-28', 1191, 1277, 1138, 'active', NULL, NULL, '2019-02-28', '2019-08-28', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1179, '2017-09-23', 1203, 1280, 1138, 'active', NULL, NULL, '2017-09-23', '2020-03-23', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1180, '2017-05-11', 1097, 1281, 1143, 'inactive', '2018-06-11', 'end_of_contract', '2017-05-11', '2018-06-11', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 23:49:31', '2019-07-18 23:49:31'),
-(1181, '2018-08-01', 1090, 1282, 1024, 'active', NULL, NULL, '2018-08-01', '2019-08-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 23:55:28', '2019-07-18 23:55:28'),
+(1181, '2018-08-01', 1090, 1282, 1024, 'active', NULL, NULL, '2018-08-01', '2019-08-01', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1182, '2018-07-23', 1063, 1283, 1033, 'inactive', '2019-01-23', 'end_of_contract', '2018-07-23', '2019-01-23', 'long_term', NULL, NULL, NULL, NULL, '2019-07-18 23:59:58', '2019-07-18 23:59:58'),
 (1183, '2018-05-28', 1096, 1284, 1034, 'inactive', '2019-05-28', 'end_of_contract', '2018-05-28', '2019-05-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 00:05:28', '2019-07-19 00:05:28'),
 (1184, '2018-06-12', 1062, 1287, 1242, 'inactive', '2018-12-13', 'end_of_contract', '2018-06-12', '2018-12-13', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 00:57:54', '2019-07-19 00:57:54'),
@@ -3285,128 +3323,127 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 (1198, '2016-08-12', 1076, 1305, 1179, 'inactive', '2018-04-12', 'end_of_contract', '2016-08-12', '2018-04-12', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 19:46:54', '2019-07-19 19:46:54'),
 (1199, '2017-04-30', 1077, 1306, 1182, 'inactive', '2018-04-30', 'end_of_contract', '2017-04-30', '2018-04-30', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 19:51:19', '2019-07-19 19:51:19'),
 (1200, '2018-09-05', 1125, 1307, 1175, 'inactive', '2019-03-05', 'end_of_contract', '2018-09-05', '2019-03-05', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 19:55:51', '2019-07-19 19:55:51'),
-(1201, '2018-06-02', 1266, 1309, 1187, 'active', NULL, NULL, '2018-06-02', '2019-06-07', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 20:07:13', '2019-07-19 20:07:13'),
-(1202, '2018-09-20', 1138, 1310, 1187, 'active', NULL, NULL, '2018-09-20', '2019-03-20', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 20:28:00', '2019-07-19 20:28:00'),
-(1203, '2018-04-19', 1139, 1309, 1188, 'active', NULL, NULL, '2018-04-19', '2019-04-19', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 20:55:05', '2019-07-19 20:55:05'),
-(1204, '2018-10-12', 1140, 1311, 1189, 'active', NULL, NULL, '2018-10-12', '2019-10-12', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 21:12:24', '2019-07-19 21:12:24'),
-(1205, '2017-10-28', 1085, 1312, 1190, 'active', NULL, NULL, '2017-10-28', '2018-08-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 21:17:31', '2019-07-19 21:17:31'),
-(1206, '2018-12-15', 1141, 1120, 1163, 'active', NULL, NULL, '2018-12-15', '2019-06-15', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 22:07:07', '2019-07-19 22:07:07'),
+(1201, '2018-06-02', 1266, 1309, 1187, 'active', NULL, NULL, '2018-06-02', '2019-06-07', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1202, '2018-09-20', 1138, 1310, 1187, 'active', NULL, NULL, '2018-09-20', '2019-03-20', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1203, '2018-04-19', 1139, 1309, 1188, 'active', NULL, NULL, '2018-04-19', '2019-04-19', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1204, '2018-10-12', 1140, 1311, 1189, 'active', NULL, NULL, '2018-10-12', '2019-10-12', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1205, '2017-10-28', 1085, 1312, 1190, 'active', NULL, NULL, '2017-10-28', '2018-08-28', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1206, '2018-12-15', 1141, 1120, 1163, 'active', NULL, NULL, '2018-12-15', '2019-06-15', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1207, '2018-10-03', 1134, 1313, 1191, 'inactive', '2019-04-03', 'delinquent', '2018-10-03', '2019-04-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 22:11:05', '2019-07-19 22:11:05'),
-(1208, '2019-04-08', 1078, 1314, 1192, 'active', NULL, NULL, '2019-04-08', '2019-10-08', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 22:15:24', '2019-07-19 22:15:24'),
-(1209, '2018-08-04', 1135, 1315, 1193, 'active', NULL, NULL, '2018-08-04', '2019-07-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 22:19:12', '2019-07-19 22:19:12'),
-(1210, '2018-11-12', 1142, 1316, 1194, 'active', NULL, NULL, '2018-11-12', '2019-05-12', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 22:24:05', '2019-07-19 22:24:05'),
-(1211, '2018-07-14', 1143, 1318, 1143, 'active', NULL, NULL, '2018-07-14', '2020-01-14', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 22:28:34', '2019-07-19 22:28:34'),
-(1212, '2018-03-12', 1136, 1319, 1143, 'active', NULL, NULL, '2018-03-12', '2019-03-12', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 22:44:16', '2019-07-19 22:44:16'),
-(1213, '2018-08-08', 1137, 1320, 1196, 'active', NULL, NULL, '2018-08-08', '2019-08-08', 'long_term', NULL, NULL, NULL, NULL, '2019-07-19 22:47:24', '2019-07-19 22:47:24'),
-(1214, '2018-08-15', 1131, 1321, 1186, 'active', NULL, NULL, '2018-08-15', '2019-08-15', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 17:42:29', '2019-07-21 17:42:29'),
-(1215, '2019-05-29', 1079, 1322, 1197, 'active', NULL, NULL, '2019-05-29', '2019-07-29', 'short_term', NULL, NULL, NULL, NULL, '2019-07-21 17:46:02', '2019-07-21 17:46:02'),
-(1216, '2019-03-06', 1080, 1323, 1198, 'active', NULL, NULL, '2019-03-06', '2019-09-26', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 17:53:32', '2019-07-21 17:53:32'),
-(1217, '2018-07-10', 1152, 1324, 1199, 'active', NULL, NULL, '2018-07-10', '2019-07-10', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 17:56:47', '2019-07-21 17:56:47'),
-(1218, '2018-11-29', 1087, 1325, 1200, 'active', NULL, NULL, '2018-11-29', '2019-03-28', 'short_term', NULL, NULL, NULL, NULL, '2019-07-21 18:01:03', '2019-07-21 18:01:03'),
-(1219, '2017-07-01', 1086, 1326, 1201, 'active', NULL, NULL, '2017-07-01', '2018-07-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 18:03:58', '2019-07-21 18:03:58'),
-(1220, '2019-01-07', 1144, 1327, 1202, 'active', NULL, NULL, '2019-01-07', '2019-06-09', 'short_term', NULL, NULL, NULL, NULL, '2019-07-21 18:08:58', '2019-07-21 18:08:58'),
-(1221, '2019-05-27', 1146, 1328, 1203, 'active', NULL, NULL, '2019-05-27', '2019-08-27', 'short_term', NULL, NULL, NULL, NULL, '2019-07-21 18:12:34', '2019-07-21 18:12:34'),
-(1222, '2018-07-30', 1147, 1329, 1204, 'active', NULL, NULL, '2018-07-30', '2020-01-30', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 18:16:16', '2019-07-21 18:16:16'),
-(1223, '2018-01-16', 1148, 1331, 1205, 'active', NULL, NULL, '2018-01-16', '2019-12-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 18:21:45', '2019-07-21 18:21:45'),
-(1224, '2015-10-03', 1149, 1332, 1206, 'active', NULL, NULL, '2015-10-03', '2019-08-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 18:23:39', '2019-07-21 18:23:39'),
-(1225, '2017-07-19', 1150, 1333, 1207, 'active', NULL, NULL, '2017-07-19', '2019-07-19', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 18:25:57', '2019-07-21 18:25:57'),
-(1226, '2018-04-03', 1153, 1334, 1184, 'active', NULL, NULL, '2018-04-03', '2020-04-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 18:29:21', '2019-07-21 18:29:21'),
-(1227, '2017-06-15', 1151, 1335, 1209, 'active', NULL, NULL, '2017-06-15', '2019-09-15', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 18:33:31', '2019-07-21 18:33:31'),
-(1228, '2018-05-02', 1154, 1336, 1210, 'active', NULL, NULL, '2018-05-02', '2019-12-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 18:36:05', '2019-07-21 18:36:05'),
-(1229, '2019-05-01', 1082, 1338, 1211, 'active', NULL, NULL, '2019-05-01', '2019-11-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 18:46:09', '2019-07-21 18:46:09'),
-(1230, '2019-01-07', 1155, 1339, 1212, 'active', NULL, NULL, '2019-01-07', '2019-06-07', 'short_term', NULL, NULL, NULL, NULL, '2019-07-21 19:11:25', '2019-07-21 19:11:25'),
-(1231, '2019-01-22', 1156, 1340, 1212, 'active', NULL, NULL, '2019-01-22', '2019-12-22', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 19:19:34', '2019-07-21 19:19:34'),
-(1232, '2017-09-04', 1157, 1341, 1213, 'active', NULL, NULL, '2017-09-04', '2019-08-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 19:22:03', '2019-07-21 19:22:03'),
-(1233, '2019-04-25', 1083, 1342, 1214, 'active', NULL, NULL, '2019-04-25', '2019-06-25', 'short_term', NULL, NULL, NULL, NULL, '2019-07-21 19:24:15', '2019-07-21 19:24:15'),
-(1234, '2019-06-03', 1166, 1343, 1214, 'active', NULL, NULL, '2019-06-03', '2019-12-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 19:27:39', '2019-07-21 19:27:39'),
-(1235, '2018-07-31', 1158, 1344, 1215, 'active', NULL, NULL, '2018-07-31', '2019-07-31', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 19:46:54', '2019-07-21 19:46:54'),
-(1236, '2018-08-02', 1167, 1345, 1216, 'active', NULL, NULL, '2018-08-02', '2019-08-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 19:51:22', '2019-07-21 19:51:22'),
-(1237, '2018-12-29', 1168, 1346, 1217, 'active', NULL, NULL, '2018-12-29', '2019-06-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-21 20:00:50', '2019-07-21 20:00:50'),
-(1238, '2019-05-22', 1084, 1348, 1218, 'active', NULL, NULL, '2019-05-22', '2019-11-22', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:18:39', '2019-07-22 19:18:39'),
-(1239, '2018-08-23', 1159, 1349, 1219, 'active', NULL, NULL, '2018-08-23', '2019-08-23', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:20:54', '2019-07-22 19:20:54'),
-(1240, '2015-08-14', 1169, 1350, 1220, 'active', NULL, NULL, '2015-08-14', '2018-08-14', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:24:15', '2019-07-22 19:24:15'),
-(1241, '2019-01-11', 1160, 1352, 1221, 'active', NULL, NULL, '2019-01-11', '2019-12-11', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:28:12', '2019-07-22 19:28:12'),
-(1242, '2017-02-19', 1170, 1353, 1222, 'active', NULL, NULL, '2017-02-19', '2019-08-19', 'long_term', 10, 11, NULL, NULL, '2019-07-22 19:34:40', '2019-07-22 21:34:50'),
-(1243, '2018-01-05', 1171, 1354, 1222, 'active', NULL, NULL, '2018-01-05', '2019-07-05', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:37:06', '2019-07-22 19:37:06'),
-(1244, '2018-02-15', 1161, 1355, 1184, 'active', NULL, NULL, '2018-02-15', '2019-08-15', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:40:56', '2019-07-22 19:40:56'),
-(1245, '2018-11-19', 1172, 1356, 1174, 'active', NULL, NULL, '2018-11-19', '2019-05-19', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:52:38', '2019-07-22 19:52:38'),
-(1246, '2018-08-14', 1162, 1357, 1184, 'active', NULL, NULL, '2018-08-14', '2019-06-14', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:55:14', '2019-07-22 19:55:14'),
-(1247, '2017-05-28', 1173, 1358, 1223, 'active', NULL, NULL, '2017-05-28', '2019-06-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 19:57:22', '2019-07-22 19:57:22'),
-(1248, '2014-09-12', 1163, 1359, 1184, 'active', NULL, NULL, '2014-09-12', '2018-12-12', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:03:41', '2019-07-22 20:03:41'),
-(1249, '2018-08-02', 1164, 1360, 1184, 'active', NULL, NULL, '2018-08-02', '2019-02-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:05:26', '2019-07-22 20:05:26'),
-(1250, '2018-08-06', 1174, 1361, 1224, 'active', NULL, NULL, '2018-08-06', '2019-02-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:08:04', '2019-07-22 20:08:04'),
-(1251, '2018-05-02', 1165, 1362, 1184, 'active', NULL, NULL, '2018-05-02', '2019-12-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:10:29', '2019-07-22 20:10:29'),
-(1252, '2018-08-06', 1175, 1363, 1225, 'active', NULL, NULL, '2018-08-06', '2019-02-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:12:57', '2019-07-22 20:12:57'),
-(1253, '2017-06-11', 1176, 1364, 1226, 'active', NULL, NULL, '2017-06-11', '2018-07-11', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:15:18', '2019-07-22 20:15:18'),
-(1254, '2019-05-29', 1000, 1365, 1227, 'active', NULL, NULL, '2019-05-29', '2020-05-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:56:08', '2019-07-22 20:56:08'),
-(1255, '2018-08-25', 1177, 1366, 1228, 'active', NULL, NULL, '2018-08-25', '2019-07-25', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 20:57:53', '2019-07-22 20:57:53'),
-(1256, '2018-08-02', 1179, 1367, 1229, 'active', NULL, NULL, '2018-08-02', '2019-08-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:03:53', '2019-07-22 21:03:53'),
-(1257, '2019-06-07', 1181, 1368, 1230, 'active', NULL, NULL, '2019-06-07', '2019-12-07', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:06:20', '2019-07-22 21:06:20'),
-(1258, '2019-04-17', 1182, 1369, 1231, 'active', NULL, NULL, '2019-04-17', '2020-04-17', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:08:06', '2019-07-22 21:08:06'),
-(1259, '2018-07-07', 1178, 1370, 1232, 'active', NULL, NULL, '2018-07-07', '2021-01-07', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:12:15', '2019-07-22 21:12:15'),
-(1260, '2014-08-07', 1183, 1371, 1233, 'active', NULL, NULL, '2014-08-07', '2018-02-08', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:15:30', '2019-07-22 21:15:30'),
-(1261, '2019-05-02', 1184, 1372, 1234, 'active', NULL, NULL, '2019-05-02', '2020-05-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:18:47', '2019-07-22 21:18:47'),
-(1262, '2019-04-28', 1180, 1373, 1235, 'active', NULL, NULL, '2019-04-28', '2019-10-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-22 21:20:47', '2019-07-22 21:20:47'),
-(1281, '2019-06-06', 1269, 1398, 1157, 'active', NULL, NULL, '2019-06-06', '2019-12-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 11:32:02', '2019-07-26 11:32:02'),
+(1208, '2019-04-08', 1078, 1314, 1192, 'active', NULL, NULL, '2019-04-08', '2019-10-08', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1209, '2018-08-04', 1135, 1315, 1193, 'active', NULL, NULL, '2018-08-04', '2019-07-04', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1210, '2018-11-12', 1142, 1316, 1194, 'active', NULL, NULL, '2018-11-12', '2019-05-12', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1211, '2018-07-14', 1143, 1318, 1143, 'active', NULL, NULL, '2018-07-14', '2020-01-14', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1212, '2018-03-12', 1136, 1319, 1143, 'active', NULL, NULL, '2018-03-12', '2019-03-12', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1213, '2018-08-08', 1137, 1320, 1196, 'active', NULL, NULL, '2018-08-08', '2019-08-08', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1214, '2018-08-15', 1131, 1321, 1186, 'active', NULL, NULL, '2018-08-15', '2019-08-15', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1215, '2019-05-29', 1079, 1322, 1197, 'active', NULL, NULL, '2019-05-29', '2019-07-29', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1216, '2019-03-06', 1080, 1323, 1198, 'active', NULL, NULL, '2019-03-06', '2019-09-26', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1217, '2018-07-10', 1152, 1324, 1199, 'active', NULL, NULL, '2018-07-10', '2019-07-10', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1218, '2018-11-29', 1087, 1325, 1200, 'active', NULL, NULL, '2018-11-29', '2019-03-28', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1219, '2017-07-01', 1086, 1326, 1201, 'active', NULL, NULL, '2017-07-01', '2018-07-01', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1220, '2019-01-07', 1144, 1327, 1202, 'active', NULL, NULL, '2019-01-07', '2019-06-09', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1221, '2019-05-27', 1146, 1328, 1203, 'active', NULL, NULL, '2019-05-27', '2019-08-27', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1222, '2018-07-30', 1147, 1329, 1204, 'active', NULL, NULL, '2018-07-30', '2020-01-30', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1223, '2018-01-16', 1148, 1331, 1205, 'active', NULL, NULL, '2018-01-16', '2019-12-01', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1224, '2015-10-03', 1149, 1332, 1206, 'active', NULL, NULL, '2015-10-03', '2019-08-03', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1225, '2017-07-19', 1150, 1333, 1207, 'active', NULL, NULL, '2017-07-19', '2019-07-19', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1226, '2018-04-03', 1153, 1334, 1184, 'active', NULL, NULL, '2018-04-03', '2020-04-03', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1227, '2017-06-15', 1151, 1335, 1209, 'active', NULL, NULL, '2017-06-15', '2019-09-15', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1228, '2018-05-02', 1154, 1336, 1210, 'active', NULL, NULL, '2018-05-02', '2019-12-02', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1229, '2019-05-01', 1082, 1338, 1211, 'active', NULL, NULL, '2019-05-01', '2019-11-01', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1230, '2019-01-07', 1155, 1339, 1212, 'active', NULL, NULL, '2019-01-07', '2019-06-07', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1231, '2019-01-22', 1156, 1340, 1212, 'active', NULL, NULL, '2019-01-22', '2019-12-22', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1232, '2017-09-04', 1157, 1341, 1213, 'active', NULL, NULL, '2017-09-04', '2019-08-04', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1233, '2019-04-25', 1083, 1342, 1214, 'active', NULL, NULL, '2019-04-25', '2019-06-25', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1234, '2019-06-03', 1166, 1343, 1214, 'active', NULL, NULL, '2019-06-03', '2019-12-03', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1235, '2018-07-31', 1158, 1344, 1215, 'active', NULL, NULL, '2018-07-31', '2019-07-31', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1236, '2018-08-02', 1167, 1345, 1216, 'active', NULL, NULL, '2018-08-02', '2019-08-02', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1237, '2018-12-29', 1168, 1346, 1217, 'active', NULL, NULL, '2018-12-29', '2019-06-29', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1238, '2019-05-22', 1084, 1348, 1218, 'active', NULL, NULL, '2019-05-22', '2019-11-22', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1239, '2018-08-23', 1159, 1349, 1219, 'active', NULL, NULL, '2018-08-23', '2019-08-23', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1240, '2015-08-14', 1169, 1350, 1220, 'active', NULL, NULL, '2015-08-14', '2018-08-14', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1241, '2019-01-11', 1160, 1352, 1221, 'active', NULL, NULL, '2019-01-11', '2019-12-11', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1242, '2017-02-19', 1170, 1353, 1222, 'active', NULL, NULL, '2017-02-19', '2019-08-19', 'long_term', 10, 11, NULL, NULL, NULL, NULL),
+(1243, '2018-01-05', 1171, 1354, 1222, 'active', NULL, NULL, '2018-01-05', '2019-07-05', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1244, '2018-02-15', 1161, 1355, 1184, 'active', NULL, NULL, '2018-02-15', '2019-08-15', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1245, '2018-11-19', 1172, 1356, 1174, 'active', NULL, NULL, '2018-11-19', '2019-05-19', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1246, '2018-08-14', 1162, 1357, 1184, 'active', NULL, NULL, '2018-08-14', '2019-06-14', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1247, '2017-05-28', 1173, 1358, 1223, 'active', NULL, NULL, '2017-05-28', '2019-06-28', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1248, '2014-09-12', 1163, 1359, 1184, 'active', NULL, NULL, '2014-09-12', '2018-12-12', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1249, '2018-08-02', 1164, 1360, 1184, 'active', NULL, NULL, '2018-08-02', '2019-02-02', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1250, '2018-08-06', 1174, 1361, 1224, 'active', NULL, NULL, '2018-08-06', '2019-02-06', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1251, '2018-05-02', 1165, 1362, 1184, 'active', NULL, NULL, '2018-05-02', '2019-12-29', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1252, '2018-08-06', 1175, 1363, 1225, 'active', NULL, NULL, '2018-08-06', '2019-02-06', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1253, '2017-06-11', 1176, 1364, 1226, 'active', NULL, NULL, '2017-06-11', '2018-07-11', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1254, '2019-05-29', 1000, 1365, 1227, 'active', NULL, NULL, '2019-05-29', '2020-05-29', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1255, '2018-08-25', 1177, 1366, 1228, 'active', NULL, NULL, '2018-08-25', '2019-07-25', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1256, '2018-08-02', 1179, 1367, 1229, 'active', NULL, NULL, '2018-08-02', '2019-08-02', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1257, '2019-06-07', 1181, 1368, 1230, 'active', NULL, NULL, '2019-06-07', '2019-12-07', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1258, '2019-04-17', 1182, 1369, 1231, 'active', NULL, NULL, '2019-04-17', '2020-04-17', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1259, '2018-07-07', 1178, 1370, 1232, 'active', NULL, NULL, '2018-07-07', '2021-01-07', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1260, '2014-08-07', 1183, 1371, 1233, 'active', NULL, NULL, '2014-08-07', '2018-02-08', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1261, '2019-05-02', 1184, 1372, 1234, 'active', NULL, NULL, '2019-05-02', '2020-05-02', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1262, '2019-04-28', 1180, 1373, 1235, 'active', NULL, NULL, '2019-04-28', '2019-10-29', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1281, '2019-06-06', 1269, 1398, 1157, 'active', NULL, NULL, '2019-06-06', '2019-12-06', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1264, '2019-01-21', 1006, 1375, 1007, 'inactive', '2019-02-21', 'end_of_contract', '2019-01-21', '2019-02-21', 'short_term', NULL, NULL, NULL, NULL, '2019-07-25 08:09:45', '2019-07-25 08:09:45'),
-(1265, '2019-07-07', 1005, 1122, 1006, 'active', NULL, NULL, '2019-07-07', '2019-08-07', 'short_term', NULL, NULL, NULL, NULL, '2019-07-25 08:34:03', '2019-07-25 08:34:03'),
-(1266, '2019-05-31', 1074, 1376, 1185, 'active', NULL, NULL, '2019-05-31', '2019-07-31', 'short_term', NULL, NULL, NULL, NULL, '2019-07-26 07:53:55', '2019-07-26 07:53:55'),
+(1265, '2019-07-07', 1005, 1122, 1006, 'active', NULL, NULL, '2019-07-07', '2019-08-07', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1266, '2019-05-31', 1074, 1376, 1185, 'active', NULL, NULL, '2019-05-31', '2019-07-31', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1267, '2019-05-20', 1127, 1377, 1181, 'inactive', '2019-07-20', 'end_of_contract', '2019-05-20', '2019-07-20', 'short_term', NULL, NULL, NULL, NULL, '2019-07-26 07:57:03', '2019-07-26 07:57:03'),
-(1268, '2017-08-05', 1088, 1378, 1144, 'active', NULL, NULL, '2017-08-05', '2020-01-05', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:03:35', '2019-07-26 08:03:35'),
+(1268, '2017-08-05', 1088, 1378, 1144, 'active', NULL, NULL, '2017-08-05', '2020-01-05', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1269, '2016-05-20', 1089, 1379, 1145, 'inactive', '2019-05-20', 'end_of_contract', '2016-05-20', '2019-05-20', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:09:14', '2019-07-26 08:09:14'),
-(1270, '2017-08-05', 1091, 1381, 1025, 'active', NULL, NULL, '2017-08-05', '2020-01-05', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:15:51', '2019-07-26 08:15:51'),
-(1271, '2019-03-18', 1060, 1382, 1027, 'active', NULL, NULL, '2019-03-18', '2019-09-18', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:20:07', '2019-07-26 08:20:07'),
-(1272, '2018-04-16', 1093, 1383, 1031, 'active', NULL, NULL, '2018-04-16', '2019-10-16', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:22:20', '2019-07-26 08:22:20'),
-(1273, '2018-09-18', 1094, 1384, 1028, 'active', NULL, NULL, '2018-09-18', '2019-09-18', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:26:35', '2019-07-26 08:26:35'),
-(1274, '2019-07-26', 1097, 1385, 1143, 'active', NULL, NULL, '2019-07-26', '2020-07-26', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:29:22', '2019-07-26 08:29:22'),
-(1275, '2018-07-27', 1095, 1387, 1032, 'active', NULL, NULL, '2018-07-27', '2019-07-27', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:34:05', '2019-07-26 08:34:05'),
-(1276, '2018-06-21', 1101, 1388, 1152, 'active', NULL, NULL, '2018-06-21', '2020-06-21', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:36:46', '2019-07-26 08:36:46'),
-(1277, '2019-03-18', 1065, 1392, 1153, 'active', NULL, NULL, '2019-03-18', '2019-09-18', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:51:50', '2019-07-26 08:51:50'),
-(1278, '2018-09-20', 1102, 1394, 1153, 'active', NULL, NULL, '2018-09-20', '2019-09-20', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 08:59:41', '2019-07-26 08:59:41'),
-(1279, '2018-09-18', 1104, 1396, 1156, 'active', NULL, NULL, '2018-09-18', '2019-09-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 09:02:21', '2019-07-26 09:02:21'),
+(1270, '2017-08-05', 1091, 1381, 1025, 'active', NULL, NULL, '2017-08-05', '2020-01-05', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1271, '2019-03-18', 1060, 1382, 1027, 'active', NULL, NULL, '2019-03-18', '2019-09-18', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1272, '2018-04-16', 1093, 1383, 1031, 'active', NULL, NULL, '2018-04-16', '2019-10-16', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1273, '2018-09-18', 1094, 1384, 1028, 'active', NULL, NULL, '2018-09-18', '2019-09-18', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1274, '2019-07-26', 1097, 1385, 1143, 'active', NULL, NULL, '2019-07-26', '2020-07-26', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1275, '2018-07-27', 1095, 1387, 1032, 'active', NULL, NULL, '2018-07-27', '2019-07-27', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1276, '2018-06-21', 1101, 1388, 1152, 'active', NULL, NULL, '2018-06-21', '2020-06-21', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1277, '2019-03-18', 1065, 1392, 1153, 'active', NULL, NULL, '2019-03-18', '2019-09-18', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1278, '2018-09-20', 1102, 1394, 1153, 'active', NULL, NULL, '2018-09-20', '2019-09-20', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1279, '2018-09-18', 1104, 1396, 1156, 'active', NULL, NULL, '2018-09-18', '2019-09-28', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1280, '2018-08-04', 1105, 1397, 1157, 'inactive', '2019-02-04', 'end_of_contract', '2018-08-04', '2019-02-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 10:35:56', '2019-07-26 11:17:10'),
-(1284, '2017-07-22', 1272, 1403, 1240, 'active', NULL, NULL, '2017-07-22', '2019-08-22', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 12:25:05', '2019-07-26 12:25:05'),
-(1285, '2018-06-14', 1066, 1404, 1155, 'active', NULL, NULL, '2018-06-14', '2020-06-14', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 12:30:37', '2019-07-26 12:30:37'),
+(1284, '2017-07-22', 1272, 1403, 1240, 'active', NULL, NULL, '2017-07-22', '2019-08-22', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1285, '2018-06-14', 1066, 1404, 1155, 'active', NULL, NULL, '2018-06-14', '2020-06-14', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1286, '2018-01-04', 1274, 1409, 1241, 'inactive', '2019-06-04', 'end_of_contract', '2018-01-04', '2019-06-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 12:53:34', '2019-07-26 12:55:30'),
-(1287, '2019-01-26', 1106, 1410, 1158, 'active', NULL, NULL, '2019-01-26', '2020-01-26', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 12:58:41', '2019-07-26 12:58:41'),
-(1288, '2019-03-15', 1070, 1411, 1161, 'active', NULL, NULL, '2019-03-15', '2019-09-15', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 13:08:44', '2019-07-26 13:08:44'),
-(1289, '2018-02-01', 1107, 1412, 1162, 'active', NULL, NULL, '2018-02-01', '2019-08-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 13:14:50', '2019-07-26 13:14:50'),
-(1290, '2018-08-03', 1109, 1413, 1162, 'active', NULL, NULL, '2018-08-03', '2019-08-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 13:23:15', '2019-07-26 13:23:15'),
+(1287, '2019-01-26', 1106, 1410, 1158, 'active', NULL, NULL, '2019-01-26', '2020-01-26', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1288, '2019-03-15', 1070, 1411, 1161, 'active', NULL, NULL, '2019-03-15', '2019-09-15', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1289, '2018-02-01', 1107, 1412, 1162, 'active', NULL, NULL, '2018-02-01', '2019-08-01', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1290, '2018-08-03', 1109, 1413, 1162, 'active', NULL, NULL, '2018-08-03', '2019-08-03', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1291, '2015-01-15', 1110, 1414, 1167, 'inactive', '2018-08-17', 'end_of_contract', '2015-01-15', '2018-08-17', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 13:33:17', '2019-07-26 13:34:12'),
-(1292, '2018-06-08', 1111, 1415, 1166, 'active', NULL, NULL, '2018-06-08', '2019-12-08', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 13:42:49', '2019-07-26 13:42:49'),
-(1293, '2014-07-31', 1112, 1416, 1166, 'active', NULL, NULL, '2014-07-31', '2019-07-31', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 13:46:15', '2019-07-26 13:46:15'),
+(1292, '2018-06-08', 1111, 1415, 1166, 'active', NULL, NULL, '2018-06-08', '2019-12-08', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1293, '2014-07-31', 1112, 1416, 1166, 'active', NULL, NULL, '2014-07-31', '2019-07-31', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1294, '2018-11-28', 1113, 1417, 1168, 'inactive', '2019-05-28', 'end_of_contract', '2018-11-28', '2019-05-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 13:50:12', '2019-07-26 13:50:42'),
-(1295, '2019-02-06', 1114, 1418, 1170, 'active', NULL, NULL, '2019-02-06', '2019-09-06', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 13:57:43', '2019-07-26 13:57:43'),
-(1296, '2018-08-01', 1115, 1420, 1172, 'active', NULL, NULL, '2018-08-01', '2019-08-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 14:04:23', '2019-07-26 14:04:23'),
+(1295, '2019-02-06', 1114, 1418, 1170, 'active', NULL, NULL, '2019-02-06', '2019-09-06', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1296, '2018-08-01', 1115, 1420, 1172, 'active', NULL, NULL, '2018-08-01', '2019-08-01', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1297, '2015-08-09', 1116, 1421, 1245, 'inactive', '2018-08-09', 'end_of_contract', '2015-08-09', '2018-08-09', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 23:09:36', '2019-07-26 23:10:39'),
-(1298, '2019-03-01', 1071, 1422, 1163, 'active', NULL, NULL, '2019-03-01', '2019-08-01', 'short_term', NULL, NULL, NULL, NULL, '2019-07-26 23:15:00', '2019-07-26 23:15:00'),
-(1299, '2019-06-28', 1117, 1423, 1165, 'active', NULL, NULL, '2019-06-28', '2019-12-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 23:22:35', '2019-07-26 23:22:35'),
-(1300, '2019-02-27', 1073, 1424, 1173, 'active', NULL, NULL, '2019-02-27', '2019-08-27', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 23:27:48', '2019-07-26 23:27:48'),
+(1298, '2019-03-01', 1071, 1422, 1163, 'active', NULL, NULL, '2019-03-01', '2019-08-01', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1299, '2019-06-28', 1117, 1423, 1165, 'active', NULL, NULL, '2019-06-28', '2019-12-28', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1300, '2019-02-27', 1073, 1424, 1173, 'active', NULL, NULL, '2019-02-27', '2019-08-27', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1301, '2017-06-03', 1121, 1427, 1176, 'inactive', '2019-07-03', 'end_of_contract', '2017-06-03', '2019-07-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 23:34:32', '2019-07-26 23:34:58'),
-(1302, '2018-08-02', 1122, 1428, 1178, 'active', NULL, NULL, '2018-08-02', '2020-02-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 23:37:56', '2019-07-26 23:37:56'),
-(1303, '2018-02-04', 1123, 1429, 1178, 'active', NULL, NULL, '2018-02-04', '2019-08-04', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 23:42:39', '2019-07-26 23:42:39'),
-(1304, '2019-07-22', 1077, 1430, 1182, 'active', NULL, NULL, '2019-07-22', '2020-01-22', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 23:46:22', '2019-07-26 23:46:22'),
-(1305, '2018-06-09', 1124, 1432, 1142, 'active', NULL, NULL, '2018-06-09', '2019-12-09', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 23:52:07', '2019-07-26 23:52:07'),
-(1306, '2019-05-30', 1129, 1433, 1180, 'active', NULL, NULL, '2019-05-30', '2019-11-30', 'long_term', NULL, NULL, NULL, NULL, '2019-07-26 23:57:56', '2019-07-26 23:57:56'),
-(1307, '2018-05-19', 1128, 1434, 1183, 'active', NULL, NULL, '2018-05-19', '2020-05-19', 'long_term', NULL, NULL, NULL, NULL, '2019-07-27 09:39:24', '2019-07-27 09:39:24'),
-(1308, '2015-04-23', 1130, 1436, 1184, 'active', NULL, NULL, '2015-04-23', '2019-11-23', 'long_term', NULL, NULL, NULL, NULL, '2019-07-27 09:49:09', '2019-07-27 09:49:09'),
+(1302, '2018-08-02', 1122, 1428, 1178, 'active', NULL, NULL, '2018-08-02', '2020-02-02', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1303, '2018-02-04', 1123, 1429, 1178, 'active', NULL, NULL, '2018-02-04', '2019-08-04', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1304, '2019-07-22', 1077, 1430, 1182, 'active', NULL, NULL, '2019-07-22', '2020-01-22', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1305, '2018-06-09', 1124, 1432, 1142, 'active', NULL, NULL, '2018-06-09', '2019-12-09', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1306, '2019-05-30', 1129, 1433, 1180, 'active', NULL, NULL, '2019-05-30', '2019-11-30', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1307, '2018-05-19', 1128, 1434, 1183, 'active', NULL, NULL, '2018-05-19', '2020-05-19', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1308, '2015-04-23', 1130, 1436, 1184, 'active', NULL, NULL, '2015-04-23', '2019-11-23', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1309, '2015-08-03', 1248, 1437, 1132, 'inactive', '2018-02-03', 'end_of_contract', '2015-08-03', '2018-02-03', 'long_term', NULL, NULL, NULL, NULL, '2019-07-27 10:37:54', '2019-07-27 10:45:31'),
 (1310, '2018-08-20', 1250, 1438, 1134, 'inactive', '2019-02-20', 'end_of_contract', '2018-08-20', '2019-02-20', 'long_term', NULL, NULL, NULL, NULL, '2019-07-27 10:53:26', '2019-07-27 10:54:20'),
 (1311, '2018-08-28', 1254, 1439, 1113, 'inactive', '2019-02-28', 'end_of_contract', '2018-08-28', '2019-02-28', 'long_term', NULL, NULL, NULL, NULL, '2019-07-27 11:01:57', '2019-07-27 11:02:26'),
-(1312, '2019-02-27', 1188, 1302, 1089, 'active', NULL, NULL, '2019-02-27', '2019-03-27', 'short_term', NULL, NULL, NULL, NULL, '2019-07-27 11:05:08', '2019-07-27 11:05:08'),
-(1313, '2019-07-18', 1195, 1440, 1081, 'active', NULL, NULL, '2019-07-18', '2020-01-18', 'long_term', NULL, NULL, NULL, NULL, '2019-07-27 11:14:47', '2019-07-27 11:14:47');
-INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_resident_id`, `trans_owner_id`, `trans_status`, `actual_move_out_date`, `move_out_reason`, `move_in_date`, `move_out_date`, `term`, `initial_water_reading`, `initial_electric_reading`, `final_water_reading`, `final_electric_reading`, `created_at`, `updated_at`) VALUES
-(1314, '2019-07-05', 1186, 1441, 1080, 'active', NULL, NULL, '2019-07-05', '2020-07-05', 'long_term', NULL, NULL, NULL, NULL, '2019-07-27 11:44:30', '2019-07-27 11:44:30'),
+(1312, '2019-02-27', 1188, 1302, 1089, 'active', NULL, NULL, '2019-02-27', '2019-03-27', 'short_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1313, '2019-07-18', 1195, 1440, 1081, 'active', NULL, NULL, '2019-07-18', '2020-01-18', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1314, '2019-07-05', 1186, 1441, 1080, 'active', NULL, NULL, '2019-07-05', '2020-07-05', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1315, '2017-12-08', 1196, 1443, 1080, 'inactive', '2019-07-08', 'end_of_contract', '2017-12-08', '2019-07-08', 'long_term', NULL, NULL, NULL, NULL, '2019-07-29 06:02:09', '2019-07-29 06:05:50'),
-(1316, '2019-05-10', 1197, 1444, 1080, 'active', NULL, NULL, '2019-05-10', '2020-05-10', 'long_term', NULL, NULL, NULL, NULL, '2019-07-29 06:14:10', '2019-07-29 06:14:10'),
-(1317, '2018-10-20', 1198, 1445, 1082, 'active', NULL, NULL, '2018-10-20', '2019-10-20', 'long_term', NULL, NULL, NULL, NULL, '2019-07-29 06:22:27', '2019-07-29 06:22:27'),
-(1318, '2018-10-15', 1199, 1446, 1083, 'active', NULL, NULL, '2018-10-15', '2019-10-15', 'long_term', NULL, NULL, NULL, NULL, '2019-07-29 06:31:33', '2019-07-29 06:31:33'),
-(1319, '2018-07-18', 1200, 1447, 1084, 'active', NULL, NULL, '2018-07-18', '2020-01-18', 'long_term', NULL, NULL, NULL, NULL, '2019-07-29 06:44:37', '2019-07-29 06:44:37'),
+(1316, '2019-05-10', 1197, 1444, 1080, 'active', NULL, NULL, '2019-05-10', '2020-05-10', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1317, '2018-10-20', 1198, 1445, 1082, 'active', NULL, NULL, '2018-10-20', '2019-10-20', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1318, '2018-10-15', 1199, 1446, 1083, 'active', NULL, NULL, '2018-10-15', '2019-10-15', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1319, '2018-07-18', 1200, 1447, 1084, 'active', NULL, NULL, '2018-07-18', '2020-01-18', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
 (1320, '2017-09-09', 1202, 1449, 1243, 'inactive', '2019-06-09', 'end_of_contract', '2017-09-09', '2019-06-09', 'long_term', NULL, NULL, NULL, NULL, '2019-07-29 08:47:39', '2019-07-29 08:51:05'),
 (1321, '2018-03-02', 1204, 1450, 1086, 'inactive', '2019-03-02', 'end_of_contract', '2018-03-02', '2019-03-02', 'long_term', NULL, NULL, NULL, NULL, '2019-07-29 08:56:16', '2019-07-29 10:54:09'),
-(1322, '2019-06-01', 1192, 1451, 1090, 'active', NULL, NULL, '2019-06-01', '2019-12-01', 'long_term', NULL, NULL, NULL, NULL, '2019-07-29 11:17:17', '2019-07-29 11:17:17'),
-(1323, '2019-06-29', 1206, 1452, 1091, 'active', NULL, NULL, '2019-06-29', '2019-12-29', 'long_term', NULL, NULL, NULL, NULL, '2019-07-29 12:01:22', '2019-07-29 12:01:22'),
-(1324, '2019-07-17', 1207, 1453, 1092, 'active', NULL, NULL, '2019-07-17', '2020-07-17', 'long_term', NULL, NULL, NULL, NULL, '2019-07-29 12:12:16', '2019-07-29 12:12:16');
+(1322, '2019-06-01', 1192, 1451, 1090, 'active', NULL, NULL, '2019-06-01', '2019-12-01', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1323, '2019-06-29', 1206, 1452, 1091, 'active', NULL, NULL, '2019-06-29', '2019-12-29', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL),
+(1324, '2019-07-17', 1207, 1453, 1092, 'active', NULL, NULL, '2019-07-17', '2020-07-17', 'long_term', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3414,8 +3451,9 @@ INSERT INTO `transactions` (`trans_id`, `trans_date`, `trans_room_id`, `trans_re
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `user_id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -3424,8 +3462,12 @@ CREATE TABLE `users` (
   `user_owner_id` int(10) UNSIGNED DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  KEY `users_user_resident_id_foreign` (`user_resident_id`),
+  KEY `users_user_owner_id_foreign` (`user_owner_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1563 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -3959,194 +4001,6 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `privilege`, `user_
 (1560, 'Jyra mae Ramirez', 'messageayaramirez@gmail.com', '$2y$10$IhHk3d3VxgyyFJ.dn.GTru1sV/mIVA4xGjXHH3zWAVvGF1Tyf8Kcy', 'resident', 1451, NULL, NULL, '2019-07-29 11:17:17', '2019-07-29 11:17:17'),
 (1561, 'Ron Bacani', 'ronbacani@gmail.com', '$2y$10$v26EoGkidaV.kBCyK04NXu89MjWpGTSgPlSSUxeA/m7gQCo2cZ5gO', 'resident', 1452, NULL, NULL, '2019-07-29 12:01:22', '2019-07-29 12:01:22'),
 (1562, 'Errold Paul Gagarin', 'errobl.paul@gmail.com', '$2y$10$74CBvDaJgo719lR.iOs8POp3Gvn0QOokak37eARDmynoDx/ntm4le', 'resident', 1453, NULL, NULL, '2019-07-29 12:12:16', '2019-07-29 12:12:16');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `banks`
---
-ALTER TABLE `banks`
-  ADD PRIMARY KEY (`bank_id`),
-  ADD KEY `banks_bank_owner_id_foreign` (`bank_owner_id`);
-
---
--- Indexes for table `charges`
---
-ALTER TABLE `charges`
-  ADD PRIMARY KEY (`charge_id`),
-  ADD KEY `charges_charge_trans_id_foreign` (`charge_trans_id`);
-
---
--- Indexes for table `contracts`
---
-ALTER TABLE `contracts`
-  ADD PRIMARY KEY (`contract_id`),
-  ADD KEY `contracts_contract_owner_id_foreign` (`contract_owner_id`),
-  ADD KEY `contracts_contract_room_id_foreign` (`contract_room_id`);
-
---
--- Indexes for table `guardians`
---
-ALTER TABLE `guardians`
-  ADD PRIMARY KEY (`guardian_id`),
-  ADD KEY `guardians_guardian_resident_id_foreign` (`guardian_resident_id`);
-
---
--- Indexes for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `owners`
---
-ALTER TABLE `owners`
-  ADD PRIMARY KEY (`owner_id`),
-  ADD UNIQUE KEY `owners_owner_email_address_unique` (`owner_email_address`),
-  ADD UNIQUE KEY `owners_owner_mobile_number_unique` (`owner_mobile_number`);
-
---
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
-
---
--- Indexes for table `payments`
---
-ALTER TABLE `payments`
-  ADD PRIMARY KEY (`payment_id`),
-  ADD KEY `payments_payment_transaction_id_foreign` (`payment_transaction_id`);
-
---
--- Indexes for table `repairs`
---
-ALTER TABLE `repairs`
-  ADD PRIMARY KEY (`repair_id`);
-
---
--- Indexes for table `representatives`
---
-ALTER TABLE `representatives`
-  ADD PRIMARY KEY (`rep_id`),
-  ADD KEY `representatives_rep_owner_id_foreign` (`rep_owner_id`);
-
---
--- Indexes for table `residents`
---
-ALTER TABLE `residents`
-  ADD PRIMARY KEY (`resident_id`),
-  ADD UNIQUE KEY `residents_email_address_unique` (`email_address`),
-  ADD UNIQUE KEY `residents_mobile_number_unique` (`mobile_number`);
-
---
--- Indexes for table `rooms`
---
-ALTER TABLE `rooms`
-  ADD PRIMARY KEY (`room_id`),
-  ADD UNIQUE KEY `rooms_room_no_unique` (`room_no`);
-
---
--- Indexes for table `transactions`
---
-ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`trans_id`),
-  ADD KEY `transactions_trans_room_id_foreign` (`trans_room_id`),
-  ADD KEY `transactions_trans_resident_id_foreign` (`trans_resident_id`),
-  ADD KEY `transactions_trans_owner_id_foreign` (`trans_owner_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD KEY `users_user_resident_id_foreign` (`user_resident_id`),
-  ADD KEY `users_user_owner_id_foreign` (`user_owner_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `banks`
---
-ALTER TABLE `banks`
-  MODIFY `bank_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1243;
-
---
--- AUTO_INCREMENT for table `charges`
---
-ALTER TABLE `charges`
-  MODIFY `charge_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000;
-
---
--- AUTO_INCREMENT for table `contracts`
---
-ALTER TABLE `contracts`
-  MODIFY `contract_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=279;
-
---
--- AUTO_INCREMENT for table `guardians`
---
-ALTER TABLE `guardians`
-  MODIFY `guardian_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1308;
-
---
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
-
---
--- AUTO_INCREMENT for table `owners`
---
-ALTER TABLE `owners`
-  MODIFY `owner_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1247;
-
---
--- AUTO_INCREMENT for table `payments`
---
-ALTER TABLE `payments`
-  MODIFY `payment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1955;
-
---
--- AUTO_INCREMENT for table `repairs`
---
-ALTER TABLE `repairs`
-  MODIFY `repair_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `representatives`
---
-ALTER TABLE `representatives`
-  MODIFY `rep_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1244;
-
---
--- AUTO_INCREMENT for table `residents`
---
-ALTER TABLE `residents`
-  MODIFY `resident_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1454;
-
---
--- AUTO_INCREMENT for table `rooms`
---
-ALTER TABLE `rooms`
-  MODIFY `room_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1275;
-
---
--- AUTO_INCREMENT for table `transactions`
---
-ALTER TABLE `transactions`
-  MODIFY `trans_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1325;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1563;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

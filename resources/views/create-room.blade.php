@@ -105,8 +105,8 @@
                 </div>
               
             <div class="row">
-                <a href="/rooms" class="btn-default"></i>CANCEL</a>           
-                <button class="btn-default" type="submit">SUBMIT</button>         
+                <a href="/rooms" class="btn-default"><i class="far fa-arrow-alt-circle-left"></i>&nbspBACK</a>           
+                <button class="btn-default" type="submit"><i class="fas fa-arrow-circle-right"></i>&nbspSUBMIT</button>         
             </div>  
             
             </form>    

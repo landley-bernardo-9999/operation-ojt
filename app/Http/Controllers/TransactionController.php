@@ -369,6 +369,12 @@ class TransactionController extends Controller
      */
     public function edit($trans_id)
     {
+       $transaction = Transaction::findOrFail($trans_id);
+
+       if($transaction->updated_at == null){
+            abort(404, "Forbidden Page.");
+       }
+       else{
         $transaction = Transaction::findOrFail($trans_id);
 
         $resident = DB::table('transactions')
@@ -405,6 +411,7 @@ class TransactionController extends Controller
         ->get();
 
         return view('resident-moveout', compact('transaction', 'resident', 'payment_move_ins', 'payment_move_outs', 'unpaid_charges'));
+       }
     }
 
     /**

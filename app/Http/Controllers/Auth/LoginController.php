@@ -27,27 +27,8 @@ class LoginController extends Controller
      */
 
      protected function authenticated($request, $user){
-         if($user->privilege === 'admin'){
-            return redirect('/users');
-         }
-        elseif($user->privilege === 'leasingManager'){
-            return redirect('/dashboard');
-        }
-         elseif($user->privilege === 'leasingOfficer'){
-            return redirect('/dashboard');
-        }
-        elseif($user->privilege === 'billingAndCollection'){
-            return redirect('/dashboard');
-        }
-        elseif($user->privilege === 'resident'){  
-            return redirect('/dashboard');
-        }
-        elseif($user->privilege === 'treasury'){  
-            return redirect('/dashboard');
-        }
-        elseif($user->privilege === 'owner'){
-            return redirect('/dashboard');
-        }
+            
+        return redirect('/dashboard');
          
      }
     // protected $redirectTo = '/dashboard';

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <h3>Dashboard</h3>
+        <h3>Dashboard as of <b>{{ date("l jS \of F Y h:i:s A") }}</b></h3>
     </div>
     <div class="row">
         <div class="col-md-4 text-center">
@@ -247,9 +247,9 @@
 
    <div class="row">
        @if($move_in_rate_increase < 0)
-            <h3>Move In Rate ( +{{ number_format($move_in_rate_increase,0) }} % )</h3>
-       @else
             <h3>Move In Rate ( {{ number_format($move_in_rate_increase,0) }} % )</h3>
+       @else
+            <h3>Move In Rate (- {{ number_format($move_in_rate_increase,0) }} % )</h3>
        @endif
     </div>
      <div class="row">
@@ -257,21 +257,13 @@
     </div>
     <br>
      <div class="row">
-       @if($move_out_rate_increase > 0)
-            <h3>Move Out Rate ( +{{ number_format($move_out_rate_increase,0) }} % )</h3>
-       @else
-            <h3>Move Out Rate ( {{ number_format($move_out_rate_increase,0) }} % )</h3>
-       @endif
+        <h3>Move Out Rate ( {{ number_format($move_out_rate_increase,0) }} % )</h3>
     </div>
      <div class="row">
         {!! $line2->container() !!}
     </div>
     <div class="row">
-       @if($collection_rate_increase > 0)
-            <h3>Collection Rate ( +{{ number_format($collection_rate_increase,0) }} % )</h3>
-       @else
-            <h3>Collection Rate ( {{ number_format($collection_rate_increase,0) }} % )</h3>
-       @endif
+        <h3>Collection Rate ( {{ number_format($collection_rate_increase,0) }} % )</h3>
     </div>
      <div class="row">
         {!! $line3->container() !!}

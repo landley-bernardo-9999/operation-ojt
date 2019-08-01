@@ -115,7 +115,9 @@ Route::get('/dashboard', function(){
         return view('owner-dashboard', compact('rooms', 'enrollment_date', 'contract', 'move_out', 'long_term_rent', 'short_term_rent'));
     }
     if(auth()->user()->privilege === 'admin'){
-        return view('admin-dashboard');
+        $user = User::count();
+        
+        return view('admin-dashboard', compact('user'));
     }
     if(auth()->user()->privilege === 'treasury'){
 
@@ -274,8 +276,8 @@ Route::get('/dashboard', function(){
         ->orderBy('move_out_date')
         ->where('trans_status', 'active')
          ->whereBetween('move_out_date', [
-                                Carbon::now()->subDay(1), 
-                                Carbon::now()->addDays(6)
+                                Carbon::now(), 
+                                Carbon::now()->addDays(7)
                                         ])
         ->get();  
 
