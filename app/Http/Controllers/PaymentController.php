@@ -12,6 +12,7 @@ use DB;
 use App\Guardian;
 use App\User;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -55,6 +56,23 @@ class PaymentController extends Controller
 
            return view('payments', compact('owners'));
         } 
+        elseif(auth()->user()->privilege === 'treasury'){
+
+            $payment_date = $request->query('payment_date');
+            
+            $collection = DB::table('transactions')
+            ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+            ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+            ->join('owners', 'transactions.trans_owner_id', 'owners.owner_id')
+            ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
+            ->select('*', 'payments.updated_at as payment_date')
+            ->where('payment_status', 'paid')
+            ->whereDate('payments.updated_at', "$payment_date")
+            ->orderBy('payments.updated_at', 'desc')
+            ->get();
+    
+            return view('treasury-dashboard', compact('collection'));
+        }
         else{
             abort(404, "Forbidden Page.");
         } 

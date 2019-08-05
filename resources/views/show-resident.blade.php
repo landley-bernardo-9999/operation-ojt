@@ -21,12 +21,6 @@
             <li class="">
                 <a href="/room/add" oncontextmenu="return false"><i class="far fa-edit"></i>&nbspAdd/Renewal/Transfer Contract</a>
             </li>
-            <li class="">
-                <a href="#" oncontextmenu="return false">Add Repair</a>
-            </li>
-            <li class="">
-                <a href="#" oncontextmenu="return false">Add Violation</a>
-            </li>
              {{-- <li class="nav-item">
                 <form method="POST" action="/residents/{{ $resident->resident_id }}">
                     @method('delete')
@@ -166,7 +160,7 @@
     <div class="row">
         <table class="table">
             <p><h4><b>Contracts</b></<h4></p>        
-           <?php $row_no_contracts = 1; ?>
+           <?php $row_no = 1; ?>
            <tr>
                <th>#</th>
                <th>Unit No</th>
@@ -176,33 +170,39 @@
                <th>Montly Rent</th>
                <th></th>
            </tr>
-           @foreach ($contract as $contract)
+           @foreach ($contract as $row)
            <tr>
                 <th>
-                    {{ $row_no_contracts++ }}
+                    {{ $row_no++ }}
                 </th>
                 <td>
-                   {{ $contract->room_no }}
+                   {{ $row->room_no }}
                 </td>
                 <td>
-                    {{ $contract->building }}
+                    {{ $row->building }}
                 </td>
                 <td>
-                    {{Carbon\Carbon::parse(  $contract->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $contract->move_out_date )->formatLocalized('%b %d %Y')}} 
+                    {{Carbon\Carbon::parse(  $row->move_in_date )->formatLocalized('%b %d %Y')}} - {{Carbon\Carbon::parse(  $row->move_out_date )->formatLocalized('%b %d %Y')}} 
                 </td>
                 <td>
-                    {{ $contract->trans_status }}
+                    {{ $row->trans_status }}
                 </td>
                 <td>
-                    @if($contract->term == 'long_term')
-                        {{ number_format($contract->long_term_rent, 2) }}
-                    @elseif($contract->term == 'short_term')
-                        {{ number_format($contract->short_term_rent, 2) }}
+                    @if($row->term === 'long_term')
+                        {{ number_format($row->long_term_rent, 2) }}
+                    @elseif($row->term === 'short_term')
+                        {{ number_format($row->short_term_rent, 2) }}
                     @else   
-                        {{ number_format($contract->transient, 2) }} - transient
+                        {{ number_format($row->transient, 2) }} - transient
                     @endif
                 </td>
-                <td><a href="/transactions/{{ $contract->trans_id }}" oncontextmenu="return false">MORE INFO</a></td>
+                <td>
+                    @if($row->trans_status === 'active')
+                       <a href="/transactions/{{ $row->trans_id }}" oncontextmenu="return false">MORE INFO</a>
+                    @else
+                        <a href="/transactions/{{ $row->trans_id }}/edit" oncontextmenu="return false">MORE INFO</a>
+                    @endif
+                </td>
            </tr>
            @endforeach
           

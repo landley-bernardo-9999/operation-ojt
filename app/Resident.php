@@ -8,6 +8,8 @@ class Resident extends Model
 {
     protected $primaryKey = 'resident_id';
 
+    public $timestamps  = false;
+
     protected $fillable = [
             'first_name', 
             'middle_name',

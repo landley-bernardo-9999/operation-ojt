@@ -147,6 +147,7 @@ class TransactionController extends Controller
          $resident->province = session('sess_province');
          $resident->zip = session('sess_zip');
          $resident->updated_at = null;
+         $resident->created_at = now();
          $resident->save();
 
          //create the guardian
@@ -449,15 +450,19 @@ class TransactionController extends Controller
                                 'actual_move_out_date' => $request->actual_move_out_date                    
                             ]);
                        
-                  //update the updated_at column of resident.     
-                  Resident::
-                    where('resident_id', session('resident_id'))
-                 ->where('primary_resident_id', session('resident_id'))
-                    ->update([
-                                'updated_at' => $request->actual_move_out_date
+                  //update the updated_at column of the primary_resident for counting active residents.     
+                Resident::where('resident_id', session('resident_id'))
+                        ->update([
+                                    'updated_at' => $request->actual_move_out_date,
                             ]);
                 
-                //update the room created_at column
+                //update the updated column of the co-resident for counting active residents.
+                Resident::where('primary_resident_id', session('resident_id'))
+                        ->update([
+                                    'updated_at' => $request->actual_move_out_date,
+                                ]);
+                
+                //update the room created_at column for sorting the last room that has been occupied.
                 Room::
                     where('room_id', session('sess_room_id'))
                     ->update([
@@ -564,26 +569,26 @@ class TransactionController extends Controller
                     $payment->updated_at = null;
                     $payment->save();
                 }
-                return Redirect::back()->with('success', 'Resident has move out!');
+                return Redirect::back()->with('success', 'Resident has moved out!');
             }
 
             elseif($transaction->trans_status === 'active' ){
                 //requesting for move out to the manager.
-               if($transaction->created_at == null){
-                    $transaction->updated_at = null;
-                    $transaction->created_at = now();
-                    $transaction->save();
+               
+                   if($request->action == 'adding_utilities'){
+                        $data = $request->all();
+                        Transaction::findOrFail($trans_id)->update($data);       
+                        return Redirect::back()->with('success', 'Reading for utilities has been updated!');
+                   }
+                   //adding and updating the utilities of the resident.
+                   else{
+                        $transaction->updated_at = null;
+                        $transaction->created_at = now();
+                        $transaction->save();
 
-                    return Redirect::back()->with('success', 'Request for moveout has been sent!');
-
-               }
-               //adding and updating the utilities of the resident.
-               else{
-                $data = $request->all();
-                Transaction::findOrFail($trans_id)->update($data);       
-                
-                return Redirect::back()->with('success', 'Reading for utilities has been added!');
-               } 
+                        return Redirect::back()->with('success', 'Request for moveout has been sent!');
+                   }
+              
         }
         }else{
             abort(404, "Forbidden Page.");

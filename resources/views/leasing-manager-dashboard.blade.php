@@ -149,13 +149,19 @@
                     <td>{{Carbon\Carbon::parse(  $row->move_out_date )->formatLocalized('%b %d %Y')}}</td>
                    
                     <td>  
-                        <form action="/transactions/{{ $row->trans_id }}" method="POST">
+                       @if($row->trans_updated_at == null)
+                         <form action="/transactions/{{ $row->trans_id }}" method="POST">
                         @method('PATCH')
                         {{ csrf_field() }}
                         <p>
                             <button class="btn-default" onclick="return confirm('Are you sure you want to perform this operation? ');"><i class="fas fa-sign-out-alt"></i>&nbspALLOW</button>   
                         </p> 
                         </form>
+                       @else
+                         <p class="text-primary">
+                            REQUEST HAS BEEN GRANTED.   
+                        </p> 
+                       @endif
                     </td>
                 </tr>
                 @endforeach

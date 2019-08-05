@@ -132,47 +132,58 @@ Route::get('/dashboard', function(){
         ->orderBy('payments.updated_at', 'desc')
         ->get();
 
+        
+
         return view('treasury-dashboard', compact('collection'));
     } 
     if(auth()->user()->privilege === 'billingAndCollection'){
 
          $harvard_delinquent_account = DB::table('transactions')
-            ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
-            ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
-            ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
-            
-            ->whereIn('desc', ['advance_rent', 'monthly_rent'])
-            ->where('payment_status', 'unpaid')
-            ->where('building', 'harvard')
-            ->get();
+                ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
+                ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
+                ->select('residents.*',DB::raw('sum(amt) as total'))
+                ->groupBy('resident_id')
+                ->whereIn('desc', ['advance_rent', 'monthly_rent'])
+                ->where('payment_status', 'unpaid')
+                ->where('building', 'harvard')
+                ->orderBy('total', 'desc')
+                ->get();
 
-         $princeton_delinquent_account = DB::table('transactions')
+            $princeton_delinquent_account = DB::table('transactions')
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
             ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
-         
+            ->select('residents.*',DB::raw('sum(amt) as total'))
+            ->groupBy('resident_id')
             ->whereIn('desc', ['advance_rent', 'monthly_rent'])
             ->where('payment_status', 'unpaid')
             ->where('building', 'princeton')
+            ->orderBy('total', 'desc')
             ->get();
 
-         $wharton_delinquent_account = DB::table('transactions')
+            $wharton_delinquent_account = DB::table('transactions')
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
             ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
-        
+            ->select('residents.*',DB::raw('sum(amt) as total'))
+            ->groupBy('resident_id')
             ->whereIn('desc', ['advance_rent', 'monthly_rent'])
             ->where('payment_status', 'unpaid')
             ->where('building', 'wharton')
+            ->orderBy('total', 'desc')
             ->get();
 
-        $cy_delinquent_account = DB::table('transactions')
+            $cy_delinquent_account = DB::table('transactions')
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
             ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
             ->join('rooms','transactions.trans_room_id', 'rooms.room_id')
+            ->select('residents.*',DB::raw('sum(amt) as total'))
+            ->groupBy('resident_id')
             ->whereIn('desc', ['advance_rent', 'monthly_rent'])
             ->where('payment_status', 'unpaid')
             ->where('project', 'the_courtyards')
+            ->orderBy('total', 'desc')
             ->get();
 
               //bar graph
@@ -275,10 +286,10 @@ Route::get('/dashboard', function(){
         ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
         ->orderBy('move_out_date')
         ->where('trans_status', 'active')
-         ->whereBetween('move_out_date', [
-                                Carbon::now(), 
+        ->whereBetween('move_out_date', [
+                                Carbon::now()->subYear(2), 
                                 Carbon::now()->addDays(7)
-                                        ])
+                                        ])  
         ->get();  
 
         $harvard_least_occupied_rooms = Room::
@@ -472,6 +483,7 @@ Route::get('/dashboard', function(){
             $about_to_move_out = DB::table('transactions')
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->select('*','transactions.updated_at as trans_updated_at')
                 ->orderBy('move_out_date')
                 ->where('trans_status', 'active')
                 ->where('transactions.created_at', '!=' , null)
@@ -528,3 +540,5 @@ Route::get('/search/residents{s?}', 'ResidentController@index')->where('s', '[\w
 Route::get('/search/owners{s?}', 'OwnerController@index')->where('s', '[\w\d]+');
 Route::get('/search/users{s?}', 'UserController@index')->where('s', '[\w\d]+');
 Route::get('/search/rooms{s?}', 'RoomController@index')->where('s', '[\w\d]+');
+
+Route::get('/search/payments{s?}', 'PaymentController@index')->where('s', '[\w\d]+');

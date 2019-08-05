@@ -12,14 +12,17 @@
                     <a class="nav-link" href="/transactions/{{ $transaction->trans_id }}/edit" oncontextmenu="return false"><i class="fas fa-sign-out-alt"></i>&nbspMove out resident.</a>
             </li>
         </ul>
-                @else
+                @elseif($transaction->created_at ==null)
                     <form action="/transactions/{{ $transaction->trans_id }}" method="POST">
                         @method('PATCH')
                         {{ csrf_field() }}
                         <p>
+                             <input type="hidden" name="action" value="request_for_move_out">
                             <button class="btn-default" onclick="return confirm('Are you sure you want to perform this operation? ');"><i class="fas fa-sign-out-alt"></i>&nbspRequest for move out.</button>   
                         </p> 
                     </form>
+                @else
+                        <a title="Waiting for the leasing manager's approval..." class="nav-link text-danger" href="#" oncontextmenu="return false"><i class="fas fa-sign-out-alt"></i>&nbspRequest has already been sent.</a>
                 @endif
     </div>
     <div class="row">
@@ -69,25 +72,17 @@
                 <th><label for="">Electric</label></th>
                 <th></th>
             </tr>
-            @if($transaction->trans_status == 'active' || $transaction->trans_resident_id != session('resident_id'))
+            
             <tr>
                 <td>Initial</td>
-                <td><input type="text" class="form-control" style="width:30%" name="initial_water_reading" value="{{ $transaction->initial_water_reading }}"></td>
+                <td>
+                    <input type="text" class="form-control" style="width:30%" name="initial_water_reading" value="{{ $transaction->initial_water_reading }}">
+                    
+                    <input type="hidden" name="action" value="adding_utilities">
+                </td>
                 <td>Initial</td>
                 <td><input type="text" class="form-control" style="width:30%" name="initial_electric_reading" value="{{ $transaction->initial_electric_reading }}"></td>
-                @if(auth()->user()->privilege === 'leasingOfficer')
                 <th><button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default"><i class="fas fa-check-circle"></i>&nbspSUBMIT</button></th>
-                @endif
-            </tr>
-            @else
-             <tr>
-                <td>Initial</td>
-                <td>{{ $transaction->initial_water_reading }}</td>
-                <td>Initial</td>
-                <td>{{ $transaction->initial_electric_reading }}</td>
-            </tr>
-            @endif
-
         </table>
         </form>
     </div>    

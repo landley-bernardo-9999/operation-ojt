@@ -85,8 +85,8 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn-default">
-                                    Register
+                                <button type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn-default">
+                                    <i class="fas fa-check-circle"></i>&nbspSubmit
                                 </button>
                             </div>
                         </div>
