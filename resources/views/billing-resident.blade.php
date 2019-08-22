@@ -20,16 +20,21 @@
         <table class="table">
             <tr>
                  <td>
-                Resident Name: <b>{{session('billing_resident_name')}}</b>
+                Resident: <b>{{session('billing_resident_name')}}</b>
                 </td>
                
                 <td>
                     Total Balance: <b>{{ number_format($total_amt - $total_amt_paid,2)  }}</b>
                 </td>
             </tr>
+              <tr>
+                <td>
+                    Contact Details: <b>{{session('resident_contact_details')}}</b>
+                </td>
+            </tr>
             <tr>
                  <td>
-                    Unit:   
+                    Unit No:   
                     @foreach ($unit as $unit)
                         <b>{{ $unit->building }} {{ $unit->room_no }}, </b>
                     @endforeach

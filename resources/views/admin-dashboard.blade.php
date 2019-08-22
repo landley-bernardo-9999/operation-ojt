@@ -3,6 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row">
+        <h3>Dashboard as of {{ date("l jS \of F Y h:i:s A") }}</h3>
+    </div>
+    <div class="row">
          <div class="col-md-4 text-center">
             <div class="panel">
                 <div class="panel-header">

@@ -13,7 +13,7 @@
     <br>
     <table class="table">
         @if($residents->count() > 0)
-        <p>{{ $residents->count() }} residents found.</p>
+        <p>{{ $residents->count() }} transactions found.</p>
         @if(auth()->user()->privilege === 'billingAndCollection')
         <h4 class="text-right">Billed residents: {{ $billed_residents }}/{{ $active_residents }} for {{ Date('F Y') }} 
         </h4>
@@ -40,7 +40,7 @@
         </tr>
         @endforeach
         @else
-          <p class="text-danger">No residents found.</p>
+          <p class="text-danger">No transactions found.</p>
         @endif
     </table>    
   </div>         

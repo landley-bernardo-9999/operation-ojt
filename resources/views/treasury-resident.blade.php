@@ -39,8 +39,8 @@
                         
                     </tr>
                     <tr>
-                        <td><input type="text" style="width:100%" name="desc" class="form-control" value="{{ $payment->desc }}" readonly></td>
-                        <td>{{ number_format($payment->amt,2) }}</td>
+                        <td><input type="text" style="width:105%" name="desc" class="form-control" value="{{ $payment->desc }}" readonly></td>
+                        <td><input type="text" style="width:100%" name="" class="form-control" value="{{ number_format($payment->amt,2) }}" readonly></td>
                         <td><input type="text" style="width:80%" name="or_number" class="form-control"></td>
                         <td><input type="text" style="width:80%" name="ar_number" class="form-control"></td>
 

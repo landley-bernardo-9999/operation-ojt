@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <h3>Dashboard as of <b>{{ date("l jS \of F Y h:i:s A") }}</b></h3>
+        <h3>Dashboard as of {{ date("l jS \of F Y h:i:s A") }}</h3>
     </div>
-
+    
     <div class="row">
         <div class="col-md-12">
             <table class="table">

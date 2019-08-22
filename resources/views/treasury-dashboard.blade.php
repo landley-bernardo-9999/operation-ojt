@@ -4,11 +4,23 @@
 <div class="container">
     <div class="row">
         <h3>Daily Collection Report</h3>
-        <input type="date" class="form-control" value="{{ date('Y-m-d') }}" style="width:15%">
+    </div>
+    <div class="row">
+        <form class="" action="/search/payments" method="GET">
+           <div class="col-md-11">
+                <input type="date" class="form-control" style="width:20%" name="payment_date" value="{{ Request::query('payment_date') }}">
+            
+           </div>
+           <div class="col-md-1">
+                <button class="btn btn-default" type="hidden">Search</button>
+           </div>
+        </form>
+    </div>
+    <div class="row">
         <table border='2' style="width:100%;padding:10%;">
             <br>
             @if($collection->count() > 0)
-            <p>{{ $collection->count() }} collections found.</p>
+            <p class="text-center"><b>{{ $collection->count() }}</b> collections found.</p>
             <tr>
                 <th>#</th>
                 <th >UNIT NO</th>
@@ -52,10 +64,22 @@
                 <th>{{ number_format($collection->sum('amt_paid'),2) }}</th>
             </tr>
             @else
-            <p class="text-danger">No collections yet for today.</p>
+            <p class="text-danger text-center">No collections found.</p>
           @endif
         </table>
     </div>
     <br>
-</div>
+    {{-- <div class="row">
+         <div class="col-md-4 text-center">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Average Collection/Day</h3>
+                </div>
+                <div class="panel-body">
+                    <h1></h1>
+                </div>
+            </div>
+        </div>
+    <br>
+</div> --}}
 @endsection

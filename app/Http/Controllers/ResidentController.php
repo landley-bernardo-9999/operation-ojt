@@ -8,6 +8,8 @@ use DB;
 use App\Transaction;
 use App\Payment;
 use Carbon\Carbon;
+use App\Guardian;
+use App\User;
 
 class ResidentController extends Controller
 {
@@ -30,7 +32,7 @@ class ResidentController extends Controller
                 ->orWhere(DB::raw('CONCAT_WS(" ", first_name,last_name, " ")'), 'like', "%{$s}%")
                 ->orWhere('email_address', 'like', "%$s%")
                 ->orWhere('mobile_number', 'like', "%$s%")
-                ->orderBy('residents.created_at', 'desc')
+                ->orderBy('move_in_date', 'desc')
                 ->get();  
                 
                 $active_residents = Transaction::where('trans_status','active')->count();
@@ -86,6 +88,7 @@ class ResidentController extends Controller
             $resident->telephone_number = $request->telephone_number;
             $resident->primary_resident_id = session('resident_id');
             $resident->updated_at = null;
+            $resident->created_at = now();
             $resident->save();
 
             return redirect('/co-tenant/create')->with('success', 'Co-resident has been added!');
@@ -191,6 +194,7 @@ class ResidentController extends Controller
 
                 session(['billing_resident_name'=> $resident->first_name.' '.$resident->last_name]);
                 session(['treasury_resident_name'=> $resident->first_name.' '.$resident->last_name]);
+                  session(['resident_contact_details'=> $resident->phone_number.'/'.$resident->email_address]);
 
                 $payment = DB::table('transactions')
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
@@ -270,9 +274,9 @@ class ResidentController extends Controller
      */
     public function destroy($resident_id)
     {
-        Resident::where('guardian_resident_id', $resident_id)->delete();
-        Resident::where('trans_resident_id', $resident_id)->delete();
-        Resident::where('user_resident_id', $resident_id)->delete();
+        Guardian::where('guardian_resident_id', $resident_id)->delete();
+        Transaction::where('trans_resident_id', $resident_id)->delete();
+        User::where('user_resident_id', $resident_id)->delete();
         Resident::where('primary_resident_id', $resident_id)->delete();
         Resident::where('resident_id', $resident_id)->delete();
 

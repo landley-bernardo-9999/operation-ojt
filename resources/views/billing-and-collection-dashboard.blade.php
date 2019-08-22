@@ -4,9 +4,9 @@
 <div class="container">
     <div class="row">
        @if($increase_rate < 0)
-            <h3>Collection Rate ( +{{ number_format($increase_rate,2) }} % )</h3>
-       @else
             <h3>Collection Rate ( {{ number_format($increase_rate,2) }} % )</h3>
+       @else
+            <h3>Collection Rate ( -{{ number_format($increase_rate,2) }} % )</h3>
        @endif
     </div>
      <div class="row">
@@ -29,14 +29,14 @@
                 <tr>
                     <th>#</th>
                     <th>Resident</th>
-                    <th>Unit</th>
+                    <th>Total</th>
                 </tr>
                 <?php $row_no = 1; ?>
                 @foreach ($harvard_delinquent_account as $row)
                 <tr>
                     <th>{{ $row_no++ }}</th>
                     <td><a href="residents/{{ $row->resident_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
-                    <td>{{ $row->room_no}} </td>
+                    <td>{{ number_format($row->total,2) }}</td>
                 </tr>
                 @endforeach
                 @else
@@ -53,15 +53,14 @@
                 <tr>
                     <th>#</th>
                     <th>Resident</th>
-                    <th>Unit</th>
-                  
+                    <th>Total</th>
                 </tr>
                 <?php $row_no = 1; ?>
                 @foreach ($princeton_delinquent_account as $row)
                 <tr>
                     <th>{{ $row_no++ }}</th>
                     <td><a href="residents/{{ $row->resident_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
-                    <td>{{ $row->room_no}} </td>
+                    <td>{{ number_format($row->total,2) }}</td>
                 </tr>
                 @endforeach
                 @else
@@ -78,14 +77,14 @@
                 <tr>
                     <th>#</th>
                     <th>Resident</th>
-                    <th>Unit</th>
+                    <th>Total</th>
                 </tr>
                 <?php $row_no = 1; ?>
                 @foreach ($wharton_delinquent_account as $row)
                 <tr>
                     <th>{{ $row_no++ }}</th>
                     <td><a href="residents/{{ $row->resident_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
-                    <td>{{ $row->room_no}} </td>
+                    <td>{{ number_format($row->total,2) }}</td>
                 </tr>
                 @endforeach
                 @else
@@ -102,16 +101,14 @@
                 <tr>
                     <th>#</th>
                     <th>Resident</th>
-                    <th>Unit</th>
-                  
+                    <th>Total</th>
                 </tr>
                 <?php $row_no = 1; ?>
                 @foreach ($cy_delinquent_account as $row)
                 <tr>
                     <th>{{ $row_no++ }}</th>
                     <td><a href="residents/{{ $row->resident_id }}" oncontextmenu="return false">{{ $row->first_name}} {{ $row->last_name }}</a></td>
-                    <td>{{ $row->room_no}} </td>
-              
+                    <td>{{ number_format($row->total,2) }}</td>
                 </tr>
                 @endforeach
                 @else

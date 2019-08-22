@@ -132,15 +132,15 @@ window.onload = function() {
         var timeDiff = d2.getTime() - d1.getTime();
         var DaysDiff = timeDiff / (1000 * 3600 * 24);
 
-        if(DaysDiff => 180 && DaysDiff > 27){
+        if(DaysDiff => 180 && DaysDiff > 28){
             document.getElementById('term').value =   'long_term' ;
         }
 
-        if(DaysDiff < 180 && DaysDiff > 27){
+        if(DaysDiff < 180 && DaysDiff > 28){
             document.getElementById('term').value =  'short_term' ;
         }
 
-        if(DaysDiff <= 27 ){
+        if(DaysDiff <= 28 ){
             document.getElementById('term').value = 'transient' ;
         }
 

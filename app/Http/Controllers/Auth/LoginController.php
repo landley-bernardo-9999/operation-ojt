@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Request;
 
 class LoginController extends Controller
 {
@@ -27,6 +28,10 @@ class LoginController extends Controller
      */
 
      protected function authenticated($request, $user){
+
+        $pieces = explode(" ", $user->name);
+
+        $request->session()->flash('success', 'Good Day, '.$pieces[0].'! Welcome to Martha Management System.');
             
         return redirect('/dashboard');
          
