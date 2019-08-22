@@ -29,6 +29,7 @@ class ResidentController extends Controller
                 $residents = DB::table('transactions')
                 ->join('rooms', 'transactions.trans_room_id', 'rooms.room_id')
                 ->join('residents', 'transactions.trans_resident_id', 'residents.resident_id')
+                ->groupBy('resident_id')
                 ->orWhere(DB::raw('CONCAT_WS(" ", first_name,last_name, " ")'), 'like', "%{$s}%")
                 ->orWhere('email_address', 'like', "%$s%")
                 ->orWhere('mobile_number', 'like', "%$s%")

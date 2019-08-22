@@ -58,7 +58,11 @@ class PaymentController extends Controller
         } 
         elseif(auth()->user()->privilege === 'treasury'){
 
+<<<<<<< HEAD
            $payment_date = $request->query('payment_date');
+=======
+            $payment_date = $request->query('payment_date');
+>>>>>>> 2b738e2cfcf0d000d7a14610a0b2cb23d1f1f0f5
             
             $collection = DB::table('transactions')
             ->join('payments', 'transactions.trans_id', 'payments.payment_transaction_id')
