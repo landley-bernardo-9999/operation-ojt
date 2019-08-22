@@ -22,13 +22,13 @@
             <th></th>
             <?php $row_no = 1; ?>    
         </tr>   
-        @foreach ($users as $user)
+        @foreach ($users as $row)
         <tr>
             <th>{{ $row_no++ }}</th>
-            <td>{{ $user->name }}</td>
-            <td>{{ $user->email }}</td>
-            <td>{{ $user->privilege }}</td>
-            <td><a href="/users/{{ $user->user_id }}">MORE INFO</a></td>
+            <td>{{ $row->name }}</td>
+            <td>{{ $row->email }}</td>
+            <td>{{ $row->privilege }}</td>
+            <td><a href="/users/{{ $row->user_id }}">MORE INFO</a></td>
         </tr>
         @endforeach
         @else

@@ -69,6 +69,15 @@ Route::get('/owners/billing', function(){
     return view('billing-owner');
 }); 
 
+Route::get('/active-sessions', function(){
+
+    $active_session = DB::table('users')
+    ->join('sessions', 'users.user_id', 'sessions.user_id')
+    ->where('sessions.user_id','!=',null)->get();
+    return view('show-sessions', compact('active_session'));
+
+}); 
+
 Route::get('/dashboard', function(){
     if(auth()->user()->privilege === 'owner'){
         $rooms = DB::table('contracts')
@@ -116,8 +125,12 @@ Route::get('/dashboard', function(){
     }
     if(auth()->user()->privilege === 'admin'){
         $user = User::count();
+
+        $active_session = DB::table('users')
+        ->join('sessions', 'users.user_id', 'sessions.user_id')
+        ->where('sessions.user_id','!=',null)->count();
         
-        return view('admin-dashboard', compact('user'));
+        return view('admin-dashboard', compact('user', 'active_session'));
     }
     if(auth()->user()->privilege === 'treasury'){
 
